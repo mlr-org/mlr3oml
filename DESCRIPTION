@@ -1,0 +1,22 @@
+Package: mlr3oml
+Type: Package
+Title: What the package does (short line)
+Version: 1.0
+Date: 2019-10-12
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+Imports:
+    checkmate,
+    jsonlite,
+    mlr3misc,
+    mlr3,
+    Rcpp,
+    stringi,
+    vroom
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+Encoding: UTF-8
+LinkingTo: 
+    Rcpp
