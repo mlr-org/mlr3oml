@@ -1,9 +1,3 @@
-if (FALSE) {
-  parse_arff_levels("{'a', 'b'} % lasd")
-  parse_arff_levels("   {  aas , , '  b  '  }")
-}
-
-
 #' @useDynLib mlr3oml
 #' @import stringi
 read_arff = function(file) {
@@ -61,7 +55,6 @@ read_arff = function(file) {
     }
   }
   types = lapply(declarations, translate_type)
-  declaration = declarations[[1]]
 
   ### read data
   vroom::vroom(
@@ -77,14 +70,3 @@ read_arff = function(file) {
     col_names = names
   )
 }
-
-if (FALSE) {
-  id = 74
-  j = jsonlite::fromJSON(sprintf("https://www.openml.org/d/%i/json", id))
-  file = file.path("/tmp", sprintf("%i.arff", id))
-  if (!file.exists(file))
-    download.file(j$url, file)
-  data = read_arff(file)
-  as.data.table(data)
-}
-

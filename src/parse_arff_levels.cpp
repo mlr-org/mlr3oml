@@ -16,7 +16,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
 
             case DULL:
                 switch(*c) {
-                    case '{': 
+                    case '{':
                         state = BEFORE_WORD;
                         break;
                     default:
@@ -53,7 +53,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
                     case '}':
                         stop = true;
                         break;
-                    default: 
+                    default:
                         if (!std::isspace(*c)) {
                             Rcpp::Rcout << *c << std::endl;
                             Rcpp::stop("Malformated set of categorical attributes, expected ',' or '}' after category.");
@@ -64,7 +64,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
 
             case IN_WORD:
                 switch(*c) {
-                    case '}': 
+                    case '}':
                         stop = true;
                     case ',':
                         result.push_back(std::string(first_char, c));

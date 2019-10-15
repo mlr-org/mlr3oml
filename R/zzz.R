@@ -1,4 +1,5 @@
 #' @import checkmate
+#' @import data.table
 NULL
 
 .onUnload <- function (libpath) {

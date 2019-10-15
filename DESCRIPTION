@@ -9,6 +9,7 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Imports:
     checkmate,
+    data.table,
     jsonlite,
     mlr3misc,
     mlr3,
@@ -18,5 +19,5 @@ Imports:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Encoding: UTF-8
-LinkingTo: 
+LinkingTo:
     Rcpp
