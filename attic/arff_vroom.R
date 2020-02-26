@@ -1,14 +1,14 @@
 #' @useDynLib mlr3oml
 #' @import stringi
-read_arff = function(path) {
+read_arff = function(file) {
   unquote = function(x) {
     i = stri_startswith_fixed(x, "'") & stri_endswith_fixed(x, "'")
     x[i] = stri_sub(x[i], 2L, -2L)
     x
   }
 
-  # find @data line
-  con = file(path, "r")
+  ### find @data line
+  con = file(file, "r")
   dsep = 1L
   repeat {
     line = readLines(con, n = 1L, ok = TRUE, warn = FALSE)
@@ -24,8 +24,8 @@ read_arff = function(path) {
     dsep = dsep + 1L
   }
 
-  # read header, close file
-  header = stri_trim_both(readLines(path, dsep - 1L))
+  ### read header, close file
+  header = stri_trim_both(readLines(file, dsep - 1L))
   close(con)
 
   # extract @attribute declarations
@@ -39,21 +39,36 @@ read_arff = function(path) {
   }
   col_names = make.names(col_names, unique = TRUE)
 
-  # extract col classes
-  col_classes = map_chr(declarations, 3L)
-  col_is_factor = which(stri_startswith_fixed(col_classes, "{"))
-  col_classes[!col_is_factor] = tolower(map_values(col_classes[!col_is_factor],
-    c("real", "string", "date"), c("numeric", "character", "character")))
-
-  # read data
-  data = fread(file = path, skip = dsep, col.names = col_names,
-    sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-    colClasses = replace(col_classes, col_is_factor, "character"))
-
-  # fix factor levels
-  for (j in col_is_factor) {
-    set(data, j = j, value = factor(data[[j]], levels = parse_arff_levels(col_classes[j])))
+  ### parse declarations
+  translate_type = function(declaration) {
+    type = declaration[3L]
+    if (stri_startswith_fixed(type, "{")) {
+      lvls = parse_arff_levels(type)
+      vroom::col_factor(levels = lvls)
+    } else {
+      switch(type,
+        "real" = ,
+        "numeric" = vroom::col_double(),
+        "string" = vroom::col_character(),
+        "date" = vroom::col_datetime(),
+        vroom::col_guess()
+      )
+    }
   }
+  col_types = lapply(declarations, translate_type)
 
-  data
+  ### read data
+  setDT(vroom::vroom(
+    file,
+    delim = ",",
+    comment = "%",
+    quote = "'",
+    escape_backslash = FALSE,
+    na = "?",
+    trim_ws = TRUE,
+    skip = dsep,
+    col_types = col_types,
+    col_names = col_names
+  ))[]
 }
+

@@ -8,16 +8,16 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Imports:
+    R6,
+    Rcpp,
     checkmate,
     data.table,
     jsonlite,
-    mlr3misc,
     mlr3,
-    Rcpp,
-    stringi,
-    vroom
+    mlr3misc,
+    stringi
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Encoding: UTF-8
 LinkingTo:
     Rcpp
