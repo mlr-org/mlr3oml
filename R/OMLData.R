@@ -53,16 +53,14 @@ OMLData = R6Class("OMLData",
 
   private = list(
     .data = NULL,
+    .qualities = NULL,
+    .features = NULL,
     .info = NULL
   )
 )
 
 download_data_info = function(id) {
   info = jsonlite::fromJSON(sprintf("https://www.openml.org/d/%i/json", id))
-  # new api:
-  # jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/57")
-  # jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/qualities/57")
-  # jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/features/57")
 
   setDT(info$features, key = "name")
   convert_type(info$features, type_map_data_features)
@@ -86,4 +84,9 @@ if (FALSE) {
   self = OMLData$new(1038)
   self$data
   self$task
+
+  # new api:
+  jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/57")
+  jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/qualities/57")
+  jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/features/57")
 }
