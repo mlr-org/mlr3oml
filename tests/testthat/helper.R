@@ -1,9 +1,9 @@
 expect_oml_data = function(oml_data) {
-  expect_string(x$name)
-  expect_count(x$nrow)
-  expect_count(x$ncol)
-  expect_list(description, names = "unique")
-  expect_data_table(x$data, nrow = x$nrow, ncol = x$ncol)
-  expect_choice(x$target_names, colnames(x$data))
-  expect_is(x$task, "Task")
+  expect_string(oml_data$name)
+  expect_count(oml_data$nrow)
+  expect_count(oml_data$ncol)
+  expect_list(oml_data$description, names = "unique")
+  expect_data_table(oml_data$data, nrow = oml_data$nrow, ncol = oml_data$ncol)
+  expect_choice(oml_data$target_names, colnames(oml_data$data))
+  expect_is(oml_data$task, "Task")
 }

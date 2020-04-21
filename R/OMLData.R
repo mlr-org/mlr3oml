@@ -28,6 +28,13 @@ OMLData = R6Class("OMLData",
       private$.qualities
     },
 
+    features = function() {
+      if (is.null(private$.features)) {
+        private$.features = cached(download_data_features, "data_features", self$id, use_cache = self$use_cache)
+      }
+      private$.features
+    },
+
     data = function() {
       if (is.null(private$.data)) {
         private$.data = cached(download_data, "data", self$id, description = self$description, use_cache = self$use_cache)
@@ -41,16 +48,16 @@ OMLData = R6Class("OMLData",
     },
 
     nrow = function() {
-      self$qualities[.("NumberOfInstances")]$value
+      as.integer(self$qualities[.("NumberOfInstances")]$value)
     },
 
     ncol = function() {
-      self$qualities[.("NumberOfFeatures")]$value
+      as.integer(self$qualities[.("NumberOfFeatures")]$value)
     },
 
     task = function() {
       target = self$target_names
-      switch(self$description$features[list(target), type],
+      switch(self$features[.(target), data_type],
         "nominal" = mlr3::TaskClassif$new(self$name, self$data, target = target),
         "numeric" = mlr3::TaskRegr$new(self$name, self$data, target = target),
         stop("Unknown task type")
@@ -84,12 +91,12 @@ download_data_features = function(id) {
   features$is_row_identifier = as.logical(features$is_row_identifier)
   features$numer_of_missing_values = as.integer(features$number_of_missing_values)
 
-  setDT(features)[]
+  setDT(features, key = "name")[]
 }
 
 download_data = function(id, description = download_data_description(id)) {
   path = file.path(dirname(tempdir()), sprintf("oml_data_%i.arff", id))
-  download.file(description$url, path)
+  download.file(description$url, path, quiet = !getOption("mlr3oml.verbose", TRUE))
   on.exit(file.remove(path))
 
   data = read_arff(path)
