@@ -10,3 +10,8 @@ test_that("OMLData iris", {
   expect_identical(oml_data$target_names, "class")
   expect_is(oml_data$task, "TaskClassif")
 })
+
+test_that("data backend", {
+  oml_data = OMLData$new(61)
+  expect_backend(as_data_backend(oml_data))
+})

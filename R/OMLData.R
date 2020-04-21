@@ -47,6 +47,10 @@ OMLData = R6Class("OMLData",
       self$description$default_target_attribute
     },
 
+    feature_names = function() {
+      setdiff(self$features$name, self$target_names)
+    },
+
     nrow = function() {
       as.integer(self$qualities[.("NumberOfInstances")]$value)
     },
@@ -58,8 +62,8 @@ OMLData = R6Class("OMLData",
     task = function() {
       target = self$target_names
       switch(self$features[.(target), data_type],
-        "nominal" = mlr3::TaskClassif$new(self$name, self$data, target = target),
-        "numeric" = mlr3::TaskRegr$new(self$name, self$data, target = target),
+        "nominal" = TaskClassif$new(self$name, self$data, target = target),
+        "numeric" = TaskRegr$new(self$name, self$data, target = target),
         stop("Unknown task type")
       )
     }
@@ -72,33 +76,3 @@ OMLData = R6Class("OMLData",
     .features = NULL
   )
 )
-
-download_data_description = function(id) {
-  jsonlite::fromJSON(sprintf("https://www.openml.org/api/v1/json/data/%i", id))[[1L]]
-}
-
-download_data_qualities = function(id) {
-  qualities = jsonlite::fromJSON(sprintf("https://www.openml.org/api/v1/json/data/qualities/%i", id))[[1L]][[1L]]
-  qualities$value = as.numeric(qualities$value)
-  setDT(qualities, key = "name")[]
-}
-
-download_data_features = function(id) {
-  # convert_type(description$features, type_map_data_features)
-  features = jsonlite::fromJSON(sprintf("https://www.openml.org/api/v1/json/data/features/%i", id))[[1L]][[1L]]
-  features$is_target = as.logical(features$is_target)
-  features$is_ignore = as.logical(features$is_ignore)
-  features$is_row_identifier = as.logical(features$is_row_identifier)
-  features$numer_of_missing_values = as.integer(features$number_of_missing_values)
-
-  setDT(features, key = "name")[]
-}
-
-download_data = function(id, description = download_data_description(id)) {
-  path = file.path(dirname(tempdir()), sprintf("oml_data_%i.arff", id))
-  download.file(description$url, path, quiet = !getOption("mlr3oml.verbose", TRUE))
-  on.exit(file.remove(path))
-
-  data = read_arff(path)
-  remove_named(data, c(description$row_id_attribute, description$ignore_attribute))
-}

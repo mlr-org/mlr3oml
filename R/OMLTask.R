@@ -11,74 +11,75 @@ OMLTask = R6Class("OMLTask",
 
   active = list(
     name = function() {
-      self$info$source$name
+      self$description$task_name
     },
 
-    info = function() {
-      if (is.null(private$.info)) {
-        private$.info = cached(download_task_info, "task_info", self$id, use_cache = self$use_cache)
+    description = function() {
+      if (is.null(private$.description)) {
+        private$.description = cached(download_task_description, "task_description", self$id, use_cache = self$use_cache)
      }
 
-      private$.info
+      private$.description
+    },
+
+    data_id = function() {
+      as.integer(self$description$input$source_data$data_set_id)
     },
 
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$info$source$data_id, use_cache = self$use_cache)
+        private$.data = OMLData$new(self$data_id, use_cache = self$use_cache)
       }
 
       private$.data
     },
 
+    nrow = function() {
+      self$data$nrow
+    },
+
+    ncol = function() {
+      self$data$ncol
+    },
+
     target_names = function() {
-      self$info$target_feature
+      self$description$input$source_data$target_feature
+    },
+
+    feature_names = function() {
+      setdiff(self$data$features$name, self$target_names)
     },
 
     task = function() {
-      info = self$info
-      switch(self$info$tasktype$name,
+      switch(self$description$task_type,
         # FIXME: positive class?
-        "Supervised Classification" = mlr3::TaskClassif$new(self$name, self$data$data, target = self$target_names),
-        "Supervised Regression" = mlr3::TaskRegr$new(self$name, self$data$data, target = self$target_names)
+        "Supervised Classification" = TaskClassif$new(self$name, self$data$data, target = self$target_names),
+        "Supervised Regression" = TaskRegr$new(self$name, self$data$data, target = self$target_names)
       )
     },
 
     resampling = function() {
-      stop("'data_splits_url' missing in JSON")
+      if (is.null(private$.data)) {
+        splits = cached(download_data_splits, "data_splits", self$id, self$description, use_cache = self$use_cache)
+        train_sets = splits[type == "TRAIN", list(row_id = list(rowid + 1L)), keyby = c("repeat.", "fold")]$row_id
+        test_sets = splits[type == "TEST", list(row_id = list(rowid + 1L)), keyby = c("repeat.", "fold")]$row_id
+
+        resampling = ResamplingCustom$new()
+        private$.resampling = resampling$instantiate(self$task, train_sets = train_sets, test_sets = test_sets)
+      }
+
+      private$.resampling
     },
 
     tags = function() {
-      self$info$tags$tag
+      self$description$tag
     }
 
   ),
 
   private = list(
     .data = NULL,
-    .info = NULL
+    .description = NULL,
+    .resampling = NULL
   )
 )
-
-download_task_info = function(id) {
-  info = jsonlite::fromJSON(sprintf("https://www.openml.org/t/%i/json", id))
-  info$source$data_id = as.integer(info$source$data_id)
-  info
-}
-
-OMLTaskConnector = function(id, use_cache = getOption("mlr3oml.use_cache", FALSE)) {
-  OMLTask$new(id, use_cache)$task
-}
-
-if (FALSE) {
-  self = OMLTask$new(31, use_cache = TRUE)
-  self$data
-  self$info
-  self$task
-
-  self = OMLTask$new(4734, use_cache = TRUE)
-  self$data
-  self$info
-  self$task
-
-  mlr3::tsk("oml", id = 31, use_cache = TRUE)
-}

@@ -4,5 +4,8 @@ list_oml_tasks = function(...) {
   query = paste("https://www.openml.org/api/v1/json/task/list",
     paste(names(dots), unlist(dots), sep = "/", collapse = "/"), sep = "/")
   j = jsonlite::fromJSON(query)
-  setDT(j$tasks$task)[]
+  tab = setDT(j$tasks$task)[]
+
+  qualities = transpose_name_value(tab$quality)
+  rcbind(remove_named(tab, c("input", "quality")), qualities)
 }

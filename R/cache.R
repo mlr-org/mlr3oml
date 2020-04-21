@@ -20,3 +20,10 @@ cached = function(fun, type, id, ..., use_cache = FALSE) {
 
   return(obj)
 }
+
+clear_cache = function() {
+  path = R_user_dir("mlr3oml", "cache")
+  if (dir.exists(path))
+    unlink(path, recursive = TRUE)
+  invisible(TRUE)
+}
