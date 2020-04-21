@@ -40,3 +40,5 @@ inst/doc
 /src/*.o
 
 revdep
+
+README.html

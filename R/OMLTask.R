@@ -1,3 +1,4 @@
+#' @export
 OMLTask = R6Class("OMLTask",
   public = list(
     id = NULL,

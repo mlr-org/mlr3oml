@@ -1,0 +1,57 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+library(mlr3)
+library(mlr3oml)
+lgr::get_logger("mlr3")$set_threshold("warn")
+set.seed(1)
+options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.verbose = FALSE)
+```
+
+# mlr3oml
+
+[![R build status](https://github.com/mlr-org/mlr3oml/workflows/R-CMD-check/badge.svg)](https://github.com/mlr-org/mlr3oml/actions)
+[![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
+[![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
+
+Connects the [mlr3](https://mlr3.mlr-org.com/) package to [OpenML](https://openml.org).
+
+
+## Short Demo
+
+```{r}
+library(mlr3)
+library(mlr3oml)
+
+# new parametrized task "oml"
+tsk("oml", data_id = 31)
+tsk("oml", task_id = 59)
+
+# same for resampling
+rsmp("oml", task_id = 59)
+
+# R6 class for data sets
+oml_data = OMLData$new(61)
+oml_data$name
+oml_data$nrow
+oml_data$ncol
+oml_data$data
+
+# R6 class for tasks
+oml_task = OMLTask$new(31)
+oml_task$name
+oml_task$nrow
+oml_task$ncol
+oml_task$task
+oml_task$resampling
+
+# list oml data sets with 5 features and 50 - 200 instances
+tab = list_oml_data(number_features = "5", number_instances = "50..200")
+head(tab[, .(did, name)])
+
+# list first 10 oml tasks
+tab = list_oml_tasks(limit = 10)
+head(tab[, .(task_id, did, name)])
+```

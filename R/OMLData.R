@@ -1,3 +1,4 @@
+#' @export
 OMLData = R6Class("OMLData",
   public = list(
     id = NULL,

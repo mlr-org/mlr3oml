@@ -1,3 +1,4 @@
+#' @export
 list_oml_tasks = function(...) {
   dots = qassertr(list(...), "A1")
 
