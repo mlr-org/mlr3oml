@@ -11,7 +11,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
     enum states { DULL, BEFORE_WORD, IN_WORD, AFTER_WORD, IN_QUOTE, ESCAPING } state = DULL;
     bool stop = false;
 
-    for (c = buffer.begin(); !stop & c != end; ++c) {
+    for (c = buffer.begin(); !stop && c != end; ++c) {
         switch(state) {
 
             case DULL:
@@ -55,7 +55,6 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
                         break;
                     default:
                         if (!std::isspace(*c)) {
-                            Rcpp::Rcout << *c << std::endl;
                             Rcpp::stop("Malformated set of categorical attributes, expected ',' or '}' after category.");
                         }
                 }

@@ -12,7 +12,6 @@ if (FALSE) {
   x = list_oml_data()
   unnest(x, "quality")
 
-
   xx = as.data.table(x$quality[[1]])
   xx$value = as.numeric(xx$value)
   dcast(xx, . ~ name, value.var = "value")

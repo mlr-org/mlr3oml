@@ -1,3 +1,22 @@
+find_data_marker = function(path) {
+  con = file(path, "r")
+  on.exit(close(con))
+
+  dsep = 1L
+  repeat {
+    line = readLines(con, n = 1L, ok = TRUE, warn = FALSE)
+    if (length(line) == 0L) {
+      stop("No @data section found")
+    }
+
+    if (stri_startswith_fixed(stri_trim_left(line), "@data", case_insensitive = TRUE)) {
+      return(dsep)
+    }
+
+    dsep = dsep + 1L
+  }
+}
+
 #' @useDynLib mlr3oml
 #' @import stringi
 read_arff = function(path) {
@@ -7,26 +26,10 @@ read_arff = function(path) {
     x
   }
 
-  # find @data line
-  con = file(path, "r")
-  dsep = 1L
-  repeat {
-    line = readLines(con, n = 1L, ok = TRUE, warn = FALSE)
-    if (length(line) == 0L) {
-      close(con)
-      stop("No @data section found")
-    }
-
-    if (stri_startswith_fixed(stri_trim_left(line), "@data", case_insensitive = TRUE)) {
-      break
-    }
-
-    dsep = dsep + 1L
-  }
+  dsep = find_data_marker(path)
 
   # read header, close file
-  header = stri_trim_both(readLines(path, dsep - 1L))
-  close(con)
+  header = stri_trim_both(readLines(path, n = dsep - 1L))
 
   # extract @attribute declarations
   declarations = header[stri_startswith_fixed(header, "@attribute", case_insensitive = TRUE)]
@@ -41,17 +44,19 @@ read_arff = function(path) {
 
   # extract col classes
   col_classes = map_chr(declarations, 3L)
-  col_is_factor = which(stri_startswith_fixed(col_classes, "{"))
-  col_classes[!col_is_factor] = tolower(map_values(col_classes[!col_is_factor],
-    c("real", "string", "date"), c("numeric", "character", "character")))
+  col_is_factor = stri_startswith_fixed(col_classes, "{")
+
+  col_classes[!col_is_factor] = map_values(tolower(col_classes[!col_is_factor]),
+    c("real", "string", "date"), c("numeric", "character", "character"))
 
   # read data
   data = fread(file = path, skip = dsep, col.names = col_names,
     sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-    colClasses = replace(col_classes, col_is_factor, "character"))
+    colClasses = ifelse(col_is_factor, "character", col_classes)
+  )
 
   # fix factor levels
-  for (j in col_is_factor) {
+  for (j in which(col_is_factor)) {
     set(data, j = j, value = factor(data[[j]], levels = parse_arff_levels(col_classes[j])))
   }
 

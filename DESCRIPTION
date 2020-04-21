@@ -8,6 +8,7 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Imports:
+    backports (>= 1.1.6),
     R6,
     Rcpp,
     checkmate,
@@ -16,8 +17,11 @@ Imports:
     mlr3,
     mlr3misc,
     stringi
+Suggests:
+    qs,
+    testthat
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8
 LinkingTo:
     Rcpp

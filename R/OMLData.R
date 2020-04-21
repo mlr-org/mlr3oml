@@ -11,41 +11,48 @@ OMLData = R6Class("OMLData",
 
   active = list(
     name = function() {
-      self$info$name
+      self$description$name
     },
 
-    info = function() {
-      if (is.null(private$.info)) {
-        private$.info = download_data_info(self$id)
+    description = function() {
+      if (is.null(private$.description)) {
+        private$.description = cached(download_data_description, "data_description", self$id, use_cache = self$use_cache)
      }
+      private$.description
+    },
 
-      private$.info
+    qualities = function() {
+      if (is.null(private$.qualities)) {
+        private$.qualities = cached(download_data_qualities, "data_qualities", self$id, use_cache = self$use_cache)
+      }
+      private$.qualities
     },
 
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = download_data(self$id, self$info)
+        private$.data = cached(download_data, "data", self$id, description = self$description, use_cache = self$use_cache)
       }
 
       private$.data
     },
 
     target_names = function() {
-      self$info$default_target_attribute
+      self$description$default_target_attribute
     },
 
     nrow = function() {
-      self$info$qualities$NumberOfInstances
+      self$qualities[.("NumberOfInstances")]$value
     },
 
     ncol = function() {
-      self$info$qualities$NumberOfFeatures
+      self$qualities[.("NumberOfFeatures")]$value
     },
 
     task = function() {
       target = self$target_names
-      switch(self$info$features[list(target), type],
+      switch(self$description$features[list(target), type],
         "nominal" = mlr3::TaskClassif$new(self$name, self$data, target = target),
+        "numeric" = mlr3::TaskRegr$new(self$name, self$data, target = target),
         stop("Unknown task type")
       )
     }
@@ -53,40 +60,38 @@ OMLData = R6Class("OMLData",
 
   private = list(
     .data = NULL,
+    .description = NULL,
     .qualities = NULL,
-    .features = NULL,
-    .info = NULL
+    .features = NULL
   )
 )
 
-download_data_info = function(id) {
-  info = jsonlite::fromJSON(sprintf("https://www.openml.org/d/%i/json", id))
-
-  setDT(info$features, key = "name")
-  convert_type(info$features, type_map_data_features)
-  return(info)
+download_data_description = function(id) {
+  jsonlite::fromJSON(sprintf("https://www.openml.org/api/v1/json/data/%i", id))[[1L]]
 }
 
-download_data = function(id, info = download_data_info(id)) {
+download_data_qualities = function(id) {
+  qualities = jsonlite::fromJSON(sprintf("https://www.openml.org/api/v1/json/data/qualities/%i", id))[[1L]][[1L]]
+  qualities$value = as.numeric(qualities$value)
+  setDT(qualities, key = "name")[]
+}
+
+download_data_features = function(id) {
+  # convert_type(description$features, type_map_data_features)
+  features = jsonlite::fromJSON(sprintf("https://www.openml.org/api/v1/json/data/features/%i", id))[[1L]][[1L]]
+  features$is_target = as.logical(features$is_target)
+  features$is_ignore = as.logical(features$is_ignore)
+  features$is_row_identifier = as.logical(features$is_row_identifier)
+  features$numer_of_missing_values = as.integer(features$number_of_missing_values)
+
+  setDT(features)[]
+}
+
+download_data = function(id, description = download_data_description(id)) {
   path = file.path(dirname(tempdir()), sprintf("oml_data_%i.arff", id))
-  download.file(info$url, path)
-  # on.exit(file.remove(path))
+  download.file(description$url, path)
+  on.exit(file.remove(path))
+
   data = read_arff(path)
-
-  remove_named(data, c(info$row_id_attribute, info$ignore_attribute))
-}
-
-if (FALSE) {
-  self = OMLData$new(1510)
-  self$nrow
-  self$ncol
-  ncol(self$data)
-  self = OMLData$new(1038)
-  self$data
-  self$task
-
-  # new api:
-  jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/57")
-  jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/qualities/57")
-  jsonlite::fromJSON("https://www.openml.org/api/v1/json/data/features/57")
+  remove_named(data, c(description$row_id_attribute, description$ignore_attribute))
 }
