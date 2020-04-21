@@ -2,7 +2,6 @@ library(checkmate)
 lapply(list.files(system.file("testthat", package = "mlr3"), pattern = "^helper.*\\.[rR]$", full.names = TRUE), source)
 
 expect_oml_data = function(oml_data) {
-  oml_data = OMLData$new(31)
   expect_is(oml_data, "OMLData")
   expect_string(oml_data$name)
   expect_count(oml_data$nrow)
@@ -18,7 +17,6 @@ expect_oml_data = function(oml_data) {
 }
 
 expect_oml_task = function(oml_task) {
-  oml_task = OMLTask$new(59)
   expect_is(oml_task, "OMLTask")
   expect_string(oml_task$name)
   expect_count(oml_task$nrow)
@@ -31,4 +29,7 @@ expect_oml_task = function(oml_task) {
   expect_subset(oml_task$feature_names, colnames(oml_task$data$data))
   expect_disjunct(oml_task$target_names, oml_task$feature_names)
   expect_is(oml_task$task, "Task")
+  expect_is(oml_task$resampling, "ResamplingCustom")
+
+  expect_subset(unlist(oml_task$resampling$instance, use.names = FALSE), oml_task$task$row_ids)
 }

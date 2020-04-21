@@ -59,7 +59,7 @@ OMLTask = R6Class("OMLTask",
     },
 
     resampling = function() {
-      if (is.null(private$.data)) {
+      if (is.null(private$.resampling)) {
         splits = cached(download_data_splits, "data_splits", self$id, self$description, use_cache = self$use_cache)
         train_sets = splits[type == "TRAIN", list(row_id = list(rowid + 1L)), keyby = c("repeat.", "fold")]$row_id
         test_sets = splits[type == "TEST", list(row_id = list(rowid + 1L)), keyby = c("repeat.", "fold")]$row_id

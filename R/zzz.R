@@ -9,6 +9,7 @@ NULL
 .onLoad = function(libname, pkgname) {
   backports::import(pkgname)
   mlr3::mlr_tasks$add("oml", OMLTaskConnector)
+  mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
 }
 
 .onUnload <- function (libpath) {
