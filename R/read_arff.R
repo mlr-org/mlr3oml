@@ -50,10 +50,19 @@ read_arff = function(path) {
     c("real", "string", "date"), c("numeric", "character", "character"))
 
   # read data
-  data = fread(file = path, skip = dsep, col.names = col_names,
-    sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-    colClasses = ifelse(col_is_factor, "character", col_classes)
-  )
+  if (nzchar(Sys.which("grep"))) {
+    data = fread(cmd = sprintf('grep -v "%%" %s', path), skip = dsep, col.names = col_names,
+      sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
+      colClasses = ifelse(col_is_factor, "character", col_classes)
+    )
+  } else {
+    lines = tail(readLines(path), -dsep)
+    lines = stri_trim_both(stri_split_fixed(lines, "%", 2L, simplify = TRUE)[, 1L])
+    data = fread(text = lines, col.names = col_names,
+      sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
+      colClasses = ifelse(col_is_factor, "character", col_classes)
+    )
+  }
 
   # fix factor levels
   for (j in which(col_is_factor)) {
