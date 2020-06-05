@@ -4,6 +4,7 @@
 #' @import R6
 #' @import mlr3misc
 #' @import mlr3
+#' @import Rcpp
 NULL
 
 .onLoad = function(libname, pkgname) {
