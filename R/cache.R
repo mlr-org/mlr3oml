@@ -1,10 +1,14 @@
+get_cache_dir = function(type = "") {
+  file.path(R_user_dir("mlr3oml", "cache"), type)
+}
+
 cached = function(fun, type, id, ..., use_cache = FALSE) {
   if (!use_cache) {
     return(fun(id, ...))
   }
   require_namespaces("qs", "The following packages are required for caching: %s")
 
-  path = file.path(R_user_dir("mlr3oml", "cache"), type)
+  path = get_cache_dir(type)
   file = file.path(path, sprintf("%i.qs", id))
 
   if (file.exists(file)) {
@@ -22,7 +26,7 @@ cached = function(fun, type, id, ..., use_cache = FALSE) {
 }
 
 clear_cache = function() {
-  path = R_user_dir("mlr3oml", "cache")
+  path = get_cache_dir()
   if (dir.exists(path))
     unlink(path, recursive = TRUE)
   invisible(TRUE)

@@ -1,13 +1,15 @@
-#include <Rcpp.h>
+#include <R.h>
+#include <Rdefines.h>
 #include <string>
 #include <vector>
 
+extern "C" {
 
-// [[Rcpp::export]]
-Rcpp::StringVector parse_arff_levels(std::string & buffer) {
+SEXP c_parse_arff_levels(SEXP buffer_) {
+    std::string buffer(Rf_translateCharUTF8(STRING_ELT(buffer_, 0)));
     std::string::const_iterator c, first_char;
     const std::string::const_iterator end = buffer.end();
-    std::vector<std::string> result;
+    std::vector<std::string> levels;
     enum states { DULL, BEFORE_WORD, IN_WORD, AFTER_WORD, IN_QUOTE, ESCAPING } state = DULL;
     bool stop = false;
 
@@ -21,7 +23,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
                         break;
                     default:
                         if (!std::isspace(*c)) {
-                            Rcpp::stop("Set of categorical attributes must start with '{'.");
+                            Rf_error("Set of categorical attributes must start with '{'.");
                         }
                 }
                 break;
@@ -30,7 +32,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
             case BEFORE_WORD:
                 switch(*c) {
                     case ',':
-                        result.push_back("");
+                        levels.push_back("");
                         break;
                     case '\'':
                         state = IN_QUOTE;
@@ -55,7 +57,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
                         break;
                     default:
                         if (!std::isspace(*c)) {
-                            Rcpp::stop("Malformated set of categorical attributes, expected ',' or '}' after category.");
+                            Rf_error("Malformated set of categorical attributes, expected ',' or '}' after category.");
                         }
                 }
                 break;
@@ -66,12 +68,12 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
                     case '}':
                         stop = true;
                     case ',':
-                        result.push_back(std::string(first_char, c));
+                        levels.push_back(std::string(first_char, c));
                         state = BEFORE_WORD;
                         break;
                     default:
                         if (std::isspace(*c)) {
-                            result.push_back(std::string(first_char, c));
+                            levels.push_back(std::string(first_char, c));
                             state = AFTER_WORD;
                         }
                 }
@@ -84,7 +86,7 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
                         state = ESCAPING;
                         break;
                     case '\'':
-                        result.push_back(std::string(first_char, c));
+                        levels.push_back(std::string(first_char, c));
                         state = AFTER_WORD;
                         break;
                 }
@@ -98,8 +100,15 @@ Rcpp::StringVector parse_arff_levels(std::string & buffer) {
     }
 
     if (!stop) {
-        Rcpp::stop("Incomplete set of categorical attributes detected.");
+        Rf_error("Incomplete set of categorical attributes detected.");
     }
 
-    return Rcpp::wrap(result);
+    SEXP result = PROTECT(allocVector(STRSXP, levels.size()));
+    for (R_len_t i = 0; i < levels.size(); i++) {
+        SET_STRING_ELT(result, i, Rf_mkCharCE(levels[i].c_str(), CE_UTF8));
+    }
+    UNPROTECT(1);
+    return result;
+}
+
 }

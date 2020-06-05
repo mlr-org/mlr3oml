@@ -10,7 +10,6 @@ License: What license is it under?
 Imports:
     backports (>= 1.1.6),
     R6,
-    Rcpp,
     checkmate,
     data.table,
     jsonlite,
@@ -23,5 +22,3 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Encoding: UTF-8
-LinkingTo:
-    Rcpp

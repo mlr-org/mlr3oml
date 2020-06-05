@@ -17,7 +17,11 @@ find_data_marker = function(path) {
   }
 }
 
-#' @useDynLib mlr3oml
+#' @useDynLib mlr3oml c_parse_arff_levels
+parse_arff_levels = function(str) {
+  .Call(c_parse_arff_levels, str)
+}
+
 #' @import stringi
 read_arff = function(path) {
   unquote = function(x) {
