@@ -5,6 +5,7 @@ download_data_features = function(id) {
   features$is_ignore = as.logical(features$is_ignore)
   features$is_row_identifier = as.logical(features$is_row_identifier)
   features$numer_of_missing_values = as.integer(features$number_of_missing_values)
+  features$name = make.names(features$name)
 
   setDT(features, key = "name")[]
 }

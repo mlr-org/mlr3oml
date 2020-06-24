@@ -44,7 +44,7 @@ OMLTask = R6Class("OMLTask",
     },
 
     target_names = function() {
-      self$description$input$source_data$target_feature
+      make.names(self$description$input$source_data$target_feature)
     },
 
     feature_names = function() {

@@ -1,50 +1,46 @@
-find_data_marker = function(path) {
-  con = file(path, "r")
-  on.exit(close(con))
-
-  dsep = 1L
-  repeat {
-    line = readLines(con, n = 1L, ok = TRUE, warn = FALSE)
-    if (length(line) == 0L) {
-      stop("No @data section found")
-    }
-
-    if (stri_startswith_fixed(stri_trim_left(line), "@data", case_insensitive = TRUE)) {
-      return(dsep)
-    }
-
-    dsep = dsep + 1L
-  }
-}
-
 #' @useDynLib mlr3oml c_parse_arff_levels
-parse_arff_levels = function(str) {
-  .Call(c_parse_arff_levels, str)
-}
-
 #' @import stringi
 read_arff = function(path) {
+  parse_arff_levels = function(str) {
+    .Call(c_parse_arff_levels, str)
+  }
+
   unquote = function(x) {
     i = stri_startswith_fixed(x, "'") & stri_endswith_fixed(x, "'")
     x[i] = stri_sub(x[i], 2L, -2L)
     x
   }
 
-  dsep = find_data_marker(path)
+  assert_file_exists(path, access = "r")
+  con = file(path, "r")
+  on.exit(close(con))
 
-  # read header, close file
-  header = stri_trim_both(readLines(path, n = dsep - 1L))
+  # parse the header, store declarations
+  declarations = character()
+  repeat {
+    line = stri_trim_left(readLines(con, n = 1L, ok = TRUE, warn = FALSE))
+
+    if (length(line) == 0L) {
+      stop("No @data section found")
+    }
+
+    if (stri_startswith_fixed(line, "@data", case_insensitive = TRUE)) {
+      break
+    }
+
+    if (stri_startswith_fixed(line, "@attribute", case_insensitive = TRUE)) {
+      declarations = c(declarations, stri_trim_right(line))
+    }
+  }
 
   # extract @attribute declarations
-  declarations = header[stri_startswith_fixed(header, "@attribute", case_insensitive = TRUE)]
-  declarations = stri_split_regex(declarations, "[[:space:]]+", n = 3)
+  declarations = stri_split_regex(declarations, "[[:space:]]+", n = 3L)
 
   # extract names, unquote + clean
-  col_names = unquote(mlr3misc::map_chr(declarations, 2L))
+  col_names = make.names(unquote(mlr3misc::map_chr(declarations, 2L)))
   if (anyDuplicated(col_names)) {
-    warning("Duplicated column names detected")
+    stop("Duplicated column names detected after conversion")
   }
-  col_names = make.names(col_names, unique = TRUE)
 
   # extract col classes
   col_classes = map_chr(declarations, 3L)
@@ -54,7 +50,7 @@ read_arff = function(path) {
     c("real", "string", "date"), c("numeric", "character", "character"))
 
   # read data with workaround for missing comment char functionality
-  lines = tail(readLines(path), -dsep)
+  lines = readLines(con, n = -1L, warn = FALSE, ok = TRUE)
   lines = stri_trim_both(stri_split_fixed(lines, "%", 2L, simplify = TRUE)[, 1L])
   data = fread(text = lines, col.names = col_names,
     sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,

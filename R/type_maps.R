@@ -8,7 +8,6 @@ type_map_data_features = c(
   "stdev" = "dbl",
   "distr" = NA,
   "target" = NA
-
 )
 
 convert_type = function(dt, map) {
