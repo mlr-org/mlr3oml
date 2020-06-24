@@ -4,9 +4,11 @@
 #include <R_ext/Rdynload.h>
 
 extern SEXP c_parse_arff_levels(SEXP);
+extern SEXP c_remove_comment(SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"c_keep_in_bounds", (DL_FUNC) &c_parse_arff_levels, 1},
+    {"c_parse_arff_levels", (DL_FUNC) &c_parse_arff_levels, 1},
+    {"c_remove_comment", (DL_FUNC) &c_remove_comment, 1},
     {NULL, NULL, 0}
 };
 

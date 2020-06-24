@@ -12,7 +12,9 @@ cached = function(fun, type, id, ..., use_cache = FALSE) {
   file = file.path(path, sprintf("%i.qs", id))
 
   if (file.exists(file)) {
-    return(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
+    obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
+    if (!inherits(obj, "try-error"))
+      return(obj)
   }
 
   obj = fun(id, ...)

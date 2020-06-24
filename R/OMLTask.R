@@ -52,11 +52,13 @@ OMLTask = R6Class("OMLTask",
     },
 
     task = function() {
-      switch(self$description$task_type,
+      task = switch(self$description$task_type,
         # FIXME: positive class?
         "Supervised Classification" = TaskClassif$new(self$name, self$data$data, target = self$target_names),
         "Supervised Regression" = TaskRegr$new(self$name, self$data$data, target = self$target_names)
       )
+      task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
+      task
     },
 
     resampling = function() {
