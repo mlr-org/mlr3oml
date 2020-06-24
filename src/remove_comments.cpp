@@ -7,11 +7,9 @@ static int remove_comment(std::string line) {
     int i;
 
     for (i = 0; i < line.size(); i++) {
-        char c = line[i];
-
         switch(state) {
             case DULL:
-                switch(c) {
+                switch(line[i]) {
                     case '\'':
                         state = IN_QUOTE;
                         break;
@@ -21,7 +19,7 @@ static int remove_comment(std::string line) {
                 break;
 
             case IN_QUOTE:
-                switch(c) {
+                switch(line[i]) {
                     case '\'':
                         state = DULL;
                         break;
@@ -37,7 +35,7 @@ static int remove_comment(std::string line) {
         }
     }
 
-    return i;
+    return -1;
 }
 
 
@@ -50,11 +48,10 @@ SEXP c_remove_comment(SEXP lines_) {
     for (R_len_t i = 0; i < n; i++) {
         std::string line = Rf_translateCharUTF8(STRING_ELT(lines_, i));
         int pos = remove_comment(line);
-        if (pos == line.size()) {
+        if (pos < 0) {
             SET_STRING_ELT(result_, i, STRING_ELT(lines_, i));
         } else {
             SET_STRING_ELT(result_, i, Rf_mkCharCE(line.substr(0, pos).c_str(), CE_UTF8));
-
         }
     }
 
