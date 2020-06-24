@@ -1,25 +1,19 @@
 #include <R.h>
 #include <Rdefines.h>
 #include <string>
-#include <vector>
 
-
-extern "C" {
-static int remove_comment(std::string buffer) {
+static int remove_comment(std::string line) {
     enum states { DULL, IN_QUOTE, ESCAPING } state = DULL;
     int i;
 
-    for (i = 0; i < buffer.size(); i++) {
-        char c = buffer[i];
-
-        Rprintf("c: %c,  state: %d\n", c, state);
+    for (i = 0; i < line.size(); i++) {
+        char c = line[i];
 
         switch(state) {
             case DULL:
                 switch(c) {
                     case '\'':
                         state = IN_QUOTE;
-                        break;
                         break;
                     case '%':
                         return i;
@@ -46,18 +40,20 @@ static int remove_comment(std::string buffer) {
     return i;
 }
 
+
+extern "C" {
+
 SEXP c_remove_comment(SEXP lines_) {
     const R_len_t n = length(lines_);
     SEXP result_ = PROTECT(allocVector(STRSXP, n));
 
-
     for (R_len_t i = 0; i < n; i++) {
-        std::string buffer = Rf_translateCharUTF8(STRING_ELT(lines_, i));
-        int pos = remove_comment(buffer);
-        if (pos == buffer.size()) {
+        std::string line = Rf_translateCharUTF8(STRING_ELT(lines_, i));
+        int pos = remove_comment(line);
+        if (pos == line.size()) {
             SET_STRING_ELT(result_, i, STRING_ELT(lines_, i));
         } else {
-            SET_STRING_ELT(result_, i, Rf_mkCharCE(buffer.substr(0, pos).c_str(), CE_UTF8));
+            SET_STRING_ELT(result_, i, Rf_mkCharCE(line.substr(0, pos).c_str(), CE_UTF8));
 
         }
     }
