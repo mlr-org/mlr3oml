@@ -9,3 +9,14 @@ transpose_name_value = function(li) {
 
   remove_named(tab, "..dummy")
 }
+
+file_rm = function(path) {
+  file.remove(path[file.exists(path)])
+}
+
+get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE) {
+  path = tempfile(pattern = "json", fileext = "json")
+  on.exit(file_rm(path))
+  download.file(sprintf(url, ...), path, quiet = TRUE)
+  jsonlite::fromJSON(path, simplifyVector = simplifyVector, simplifyDataFrame = simplifyDataFrame)
+}

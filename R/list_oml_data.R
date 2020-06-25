@@ -4,7 +4,7 @@ list_oml_data = function(...) {
 
   query = paste("https://www.openml.org/api/v1/json/data/list",
     paste(names(dots), unlist(dots), sep = "/", collapse = "/"), sep = "/")
-  j = jsonlite::fromJSON(query)
+  j = get_json(query)
   tab = setDT(j$data$dataset)
 
   qualities = transpose_name_value(tab$quality)

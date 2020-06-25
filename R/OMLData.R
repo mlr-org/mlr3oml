@@ -1,7 +1,19 @@
+#' @title Interface to OpenML Data
+#'
+#' @description
+#' This is the class for data sets served on \url{https://openml.org/d}.
+#'
 #' @export
 OMLData = R6Class("OMLData",
   public = list(
+
+    #' @field id (`integer(1)`)\cr
+    #' Data id on OpenML.
     id = NULL,
+
+    #' @field use_cache (`logical(1)`)\cr
+    #' If `TRUE`, locally caches downloaded objects on the file system.file.
+    #' See [R_user_dir()] for the location.
     use_cache = NULL,
 
     initialize = function(id, use_cache = getOption("mlr3oml.use_cache", FALSE)) {
