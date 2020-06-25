@@ -2,7 +2,7 @@
 % Please edit documentation in R/OMLData.R
 \name{OMLData}
 \alias{OMLData}
-\title{Interface to OpenML Data}
+\title{Interface to OpenML Data Sets}
 \description{
 This is the class for data sets served on \url{https://openml.org/d}.
 }
@@ -10,11 +10,61 @@ This is the class for data sets served on \url{https://openml.org/d}.
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
-Data id on OpenML.}
+OpenML data id.}
 
 \item{\code{use_cache}}{(\code{logical(1)})\cr
 If \code{TRUE}, locally caches downloaded objects on the file system.file.
-See \code{\link[=R_user_dir]{R_user_dir()}} for the location.}
+See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your operating system).}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{name}}{(\code{character(1)})\cr
+Name of the data set, as extracted from the data set description.}
+
+\item{\code{description}}{(\code{list()})\cr
+Data set description (meta information), downloaded and converted from the JSON API response.}
+
+\item{\code{qualities}}{(\code{data.table()})\cr
+Data set qualities (performance values), downloaded from the JSON API response and
+converted to a [data.table()\verb{] with columns }"name"\code{and}"value"`.}
+
+\item{\code{features}}{(\code{data.table()})\cr
+Information about data set features (including target), downloaded from the JSON API response and
+converted to a \link{data.table()`} with columns:
+\itemize{
+\item \code{"index"} (\code{integer()}): Column position.
+\item \code{"name"} (\code{character()}): Name of the feature.
+\item \code{"data_type"} (\code{factor()}): Type of the feature: \code{"nominal"} or \code{"numeric"}.
+\item \code{"nominal_value"} (\code{list()}): Levels of the feature, or \code{NULL} for numeric features.
+\item \code{"is_target"} (\code{logical()}): \code{TRUE} for target column, \code{FALSE} otherwise.
+\item \code{"is_ignore"} (\code{logical()}): \code{TRUE} if this feature should be ignored.
+Ignored features are removed automatically from the data set.
+\item \code{"is_row_identifier"} (\code{logical()}): \code{TRUE} if the column encodes a row identifier.
+Row identifiers are removed automatically from the data set.
+\item \code{"number_of_missing_values"} (\code{integer()}): Number of missing values in the column.
+}}
+
+\item{\code{data}}{(\code{data.table()})\cr
+Data as \code{data.table()}.
+Columns marked as row identifiers or marked with the ignore flag are automatically removed.}
+
+\item{\code{target_names}}{(\code{character()})\cr
+Name of the default target, as extracted from the OpenML data set description.}
+
+\item{\code{feature_names}}{(\code{character()})\cr
+Name of the features, as extracted from the OpenML data set description.}
+
+\item{\code{nrow}}{(\code{integer()})\cr
+Number of observations, as extracted from the OpenML data set qualities.}
+
+\item{\code{ncol}}{(\code{integer()})\cr
+Number of features (including targets), as extracted from the OpenML data set qualities.}
+
+\item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
+Creates a \link[mlr3:Task]{mlr3::Task} using the default target attribute stored in the data set.}
 }
 \if{html}{\out{</div>}}
 }
@@ -22,6 +72,7 @@ See \code{\link[=R_user_dir]{R_user_dir()}} for the location.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OMLData$new()}}
+\item \href{#method-quality}{\code{OMLData$quality()}}
 \item \href{#method-clone}{\code{OMLData$clone()}}
 }
 }
@@ -29,10 +80,42 @@ See \code{\link[=R_user_dir]{R_user_dir()}} for the location.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Creates a new object of class \code{OMLData}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$new(id, use_cache = getOption("mlr3oml.use_cache", FALSE))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{(\code{integer(1)})\cr
+OpenML data id.}
+
+\item{\code{use_cache}}{(\code{logical(1)})\cr
+Flag to control the file system cache.
+See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your operating system).
+Default is the value of option \code{"mlr3oml.use_cache"} or \code{FALSE}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-quality"></a>}}
+\if{latex}{\out{\hypertarget{method-quality}{}}}
+\subsection{Method \code{quality()}}{
+Returns the value of a single OpenML data set quality.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$quality(name)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{name}}{(\code{character(1)})\cr
+Name of the quality to extract.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

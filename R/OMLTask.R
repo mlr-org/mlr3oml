@@ -1,9 +1,28 @@
+#' @title Interface to OpenML Tasks
+#'
+#' @description
+#' This is the class for tasks served on \url{https://openml.org/t}.
 #' @export
 OMLTask = R6Class("OMLTask",
   public = list(
+    #' @field id (`integer(1)`)\cr
+    #' OpenML task id.
     id = NULL,
+
+    #' @field use_cache (`logical(1)`)\cr
+    #' If `TRUE`, locally caches downloaded objects on the file system.file.
+    #' See [R_user_dir()] for the path (depending on your operating system).
     use_cache = NULL,
 
+    #' @description
+    #' Creates a new object of class `OMLTask`.
+    #'
+    #' @param id (`integer(1)`)\cr
+    #'   OpenML task id.
+    #' @param use_cache (`logical(1)`)\cr
+    #'   Flag to control the file system cache.
+    #'   See [R_user_dir()] for the path (depending on your operating system).
+    #'   Default is the value of option `"mlr3oml.use_cache"` or `FALSE`.
     initialize = function(id, use_cache = getOption("mlr3oml.use_cache", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
       self$use_cache = assert_flag(use_cache)
@@ -11,10 +30,14 @@ OMLTask = R6Class("OMLTask",
   ),
 
   active = list(
+    #' @field name (`character(1)`)\cr
+    #'   Name of the task, as extracted from the task description.
     name = function() {
       self$description$task_name
     },
 
+    #' @field description (`list()`)\cr
+    #'   Task description (meta information), downloaded and converted from the JSON API response.
     description = function() {
       if (is.null(private$.description)) {
         private$.description = cached(download_task_description, "task_description", self$id, use_cache = self$use_cache)
@@ -23,10 +46,14 @@ OMLTask = R6Class("OMLTask",
       private$.description
     },
 
+    #' @field data_id (`integer()`)\cr
+    #'   Data id, extracted from the task description.
     data_id = function() {
-      as.integer(self$description$input$source_data$data_set_id)
+      self$description$input$source_data$data_set_id
     },
 
+    #' @field data ([OMLData])\cr
+    #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
         private$.data = OMLData$new(self$data_id, use_cache = self$use_cache)
@@ -35,22 +62,32 @@ OMLTask = R6Class("OMLTask",
       private$.data
     },
 
+    #' @field nrow (`integer()`)\cr
+    #' Number of rows, as extracted from the [OMLData] object.
     nrow = function() {
       self$data$nrow
     },
 
+    #' @field ncol (`integer()`)\cr
+    #' Number of columns, as extracted from the [OMLData] object.
     ncol = function() {
       self$data$ncol
     },
 
+    #' @field target_names (`character()`)\cr
+    #' Name of the targets, as extracted from the OpenML task description.
     target_names = function() {
       make.names(self$description$input$source_data$target_feature)
     },
 
+    #' @field feature_names (`character()`)\cr
+    #' Name of the features, as extracted from the [OMLData] object.
     feature_names = function() {
-      setdiff(self$data$features$name, self$target_names)
+      self$data$feature_names
     },
 
+    #' @field task ([mlr3::Task])\cr
+    #' Creates a [mlr3::Task] using the target attribute of the task description.
     task = function() {
       task = switch(self$description$task_type,
         # FIXME: positive class?
@@ -61,6 +98,8 @@ OMLTask = R6Class("OMLTask",
       task
     },
 
+    #' @field resampling ([mlr3::Resampling])\cr
+    #' Creates a [mlr3::ResamplingCustim] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
         splits = cached(download_data_splits, "data_splits", self$id, self$description, use_cache = self$use_cache)
@@ -77,7 +116,6 @@ OMLTask = R6Class("OMLTask",
     tags = function() {
       self$description$tag
     }
-
   ),
 
   private = list(

@@ -1,7 +1,10 @@
 download_task_description = function(id) {
-  description = get_json("https://www.openml.org/api/v1/json/task/%i", id, simplifyDataFrame = FALSE)[[1L]]
-  description$task_id = as.integer(description$task_id)
-  description$input = set_names(map(description$input, function(x) x[[2L]]), map_chr(description$input, "name"))
-  description$output = NULL
-  description
+  desc = get_json("https://www.openml.org/api/v1/json/task/%i", id, simplifyDataFrame = FALSE)[[1L]]
+  desc$task_id = as.integer(desc$task_id)
+  desc$task_type_id = as.integer(desc$task_type_id)
+  desc$input = set_names(map(desc$input, function(x) x[[2L]]), map_chr(desc$input, "name"))
+  desc$input$source_data$data_set_id = as.integer(desc$input$source_data$data_set_id)
+  desc$output = NULL
+
+  desc
 }
