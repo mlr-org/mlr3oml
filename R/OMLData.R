@@ -84,6 +84,7 @@ OMLData = R6Class("OMLData",
       if (is.null(private$.features)) {
         private$.features = cached(download_data_features, "data_features", self$id, use_cache = self$use_cache)
       }
+
       private$.features
     },
 
@@ -117,9 +118,9 @@ OMLData = R6Class("OMLData",
     },
 
     #' @field ncol (`integer()`)\cr
-    #' Number of features (including targets), as extracted from the OpenML data set qualities.
+    #' Number of features (including targets), as extracted from the table of data set features.
     ncol = function() {
-      as.integer(self$quality("NumberOfFeatures"))
+      self$features[!is_row_identifier & !is_ignore, .N]
     },
 
     #' @field task ([mlr3::Task])\cr
@@ -131,6 +132,12 @@ OMLData = R6Class("OMLData",
         "numeric" = TaskRegr$new(self$name, self$data, target = target),
         stop("Unknown task type")
       )
+    },
+
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the data set.
+    tags = function() {
+      self$description$tag
     }
   ),
 

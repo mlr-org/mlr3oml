@@ -9,6 +9,9 @@ test_that("OMLData iris", {
   expect_identical(oml_data$ncol, 5L)
   expect_identical(oml_data$target_names, "class")
   expect_is(oml_data$task, "TaskClassif")
+
+  data = oml_data$data
+  expect_data_table(data, nrows = 150L, ncols = 5L)
 })
 
 test_that("data backend", {

@@ -66,7 +66,7 @@ read_arff = function(path) {
 
     data[[counter]] = fread(text = remove_comment(lines), col.names = col_names,
       sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-      colClasses = ifelse(col_is_factor, "character", col_classes)
+      header = FALSE, colClasses = ifelse(col_is_factor, "character", col_classes)
     )
 
     counter = counter + 1L

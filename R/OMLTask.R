@@ -113,6 +113,8 @@ OMLTask = R6Class("OMLTask",
       private$.resampling
     },
 
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the task.
     tags = function() {
       self$description$tag
     }
