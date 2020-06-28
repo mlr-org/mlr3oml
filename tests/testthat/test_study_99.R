@@ -8,8 +8,6 @@ test_that("study 99 can be loaded and parsed", {
   use_cache = FALSE
 
   for (data_id in data_ids) {
-    data_id = 40984L
-
     odata = OMLData$new(data_id, use_cache = use_cache)
     expect_count(odata$id)
     expect_identical(odata$id, data_id)
@@ -69,4 +67,6 @@ test_that("study 99 can be loaded and parsed", {
 
 
 #   match(as.character(mine$Instance_name), as.character(theirs$Instance_name))
+
+
 })
