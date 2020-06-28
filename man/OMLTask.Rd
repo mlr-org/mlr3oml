@@ -4,7 +4,7 @@
 \alias{OMLTask}
 \title{Interface to OpenML Tasks}
 \description{
-This is the class for data sets served on \url{https://openml.org/t}.
+This is the class for tasks served on \url{https://openml.org/t}.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -15,6 +15,44 @@ OpenML task id.}
 \item{\code{use_cache}}{(\code{logical(1)})\cr
 If \code{TRUE}, locally caches downloaded objects on the file system.file.
 See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your operating system).}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{name}}{(\code{character(1)})\cr
+Name of the task, as extracted from the task description.}
+
+\item{\code{desc}}{(\code{list()})\cr
+Task description (meta information), downloaded and converted from the JSON API response.}
+
+\item{\code{data_id}}{(\code{integer()})\cr
+Data id, extracted from the task description.}
+
+\item{\code{data}}{(\link{OMLData})\cr
+Access to the underlying OpenML data set via a \link{OMLData} object.}
+
+\item{\code{nrow}}{(\code{integer()})\cr
+Number of rows, as extracted from the \link{OMLData} object.}
+
+\item{\code{ncol}}{(\code{integer()})\cr
+Number of columns, as extracted from the \link{OMLData} object.}
+
+\item{\code{target_names}}{(\code{character()})\cr
+Name of the targets, as extracted from the OpenML task description.}
+
+\item{\code{feature_names}}{(\code{character()})\cr
+Name of the features, as extracted from the \link{OMLData} object.}
+
+\item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
+Creates a \link[mlr3:Task]{mlr3::Task} using the target attribute of the task desc.}
+
+\item{\code{resampling}}{(\link[mlr3:Resampling]{mlr3::Resampling})\cr
+Creates a \link[mlr3:ResamplingCustim]{mlr3::ResamplingCustim} using the target attribute of the task description.}
+
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the task.}
 }
 \if{html}{\out{</div>}}
 }
@@ -29,7 +67,7 @@ See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your oper
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new object of class \code{OMLData}.
+Creates a new object of class \code{OMLTask}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLTask$new(id, use_cache = getOption("mlr3oml.use_cache", FALSE))}\if{html}{\out{</div>}}
 }

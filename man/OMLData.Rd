@@ -24,7 +24,7 @@ See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your oper
 \item{\code{name}}{(\code{character(1)})\cr
 Name of the data set, as extracted from the data set description.}
 
-\item{\code{description}}{(\code{list()})\cr
+\item{\code{desc}}{(\code{list()})\cr
 Data set description (meta information), downloaded and converted from the JSON API response.}
 
 \item{\code{qualities}}{(\code{data.table()})\cr
@@ -61,10 +61,13 @@ Name of the features, as extracted from the OpenML data set description.}
 Number of observations, as extracted from the OpenML data set qualities.}
 
 \item{\code{ncol}}{(\code{integer()})\cr
-Number of features (including targets), as extracted from the OpenML data set qualities.}
+Number of features (including targets), as extracted from the table of data set features.}
 
 \item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
 Creates a \link[mlr3:Task]{mlr3::Task} using the default target attribute stored in the data set.}
+
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the data set.}
 }
 \if{html}{\out{</div>}}
 }

@@ -33,23 +33,23 @@ OMLTask = R6Class("OMLTask",
     #' @field name (`character(1)`)\cr
     #'   Name of the task, as extracted from the task description.
     name = function() {
-      self$description$task_name
+      self$desc$task_name
     },
 
-    #' @field description (`list()`)\cr
+    #' @field desc (`list()`)\cr
     #'   Task description (meta information), downloaded and converted from the JSON API response.
-    description = function() {
-      if (is.null(private$.description)) {
-        private$.description = cached(download_task_description, "task_description", self$id, use_cache = self$use_cache)
+    desc = function() {
+      if (is.null(private$.desc)) {
+        private$.desc = cached(download_task_desc, "task_desc", self$id, use_cache = self$use_cache)
      }
 
-      private$.description
+      private$.desc
     },
 
     #' @field data_id (`integer()`)\cr
     #'   Data id, extracted from the task description.
     data_id = function() {
-      self$description$input$source_data$data_set_id
+      self$desc$input$source_data$data_set_id
     },
 
     #' @field data ([OMLData])\cr
@@ -77,7 +77,7 @@ OMLTask = R6Class("OMLTask",
     #' @field target_names (`character()`)\cr
     #' Name of the targets, as extracted from the OpenML task description.
     target_names = function() {
-      make.names(self$description$input$source_data$target_feature)
+      make.names(self$desc$input$source_data$target_feature)
     },
 
     #' @field feature_names (`character()`)\cr
@@ -87,9 +87,9 @@ OMLTask = R6Class("OMLTask",
     },
 
     #' @field task ([mlr3::Task])\cr
-    #' Creates a [mlr3::Task] using the target attribute of the task description.
+    #' Creates a [mlr3::Task] using the target attribute of the task desc.
     task = function() {
-      task = switch(self$description$task_type,
+      task = switch(self$desc$task_type,
         # FIXME: positive class?
         "Supervised Classification" = TaskClassif$new(self$name, self$data$data, target = self$target_names),
         "Supervised Regression" = TaskRegr$new(self$name, self$data$data, target = self$target_names)
@@ -102,9 +102,9 @@ OMLTask = R6Class("OMLTask",
     #' Creates a [mlr3::ResamplingCustim] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
-        splits = cached(download_data_splits, "data_splits", self$id, self$description, use_cache = self$use_cache)
-        train_sets = splits[type == "TRAIN", list(row_id = list(rowid + 1L)), keyby = c("repeat.", "fold")]$row_id
-        test_sets = splits[type == "TEST", list(row_id = list(rowid + 1L)), keyby = c("repeat.", "fold")]$row_id
+        splits = cached(download_data_splits, "data_splits", self$id, self$desc, use_cache = self$use_cache)
+        train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)), keyby = c("repeat.", "fold")]$row_id
+        test_sets = splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)), keyby = c("repeat.", "fold")]$row_id
 
         resampling = ResamplingCustom$new()
         private$.resampling = resampling$instantiate(self$task, train_sets = train_sets, test_sets = test_sets)
@@ -116,13 +116,13 @@ OMLTask = R6Class("OMLTask",
     #' @field tags (`character()`)\cr
     #' Returns all tags of the task.
     tags = function() {
-      self$description$tag
+      self$desc$tag
     }
   ),
 
   private = list(
     .data = NULL,
-    .description = NULL,
+    .desc = NULL,
     .resampling = NULL
   )
 )

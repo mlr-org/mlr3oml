@@ -14,8 +14,8 @@ test_that("study 99 can be loaded and parsed", {
     expect_flag(odata$use_cache)
 
     expect_string(odata$name, min.chars = 1L)
-    expect_list(odata$description)
-    expect_identical(odata$description$id, data_id)
+    expect_list(odata$desc)
+    expect_identical(odata$desc$id, data_id)
 
     data = odata$data
     expect_data_table(data, nrows = odata$nrow, ncols = odata$ncol)
@@ -48,25 +48,4 @@ test_that("study 99 can be loaded and parsed", {
     expect_set_equal(odata$feature_names, task$feature_names)
     expect_set_equal(odata$target_names, task$target_names)
   }
-
-
-
-#   id = 46
-#   description = download_data_description(id)
-#   path = file.path(tempdir(), sprintf("oml_data_%i.arff", id))
-#   download.file(description$url, path, quiet = !getOption("mlr3oml.verbose", TRUE))
-
-#   mine = read_arff(path)
-#   theirs = as.data.table(foreign::read.arff(path))
-#   head(mine)
-#   head(theirs)
-
-#   tail(mine)
-#   tail(theirs)
-#   path
-
-
-#   match(as.character(mine$Instance_name), as.character(theirs$Instance_name))
-
-
 })

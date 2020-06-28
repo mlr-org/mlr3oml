@@ -45,16 +45,16 @@ OMLData = R6Class("OMLData",
     #' @field name (`character(1)`)\cr
     #' Name of the data set, as extracted from the data set description.
     name = function() {
-      self$description$name
+      self$desc$name
     },
 
-    #' @field description (`list()`)\cr
+    #' @field desc (`list()`)\cr
     #' Data set description (meta information), downloaded and converted from the JSON API response.
-    description = function() {
-      if (is.null(private$.description)) {
-        private$.description = cached(download_data_description, "data_description", self$id, use_cache = self$use_cache)
+    desc = function() {
+      if (is.null(private$.desc)) {
+        private$.desc = cached(download_data_desc, "data_desc", self$id, use_cache = self$use_cache)
      }
-      private$.description
+      private$.desc
     },
 
     #' @field qualities (`data.table()`)\cr
@@ -82,7 +82,7 @@ OMLData = R6Class("OMLData",
     #'   * `"number_of_missing_values"` (`integer()`): Number of missing values in the column.
     features = function() {
       if (is.null(private$.features)) {
-        private$.features = cached(download_data_features, "data_features", self$id, description = self$description, use_cache = self$use_cache)
+        private$.features = cached(download_data_features, "data_features", self$id, desc = self$desc, use_cache = self$use_cache)
       }
 
       private$.features
@@ -93,7 +93,7 @@ OMLData = R6Class("OMLData",
     #' Columns marked as row identifiers or marked with the ignore flag are automatically removed.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = cached(download_data, "data", self$id, description = self$description, use_cache = self$use_cache)
+        private$.data = cached(download_data, "data", self$id, desc = self$desc, use_cache = self$use_cache)
       }
 
       private$.data
@@ -102,7 +102,7 @@ OMLData = R6Class("OMLData",
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.
     target_names = function() {
-      self$description$default_target_attribute
+      self$desc$default_target_attribute
     },
 
     #' @field feature_names (`character()`)\cr
@@ -137,13 +137,13 @@ OMLData = R6Class("OMLData",
     #' @field tags (`character()`)\cr
     #' Returns all tags of the data set.
     tags = function() {
-      self$description$tag
+      self$desc$tag
     }
   ),
 
   private = list(
     .data = NULL,
-    .description = NULL,
+    .desc = NULL,
     .qualities = NULL,
     .features = NULL
   )
