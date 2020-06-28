@@ -12,9 +12,16 @@ This is the class for data sets served on \url{https://openml.org/d}.
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML data id.}
 
-\item{\code{use_cache}}{(\code{logical(1)})\cr
-If \code{TRUE}, locally caches downloaded objects on the file system.file.
-See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your operating system).}
+\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
+Controls how objects retrieved from \url{https://openml.org} are cached on
+the local file system.
+\itemize{
+\item \code{FALSE} to disable caching completely.
+\item \code{TRUE} to enable caching in path returned by \link[=R_user_dir]{R_user_dir("mlr3oml", "cache")}
+\item A custom path as single string.
+}
+
+The package \CRANpkg{qs} is required for caching.}
 }
 \if{html}{\out{</div>}}
 }
@@ -85,7 +92,7 @@ Returns all tags of the data set.}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLData}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLData$new(id, use_cache = getOption("mlr3oml.use_cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -94,10 +101,9 @@ Creates a new object of class \code{OMLData}.
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML data id.}
 
-\item{\code{use_cache}}{(\code{logical(1)})\cr
-Flag to control the file system cache.
-See \code{\link[=R_user_dir]{R_user_dir()}} for the path (depending on your operating system).
-Default is the value of option \code{"mlr3oml.use_cache"} or \code{FALSE}.}
+\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
+See field \code{cache} for an explanation of possible values.
+Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 \if{html}{\out{</div>}}
 }

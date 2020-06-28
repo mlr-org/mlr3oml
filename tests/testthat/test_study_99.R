@@ -5,13 +5,13 @@ test_that("study 99 can be loaded and parsed", {
   skip("Expensive manual test")
 
   data_ids = list_oml_data(tag = "study_99")$did
-  use_cache = FALSE
+  cache = FALSE
 
   for (data_id in data_ids) {
-    odata = OMLData$new(data_id, use_cache = use_cache)
+    odata = OMLData$new(data_id, cache = cache)
     expect_count(odata$id)
     expect_identical(odata$id, data_id)
-    expect_flag(odata$use_cache)
+    expect_flag(odata$cache)
 
     expect_string(odata$name, min.chars = 1L)
     expect_list(odata$desc)

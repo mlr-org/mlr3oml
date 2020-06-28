@@ -9,23 +9,19 @@ OMLTask = R6Class("OMLTask",
     #' OpenML task id.
     id = NULL,
 
-    #' @field use_cache (`logical(1)`)\cr
-    #' If `TRUE`, locally caches downloaded objects on the file system.file.
-    #' See [R_user_dir()] for the path (depending on your operating system).
-    use_cache = NULL,
+    #' @template field_cache
+    cache = NULL,
 
     #' @description
     #' Creates a new object of class `OMLTask`.
     #'
     #' @param id (`integer(1)`)\cr
     #'   OpenML task id.
-    #' @param use_cache (`logical(1)`)\cr
-    #'   Flag to control the file system cache.
-    #'   See [R_user_dir()] for the path (depending on your operating system).
-    #'   Default is the value of option `"mlr3oml.use_cache"` or `FALSE`.
-    initialize = function(id, use_cache = getOption("mlr3oml.use_cache", FALSE)) {
+    #' @template param_cache
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$use_cache = assert_flag(use_cache)
+      self$cache = assert(check_flag(cache), check_directory_exists(cache), check_path_for_output(cache))
+      initialize_cache(cache)
     }
   ),
 
@@ -40,7 +36,7 @@ OMLTask = R6Class("OMLTask",
     #'   Task description (meta information), downloaded and converted from the JSON API response.
     desc = function() {
       if (is.null(private$.desc)) {
-        private$.desc = cached(download_task_desc, "task_desc", self$id, use_cache = self$use_cache)
+        private$.desc = cached(download_task_desc, "task_desc", self$id, cache = self$cache)
      }
 
       private$.desc
@@ -56,7 +52,7 @@ OMLTask = R6Class("OMLTask",
     #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$data_id, use_cache = self$use_cache)
+        private$.data = OMLData$new(self$data_id, cache = self$cache)
       }
 
       private$.data
@@ -102,7 +98,7 @@ OMLTask = R6Class("OMLTask",
     #' Creates a [mlr3::ResamplingCustim] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
-        splits = cached(download_data_splits, "data_splits", self$id, self$desc, use_cache = self$use_cache)
+        splits = cached(download_task_splits, "task_splits", self$id, self$desc, cache = self$cache)
         train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)), keyby = c("repeat.", "fold")]$row_id
         test_sets = splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)), keyby = c("repeat.", "fold")]$row_id
 

@@ -11,23 +11,19 @@ OMLData = R6Class("OMLData",
     #' OpenML data id.
     id = NULL,
 
-    #' @field use_cache (`logical(1)`)\cr
-    #' If `TRUE`, locally caches downloaded objects on the file system.file.
-    #' See [R_user_dir()] for the path (depending on your operating system).
-    use_cache = NULL,
+    #' @template field_cache
+    cache = NULL,
 
     #' @description
     #' Creates a new object of class `OMLData`.
     #'
     #' @param id (`integer(1)`)\cr
     #'   OpenML data id.
-    #' @param use_cache (`logical(1)`)\cr
-    #'   Flag to control the file system cache.
-    #'   See [R_user_dir()] for the path (depending on your operating system).
-    #'   Default is the value of option `"mlr3oml.use_cache"` or `FALSE`.
-    initialize = function(id, use_cache = getOption("mlr3oml.use_cache", FALSE)) {
+    #' @template param_cache
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$use_cache = assert_flag(use_cache)
+      self$cache = assert(check_flag(cache), check_directory_exists(cache), check_path_for_output(cache))
+      initialize_cache(cache)
     },
 
     #' @description
@@ -52,7 +48,7 @@ OMLData = R6Class("OMLData",
     #' Data set description (meta information), downloaded and converted from the JSON API response.
     desc = function() {
       if (is.null(private$.desc)) {
-        private$.desc = cached(download_data_desc, "data_desc", self$id, use_cache = self$use_cache)
+        private$.desc = cached(download_data_desc, "data_desc", self$id, cache = self$cache)
      }
       private$.desc
     },
@@ -62,7 +58,7 @@ OMLData = R6Class("OMLData",
     #' converted to a [data.table()`] with columns `"name"` and `"value"`.
     qualities = function() {
       if (is.null(private$.qualities)) {
-        private$.qualities = cached(download_data_qualities, "data_qualities", self$id, use_cache = self$use_cache)
+        private$.qualities = cached(download_data_qualities, "data_qualities", self$id, cache = self$cache)
       }
       private$.qualities
     },
@@ -82,7 +78,7 @@ OMLData = R6Class("OMLData",
     #'   * `"number_of_missing_values"` (`integer()`): Number of missing values in the column.
     features = function() {
       if (is.null(private$.features)) {
-        private$.features = cached(download_data_features, "data_features", self$id, desc = self$desc, use_cache = self$use_cache)
+        private$.features = cached(download_data_features, "data_features", self$id, desc = self$desc, cache = self$cache)
       }
 
       private$.features
@@ -93,7 +89,7 @@ OMLData = R6Class("OMLData",
     #' Columns marked as row identifiers or marked with the ignore flag are automatically removed.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = cached(download_data, "data", self$id, desc = self$desc, use_cache = self$use_cache)
+        private$.data = cached(download_data, "data", self$id, desc = self$desc, cache = self$cache)
       }
 
       private$.data
