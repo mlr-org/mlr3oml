@@ -96,7 +96,7 @@ OMLTask = R6Class("OMLTask",
     },
 
     #' @field resampling ([mlr3::Resampling])\cr
-    #' Creates a [mlr3::ResamplingCustom] using the target attribute of the task description.
+    #' Creates a [ResamplingCustom][mlr3::mlr_resamplings_custom] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
         splits = cached(download_task_splits, "task_splits", self$id, self$desc, cache = self$cache)

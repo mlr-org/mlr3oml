@@ -56,7 +56,7 @@ Name of the features, as extracted from the \link{OMLData} object.}
 Creates a \link[mlr3:Task]{mlr3::Task} using the target attribute of the task desc.}
 
 \item{\code{resampling}}{(\link[mlr3:Resampling]{mlr3::Resampling})\cr
-Creates a \link[mlr3:ResamplingCustom]{mlr3::ResamplingCustom} using the target attribute of the task description.}
+Creates a \link[mlr3:mlr_resamplings_custom]{ResamplingCustom} using the target attribute of the task description.}
 
 \item{\code{tags}}{(\code{character()})\cr
 Returns all tags of the task.}
