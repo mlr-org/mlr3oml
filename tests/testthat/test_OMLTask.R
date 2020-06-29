@@ -1,7 +1,7 @@
 context("OMLTask")
 
 test_that("OMLTask iris", {
-  oml_task = OMLTask$new(59)
+  oml_task = OMLTask$new(59, cache = "/tmp/oml")
   expect_oml_task(oml_task)
 
   expect_string(oml_task$name, pattern = "iris")

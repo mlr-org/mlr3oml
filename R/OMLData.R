@@ -22,7 +22,8 @@ OMLData = R6Class("OMLData",
     #' @template param_cache
     initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$cache = assert(check_flag(cache), check_directory_exists(cache), check_path_for_output(cache))
+      assert(check_flag(cache), check_directory_exists(cache), check_path_for_output(cache))
+      self$cache = cache
       initialize_cache(cache)
     },
 
@@ -55,7 +56,7 @@ OMLData = R6Class("OMLData",
 
     #' @field qualities (`data.table()`)\cr
     #' Data set qualities (performance values), downloaded from the JSON API response and
-    #' converted to a [data.table()`] with columns `"name"` and `"value"`.
+    #' converted to a [data.table::data.table()] with columns `"name"` and `"value"`.
     qualities = function() {
       if (is.null(private$.qualities)) {
         private$.qualities = cached(download_data_qualities, "data_qualities", self$id, cache = self$cache)
@@ -65,7 +66,7 @@ OMLData = R6Class("OMLData",
 
     #' @field features (`data.table()`)\cr
     #' Information about data set features (including target), downloaded from the JSON API response and
-    #'   converted to a [data.table()`] with columns:
+    #'   converted to a [data.table::data.table()] with columns:
     #'   * `"index"` (`integer()`): Column position.
     #'   * `"name"` (`character()`): Name of the feature.
     #'   * `"data_type"` (`factor()`): Type of the feature: `"nominal"` or `"numeric"`.
@@ -85,7 +86,7 @@ OMLData = R6Class("OMLData",
     },
 
     #' @field data (`data.table()`)\cr
-    #' Data as `data.table()`.
+    #' Data as [data.table::data.table()].
     #' Columns marked as row identifiers or marked with the ignore flag are automatically removed.
     data = function() {
       if (is.null(private$.data)) {

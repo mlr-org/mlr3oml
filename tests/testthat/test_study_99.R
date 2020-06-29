@@ -6,6 +6,7 @@ test_that("study 99 can be loaded and parsed", {
 
   data_ids = list_oml_data(tag = "study_99")$did
   cache = FALSE
+  options(warn = 2L)
 
   for (data_id in data_ids) {
     odata = OMLData$new(data_id, cache = cache)

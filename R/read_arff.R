@@ -47,12 +47,16 @@ read_arff = function(path) {
     stop("Duplicated column names detected after conversion")
   }
 
-  # extract col classes
+  # extract and translate col classes
   col_classes = declarations[, 3L]
-  col_is_factor = stri_startswith_fixed(col_classes, "{")
+  is_factor = stri_startswith_fixed(col_classes, "{")
+  lvls = set_names(lapply(col_classes[is_factor], parse_arff_levels), col_names[is_factor])
+  col_classes = ifelse(is_factor, "character", tolower(col_classes))
 
-  col_classes[!col_is_factor] = map_values(tolower(col_classes[!col_is_factor]),
-    c("real", "string", "date"), c("numeric", "character", "character"))
+  col_classes = map_values(col_classes,
+    old = c("real",    "numeric", "string",    "date"),
+    new = c("numeric", NA,        "character", "character")
+  )
 
   # read data in chunks with workaround for missing comment char functionality
   # this should go as soon as data.table supports a comment char
@@ -66,7 +70,7 @@ read_arff = function(path) {
 
     data[[counter]] = fread(text = remove_comment(lines), col.names = col_names,
       sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-      header = FALSE, colClasses = ifelse(col_is_factor, "character", col_classes)
+      header = FALSE, colClasses = unname(col_classes)
     )
 
     counter = counter + 1L
@@ -76,8 +80,8 @@ read_arff = function(path) {
   data = rbindlist(data, use.names = TRUE, fill = TRUE)
 
   # fix factor levels
-  for (j in which(col_is_factor)) {
-    set(data, j = j, value = factor(data[[j]], levels = parse_arff_levels(col_classes[j])))
+  for (j in names(lvls)) {
+    set(data, j = j, value = factor(data[[j]], levels = lvls[[j]]))
   }
 
   data

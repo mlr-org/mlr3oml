@@ -36,11 +36,11 @@ Data set description (meta information), downloaded and converted from the JSON 
 
 \item{\code{qualities}}{(\code{data.table()})\cr
 Data set qualities (performance values), downloaded from the JSON API response and
-converted to a [data.table()\verb{] with columns }"name"\code{and}"value"`.}
+converted to a \code{\link[data.table:data.table]{data.table::data.table()}} with columns \code{"name"} and \code{"value"}.}
 
 \item{\code{features}}{(\code{data.table()})\cr
 Information about data set features (including target), downloaded from the JSON API response and
-converted to a \link{data.table()`} with columns:
+converted to a \code{\link[data.table:data.table]{data.table::data.table()}} with columns:
 \itemize{
 \item \code{"index"} (\code{integer()}): Column position.
 \item \code{"name"} (\code{character()}): Name of the feature.
@@ -55,7 +55,7 @@ Row identifiers are removed automatically from the data set.
 }}
 
 \item{\code{data}}{(\code{data.table()})\cr
-Data as \code{data.table()}.
+Data as \code{\link[data.table:data.table]{data.table::data.table()}}.
 Columns marked as row identifiers or marked with the ignore flag are automatically removed.}
 
 \item{\code{target_names}}{(\code{character()})\cr

@@ -20,7 +20,8 @@ OMLTask = R6Class("OMLTask",
     #' @template param_cache
     initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$cache = assert(check_flag(cache), check_directory_exists(cache), check_path_for_output(cache))
+      assert(check_flag(cache), check_directory_exists(cache), check_path_for_output(cache))
+      self$cache = cache
       initialize_cache(cache)
     }
   ),
@@ -95,7 +96,7 @@ OMLTask = R6Class("OMLTask",
     },
 
     #' @field resampling ([mlr3::Resampling])\cr
-    #' Creates a [mlr3::ResamplingCustim] using the target attribute of the task description.
+    #' Creates a [mlr3::ResamplingCustom] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
         splits = cached(download_task_splits, "task_splits", self$id, self$desc, cache = self$cache)
