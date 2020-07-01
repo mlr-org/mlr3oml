@@ -10,10 +10,11 @@ expect_oml_data = function(oml_data) {
   expect_data_table(oml_data$data, nrow = oml_data$nrow, ncol = oml_data$ncol)
   expect_character(oml_data$target_names, any.missing = FALSE, unique = TRUE)
   expect_character(oml_data$feature_names, any.missing = FALSE, unique = TRUE)
-  expect_choice(oml_data$target_names, colnames(oml_data$data))
+  expect_subset(oml_data$target_names, colnames(oml_data$data))
   expect_subset(oml_data$feature_names, colnames(oml_data$data))
   expect_disjunct(oml_data$target_names, oml_data$feature_names)
-  expect_is(oml_data$task, "Task")
+  if (length(oml_data$target_names))
+    expect_is(oml_data$task(), "Task")
 }
 
 expect_oml_task = function(oml_task) {

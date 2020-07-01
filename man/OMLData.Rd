@@ -68,10 +68,8 @@ Name of the features, as extracted from the OpenML data set description.}
 Number of observations, as extracted from the OpenML data set qualities.}
 
 \item{\code{ncol}}{(\code{integer()})\cr
-Number of features (including targets), as extracted from the table of data set features.}
-
-\item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
-Creates a \link[mlr3:Task]{mlr3::Task} using the default target attribute stored in the data set.}
+Number of features (including targets), as extracted from the table of data set features.
+This excludes row identifiers and ignored columns.}
 
 \item{\code{tags}}{(\code{character()})\cr
 Returns all tags of the data set.}
@@ -83,6 +81,7 @@ Returns all tags of the data set.}
 \itemize{
 \item \href{#method-new}{\code{OMLData$new()}}
 \item \href{#method-quality}{\code{OMLData$quality()}}
+\item \href{#method-task}{\code{OMLData$task()}}
 \item \href{#method-clone}{\code{OMLData$clone()}}
 }
 }
@@ -122,6 +121,25 @@ Returns the value of a single OpenML data set quality.
 \describe{
 \item{\code{name}}{(\code{character(1)})\cr
 Name of the quality to extract.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-task"></a>}}
+\if{latex}{\out{\hypertarget{method-task}{}}}
+\subsection{Method \code{task()}}{
+Creates a \link[mlr3:Task]{mlr3::Task} using the provided target column, defaulting to the default target attribute
+of the task description.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$task(target_names = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{target_names}}{(\code{character()})\cr
+Name(s) of the target columns, or \code{NULL} for the default columns.}
 }
 \if{html}{\out{</div>}}
 }

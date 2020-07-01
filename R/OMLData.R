@@ -35,6 +35,25 @@ OMLData = R6Class("OMLData",
     quality = function(name) {
       id = assert_string(name)
       self$qualities[.(id), value, on = "name"]
+    },
+
+    #' @description
+    #' Creates a [mlr3::Task] using the provided target column, defaulting to the default target attribute
+    #' of the task description.
+    #'
+    #' @param target_names (`character()`)\cr
+    #'   Name(s) of the target columns, or `NULL` for the default columns.
+    task = function(target_names = NULL) {
+      target = target_names %??% self$target_names
+      if (length(target) == 0L) {
+        stopf("Data set with id '%i' does not have a default target attribute", self$id)
+      }
+
+      switch(as.character(self$features[.(target), data_type, on = "name"]),
+        "nominal" = TaskClassif$new(self$name, self$data, target = target),
+        "numeric" = TaskRegr$new(self$name, self$data, target = target),
+        stop("Unknown task type")
+      )
     }
   ),
 
@@ -116,19 +135,9 @@ OMLData = R6Class("OMLData",
 
     #' @field ncol (`integer()`)\cr
     #' Number of features (including targets), as extracted from the table of data set features.
+    #' This excludes row identifiers and ignored columns.
     ncol = function() {
       self$features[!is_row_identifier & !is_ignore, .N]
-    },
-
-    #' @field task ([mlr3::Task])\cr
-    #' Creates a [mlr3::Task] using the default target attribute stored in the data set.
-    task = function() {
-      target = self$target_names
-      switch(as.character(self$features[.(target), data_type, on = "name"]),
-        "nominal" = TaskClassif$new(self$name, self$data, target = target),
-        "numeric" = TaskRegr$new(self$name, self$data, target = target),
-        stop("Unknown task type")
-      )
     },
 
     #' @field tags (`character()`)\cr
