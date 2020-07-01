@@ -24,12 +24,11 @@ tsk("oml", data_id = 31)
     ## * Target: class
     ## * Properties: twoclass
     ## * Features (20):
-    ##   - fct (13): checking_status, credit_history, employment,
-    ##     foreign_worker, housing, job, other_parties, other_payment_plans,
-    ##     own_telephone, personal_status, property_magnitude, purpose,
-    ##     savings_status
-    ##   - dbl (7): age, credit_amount, duration, existing_credits,
-    ##     installment_commitment, num_dependents, residence_since
+    ##   - fct (13): checking_status, credit_history, employment, foreign_worker, housing, job,
+    ##     other_parties, other_payment_plans, own_telephone, personal_status,
+    ##     property_magnitude, purpose, savings_status
+    ##   - dbl (7): age, credit_amount, duration, existing_credits, installment_commitment,
+    ##     num_dependents, residence_since
 
 ``` r
 tsk("oml", task_id = 59)
@@ -115,12 +114,11 @@ oml_task$task
     ## * Target: class
     ## * Properties: twoclass
     ## * Features (20):
-    ##   - fct (13): checking_status, credit_history, employment,
-    ##     foreign_worker, housing, job, other_parties, other_payment_plans,
-    ##     own_telephone, personal_status, property_magnitude, purpose,
-    ##     savings_status
-    ##   - dbl (7): age, credit_amount, duration, existing_credits,
-    ##     installment_commitment, num_dependents, residence_since
+    ##   - fct (13): checking_status, credit_history, employment, foreign_worker, housing, job,
+    ##     other_parties, other_payment_plans, own_telephone, personal_status,
+    ##     property_magnitude, purpose, savings_status
+    ##   - dbl (7): age, credit_amount, duration, existing_credits, installment_commitment,
+    ##     num_dependents, residence_since
 
 ``` r
 oml_task$resampling
@@ -132,28 +130,32 @@ oml_task$resampling
 
 ``` r
 # list oml data sets with 5 features and 50 - 200 instances
-tab = list_oml_data(number_features = "5", number_instances = "50..200")
-head(tab[, .(did, name)])
+tab = list_oml_data_sets(number_features = "5", number_instances = c(50, 200))
+head(tab[, .(data_id, name)])
 ```
 
-    ##    did                    name
-    ## 1:  61                    iris
-    ## 2: 199                fruitfly
-    ## 3: 214                baskball
-    ## 4: 329              hayes-roth
-    ## 5: 346                    aids
-    ## 6: 551 analcatdata_michiganacc
+    ##    data_id                    name
+    ## 1:      61                    iris
+    ## 2:     199                fruitfly
+    ## 3:     214                baskball
+    ## 4:     329              hayes-roth
+    ## 5:     346                    aids
+    ## 6:     551 analcatdata_michiganacc
 
 ``` r
 # list first 10 oml tasks
 tab = list_oml_tasks(limit = 10)
-head(tab[, .(task_id, did, name)])
+tab[, .(task_id, data_id, name)]
 ```
 
-    ##    task_id did       name
-    ## 1:       2   2     anneal
-    ## 2:       3   3   kr-vs-kp
-    ## 3:       4   4      labor
-    ## 4:       5   5 arrhythmia
-    ## 5:       6   6     letter
-    ## 6:       7   7  audiology
+    ##     task_id data_id            name
+    ##  1:       2       2          anneal
+    ##  2:       3       3        kr-vs-kp
+    ##  3:       4       4           labor
+    ##  4:       5       5      arrhythmia
+    ##  5:       6       6          letter
+    ##  6:       7       7       audiology
+    ##  7:       8       8 liver-disorders
+    ##  8:       9       9           autos
+    ##  9:      10      10           lymph
+    ## 10:      11      11   balance-scale
