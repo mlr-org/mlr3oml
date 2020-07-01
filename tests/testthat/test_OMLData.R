@@ -27,4 +27,5 @@ test_that("no default target column fails gracefully (#1)", {
   expect_oml_data(oml_data)
   expect_error(oml_data$task(), "default target attribute")
   expect_task(oml_data$task("V10"))
+  expect_task(tsk("oml", data_id = data_id, target_names = "V10"))
 })
