@@ -12,7 +12,7 @@ options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.ver
 
 # mlr3oml
 
-[![R build status](https://github.com/mlr-org/mlr3oml/workflows/R-CMD-check/badge.svg)](https://github.com/mlr-org/mlr3oml/actions)
+[![tic](https://github.com/mlr-org/mlr3oml/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr3oml/actions?query=workflow%3Atic)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 
