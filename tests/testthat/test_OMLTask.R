@@ -1,5 +1,7 @@
 context("OMLTask")
 
+skip_on_cran()
+
 test_that("OMLTask iris", {
   oml_task = OMLTask$new(59)
   expect_oml_task(oml_task)

@@ -20,6 +20,7 @@ Imports:
     backports (>= 1.1.6),
     R6,
     checkmate,
+    curl,
     data.table,
     jsonlite,
     mlr3,

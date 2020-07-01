@@ -4,7 +4,7 @@ context("study_99")
 test_that("study 99 can be loaded and parsed", {
   skip("Expensive manual test")
 
-  data_ids = list_oml_data(tag = "study_99")$did
+  data_ids = list_oml_data_sets(tag = "study_99")$data_id
   cache = FALSE
   options(warn = 2L)
 
