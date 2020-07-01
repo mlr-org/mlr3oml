@@ -12,7 +12,11 @@ test_that("study 99 can be loaded and parsed", {
     odata = OMLData$new(data_id, cache = cache)
     expect_count(odata$id)
     expect_identical(odata$id, data_id)
-    expect_flag(odata$cache)
+    if (isFALSE(cache)) {
+      expect_false(odata$cache)
+    } else {
+      expect_string(odata$cache)
+    }
 
     expect_string(odata$name, min.chars = 1L)
     expect_list(odata$desc)

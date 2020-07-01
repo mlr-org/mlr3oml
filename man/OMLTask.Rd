@@ -12,14 +12,9 @@ This is the class for tasks served on \url{https://openml.org/t}.
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML task id.}
 
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-Controls how objects retrieved from \url{https://openml.org} are cached on
-the local file system.
-\itemize{
-\item \code{FALSE} to disable caching completely.
-\item \code{TRUE} to enable caching in path returned by \link[=R_user_dir]{R_user_dir("mlr3oml", "cache")}
-\item A custom path as single string.
-}
+\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
+Stores the location of the cache for objects retrieved from \url{https://openml.org}.
+If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
 }

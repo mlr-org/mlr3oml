@@ -17,12 +17,12 @@ BugReports: https://github.com/mlr-org/mlr3oml
 Depends:
     R (>= 3.1.0)
 Imports:
-    backports (>= 1.1.6),
     R6,
+    backports (>= 1.1.6),
     checkmate,
-    curl,
     data.table,
     jsonlite,
+    lgr,
     mlr3,
     mlr3misc,
     stringi

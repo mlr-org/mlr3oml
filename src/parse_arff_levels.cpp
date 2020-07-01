@@ -73,8 +73,7 @@ SEXP c_parse_arff_levels(SEXP buffer_) {
                         break;
                     default:
                         if (std::isspace(*c)) {
-                            levels.push_back(std::string(first_char, c));
-                            state = AFTER_WORD;
+                            Rf_error("Malformated set of categorical attributes, nominal values which include spaces must be quoted.");
                         }
                 }
                 break;

@@ -16,7 +16,6 @@ read_arff = function(path) {
     x
   }
 
-  assert_file_exists(path, access = "r")
   con = file(path, "r")
   on.exit(close(con))
 

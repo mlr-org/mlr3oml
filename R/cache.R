@@ -11,21 +11,20 @@ CACHE$versions = list(
 
 CACHE$initialized = character()
 
-get_cache_dir = function(cache, type = "") {
-  if (isTRUE(cache)) {
-    cache = R_user_dir("mlr3oml", "cache")
-  }
+get_cache_dir = function(cache) {
+  if (isFALSE(cache))
+    return(FALSE)
 
-  normalizePath(file.path(cache, type), mustWork = FALSE)
+  if (isTRUE(cache))
+    cache = R_user_dir("mlr3oml", "cache")
+
+  assert(check_directory_exists(cache), check_path_for_output(cache))
+  normalizePath(cache, mustWork = FALSE)
 }
 
-initialize_cache = function(cache) {
-  if (isFALSE(cache)) {
-    return(TRUE)
-  }
-
-  cache_dir = get_cache_dir(cache)
-  if (cache_dir %in% CACHE$initialized) {
+initialize_cache = function(cache_dir) {
+  if (isFALSE(cache_dir) || cache_dir %in% CACHE$initialized) {
+    lg$debug("Skipping initialization of cache", cache_dir = cache_dir)
     return(TRUE)
   }
 
@@ -38,6 +37,7 @@ initialize_cache = function(cache) {
       cache_versions = jsonlite::fromJSON(cache_file)
       for (type in intersect(names(cache_versions), names(CACHE$versions))) {
         if (cache_versions[[type]] != CACHE$versions[[type]]) {
+          lg$debug("Invalidating cache dir due to a version mismatch", path = file.path(cache_dir, type))
           unlink(file.path(cache_dir, type), recursive = TRUE)
           write_cache_file = TRUE
         }
@@ -51,6 +51,7 @@ initialize_cache = function(cache) {
   }
 
   if (write_cache_file) {
+    lg$debug("Writing cache version information", path = cache_file)
     writeLines(jsonlite::toJSON(CACHE$versions, auto_unbox = TRUE), con = cache_file)
   }
 
@@ -59,25 +60,28 @@ initialize_cache = function(cache) {
   return(TRUE)
 }
 
-cached = function(fun, type, id, ..., cache = FALSE) {
-  if (isFALSE(cache)) {
+cached = function(fun, type, id, ..., cache_dir = FALSE) {
+  if (isFALSE(cache_dir)) {
     return(fun(id, ...))
   }
 
-  cache_dir = get_cache_dir(cache, type)
-  file = file.path(cache_dir, sprintf("%i.qs", id))
+  path = file.path(cache_dir, type)
+  file = file.path(path, sprintf("%i.qs", id))
 
   if (file.exists(file)) {
+    lg$debug("Loading object from cache", type = type, id = id, file = file)
     obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
     if (!inherits(obj, "try-error"))
       return(obj)
+    lg$debug("Failed to retrieve object from cache", type = type, id = id, file = file)
   }
 
-  if (!dir.exists(cache_dir)) {
-    dir.create(cache_dir, recursive = TRUE)
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
   }
 
   obj = fun(id, ...)
+  lg$debug("Storing object in cache", type = type, id = id, file = file)
   qs::qsave(obj, file = file, nthreads = getOption("Ncpus", 1L))
 
   return(obj)
