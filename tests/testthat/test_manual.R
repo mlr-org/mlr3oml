@@ -1,9 +1,43 @@
-context("study_99")
+context("manual, expensive tests")
 
+skip("Expensive manual test")
+
+test_that("data is cached", {
+  path = tempfile()
+
+  oml_data = OMLData$new(9, cache = path)
+  expect_file_exists(file.path(path, "version.json"))
+
+  expect_list(oml_data$desc)
+  path_desc = file.path(path, "data_desc", "9.qs")
+  expect_file_exists(path_desc)
+  expect_equal(oml_data$desc, qs::qread(path_desc))
+
+  expect_data_table(oml_data$data)
+  path_data = file.path(path, "data", "9.qs")
+  expect_file_exists(path_data)
+  expect_equal(oml_data$data, qs::qread(path_data))
+
+  # ensure that cache is not overwritten
+  mtime_before = file.mtime(path_data)
+  OMLData$new(9, cache = path)$data
+  expect_equal(mtime_before, file.mtime(path_data))
+
+  # increase version number of data desc
+  env = get("CACHE", envir = asNamespace("mlr3oml"))
+  env$initialized = setdiff(env$initialized, path)
+  version_before = env$versions$data
+  on.exit({ env$versions$data = version_before })
+  env$versions$data = 9999
+
+  # ensure that cache gets invalidated
+  oml_data = OMLData$new(9, cache = path)
+  expect_false(test_file_exists(path_data))
+  force(oml_data$data)
+  expect_lt(mtime_before, file.mtime(path_data))
+})
 
 test_that("study 99 can be loaded and parsed", {
-  skip("Expensive manual test")
-
   data_ids = list_oml_data_sets(tag = "study_99")$data_id
   cache = FALSE
   options(warn = 2L)
