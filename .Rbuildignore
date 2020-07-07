@@ -16,3 +16,5 @@
 ^pkgdown$
 ^revdep$
 ^\.github
+^\.ccache$
+^\.github$
