@@ -1,11 +1,6 @@
 download_file = function(url, path, quiet = TRUE) {
   lg$debug("Downloading to local file system", url = url, path = path)
   download.file(url, path, quiet = quiet)
-
-  # resp = curl::curl_fetch_disk(url, path)
-  # if (resp$status_code != 200L) {
-  #   stopf("Failed to download '%s' (status code: %i)", resp$url, resp$status_code)
-  # }
 }
 
 get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE) {
@@ -19,7 +14,7 @@ get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE) {
   if (!is.null(api_key)) {
     url = sprintf("%s?api_key=%s", url, api_key)
   }
-  download_file(url, path)
+  download_file(url, path, quiet = "json" %in% getOption("mlr3oml.progress", character()))
 
   jsonlite::fromJSON(path, simplifyVector = simplifyVector, simplifyDataFrame = simplifyDataFrame)
 }
@@ -32,7 +27,7 @@ get_arff = function(url, ...) {
 
   lg$info("Downloading ARFF", url = url)
 
-  download_file(url, path, quiet = FALSE)
+  download_file(url, path, quiet = "arff" %in% getOption("mlr3oml.progress", character()))
 
   lg$debug("Start processing ARFF file", path = path)
   read_arff(path)

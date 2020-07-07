@@ -47,9 +47,9 @@ test_that("study 99 can be loaded and parsed", {
     expect_count(odata$id)
     expect_identical(odata$id, data_id)
     if (isFALSE(cache)) {
-      expect_false(odata$cache)
+      expect_false(odata$cache_dir)
     } else {
-      expect_string(odata$cache)
+      expect_string(odata$cache_dir)
     }
 
     expect_string(odata$name, min.chars = 1L)
@@ -80,8 +80,8 @@ test_that("study 99 can be loaded and parsed", {
     expect_integer(features$number_of_missing_values, lower = 0L, upper = odata$nrow, any.missing = FALSE)
     expect_list(features$nominal_value, types = c("NULL", "character"))
 
-    task = odata$task
-    expect_task(odata$task)
+    task = odata$task()
+    expect_task(task)
     expect_identical(odata$nrow, task$nrow)
     expect_identical(odata$ncol, task$ncol)
     expect_set_equal(odata$feature_names, task$feature_names)

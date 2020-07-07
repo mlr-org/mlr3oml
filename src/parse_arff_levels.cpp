@@ -7,7 +7,7 @@ extern "C" {
 
 SEXP c_parse_arff_levels(SEXP buffer_) {
     std::string buffer(Rf_translateCharUTF8(STRING_ELT(buffer_, 0)));
-    std::string::const_iterator c, first_char;
+    std::string::const_iterator c, first_char, last_char;
     const std::string::const_iterator end = buffer.end();
     std::vector<std::string> levels;
     enum states { DULL, BEFORE_WORD, IN_WORD, AFTER_WORD, IN_QUOTE, ESCAPING } state = DULL;
@@ -41,7 +41,7 @@ SEXP c_parse_arff_levels(SEXP buffer_) {
                     default:
                         if (!std::isspace(*c)) {
                             state = IN_WORD;
-                            first_char = c;
+                            first_char = last_char = c;
                         }
                 }
                 break;
@@ -68,12 +68,15 @@ SEXP c_parse_arff_levels(SEXP buffer_) {
                     case '}':
                         stop = true;
                     case ',':
-                        levels.push_back(std::string(first_char, c));
+                        levels.push_back(std::string(first_char, last_char + 1));
                         state = BEFORE_WORD;
                         break;
                     default:
                         if (std::isspace(*c)) {
-                            Rf_error("Malformated set of categorical attributes, nominal values which include spaces must be quoted.");
+                            // Many ARFF files do not stick to this specification, so it is disabled here.
+                            /* Rf_error("Malformated set of categorical attributes, nominal values which include spaces must be quoted."); */
+                        } else {
+                            last_char = c;
                         }
                 }
                 break;
