@@ -15,14 +15,33 @@
 #' @return (`data.table()`) of results.
 #' @export
 list_oml_tasks = function(number_instances = NULL, number_features = NULL, number_classes = NULL,
-  number_missing_values = NULL, tag = NULL, ...) {
+  number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
 
-  dots = list(number_instances = number_instances, number_features = number_features,
-    number_classes = number_classes, number_missing_values = number_missing_values, tag = tag)
+  dots = list(
+    number_instances = assert_integerish(number_instances, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_features = assert_integerish(number_features, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_classes = assert_integerish(number_classes, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_missing_values = assert_integerish(number_missing_values, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    tag = assert_character(tag, any.missing = FALSE, min.len = 1L, null.ok = TRUE)
+  )
+  limit = assert_count(limit, positive = TRUE, coerce = TRUE)
   dots = insert_named(discard(dots, is.null), list(...))
 
-  query = build_filter_query("task", dots)
-  tab = setDT(get_json(query)$tasks$task)
+  chunk_size = 1000L
+  tab = data.table()
+
+  while(nrow(tab) < limit) {
+    dots$limit = min(limit - nrow(tab), chunk_size)
+    query = build_filter_query("task", dots)
+
+    result = get_json(query, status_ok = 412L)
+    if (is.null(result))
+      break
+
+    tab = rbind(tab, setDT(result$tasks$task))
+    dots$offset = dots$offset %??% 0L + chunk_size
+  }
+
   setnames(tab, "did", "data_id")
 
   qualities = transpose_name_value(tab$quality, as_integer = TRUE)

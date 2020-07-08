@@ -20,8 +20,6 @@ If set to \code{TRUE}, cache directory as reported by \code{\link[=R_user_dir]{R
 Alternatively, you can specify a path on the local file system here.
 Default is \code{FALSE}.
 \item \code{mlr3oml.api_key}: API key to use.
-\item \code{mlr3oml.progress}: Subset of \code{c("json", "arff")}.
-Enables progress bar when downloading JSON or ARFF files, respectively.
 }
 }
 

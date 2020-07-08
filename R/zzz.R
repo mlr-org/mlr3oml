@@ -12,8 +12,6 @@
 #'   Alternatively, you can specify a path on the local file system here.
 #'   Default is `FALSE`.
 #' * `mlr3oml.api_key`: API key to use.
-#' * `mlr3oml.progress`: Subset of `c("json", "arff")`.
-#'   Enables progress bar when downloading JSON or ARFF files, respectively.
 #'
 #' @section Logging:
 #' The \CRANpkg{lgr} package is used for logging.

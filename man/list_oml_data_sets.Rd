@@ -10,6 +10,7 @@ list_oml_data_sets(
   number_classes = NULL,
   number_missing_values = NULL,
   tag = NULL,
+  limit = 5000L,
   ...
 )
 }
@@ -28,6 +29,10 @@ Filter for number of missing values.}
 
 \item{tag}{(\code{character()})\cr
 Filter for specific tag. You can provide multiple tags as character vector.}
+
+\item{limit}{(\code{integer()})\cr
+Limit the results to \code{limit} records.
+Default is 5000.}
 
 \item{...}{(any)\cr
 Additional filters as named arguments.}
