@@ -68,14 +68,13 @@ read_arff = function(path) {
       break
 
     data[[counter]] = fread(text = remove_comment(lines), col.names = col_names,
-      sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
+      sep = ",", na.strings = "?", blank.lines.skip = TRUE,
       header = FALSE, colClasses = unname(col_classes)
     )
 
     counter = counter + 1L
   }
 
-  rm(lines)
   data = rbindlist(data, use.names = TRUE, fill = TRUE)
 
   # fix factor levels
