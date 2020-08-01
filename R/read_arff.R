@@ -68,7 +68,7 @@ read_arff = function(path) {
       break
 
     data[[counter]] = fread(text = remove_comment(lines), col.names = col_names,
-      sep = ",", na.strings = "?", blank.lines.skip = TRUE,
+      sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
       header = FALSE, colClasses = unname(col_classes)
     )
 

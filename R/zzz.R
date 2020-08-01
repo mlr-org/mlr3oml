@@ -3,7 +3,13 @@
 #' @import mlr3misc
 #' @importFrom mlr3 as_data_backend TaskClassif TaskRegr
 #' @importFrom R6 R6Class
-#' @importFrom utils download.file
+#'
+#' @section mlr3 Integration:
+#' This package adds the [mlr3::Task] `"oml"` and the [mlr3::Resampling] `"oml"` to
+#' [mlr3::mlr_tasks] and [mlr3::mlr_resamplings], respectively.
+#' For the former you may pass either a `data_id` or a `task_id`, the latter requires
+#' a `task_id`.
+#'
 #'
 #' @section Options:
 #' * `mlr3oml.cache`: Enables or disables caching globally.

@@ -4,7 +4,7 @@
 #' This function allows to find data sets on \url{https://openml.org/d} using
 #' some simple filter criteria.
 #'
-#' Note that only a subset of filters are exposed here.
+#' Note that only a subset of filters is exposed here.
 #'
 #' @details
 #' Filter values can be provided as single atomic values (typically integer or character).

@@ -3,6 +3,14 @@
 #' @description
 #' This is the class for data sets served on \url{https://openml.org/d}.
 #'
+#' @section mlr3 Integration:
+#' A [mlr3::Task] is returned by the method `$task`.
+#' Alternatively, you can convert this object to a [mlr3::DataBackend] using
+#' `mlr3::as_data_backend()`.
+#'
+#' @references
+#' \cite{mlr3oml}{vanschoren2014}
+#'
 #' @export
 OMLData = R6Class("OMLData",
   public = list(

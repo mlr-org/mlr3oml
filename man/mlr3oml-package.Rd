@@ -11,6 +11,14 @@ Provides an interface to 'OpenML.org' to download data and machine
   For a more sophisticated interface which also supports listing and filtering
   of tasks as well as uploading experiments, see the 'OpenML' package.
 }
+\section{mlr3 Integration}{
+
+This package adds the \link[mlr3:Task]{mlr3::Task} \code{"oml"} and the \link[mlr3:Resampling]{mlr3::Resampling} \code{"oml"} to
+\link[mlr3:mlr_tasks]{mlr3::mlr_tasks} and \link[mlr3:mlr_resamplings]{mlr3::mlr_resamplings}, respectively.
+For the former you may pass either a \code{data_id} or a \code{task_id}, the latter requires
+a \code{task_id}.
+}
+
 \section{Options}{
 
 \itemize{

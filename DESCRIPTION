@@ -28,8 +28,12 @@ Imports:
     mlr3misc,
     stringi
 Suggests:
+    bibtex,
+    foreign,
     qs,
     testthat
+RdMacros:
+    mlr3misc
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

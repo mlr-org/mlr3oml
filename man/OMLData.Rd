@@ -6,6 +6,16 @@
 \description{
 This is the class for data sets served on \url{https://openml.org/d}.
 }
+\section{mlr3 Integration}{
+
+A \link[mlr3:Task]{mlr3::Task} is returned by the method \verb{$task}.
+Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::DataBackend} using
+\code{mlr3::as_data_backend()}.
+}
+
+\references{
+\cite{mlr3oml}{vanschoren2014}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
