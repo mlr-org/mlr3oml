@@ -21,6 +21,11 @@
 #' print(odata$feature_names)
 #' print(odata$tags)
 #' print(odata$task())
+#'
+#' # get a task via tsk():
+#' if (requireNamespace("mlr3")) {
+#'   mlr3::tsk("oml", data_id = 9)
+#' }
 #' }
 OMLData = R6Class("OMLData",
   public = list(

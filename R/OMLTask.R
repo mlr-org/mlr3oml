@@ -21,6 +21,11 @@
 #' print(otask$feature_names)
 #' print(otask$tags)
 #' print(otask$task)
+#'
+#' # get a task via tsk():
+#' if (requireNamespace("mlr3")) {
+#'   mlr3::tsk("oml", task_id = 59)
+#' }
 #' }
 OMLTask = R6Class("OMLTask",
   public = list(
