@@ -235,6 +235,14 @@ For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/refe
 #&gt; * Target: class
 #&gt; * Properties: multiclass
 #&gt; * Features (4):
+#&gt;   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</div><div class='input'>
+<span class='co'># get a task via tsk():</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlr3"</span>)) {
+  <span class='kw pkg'>mlr3</span><span class='kw ns'>::</span><span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span>(<span class='st'>"oml"</span>, <span class='kw'>task_id</span> <span class='kw'>=</span> <span class='fl'>59</span>)
+}</div><div class='output co'>#&gt; &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)
+#&gt; * Target: class
+#&gt; * Properties: multiclass
+#&gt; * Features (4):
 #&gt;   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</div><div class='input'># }
 </div></pre>
   </div>

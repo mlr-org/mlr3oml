@@ -285,6 +285,19 @@ Name(s) of the target columns, or <code>NULL</code> for the default columns.</p>
 #&gt;     normalized.losses, peak.rpm, price, stroke, wheel.base, width
 #&gt;   - fct (10): aspiration, body.style, drive.wheels, engine.location,
 #&gt;     engine.type, fuel.system, fuel.type, make, num.of.cylinders,
+#&gt;     num.of.doors</div><div class='input'>
+<span class='co'># get a task via tsk():</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlr3"</span>)) {
+  <span class='kw pkg'>mlr3</span><span class='kw ns'>::</span><span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span>(<span class='st'>"oml"</span>, <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='fl'>9</span>)
+}</div><div class='output co'>#&gt; &lt;TaskClassif:autos&gt; (205 x 26)
+#&gt; * Target: symboling
+#&gt; * Properties: multiclass
+#&gt; * Features (25):
+#&gt;   - dbl (15): bore, city.mpg, compression.ratio, curb.weight,
+#&gt;     engine.size, height, highway.mpg, horsepower, length,
+#&gt;     normalized.losses, peak.rpm, price, stroke, wheel.base, width
+#&gt;   - fct (10): aspiration, body.style, drive.wheels, engine.location,
+#&gt;     engine.type, fuel.system, fuel.type, make, num.of.cylinders,
 #&gt;     num.of.doors</div><div class='input'># }
 </div></pre>
   </div>
