@@ -4,7 +4,7 @@
 \name{mlr3oml-package}
 \alias{mlr3oml}
 \alias{mlr3oml-package}
-\title{mlr3oml: Connector between 'mlr3' and 'OpenML'}
+\title{mlr3oml: Connector Between 'mlr3' and 'OpenML'}
 \description{
 Provides an interface to 'OpenML.org' to list and
     download machine learning data and tasks. Data and tasks can be
@@ -42,6 +42,7 @@ To change the threshold, use \code{lgr::get_logger("mlr3oml")$set_threshold()}.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://mlr3oml.mlr-org.com}
   \item \url{https://github.com/mlr-org/mlr3oml}
   \item Report bugs at \url{https://github.com/mlr-org/mlr3oml}
 }
