@@ -42,7 +42,8 @@
 <meta property="og:title" content="List Tasks from OpenML — list_oml_tasks" />
 <meta property="og:description" content="This function allows to find tasks on https://openml.org/t using
 some simple filter criteria.
-Note that only a subset of filters is exposed here." />
+Note that only a subset of filters is exposed here.
+For a more feature-complete package, see OpenML." />
 
 
 
@@ -118,7 +119,8 @@ Note that only a subset of filters is exposed here." />
     <div class="ref-description">
     <p>This function allows to find tasks on <a href='https://openml.org/t'>https://openml.org/t</a> using
 some simple filter criteria.</p>
-<p>Note that only a subset of filters is exposed here.</p>
+<p>Note that only a subset of filters is exposed here.
+For a more feature-complete package, see <a href='https://CRAN.R-project.org/package=OpenML'><span class="pkg">OpenML</span></a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>list_oml_tasks</span>(
@@ -179,7 +181,78 @@ Additional filters as named arguments.</p></td>
 
     <p>Filter values can be provided as single atomic values (typically integer or character).
 Provide a numeric vector of length 2 (<code><a href='https://rdrr.io/r/base/c.html'>c(l, u)</a></code>) to find matches in the range \([l, u]\).</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
+    <p>Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, Vanschoren J, Bischl B (2017).
+&#8220;OpenML: An R Package to Connect to the Machine
+             Learning Platform OpenML.&#8221;
+<em>Computational Statistics</em>, 1--15.
+doi: <a href='https://doi.org/10.1007/s00180-017-0742-2'>10.1007/s00180-017-0742-2</a>
+.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='fu'>list_oml_tasks</span>(<span class='kw'>number_instances</span> <span class='kw'>=</span> <span class='fl'>150</span>, <span class='kw'>number_features</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt;      task_id                 task_type data_id            name status
+#&gt;   1:      59 Supervised Classification      61            iris active
+#&gt;   2:     118            Learning Curve      61            iris active
+#&gt;   3:     289 Supervised Classification      61            iris active
+#&gt;   4:    1758            Learning Curve      61            iris active
+#&gt;   5:    1823 Supervised Classification      61            iris active
+#&gt;  ---                                                                 
+#&gt; 171:  232824                Clustering   42098            iris active
+#&gt; 172:  232891                Clustering   42186 JuanFeldmanIris active
+#&gt; 173:  232938                Clustering   42261    iris-example active
+#&gt; 174:  233207            Learning Curve      61            iris active
+#&gt; 175:  233208            Learning Curve      61            iris active
+#&gt;      MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize
+#&gt;   1:                50                           3                50
+#&gt;   2:                50                           3                50
+#&gt;   3:                50                           3                50
+#&gt;   4:                50                           3                50
+#&gt;   5:                50                           3                50
+#&gt;  ---                                                                
+#&gt; 171:                50                           3                50
+#&gt; 172:                50                           3                50
+#&gt; 173:                50                          NA                50
+#&gt; 174:                50                           3                50
+#&gt; 175:                50                           3                50
+#&gt;      NumberOfClasses NumberOfFeatures NumberOfInstances
+#&gt;   1:               3                5               150
+#&gt;   2:               3                5               150
+#&gt;   3:               3                5               150
+#&gt;   4:               3                5               150
+#&gt;   5:               3                5               150
+#&gt;  ---                                                   
+#&gt; 171:               3                5               150
+#&gt; 172:               3                5               150
+#&gt; 173:               3                5               150
+#&gt; 174:               3                5               150
+#&gt; 175:               3                5               150
+#&gt;      NumberOfInstancesWithMissingValues NumberOfMissingValues
+#&gt;   1:                                  0                     0
+#&gt;   2:                                  0                     0
+#&gt;   3:                                  0                     0
+#&gt;   4:                                  0                     0
+#&gt;   5:                                  0                     0
+#&gt;  ---                                                         
+#&gt; 171:                                  0                     0
+#&gt; 172:                                  0                     0
+#&gt; 173:                                  0                     0
+#&gt; 174:                                  0                     0
+#&gt; 175:                                  0                     0
+#&gt;      NumberOfNumericFeatures NumberOfSymbolicFeatures
+#&gt;   1:                       4                        1
+#&gt;   2:                       4                        1
+#&gt;   3:                       4                        1
+#&gt;   4:                       4                        1
+#&gt;   5:                       4                        1
+#&gt;  ---                                                 
+#&gt; 171:                       4                        1
+#&gt; 172:                       4                        1
+#&gt; 173:                       4                        1
+#&gt; 174:                       4                        1
+#&gt; 175:                       4                        1</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

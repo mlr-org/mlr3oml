@@ -202,6 +202,7 @@ Returns all tags of the data set.</p></dd>
 
 <ul>
 <li><p><a href='#method-new'><code>OMLData$new()</code></a></p></li>
+<li><p><a href='#method-print'><code>OMLData$print()</code></a></p></li>
 <li><p><a href='#method-quality'><code>OMLData$quality()</code></a></p></li>
 <li><p><a href='#method-task'><code>OMLData$task()</code></a></p></li>
 <li><p><a href='#method-clone'><code>OMLData$clone()</code></a></p></li>
@@ -221,6 +222,12 @@ See field <code>cache</code> for an explanation of possible values.
 Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> if not set.</p></dd>
 
 </dl><p></div></p>
+<p><hr>
+<a id="method-print"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
+<p>Prints the object.
+For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> via <code>$task()</code>.</p><h3>Usage</h3>
+<p><div class="r"></p><pre><span class='no'>OMLData</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
+
 <p><hr>
 <a id="method-quality"></a></p><h3>Method <code>quality()</code></h3>
 <p>Returns the value of a single OpenML data set quality.</p><h3>Usage</h3>
@@ -257,6 +264,29 @@ Name(s) of the target columns, or <code>NULL</code> for the default columns.</p>
 
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='no'>odata</span> <span class='kw'>=</span> <span class='no'>OMLData</span>$<span class='fu'>new</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>9</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>odata</span>)</div><div class='output co'>#&gt; &lt;OMLData:9:autos&gt; (205x26)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>odata</span>$<span class='no'>target_names</span>)</div><div class='output co'>#&gt; [1] "symboling"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>odata</span>$<span class='no'>feature_names</span>)</div><div class='output co'>#&gt;  [1] "normalized.losses" "make"              "fuel.type"        
+#&gt;  [4] "aspiration"        "num.of.doors"      "body.style"       
+#&gt;  [7] "drive.wheels"      "engine.location"   "wheel.base"       
+#&gt; [10] "length"            "width"             "height"           
+#&gt; [13] "curb.weight"       "engine.type"       "num.of.cylinders" 
+#&gt; [16] "engine.size"       "fuel.system"       "bore"             
+#&gt; [19] "stroke"            "compression.ratio" "horsepower"       
+#&gt; [22] "peak.rpm"          "city.mpg"          "highway.mpg"      
+#&gt; [25] "price"            </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>odata</span>$<span class='no'>tags</span>)</div><div class='output co'>#&gt; [1] "study_1"  "study_41" "study_76" "uci"     </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>odata</span>$<span class='fu'>task</span>())</div><div class='output co'>#&gt; &lt;TaskClassif:autos&gt; (205 x 26)
+#&gt; * Target: symboling
+#&gt; * Properties: multiclass
+#&gt; * Features (25):
+#&gt;   - dbl (15): bore, city.mpg, compression.ratio, curb.weight,
+#&gt;     engine.size, height, highway.mpg, horsepower, length,
+#&gt;     normalized.losses, peak.rpm, price, stroke, wheel.base, width
+#&gt;   - fct (10): aspiration, body.style, drive.wheels, engine.location,
+#&gt;     engine.type, fuel.system, fuel.type, make, num.of.cylinders,
+#&gt;     num.of.doors</div><div class='input'># }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
