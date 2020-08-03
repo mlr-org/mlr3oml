@@ -30,3 +30,9 @@ test_that("no default target column fails gracefully (#1)", {
   expect_task(mlr3::tsk("oml", data_id = data_id, target_names = "V10"))
 })
 
+test_that("arff with wrong quotes", {
+  odata = OMLData$new(42585L)
+  tab = odata$data
+  expect_data_table(tab, ncols = 7, nrows = 344)
+  expect_factor(tab$species, levels = c("Adelie", "Gentoo", "Chinstrap"))
+})

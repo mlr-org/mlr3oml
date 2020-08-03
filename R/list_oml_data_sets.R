@@ -5,6 +5,7 @@
 #' some simple filter criteria.
 #'
 #' Note that only a subset of filters is exposed here.
+#' For a more feature-complete package, see \CRANpkg{OpenML}.
 #'
 #' @details
 #' Filter values can be provided as single atomic values (typically integer or character).
@@ -27,9 +28,15 @@
 #'   Additional filters as named arguments.
 #'
 #' @return (`data.table()`) of results.
+#'
+#' @references
+#' \cite{mlr3oml}{openml-r}
+#'
+#' \cite{mlr3oml}{vanschoren2014}
+#'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' list_oml_data_sets(number_instances = 150, number_features = c(1, 10))
 #' }
 list_oml_data_sets = function(number_instances = NULL, number_features = NULL, number_classes = NULL,

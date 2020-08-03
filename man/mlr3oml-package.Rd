@@ -27,7 +27,8 @@ If set to \code{FALSE}, caching is disabled.
 If set to \code{TRUE}, cache directory as reported by \code{\link[=R_user_dir]{R_user_dir()}} is used.
 Alternatively, you can specify a path on the local file system here.
 Default is \code{FALSE}.
-\item \code{mlr3oml.api_key}: API key to use.
+\item \code{mlr3oml.api_key}: API key to use. All operations supported by this package
+work without an API key, but you might get rate limited without an API key.
 }
 }
 

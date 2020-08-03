@@ -11,6 +11,7 @@ download_file = function(url, path, status_ok = integer()) {
   return(res$status_code)
 }
 
+
 get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE, status_ok = integer()) {
   path = tempfile(fileext = ".json")
   on.exit(file.remove(path[file.exists(path)]))

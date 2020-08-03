@@ -45,13 +45,17 @@ This function allows to find data sets on \url{https://openml.org/d} using
 some simple filter criteria.
 
 Note that only a subset of filters is exposed here.
+For a more feature-complete package, see \CRANpkg{OpenML}.
 }
 \details{
 Filter values can be provided as single atomic values (typically integer or character).
 Provide a numeric vector of length 2 (\code{c(l, u)}) to find matches in the range \eqn{[l, u]}.
 }
 \examples{
-\dontrun{
+\donttest{
 list_oml_data_sets(number_instances = 150, number_features = c(1, 10))
 }
+}
+\references{
+\cite{mlr3oml}{openml-r}
 }

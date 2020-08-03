@@ -12,6 +12,16 @@
 #' \cite{mlr3oml}{vanschoren2014}
 #'
 #' @export
+#' @examples
+#' \donttest{
+#' otask = OMLTask$new(id = 59)
+#'
+#' print(otask)
+#' print(otask$target_names)
+#' print(otask$feature_names)
+#' print(otask$tags)
+#' print(otask$task)
+#' }
 OMLTask = R6Class("OMLTask",
   public = list(
     #' @field id (`integer(1)`)\cr
@@ -31,6 +41,13 @@ OMLTask = R6Class("OMLTask",
       self$id = assert_count(id, coerce = TRUE)
       self$cache_dir = get_cache_dir(cache)
       initialize_cache(self$cache_dir)
+    },
+
+    #' @description
+    #' Prints the object.
+    #' For a more detailed printer, convert to a [mlr3::Task] via `$task`.
+    print = function() {
+      catf("<OMLTask:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
     }
   ),
 

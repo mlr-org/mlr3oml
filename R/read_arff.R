@@ -10,8 +10,8 @@ read_arff = function(path) {
     .Call(c_remove_comment, lines)
   }
 
-  unquote = function(x) {
-    i = stri_startswith_fixed(x, "'") & stri_endswith_fixed(x, "'")
+  unquote = function(x, quote = "'") {
+    i = which(stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote))
     x[i] = stri_sub(x[i], 2L, -2L)
     x
   }
@@ -61,7 +61,7 @@ read_arff = function(path) {
   # this should go as soon as data.table supports a comment char
   max_lines = 10000L
   counter = 1L
-  data = list()
+  data = vector("list", 100L) # over-allocating for 10M rows
   repeat {
     lines = readLines(con, n = max_lines, warn = FALSE, ok = TRUE)
     if (length(lines) == 0L)
@@ -75,9 +75,12 @@ read_arff = function(path) {
     counter = counter + 1L
   }
 
-  data = rbindlist(data, use.names = TRUE, fill = TRUE)
+  data = if (counter == 2L) data[[1L]] else rbindlist(data, use.names = TRUE, fill = TRUE)
 
-  # fix factor levels
+  for (j in which(col_classes == "character")) {
+    set(data, j = j, value = unquote(data[[j]], "\""))
+  }
+
   for (j in names(lvls)) {
     set(data, j = j, value = factor(data[[j]], levels = lvls[[j]]))
   }

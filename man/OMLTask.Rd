@@ -13,6 +13,17 @@ Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::Da
 \code{mlr3::as_data_backend()}.
 }
 
+\examples{
+\donttest{
+otask = OMLTask$new(id = 59)
+
+print(otask)
+print(otask$target_names)
+print(otask$feature_names)
+print(otask$tags)
+print(otask$task)
+}
+}
 \references{
 \cite{mlr3oml}{vanschoren2014}
 }
@@ -72,6 +83,7 @@ Returns all tags of the task.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OMLTask$new()}}
+\item \href{#method-print}{\code{OMLTask$print()}}
 \item \href{#method-clone}{\code{OMLTask$clone()}}
 }
 }
@@ -96,6 +108,17 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Prints the object.
+For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLTask$print()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

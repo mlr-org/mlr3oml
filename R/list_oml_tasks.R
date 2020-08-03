@@ -5,6 +5,7 @@
 #' some simple filter criteria.
 #'
 #' Note that only a subset of filters is exposed here.
+#' For a more feature-complete package, see \CRANpkg{OpenML}.
 #'
 #' @details
 #' Filter values can be provided as single atomic values (typically integer or character).
@@ -13,7 +14,17 @@
 #' @inheritParams list_oml_data_sets
 #'
 #' @return (`data.table()`) of results.
+#'
+#' @references
+#' \cite{mlr3oml}{openml-r}
+#'
+#' \cite{mlr3oml}{vanschoren2014}
+#'
 #' @export
+#' @examples
+#' \donttest{
+#' list_oml_tasks(number_instances = 150, number_features = c(1, 10))
+#' }
 list_oml_tasks = function(number_instances = NULL, number_features = NULL, number_classes = NULL,
   number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
 
