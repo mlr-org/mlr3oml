@@ -58,4 +58,6 @@ list_oml_tasks(number_instances = 150, number_features = c(1, 10))
 }
 \references{
 \cite{mlr3oml}{openml-r}
+
+\cite{mlr3oml}{vanschoren2014}
 }

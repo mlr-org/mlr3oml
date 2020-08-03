@@ -58,4 +58,6 @@ list_oml_data_sets(number_instances = 150, number_features = c(1, 10))
 }
 \references{
 \cite{mlr3oml}{openml-r}
+
+\cite{mlr3oml}{vanschoren2014}
 }
