@@ -1,7 +1,8 @@
 download_data_desc = function(data_id) {
   desc = get_json("https://www.openml.org/api/v1/json/data/%i", data_id)[[1L]]
 
-  if (tolower(desc$format) != "arff") {
+  desc$format = tolower(desc$format)
+  if (desc$format %nin% c("arff", "sparse_arff")) {
     stopf("Unsupported data format: %s", desc$format)
   }
 

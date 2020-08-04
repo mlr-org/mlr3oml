@@ -36,3 +36,13 @@ test_that("arff with wrong quotes", {
   expect_data_table(tab, ncols = 7, nrows = 344)
   expect_factor(tab$species, levels = c("Adelie", "Gentoo", "Chinstrap"))
 })
+
+test_that("fallback for sparse files", {
+  data_id = 292L
+  odata = OMLData$new(data_id)
+  if (requireNamespace("RWeka", quietly = TRUE)) {
+    expect_data_table(odata$data)
+  } else {
+    expect_error(odata$data, "RWeka")
+  }
+})

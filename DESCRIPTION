@@ -1,6 +1,6 @@
 Package: mlr3oml
 Title: Connector Between 'mlr3' and 'OpenML'
-Version: 0.1.0
+Version: 0.2.0
 Authors@R:
     person(given = "Michel",
            family = "Lang",
@@ -29,6 +29,7 @@ Imports:
     R6,
     stringi
 Suggests:
+    RWeka,
     bibtex,
     foreign,
     qs,

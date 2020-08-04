@@ -8,6 +8,11 @@
 #' Alternatively, you can convert this object to a [mlr3::DataBackend] using
 #' `mlr3::as_data_backend()`.
 #'
+#' @section ARFF Files:
+#' This package comes with an own reader for ARFF files, based on [data.table::fread()].
+#' For sparse ARFF files and if the \CRANpkg{RWeka} package is installed, the reader
+#' automatically falls back to the implementation in ([RWeka::read.arff()]).
+#'
 #' @references
 #' \cite{mlr3oml}{vanschoren2014}
 #'

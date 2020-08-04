@@ -33,7 +33,7 @@ get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE, s
 }
 
 
-get_arff = function(url, ...) {
+get_arff = function(url, sparse = FALSE, ...) {
   path = tempfile(fileext = ".arff")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
@@ -43,5 +43,13 @@ get_arff = function(url, ...) {
   download_file(url, path)
 
   lg$debug("Start processing ARFF file", path = path)
-  read_arff(path)
+
+  if (sparse) {
+    if (!requireNamespace("RWeka", quietly = TRUE)) {
+      stopf("Failed to parse arff file, install 'RWeka' to parse sparse files")
+    }
+    setDT(RWeka::read.arff(path))
+  } else {
+    read_arff(path)
+  }
 }

@@ -13,6 +13,13 @@ Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::Da
 \code{mlr3::as_data_backend()}.
 }
 
+\section{ARFF Files}{
+
+This package comes with an own reader for ARFF files, based on \code{\link[data.table:fread]{data.table::fread()}}.
+For sparse ARFF files and if the \CRANpkg{RWeka} package is installed, the reader
+automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{RWeka::read.arff()}}).
+}
+
 \examples{
 \donttest{
 odata = OMLData$new(id = 9)
