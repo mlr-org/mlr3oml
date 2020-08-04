@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mlr3oml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -86,6 +86,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -126,6 +129,13 @@
 <p>A <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> is returned by the method <code>$task</code>.
 Alternatively, you can convert this object to a <a href='https://mlr3.mlr-org.com/reference/DataBackend.html'>mlr3::DataBackend</a> using
 <code><a href='https://mlr3.mlr-org.com/reference/as_data_backend.html'>mlr3::as_data_backend()</a></code>.</p>
+    <h2 class="hasAnchor" id="arff-files"><a class="anchor" href="#arff-files"></a>ARFF Files</h2>
+
+    
+
+<p>This package comes with an own reader for ARFF files, based on <code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>.
+For sparse ARFF files and if the <a href='https://CRAN.R-project.org/package=RWeka'><span class="pkg">RWeka</span></a> package is installed, the reader
+automatically falls back to the implementation in (<code><a href='https://rdrr.io/pkg/RWeka/man/read.arff.html'>RWeka::read.arff()</a></code>).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Vanschoren J, van
