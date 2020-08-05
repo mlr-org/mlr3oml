@@ -18,13 +18,14 @@ options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.ver
 
 **mlr3oml** allows to create [mlr3](https://mlr3.mlr-org.com/) tasks directly from [OpenML](https://openml.org) data sets.
 Furthermore, you can also obtain the data and the resampling for a given OpenML task.
-Caching can be enabled by setting ???
+Caching can be enabled by setting the option `"mlr3oml.cache"`.
+Uploading to OpenML is currently not supported, use the [OpenML package](https://cran.r-project.org/package=OpenML) package for this.
 
 ## Short Demo
 
 ```{r}
-library(mlr3)
-library(mlr3oml)
+library("mlr3")
+library("mlr3oml")
 
 # new parametrized task "oml"
 tsk("oml", data_id = 31)
@@ -49,7 +50,7 @@ oml_task$task
 oml_task$resampling
 
 # list oml data sets with 5 features and 50 - 200 instances
-tab = list_oml_data_sets(number_features = "5", number_instances = c(50, 200))
+tab = list_oml_data_sets(number_features = 5, number_instances = c(50, 200))
 head(tab[, .(data_id, name)])
 
 # list first 10 oml tasks
