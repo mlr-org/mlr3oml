@@ -16,8 +16,9 @@ options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.ver
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 
-Connects the [mlr3](https://mlr3.mlr-org.com/) package to [OpenML](https://openml.org).
-
+**mlr3oml** allows to create [mlr3](https://mlr3.mlr-org.com/) tasks directly from [OpenML](https://openml.org) data sets.
+Furthermore, you can also obtain the data and the resampling for a given OpenML task.
+Caching can be enabled by setting ???
 
 ## Short Demo
 
