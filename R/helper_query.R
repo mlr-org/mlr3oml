@@ -3,7 +3,8 @@ build_filter_query = function(type, filters) {
 
   filters = imap_chr(filters, function(x, name) {
     if (is.numeric(x)) {
-      x = assert_integerish(x, min.len = 1L, max.len = 2L, any.missing = FALSE, .var.name = sprintf("filter value of '%s'", name), coerce = TRUE)
+      x = assert_integerish(x, min.len = 1L, max.len = 2L, any.missing = FALSE,
+        .var.name = sprintf("filter value of '%s'", name), coerce = TRUE)
       paste0(name, "/", paste0(x, collapse = ".."))
     } else {
       assert_character(x, min.len = 1L, min.chars = 1L, any.missing = FALSE)

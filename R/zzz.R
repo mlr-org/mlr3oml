@@ -24,7 +24,8 @@
 #' To change the threshold, use `lgr::get_logger("mlr3oml")$set_threshold()`.
 "_PACKAGE"
 
-.onLoad = function(libname, pkgname) { # nocov start
+.onLoad = function(libname, pkgname) { # nolint
+  # nocov start
   backports::import(pkgname)
   mlr3::mlr_tasks$add("oml", OMLTaskConnector)
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
@@ -36,6 +37,7 @@
   }
 } # nocov end
 
-.onUnload <- function (libpath) { # nocov start
+.onUnload <- function (libpath) { # nolint
+  # nocov start
   library.dynam.unload("mlr3oml", libpath)
 } # nocov end

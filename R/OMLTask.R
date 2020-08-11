@@ -130,8 +130,10 @@ OMLTask = R6Class("OMLTask",
     resampling = function() {
       if (is.null(private$.resampling)) {
         splits = cached(download_task_splits, "task_splits", self$id, self$desc, cache_dir = self$cache_dir)
-        train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)), keyby = c("repeat.", "fold")]$row_id
-        test_sets = splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)), keyby = c("repeat.", "fold")]$row_id
+        train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)),
+          keyby = c("repeat.", "fold")]$row_id
+        test_sets = splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)),
+          keyby = c("repeat.", "fold")]$row_id
 
         resampling = mlr3::ResamplingCustom$new()
         private$.resampling = resampling$instantiate(self$task, train_sets = train_sets, test_sets = test_sets)

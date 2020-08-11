@@ -12,7 +12,7 @@ download_file = function(url, path, status_ok = integer()) {
 }
 
 
-get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE, status_ok = integer()) {
+get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE, status_ok = integer()) {
   path = tempfile(fileext = ".json")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
@@ -29,7 +29,7 @@ get_json = function(url, ..., simplifyVector = TRUE, simplifyDataFrame = TRUE, s
       return(NULL)
   }
 
-  jsonlite::fromJSON(path, simplifyVector = simplifyVector, simplifyDataFrame = simplifyDataFrame)
+  jsonlite::fromJSON(path, simplifyVector = simplify_vector, simplifyDataFrame = simplify_data_frame)
 }
 
 

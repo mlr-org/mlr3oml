@@ -29,10 +29,14 @@ list_oml_tasks = function(number_instances = NULL, number_features = NULL, numbe
   number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
 
   dots = list(
-    number_instances = assert_integerish(number_instances, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    number_features = assert_integerish(number_features, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    number_classes = assert_integerish(number_classes, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    number_missing_values = assert_integerish(number_missing_values, lower = 1L, any.missing = FALSE, min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_instances = assert_integerish(number_instances, lower = 1L, any.missing = FALSE,
+      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_features = assert_integerish(number_features, lower = 1L, any.missing = FALSE,
+      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_classes = assert_integerish(number_classes, lower = 1L, any.missing = FALSE,
+      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
+    number_missing_values = assert_integerish(number_missing_values, lower = 1L, any.missing = FALSE,
+      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
     tag = assert_character(tag, any.missing = FALSE, min.len = 1L, null.ok = TRUE)
   )
   limit = assert_count(limit, positive = TRUE, coerce = TRUE)
@@ -41,7 +45,7 @@ list_oml_tasks = function(number_instances = NULL, number_features = NULL, numbe
   chunk_size = 1000L
   tab = data.table()
 
-  while(nrow(tab) < limit) {
+  while (nrow(tab) < limit) {
     dots$limit = min(limit - nrow(tab), chunk_size)
     query = build_filter_query("task", dots)
 

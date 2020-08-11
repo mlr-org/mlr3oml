@@ -27,7 +27,9 @@ test_that("data is cached", {
   env = get("CACHE", envir = asNamespace("mlr3oml"))
   env$initialized = setdiff(env$initialized, path)
   version_before = env$versions$data
-  on.exit({ env$versions$data = version_before })
+  on.exit({
+    env$versions$data = version_before
+  })
   env$versions$data = 9999
 
   # ensure that cache gets invalidated
