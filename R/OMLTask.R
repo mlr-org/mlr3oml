@@ -129,6 +129,7 @@ OMLTask = R6Class("OMLTask",
     #' Creates a [ResamplingCustom][mlr3::mlr_resamplings_custom] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
+        type = NULL
         splits = cached(download_task_splits, "task_splits", self$id, self$desc, cache_dir = self$cache_dir)
         train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)),
           keyby = c("repeat.", "fold")]$row_id

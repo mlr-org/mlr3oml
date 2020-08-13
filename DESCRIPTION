@@ -25,7 +25,7 @@ Imports:
     jsonlite,
     lgr,
     mlr3,
-    mlr3misc,
+    mlr3misc (>= 0.5.0),
     R6,
     stringi
 Suggests:

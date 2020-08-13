@@ -68,7 +68,7 @@ OMLData = R6Class("OMLData",
     #'   Name of the quality to extract.
     quality = function(name) {
       id = assert_string(name)
-      self$qualities[.(id), value, on = "name"]
+      self$qualities[list(id), "value", on = "name", with = FALSE][[1L]]
     },
 
     #' @description
@@ -83,7 +83,7 @@ OMLData = R6Class("OMLData",
         stopf("Data set with id '%i' does not have a default target attribute", self$id)
       }
 
-      switch(as.character(self$features[.(target), data_type, on = "name"]),
+      switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE]),
         "nominal" = TaskClassif$new(self$name, self$data, target = target),
         "numeric" = TaskRegr$new(self$name, self$data, target = target),
         stop("Unknown task type")
@@ -158,7 +158,7 @@ OMLData = R6Class("OMLData",
     #' @field feature_names (`character()`)\cr
     #' Name of the features, as extracted from the OpenML data set description.
     feature_names = function() {
-      self$features[!is_target & !is_ignore & !is_row_identifier, name]
+      self$features[!is_target & !is_ignore & !is_row_identifier, "name", with = FALSE]
     },
 
     #' @field nrow (`integer()`)\cr
