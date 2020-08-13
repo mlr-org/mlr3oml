@@ -11,7 +11,7 @@
 #' Filter values can be provided as single atomic values (typically integer or character).
 #' Provide a numeric vector of length 2 (`c(l, u)`) to find matches in the range \eqn{[l, u]}.
 #'
-#' @param task_ids (`integer()`)\cr
+#' @param task_id (`integer()`)\cr
 #'   Vector of task ids to restrict to.
 #' @inheritParams list_oml_data_sets
 #'
@@ -27,11 +27,11 @@
 #' \donttest{
 #' list_oml_tasks(number_instances = 150, number_features = c(1, 10))
 #' }
-list_oml_tasks = function(task_ids = NULL, number_instances = NULL, number_features = NULL,
+list_oml_tasks = function(task_id = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
 
   dots = list(
-    task_id = task_ids,
+    task_id = task_id,
     number_instances = number_instances,
     number_features = number_features,
     number_classes = number_classes,

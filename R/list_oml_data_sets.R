@@ -11,7 +11,7 @@
 #' Filter values can be provided as single atomic values (typically integer or character).
 #' Provide a numeric vector of length 2 (`c(l, u)`) to find matches in the range \eqn{[l, u]}.
 #'
-#' @param data_ids (`integer()`)\cr
+#' @param data_id (`integer()`)\cr
 #'   Vector of data ids to restrict to.
 #' @param number_instances (`integer()`)\cr
 #'   Filter for number of instances.
@@ -41,11 +41,11 @@
 #' \donttest{
 #' list_oml_data_sets(number_instances = 150, number_features = c(1, 10))
 #' }
-list_oml_data_sets = function(data_ids = NULL, number_instances = NULL, number_features = NULL,
+list_oml_data_sets = function(data_id = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
 
   dots = list(
-    data_id = data_ids,
+    data_id = data_id,
     number_instances = number_instances,
     number_features = number_features,
     number_classes = number_classes,

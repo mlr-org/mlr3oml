@@ -5,7 +5,7 @@
 \title{List Tasks from OpenML}
 \usage{
 list_oml_tasks(
-  task_ids = NULL,
+  task_id = NULL,
   number_instances = NULL,
   number_features = NULL,
   number_classes = NULL,
@@ -16,7 +16,7 @@ list_oml_tasks(
 )
 }
 \arguments{
-\item{task_ids}{(\code{integer()})\cr
+\item{task_id}{(\code{integer()})\cr
 Vector of task ids to restrict to.}
 
 \item{number_instances}{(\code{integer()})\cr

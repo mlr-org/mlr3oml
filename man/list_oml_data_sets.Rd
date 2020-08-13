@@ -5,7 +5,7 @@
 \title{List Data Sets from OpenML}
 \usage{
 list_oml_data_sets(
-  data_ids = NULL,
+  data_id = NULL,
   number_instances = NULL,
   number_features = NULL,
   number_classes = NULL,
@@ -16,7 +16,7 @@ list_oml_data_sets(
 )
 }
 \arguments{
-\item{data_ids}{(\code{integer()})\cr
+\item{data_id}{(\code{integer()})\cr
 Vector of data ids to restrict to.}
 
 \item{number_instances}{(\code{integer()})\cr
