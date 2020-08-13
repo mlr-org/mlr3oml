@@ -8,4 +8,7 @@ test_that("list_oml_data_sets", {
 
   expect_names(names(tab), type = "strict",
     must.include = c("data_id", "name", "version", "status", "NumberOfFeatures"))
+
+  expect_data_table(list_oml_data_sets(data_ids = c(9, 11)), nrows = 2)
+  expect_null(list_oml_data_sets(data_ids = 1))
 })

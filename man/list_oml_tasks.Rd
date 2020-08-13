@@ -5,6 +5,7 @@
 \title{List Tasks from OpenML}
 \usage{
 list_oml_tasks(
+  task_ids = NULL,
   number_instances = NULL,
   number_features = NULL,
   number_classes = NULL,
@@ -15,6 +16,9 @@ list_oml_tasks(
 )
 }
 \arguments{
+\item{task_ids}{(\code{integer()})\cr
+Vector of task ids to restrict to.}
+
 \item{number_instances}{(\code{integer()})\cr
 Filter for number of instances.}
 
@@ -38,7 +42,7 @@ Default is 5000.}
 Additional filters as named arguments.}
 }
 \value{
-(\code{data.table()}) of results.
+(\code{data.table()}) of results, or \code{NULL} if no data set matches the criteria.
 }
 \description{
 This function allows to find tasks on \url{https://openml.org/t} using

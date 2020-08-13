@@ -11,9 +11,11 @@
 #' Filter values can be provided as single atomic values (typically integer or character).
 #' Provide a numeric vector of length 2 (`c(l, u)`) to find matches in the range \eqn{[l, u]}.
 #'
+#' @param task_ids (`integer()`)\cr
+#'   Vector of task ids to restrict to.
 #' @inheritParams list_oml_data_sets
 #'
-#' @return (`data.table()`) of results.
+#' @return (`data.table()`) of results, or `NULL` if no data set matches the criteria.
 #'
 #' @references
 #' \cite{mlr3oml}{openml-r}
@@ -25,19 +27,16 @@
 #' \donttest{
 #' list_oml_tasks(number_instances = 150, number_features = c(1, 10))
 #' }
-list_oml_tasks = function(number_instances = NULL, number_features = NULL, number_classes = NULL,
-  number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
+list_oml_tasks = function(task_ids = NULL, number_instances = NULL, number_features = NULL,
+  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
 
   dots = list(
-    number_instances = assert_integerish(number_instances, lower = 1L, any.missing = FALSE,
-      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    number_features = assert_integerish(number_features, lower = 1L, any.missing = FALSE,
-      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    number_classes = assert_integerish(number_classes, lower = 1L, any.missing = FALSE,
-      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    number_missing_values = assert_integerish(number_missing_values, lower = 1L, any.missing = FALSE,
-      min.len = 1L, max.len = 2L, null.ok = TRUE, coerce = TRUE),
-    tag = assert_character(tag, any.missing = FALSE, min.len = 1L, null.ok = TRUE)
+    task_id = task_ids,
+    number_instances = number_instances,
+    number_features = number_features,
+    number_classes = number_classes,
+    number_missing_values = number_missing_values,
+    tag = tag
   )
   limit = assert_count(limit, positive = TRUE, coerce = TRUE)
   dots = insert_named(discard(dots, is.null), list(...))
@@ -57,8 +56,11 @@ list_oml_tasks = function(number_instances = NULL, number_features = NULL, numbe
     dots$offset = dots$offset %??% 0L + chunk_size
   }
 
-  setnames(tab, "did", "data_id")
+  if (nrow(tab) == 0L) {
+    return(NULL)
+  }
 
+  setnames(tab, "did", "data_id")
   qualities = transpose_name_value(tab$quality, as_integer = TRUE)
   rcbind(remove_named(tab, c("task_type_id", "task_type_id", "format", "input", "quality")), qualities)
 }

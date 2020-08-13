@@ -5,6 +5,7 @@
 \title{List Data Sets from OpenML}
 \usage{
 list_oml_data_sets(
+  data_ids = NULL,
   number_instances = NULL,
   number_features = NULL,
   number_classes = NULL,
@@ -15,6 +16,9 @@ list_oml_data_sets(
 )
 }
 \arguments{
+\item{data_ids}{(\code{integer()})\cr
+Vector of data ids to restrict to.}
+
 \item{number_instances}{(\code{integer()})\cr
 Filter for number of instances.}
 
@@ -38,7 +42,7 @@ Default is 5000.}
 Additional filters as named arguments.}
 }
 \value{
-(\code{data.table()}) of results.
+(\code{data.table()}) of results, or \code{NULL} if no data set matches the criteria.
 }
 \description{
 This function allows to find data sets on \url{https://openml.org/d} using
