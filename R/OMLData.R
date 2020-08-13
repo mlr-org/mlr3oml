@@ -132,7 +132,8 @@ OMLData = R6Class("OMLData",
     #'   * `"number_of_missing_values"` (`integer()`): Number of missing values in the column.
     features = function() {
       if (is.null(private$.features)) {
-        private$.features = cached(download_data_features, "data_features", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        private$.features = cached(download_data_features, "data_features", self$id,
+          desc = self$desc, cache_dir = self$cache_dir)
       }
 
       private$.features
