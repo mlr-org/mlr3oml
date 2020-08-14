@@ -83,7 +83,7 @@ OMLData = R6Class("OMLData",
         stopf("Data set with id '%i' does not have a default target attribute", self$id)
       }
 
-      switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE]),
+      switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
         "nominal" = TaskClassif$new(self$name, self$data, target = target),
         "numeric" = TaskRegr$new(self$name, self$data, target = target),
         stop("Unknown task type")
