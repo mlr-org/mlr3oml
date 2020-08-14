@@ -4,9 +4,9 @@
 
 static int remove_comment(std::string line) {
     enum states { DULL, IN_QUOTE, ESCAPING } state = DULL;
-    int i;
+    size_t i = 0;
 
-    for (i = 0; i < line.size(); i++) {
+    for (; i < line.size(); i++) {
         switch(state) {
             case DULL:
                 switch(line[i]) {

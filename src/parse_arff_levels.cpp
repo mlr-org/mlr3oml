@@ -106,7 +106,7 @@ SEXP c_parse_arff_levels(SEXP buffer_) {
     }
 
     SEXP result = PROTECT(allocVector(STRSXP, levels.size()));
-    for (R_len_t i = 0; i < levels.size(); i++) {
+    for (size_t i = 0; i < levels.size(); i++) {
         SET_STRING_ELT(result, i, Rf_mkCharCE(levels[i].c_str(), CE_UTF8));
     }
     UNPROTECT(1);
