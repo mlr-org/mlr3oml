@@ -127,6 +127,7 @@ For a more feature-complete package, see <a href='https://CRAN.R-project.org/pac
     </div>
 
     <pre class="usage"><span class='fu'>list_oml_data_sets</span>(
+  <span class='kw'>data_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>number_instances</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>number_features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>number_classes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -139,6 +140,11 @@ For a more feature-complete package, see <a href='https://CRAN.R-project.org/pac
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data_id</th>
+      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
+Vector of data ids to restrict to.</p></td>
+    </tr>
     <tr>
       <th>number_instances</th>
       <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer()</a></code>)<br />
@@ -179,7 +185,7 @@ Additional filters as named arguments.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>(<code>data.table()</code>) of results.</p>
+    <p>(<code>data.table()</code>) of results, or <code>NULL</code> if no data set matches the criteria.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Filter values can be provided as single atomic values (typically integer or character).
