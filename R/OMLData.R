@@ -159,7 +159,7 @@ OMLData = R6Class("OMLData",
     #' @field feature_names (`character()`)\cr
     #' Name of the features, as extracted from the OpenML data set description.
     feature_names = function() {
-      self$features[!is_target & !is_ignore & !is_row_identifier, "name", with = FALSE]
+      self$features[!is_target & !is_ignore & !is_row_identifier, "name", with = FALSE][[1L]]
     },
 
     #' @field nrow (`integer()`)\cr
