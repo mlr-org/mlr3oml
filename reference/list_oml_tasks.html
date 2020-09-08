@@ -127,14 +127,14 @@ For a more feature-complete package, see <a href='https://CRAN.R-project.org/pac
     </div>
 
     <pre class="usage"><span class='fu'>list_oml_tasks</span>(
-  <span class='kw'>task_id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>number_instances</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>number_features</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>number_classes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>number_missing_values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>limit</span> <span class='kw'>=</span> <span class='fl'>5000L</span>,
-  <span class='no'>...</span>
+  task_id = <span class='kw'>NULL</span>,
+  number_instances = <span class='kw'>NULL</span>,
+  number_features = <span class='kw'>NULL</span>,
+  number_classes = <span class='kw'>NULL</span>,
+  number_missing_values = <span class='kw'>NULL</span>,
+  tag = <span class='kw'>NULL</span>,
+  limit = <span class='fl'>5000L</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,7 +207,8 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>list_oml_tasks</span>(<span class='kw'>number_instances</span> <span class='kw'>=</span> <span class='fl'>150</span>, <span class='kw'>number_features</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt;      task_id                 task_type data_id            name status
+<span class='fu'>list_oml_tasks</span>(number_instances = <span class='fl'>150</span>, number_features = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>))
+</div><div class='output co'>#&gt;      task_id                 task_type data_id            name status
 #&gt;   1:      59 Supervised Classification      61            iris active
 #&gt;   2:     118            Learning Curve      61            iris active
 #&gt;   3:     289 Supervised Classification      61            iris active
@@ -266,7 +267,7 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 #&gt; 172:                       4                        1
 #&gt; 173:                       4                        1
 #&gt; 174:                       4                        1
-#&gt; 175:                       4                        1</div><div class='input'># }
+#&gt; 175:                       4                        1</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -283,7 +284,7 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
