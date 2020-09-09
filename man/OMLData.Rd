@@ -171,6 +171,8 @@ Name of the quality to extract.}
 \subsection{Method \code{task()}}{
 Creates a \link[mlr3:Task]{mlr3::Task} using the provided target column, defaulting to the default target attribute
 of the task description.
+Note that if the target column is incorrectly encoded, e.g. as numeric 0/1 for classification,
+this will result in a task of the wrong type.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$task(target_names = NULL)}\if{html}{\out{</div>}}
 }

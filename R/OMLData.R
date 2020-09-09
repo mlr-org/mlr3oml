@@ -74,6 +74,8 @@ OMLData = R6Class("OMLData",
     #' @description
     #' Creates a [mlr3::Task] using the provided target column, defaulting to the default target attribute
     #' of the task description.
+    #' Note that if the target column is incorrectly encoded, e.g. as numeric 0/1 for classification,
+    #' this will result in a task of the wrong type.
     #'
     #' @param target_names (`character()`)\cr
     #'   Name(s) of the target columns, or `NULL` for the default columns.
