@@ -118,8 +118,8 @@ OMLTask = R6Class("OMLTask",
     task = function() {
       task = switch(self$desc$task_type,
         # FIXME: positive class?
-        "Supervised Classification" = TaskClassif$new(self$name, self$data$data, target = self$target_names),
-        "Supervised Regression" = TaskRegr$new(self$name, self$data$data, target = self$target_names)
+        "Supervised Classification" = new_task_classif(self$name, self$data$data, target = self$target_names),
+        "Supervised Regression" = new_task_regr(self$name, self$data$data, target = self$target_names)
       )
       task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
       task

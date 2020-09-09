@@ -10,3 +10,23 @@ transpose_name_value = function(li, as_integer = FALSE) {
 
   remove_named(tab, "..dummy")
 }
+
+
+new_task_classif = function(name, data, target) {
+  y = data[[target]]
+  if (!is.factor(y)) {
+    data[[target]] = factor(y)
+  }
+
+  TaskClassif$new(name, data, target)
+}
+
+
+new_task_regr = function(name, data, target) {
+  y = data[[target]]
+  if (!is.numeric(y)) {
+    data[[target]] = as.numeric(y)
+  }
+
+  TaskRegr$new(name, data, target)
+}

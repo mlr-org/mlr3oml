@@ -84,8 +84,8 @@ OMLData = R6Class("OMLData",
       }
 
       switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
-        "nominal" = TaskClassif$new(self$name, self$data, target = target),
-        "numeric" = TaskRegr$new(self$name, self$data, target = target),
+        "nominal" = new_task_classif(self$name, self$data, target = target),
+        "numeric" = new_task_regr(self$name, self$data, target = target),
         stop("Unknown task type")
       )
     }
