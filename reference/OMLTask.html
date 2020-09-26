@@ -198,7 +198,7 @@ Returns all tags of the task.</p></dd>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
 <p>Creates a new object of class <code>OMLTask</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>OMLTask</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>id</span>, cache = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mlr3oml.cache"</span>, <span class='fl'>FALSE</span>))</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OMLTask</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"mlr3oml.cache"</span>, <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -214,12 +214,12 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Prints the object.
 For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> via <code>$task</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>OMLTask</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OMLTask</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='kw'>OMLTask</span><span class='op'>$</span><span class='fu'>clone</span>(deep = <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OMLTask</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -231,23 +231,23 @@ For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/refe
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>otask</span> <span class='op'>=</span> <span class='kw'>OMLTask</span><span class='op'>$</span><span class='fu'>new</span>(id = <span class='fl'>59</span>)
+<span class='va'>otask</span> <span class='op'>=</span> <span class='va'>OMLTask</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>59</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>otask</span>)
-</div><div class='output co'>#&gt; &lt;OMLTask:59:Task 59: iris (Supervised Classification)&gt; (150x5)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>otask</span><span class='op'>$</span><span class='kw'>target_names</span>)
-</div><div class='output co'>#&gt; [1] "class"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>otask</span><span class='op'>$</span><span class='kw'>feature_names</span>)
-</div><div class='output co'>#&gt; [1] "sepallength" "sepalwidth"  "petallength" "petalwidth" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>otask</span><span class='op'>$</span><span class='kw'>tags</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;OMLTask:59:Task 59: iris (Supervised Classification)&gt; (150x5)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>target_names</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "class"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>feature_names</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "sepallength" "sepalwidth"  "petallength" "petalwidth" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>tags</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "basic"     "study_1"   "study_41"  "study_50"  "study_7"   "study_89" 
-#&gt; [7] "testsuite" "under100k" "under1m"  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>otask</span><span class='op'>$</span><span class='kw'>task</span>)
+#&gt; [7] "testsuite" "under100k" "under1m"  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>task</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)
 #&gt; * Target: class
 #&gt; * Properties: multiclass
 #&gt; * Features (4):
 #&gt;   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</div><div class='input'>
 <span class='co'># get a task via tsk():</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"mlr3"</span>)) {
-  <span class='kw'>mlr3</span>::<span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span>(<span class='st'>"oml"</span>, task_id = <span class='fl'>59</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlr3"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>mlr3</span><span class='fu'>::</span><span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span><span class='op'>(</span><span class='st'>"oml"</span>, task_id <span class='op'>=</span> <span class='fl'>59</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt; &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)
 #&gt; * Target: class
 #&gt; * Properties: multiclass
