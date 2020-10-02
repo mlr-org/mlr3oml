@@ -61,7 +61,12 @@ list_oml_tasks(number_instances = 150, number_features = c(1, 10))
 }
 }
 \references{
-\cite{mlr3oml}{openml-r}
-
-\cite{mlr3oml}{vanschoren2014}
+Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, Vanschoren J, Bischl B (2017).
+\dQuote{OpenML: An R Package to Connect to the Machine Learning Platform OpenML.}
+\emph{Computational Statistics}, 1--15.
+\doi{10.1007/s00180-017-0742-2}.
+Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
+\dQuote{OpenML.}
+\emph{ACM SIGKDD Explorations Newsletter}, \bold{15}(2), 49--60.
+\doi{10.1145/2641190.2641198}.
 }

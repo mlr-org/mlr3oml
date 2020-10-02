@@ -14,7 +14,7 @@
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
 #'
 #' @references
-#' \cite{mlr3oml}{vanschoren2014}
+#' `r tools::toRd(bibentries["vanschoren2014"])`
 #'
 #' @export
 #' @examples

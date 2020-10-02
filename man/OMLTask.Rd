@@ -30,7 +30,10 @@ if (requireNamespace("mlr3")) {
 }
 }
 \references{
-\cite{mlr3oml}{vanschoren2014}
+Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
+\dQuote{OpenML.}
+\emph{ACM SIGKDD Explorations Newsletter}, \bold{15}(2), 49--60.
+\doi{10.1145/2641190.2641198}.
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}

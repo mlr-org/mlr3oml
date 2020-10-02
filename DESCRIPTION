@@ -30,12 +30,9 @@ Imports:
     stringi
 Suggests:
     RWeka,
-    bibtex,
     foreign,
     qs,
     testthat
-RdMacros:
-    mlr3misc
 Encoding: UTF-8
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
