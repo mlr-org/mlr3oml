@@ -2,9 +2,9 @@
 # mlr3oml
 
 [![tic](https://github.com/mlr-org/mlr3oml/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/mlr3oml/actions?query=workflow%3Atic)
-[![CRAN Status
-Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
+[![CRAN Status](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
+[![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
 **mlr3oml** allows to create [mlr3](https://mlr3.mlr-org.com/) tasks
 directly from [OpenML](https://openml.org) data sets. Furthermore, you
@@ -104,7 +104,7 @@ oml_data$data
     ##   3:         4.7        3.2         1.3        0.2    Iris-setosa
     ##   4:         4.6        3.1         1.5        0.2    Iris-setosa
     ##   5:         5.0        3.6         1.4        0.2    Iris-setosa
-    ##  ---                                                             
+    ##  ---
     ## 146:         6.7        3.0         5.2        2.3 Iris-virginica
     ## 147:         6.3        2.5         5.0        1.9 Iris-virginica
     ## 148:         6.5        3.0         5.2        2.0 Iris-virginica
