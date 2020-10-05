@@ -1,5 +1,5 @@
 #' @importFrom utils bibentry
-bibentries = c(
+bibentries = c( # nolint start
   vanschoren2014 = bibentry("article",
     doi       = "10.1145/2641190.2641198",
     year      = "2014",
@@ -21,4 +21,4 @@ bibentries = c(
     pages     = "1--15",
     doi       = "10.1007/s00180-017-0742-2",
   )
-)
+) # nolint end
