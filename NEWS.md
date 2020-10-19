@@ -1,3 +1,10 @@
+# mlr3oml 0.4.0
+
+* Alternative parsers for ARFF files can now be selected via option
+  `"mlr3oml.arff.parser"`.
+* Improved stability of the internal ARFF parser in case of malformed ARFF
+  files.
+
 # mlr3oml 0.3.0
 
 * The connectors used in `mlr_tasks` and `mlr_resamplings` now signal errors of
