@@ -35,6 +35,10 @@ test_that("arff with wrong quotes", {
   tab = odata$data
   expect_data_table(tab, ncols = 7, nrows = 344)
   expect_factor(tab$species, levels = c("Adelie", "Gentoo", "Chinstrap"))
+
+
+  otask = OMLTask$new(168746L)
+  expect_data_table(otask$data$data, nrows = otask$nrow, ncols = otask$ncol)
 })
 
 test_that("fallback for sparse files", {
