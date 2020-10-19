@@ -150,6 +150,9 @@ Alternatively, you can specify a path on the local file system here.
 Default is <code>FALSE</code>.</p></li>
 <li><p><code>mlr3oml.api_key</code>: API key to use. All operations supported by this package
 work without an API key, but you might get rate limited without an API key.</p></li>
+<li><p><code>mlr3oml.arff_parser</code>: ARFF parser to use, defaults to the internal one relies
+on <code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>. Can also be set to <code>"RWeka"</code> for the parser in
+<a href='https://CRAN.R-project.org/package=RWeka'><span class="pkg">RWeka</span></a> or <code>"farff"</code> for the reader implemented in <a href='https://CRAN.R-project.org/package=farff'><span class="pkg">farff</span></a>.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="logging"><a class="anchor" href="#logging"></a>Logging</h2>
