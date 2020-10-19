@@ -43,13 +43,18 @@ get_arff = function(url, sparse = FALSE, ...) {
   download_file(url, path)
 
   lg$debug("Start processing ARFF file", path = path)
+  parser = getOption("mlr3oml.arff_parser", "internal")
 
-  if (sparse) {
+  if (sparse ||  parser == "RWeka") {
     if (!requireNamespace("RWeka", quietly = TRUE)) {
-      stopf("Failed to parse arff file, install 'RWeka' to parse sparse files")
+      stopf("Failed to parse arff file, install 'RWeka'")
     }
     setDT(RWeka::read.arff(path))
-  } else {
+  } else if (parser == "farff") {
+    setDT(getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
+  } else if (parser == "internal") {
     read_arff(path)
+  } else {
+    stopf("Unknown parser '%s'", parser)
   }
 }

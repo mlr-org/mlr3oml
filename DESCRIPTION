@@ -30,6 +30,7 @@ Imports:
     stringi
 Suggests:
     RWeka,
+    farff,
     foreign,
     qs,
     testthat

@@ -52,30 +52,36 @@ read_arff = function(path) {
   lvls = set_names(lapply(col_classes[is_factor], parse_arff_levels), col_names[is_factor])
   col_classes = ifelse(is_factor, "character", tolower(col_classes))
 
-  col_classes = map_values(col_classes,
-    old = c("real",    "numeric", "string",    "date"),
-    new = c("numeric", NA,        "character", "character")
+  mapped_col_classes = map_values(col_classes,
+    old = c("integer", "real",    "numeric", "string",    "date"),
+    new = c(NA,        NA,        NA,        "character", "character")
   )
 
   # read data in chunks with workaround for missing comment char functionality
   # this should go as soon as data.table supports a comment char
   max_lines = 10000L
-  counter = 1L
+  counter = 0L
   data = vector("list", 100L) # over-allocating for 10M rows
   repeat {
     lines = readLines(con, n = max_lines, warn = FALSE, ok = TRUE)
     if (length(lines) == 0L)
       break
 
+    counter = counter + 1L
     data[[counter]] = fread(text = remove_comment(lines), col.names = col_names,
       sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-      header = FALSE, colClasses = unname(col_classes)
+      header = FALSE, colClasses = mapped_col_classes
     )
-
-    counter = counter + 1L
   }
 
-  data = if (counter == 2L) data[[1L]] else rbindlist(data, use.names = TRUE, fill = TRUE)
+  data = if (counter == 1L) data[[1L]] else rbindlist(data, use.names = TRUE, fill = TRUE)
+
+  for (j in which(col_classes == "integer")) {
+    x = data[[j]]
+    if (test_integerish(x)) {
+      set(data, j = j, value = as.integer(x))
+    }
+  }
 
   for (j in which(col_classes == "character")) {
     set(data, j = j, value = unquote(data[[j]], "\""))
