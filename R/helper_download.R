@@ -51,7 +51,7 @@ get_arff = function(url, sparse = FALSE, ...) {
     }
     setDT(RWeka::read.arff(path))
   } else if (parser == "farff") {
-    setDT(getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
+    setDT(utils::getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
   } else if (parser == "internal") {
     read_arff(path)
   } else {
