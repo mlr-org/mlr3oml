@@ -1,9 +1,10 @@
 # mlr3oml 0.4.0
 
-* Alternative parsers for ARFF files can now be selected via option
-  `"mlr3oml.arff.parser"`.
+* The parsers for ARFF files can now be explicitly selected via option
+  `"mlr3oml.arff.parser"`. Default is the internal parser based on
+  `data.table::fread()`.
 * Improved stability of the internal ARFF parser in case of malformed ARFF
-  files.
+  files and non-standardized quotes.
 
 # mlr3oml 0.3.0
 
