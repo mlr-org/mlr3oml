@@ -1,4 +1,14 @@
+#' @title Read ARFF file
+#'
+#' @description
+#' Parses a file located at `path` and returns a [data.table()].
+#'
+#' @param path (`character(1)`)\cr
+#'   Path or URI of the ARFF file, passed to [file()].
+#'
+#' @return ([data.table()]).
 #' @import stringi
+#' @export
 read_arff = function(path) {
   #' @useDynLib mlr3oml c_parse_arff_levels
   parse_arff_levels = function(str) {
@@ -78,7 +88,7 @@ read_arff = function(path) {
 
   for (j in which(col_classes == "integer")) {
     x = data[[j]]
-    if (test_integerish(x)) {
+    if (!is.integer(x) && test_integerish(x)) {
       set(data, j = j, value = as.integer(x))
     }
   }
