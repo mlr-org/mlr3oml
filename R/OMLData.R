@@ -14,7 +14,7 @@
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
 #'
 #' @references
-#' `r tools::toRd(bibentries["vanschoren2014"])`
+#' `r format_bib("vanschoren2014")`
 #'
 #' @export
 #' @examples

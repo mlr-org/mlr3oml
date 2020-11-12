@@ -65,6 +65,7 @@ Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, V
 \dQuote{OpenML: An R Package to Connect to the Machine Learning Platform OpenML.}
 \emph{Computational Statistics}, 1--15.
 \doi{10.1007/s00180-017-0742-2}.
+
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}
 \emph{ACM SIGKDD Explorations Newsletter}, \bold{15}(2), 49--60.

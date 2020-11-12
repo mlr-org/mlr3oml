@@ -9,7 +9,7 @@
 #' `mlr3::as_data_backend()`.
 #'
 #' @references
-#' `r tools::toRd(bibentries["vanschoren2014"])`
+#' `r format_bib("vanschoren2014")`
 #'
 #' @export
 #' @examples

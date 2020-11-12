@@ -18,7 +18,7 @@
 #' @return (`data.table()`) of results, or `NULL` if no data set matches the criteria.
 #'
 #' @references
-#' `r tools::toRd(bibentries[c("openml_r", "vanschoren2014")])`
+#' `r format_bib("openml_r", "vanschoren2014")`
 #'
 #' @export
 #' @examples
