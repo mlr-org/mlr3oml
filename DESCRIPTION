@@ -33,8 +33,9 @@ Suggests:
     farff,
     foreign,
     qs,
-    testthat
+    testthat (>= 3.0.0)
 Encoding: UTF-8
 NeedsCompilation: yes
+Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

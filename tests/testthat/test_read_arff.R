@@ -1,5 +1,3 @@
-context("read_arff")
-
 skip_if_not_installed("RWeka")
 
 test_that("Construct task from dict", {

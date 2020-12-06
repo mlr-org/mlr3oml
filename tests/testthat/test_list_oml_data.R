@@ -1,5 +1,3 @@
-context("list_oml_data_sets")
-
 skip_on_cran()
 
 test_that("list_oml_data_sets", {

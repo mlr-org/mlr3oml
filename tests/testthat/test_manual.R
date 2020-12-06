@@ -1,5 +1,3 @@
-context("manual, expensive tests")
-
 skip("Expensive manual test")
 
 test_that("data is cached", {

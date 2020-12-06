@@ -1,5 +1,3 @@
-context("OMLResamplingConnector")
-
 skip_on_cran()
 
 test_that("Construct resampling from dict", {

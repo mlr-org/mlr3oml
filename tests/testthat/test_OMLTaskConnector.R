@@ -1,5 +1,3 @@
-context("OMLTaskConnector")
-
 skip_on_cran()
 
 test_that("Construct task from dict", {

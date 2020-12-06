@@ -1,5 +1,3 @@
-context("OMLTask")
-
 skip_on_cran()
 
 test_that("OMLTask iris", {
@@ -10,7 +8,7 @@ test_that("OMLTask iris", {
   expect_identical(oml_task$nrow, 150L)
   expect_identical(oml_task$ncol, 5L)
   expect_identical(oml_task$target_names, "class")
-  expect_is(oml_task$task, "TaskClassif")
+  expect_r6(oml_task$task, "TaskClassif")
 })
 
 test_that("data backend", {
