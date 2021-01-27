@@ -1,3 +1,7 @@
+# mlr3oml 0.4.1
+
+* Added a heuristic to detect the quote char.
+
 # mlr3oml 0.4.0
 
 * The parsers for ARFF files can now be explicitly selected via option
