@@ -69,22 +69,32 @@ read_arff = function(path) {
 
   # read data in chunks with workaround for missing comment char functionality
   # this should go as soon as data.table supports a comment char
-  max_lines = 10000L
-  counter = 0L
   data = vector("list", 100L) # over-allocating for 10M rows
-  repeat {
-    lines = readLines(con, n = max_lines, warn = FALSE, ok = TRUE)
-    if (length(lines) == 0L)
-      break
+  max_lines = 100000L
+  quote_char = "\""
+  lines = remove_comment(readLines(con, n = max_lines, warn = FALSE, ok = TRUE))
+  counter = 1L
 
-    counter = counter + 1L
-    data[[counter]] = fread(text = remove_comment(lines), col.names = col_names,
-      sep = ",", quote = "'", na.strings = "?", blank.lines.skip = TRUE,
-      header = FALSE, colClasses = mapped_col_classes
-    )
+  while (length(lines) > 0L) {
+    tmp = try(fread(text = lines, col.names = col_names,
+      sep = ",", quote = quote_char, na.strings = "?", blank.lines.skip = TRUE,
+      header = FALSE, colClasses = mapped_col_classes), silent = TRUE)
+
+    if (inherits(tmp, "try-error")) {
+      if (quote_char != "'") {
+        # try again with single quote
+        quote_char = "'"
+      } else {
+        stop(tmp)
+      }
+    } else {
+      data[[counter]] = tmp
+      counter = counter + 1L
+      lines = remove_comment(readLines(con, n = max_lines, warn = FALSE, ok = TRUE))
+    }
   }
 
-  data = if (counter == 1L) data[[1L]] else rbindlist(data, use.names = TRUE, fill = TRUE)
+  data = if (counter == 2L) data[[1L]] else rbindlist(data, use.names = TRUE, fill = TRUE)
 
   for (j in which(col_classes == "integer")) {
     x = data[[j]]
