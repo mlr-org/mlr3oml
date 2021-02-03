@@ -18,6 +18,7 @@
 #'   Default is `FALSE`.
 #' * `mlr3oml.api_key`: API key to use. All operations supported by this package
 #'   work without an API key, but you might get rate limited without an API key.
+#'   If not set, defaults to the value of the environment variable `OPENMLAPIKEY`.
 #' * `mlr3oml.arff_parser`: ARFF parser to use, defaults to the internal one relies
 #'   on [data.table::fread()]. Can also be set to `"RWeka"` for the parser in
 #'   \CRANpkg{RWeka} or `"farff"` for the reader implemented in \CRANpkg{farff}.

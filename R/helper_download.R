@@ -1,6 +1,17 @@
+add_auth_string = function(url) {
+  api_key = getOption("mlr3oml.api_key") %??% Sys.getenv("OPENMLAPIKEY")
+  if (!nzchar(api_key)) {
+    return(url)
+  }
+
+  assert_string(api_key, min.chars = 32L)
+  sprintf("%s?api_key=%s", url, api_key)
+}
+
+
 download_file = function(url, path, status_ok = integer()) {
   lg$debug("Downloading to local file system", url = url, path = path)
-  res = curl::curl_fetch_disk(url, path)
+  res = curl::curl_fetch_disk(add_auth_string(url), path)
   status_code = res$status_code
 
   if (status_code %nin% c(200L, status_ok)) {
@@ -18,11 +29,6 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
   url = sprintf(url, ...)
 
   lg$info("Retrieving JSON", url = url)
-
-  api_key = getOption("mlr3oml.api_key")
-  if (!is.null(api_key)) {
-    url = sprintf("%s?api_key=%s", url, api_key)
-  }
 
   status = download_file(url, path, status_ok = status_ok)
   if (status != 200L) {

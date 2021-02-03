@@ -18,7 +18,7 @@ test_that("data is cached", {
 
   # ensure that cache is not overwritten
   mtime_before = file.mtime(path_data)
-  OMLData$new(9, cache = path)$data
+  expect_data_table(OMLData$new(9, cache = path)$data)
   expect_equal(mtime_before, file.mtime(path_data))
 
   # increase version number of data desc
@@ -33,14 +33,14 @@ test_that("data is cached", {
   # ensure that cache gets invalidated
   oml_data = OMLData$new(9, cache = path)
   expect_false(test_file_exists(path_data))
-  force(oml_data$data)
+  expect_data_table(oml_data$data)
   expect_lt(mtime_before, file.mtime(path_data))
 })
 
 test_that("study 99 can be loaded and parsed", {
   data_ids = list_oml_data_sets(tag = "study_99")$data_id
   cache = TRUE
-  options(warn = 2L)
+  withr::local_options(list(warn = 2L))
 
   for (data_id in data_ids) {
     odata = OMLData$new(data_id, cache = cache)

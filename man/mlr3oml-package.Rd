@@ -30,6 +30,7 @@ Alternatively, you can specify a path on the local file system here.
 Default is \code{FALSE}.
 \item \code{mlr3oml.api_key}: API key to use. All operations supported by this package
 work without an API key, but you might get rate limited without an API key.
+If not set, defaults to the value of the environment variable \code{OPENMLAPIKEY}.
 \item \code{mlr3oml.arff_parser}: ARFF parser to use, defaults to the internal one relies
 on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code{"RWeka"} for the parser in
 \CRANpkg{RWeka} or \code{"farff"} for the reader implemented in \CRANpkg{farff}.

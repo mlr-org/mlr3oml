@@ -33,7 +33,8 @@ Suggests:
     farff,
     foreign,
     qs,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Encoding: UTF-8
 NeedsCompilation: yes
 Config/testthat/edition: 3
