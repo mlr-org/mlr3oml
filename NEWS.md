@@ -1,3 +1,8 @@
+# mlr3oml 0.4.2
+
+* If not set via option `mlr3oml.api_key`, the API key is retrieved from the
+  environment variable `OPENMLAPIKEY`.
+
 # mlr3oml 0.4.1
 
 * Added a heuristic to detect the quote char.
