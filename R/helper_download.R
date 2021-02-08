@@ -1,6 +1,13 @@
-add_auth_string = function(url) {
-  api_key = getOption("mlr3oml.api_key") %??% Sys.getenv("OPENMLAPIKEY")
-  if (!nzchar(api_key)) {
+get_api_key = function() {
+  key = getOption("mlr3oml.api_key") %??% Sys.getenv("OPENMLAPIKEY")
+  if (nzchar(key))
+    return(key)
+
+  NA_character_
+}
+
+add_auth_string = function(url, api_key = get_api_key()) {
+  if (is.na(api_key)) {
     return(url)
   }
 
@@ -9,7 +16,7 @@ add_auth_string = function(url) {
 }
 
 
-download_file = function(url, path, status_ok = integer()) {
+download_file = function(url, path, status_ok = integer(), api_key = get_api_key()) {
   lg$debug("Downloading to local file system", url = url, path = path)
   res = curl::curl_fetch_disk(add_auth_string(url), path)
   status_code = res$status_code
@@ -28,9 +35,10 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
 
-  lg$info("Retrieving JSON", url = url)
+  api_key = get_api_key()
+  lg$info("Retrieving JSON", url = url, authenticated = !is.na(api_key))
 
-  status = download_file(url, path, status_ok = status_ok)
+  status = download_file(url, path, status_ok = status_ok, api_key = api_key)
   if (status != 200L) {
       return(NULL)
   }
@@ -44,9 +52,10 @@ get_arff = function(url, sparse = FALSE, ...) {
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
 
-  lg$info("Downloading ARFF", url = url)
+  api_key = get_api_key()
+  lg$info("Downloading ARFF", url = url, authenticated = !is.na(api_key))
 
-  download_file(url, path)
+  download_file(url, path, api_key = api_key)
 
   lg$debug("Start processing ARFF file", path = path)
   parser = getOption("mlr3oml.arff_parser", "internal")
