@@ -156,3 +156,9 @@ OMLTask = R6Class("OMLTask",
     .resampling = NULL
   )
 )
+
+#' @importFrom mlr3 as_task
+#' @export
+as_task.OMLTask = function(x, ...) {
+  x$task
+}

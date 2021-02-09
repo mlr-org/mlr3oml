@@ -191,3 +191,9 @@ OMLData = R6Class("OMLData",
     .features = NULL
   )
 )
+
+#' @importFrom mlr3 as_task
+#' @export
+as_task.OMLData = function(x, target_names = NULL, ...) {
+  x$task()
+}

@@ -24,7 +24,7 @@ Imports:
     data.table,
     jsonlite,
     lgr,
-    mlr3,
+    mlr3 (>= 0.10.0),
     mlr3misc (>= 0.7.0),
     R6,
     stringi
