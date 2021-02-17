@@ -22,7 +22,12 @@ download_file = function(url, path, status_ok = integer(), api_key = get_api_key
   status_code = res$status_code
 
   if (status_code %nin% c(200L, status_ok)) {
-    msg = jsonlite::fromJSON(readLines(res$content, warn = FALSE))$error$message
+    parsed = try(jsonlite::fromJSON(readLines(res$content, warn = FALSE)), silent = TRUE)
+    if (!inherits(parsed, "try-error")) {
+      msg = parsed$error$message
+    } else {
+      msg = strtrim(readLines(res$content, warn = FALSE), 500L)
+    }
     stopf("Error downloading '%s' (status code: %i, message: '%s')", url, status_code, msg)
   }
 
