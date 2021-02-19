@@ -16,22 +16,33 @@ add_auth_string = function(url, api_key = get_api_key()) {
 }
 
 
-download_file = function(url, path, status_ok = integer(), api_key = get_api_key()) {
+download_file = function(url, path, status_ok = integer(), api_key = get_api_key(), retries = 1L) {
   lg$debug("Downloading to local file system", url = url, path = path)
-  res = curl::curl_fetch_disk(add_auth_string(url), path)
-  status_code = res$status_code
 
-  if (status_code %nin% c(200L, status_ok)) {
+  for (retry in seq_len(retries)) {
+    res = curl::curl_fetch_disk(add_auth_string(url), path)
+    status_code = res$status_code
+
+    if (status_code %in% c(status_codes$ok, status_ok)) {
+      return(res$status_code)
+    }
+
     parsed = try(jsonlite::fromJSON(readLines(res$content, warn = FALSE)), silent = TRUE)
     if (!inherits(parsed, "try-error")) {
       msg = parsed$error$message
     } else {
-      msg = strtrim(paste0(readLines(res$content, warn = FALSE), collapse = ""), 1000L)
+      msg = substr(paste0(readLines(res$content, warn = FALSE), collapse = ""), 1L, 1000L)
     }
-    stopf("Error downloading '%s' (status code: %i, message: '%s')", url, status_code, msg)
-  }
 
-  return(res$status_code)
+    if (retry < retries && status_code %in% status_codes$temp) {
+      delay = abs(stats::rnorm(1L, mean = 5))
+      lg$debug("Error downloading file, retrying in %.2f seconds", delay,
+        url = url, status_code = status_code, msg = msg)
+      Sys.sleep(delay)
+    } else {
+      stopf("Error downloading '%s' (status code: %i, message: '%s')", url, status_code, msg)
+    }
+  }
 }
 
 
@@ -43,11 +54,7 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
   api_key = get_api_key()
   lg$info("Retrieving JSON", url = url, authenticated = !is.na(api_key))
 
-  status = download_file(url, path, status_ok = status_ok, api_key = api_key)
-  if (status != 200L) {
-      return(NULL)
-  }
-
+  status = download_file(url, path, status_ok = status_ok, api_key = api_key, retries = 3L)
   jsonlite::fromJSON(path, simplifyVector = simplify_vector, simplifyDataFrame = simplify_data_frame)
 }
 
@@ -65,7 +72,7 @@ get_arff = function(url, sparse = FALSE, ...) {
   lg$debug("Start processing ARFF file", path = path)
   parser = getOption("mlr3oml.arff_parser", "internal")
 
-  if (sparse ||  parser == "RWeka") {
+  if (sparse || parser == "RWeka") {
     if (!requireNamespace("RWeka", quietly = TRUE)) {
       stopf("Failed to parse arff file, install 'RWeka'")
     }
