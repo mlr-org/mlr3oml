@@ -26,7 +26,7 @@ download_file = function(url, path, status_ok = integer(), api_key = get_api_key
     if (!inherits(parsed, "try-error")) {
       msg = parsed$error$message
     } else {
-      msg = strtrim(readLines(res$content, warn = FALSE), 500L)
+      msg = strtrim(paste0(readLines(res$content, warn = FALSE), collapse = ""), 1000L)
     }
     stopf("Error downloading '%s' (status code: %i, message: '%s')", url, status_code, msg)
   }
