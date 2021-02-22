@@ -29,7 +29,7 @@
 #' @param ... (any)\cr
 #'   Additional filters as named arguments.
 #'
-#' @return (`data.table()`) of results, or `NULL` if no data set matches the criteria.
+#' @return (`data.table()`) of results, or a Null data.table if no data set matches the criteria.
 #'
 #' @references
 #' `r format_bib("openml_r", "vanschoren2014")`
@@ -41,6 +41,7 @@
 #' }
 list_oml_data_sets = function(data_id = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
+  limit = assert_count(limit, positive = TRUE, coerce = TRUE)
 
   dots = list(
     data_id = data_id,
@@ -50,30 +51,14 @@ list_oml_data_sets = function(data_id = NULL, number_instances = NULL, number_fe
     number_missing_values = number_missing_values,
     tag = tag
   )
-  limit = assert_count(limit, positive = TRUE, coerce = TRUE)
   dots = insert_named(discard(dots, is.null), list(...))
+  tab = get_paginated_table(dots, "data", limit)
 
-
-  chunk_size = 1000L
-  tab = data.table()
-
-  while (nrow(tab) < limit) {
-    dots$limit = min(limit - nrow(tab), chunk_size)
-    query = build_filter_query("data", dots)
-
-    result = get_json(query, status_ok = 412L)
-    if (is.null(result))
-      break
-
-    tab = rbind(tab, setDT(result$data$dataset))
-    dots$offset = dots$offset %??% 0L + chunk_size
+  if (nrow(tab)) {
+    setnames(tab, "did", "data_id")
+    qualities = transpose_name_value(tab$quality, as_integer = TRUE)
+    rcbind(remove_named(tab, c("md5_checksum", "file_id", "format", "quality")), qualities)
   }
 
-  if (nrow(tab) == 0L) {
-    return(NULL)
-  }
-
-  setnames(tab, "did", "data_id")
-  qualities = transpose_name_value(tab$quality, as_integer = TRUE)
-  rcbind(remove_named(tab, c("md5_checksum", "file_id", "format", "quality")), qualities)
+  return(tab)
 }

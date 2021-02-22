@@ -42,7 +42,7 @@ Default is 5000.}
 Additional filters as named arguments.}
 }
 \value{
-(\code{data.table()}) of results, or \code{NULL} if no data set matches the criteria.
+(\code{data.table()}) of results, or a Null data.table if no data set matches the criteria.
 }
 \description{
 This function allows to find data sets on \url{https://openml.org/d} using

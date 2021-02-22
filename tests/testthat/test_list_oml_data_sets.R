@@ -8,5 +8,5 @@ test_that("list_oml_data_sets", {
     must.include = c("data_id", "name", "version", "status", "NumberOfFeatures"))
 
   expect_data_table(list_oml_data_sets(data_id = c(9, 11)), nrows = 2)
-  expect_null(list_oml_data_sets(data_id = 1))
+  expect_data_table(list_oml_data_sets(data_id = 1), nrows = 0L, ncols = 0L)
 })
