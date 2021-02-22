@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("OMLData iris", {
   oml_data = OMLData$new(61)
   expect_oml_data(oml_data)
