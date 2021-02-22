@@ -2,6 +2,7 @@
 
 * If not set via option `mlr3oml.api_key`, the API key is retrieved from the
   environment variable `OPENMLAPIKEY`.
+* Implemented a retry mechanism as a workaround for temporary connection errors.
 
 # mlr3oml 0.4.1
 

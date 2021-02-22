@@ -20,26 +20,26 @@ download_file = function(url, path, status_ok = integer(), api_key = get_api_key
   lg$debug("Downloading to local file system", url = url, path = path)
 
   for (retry in seq_len(retries)) {
-    oml_error_code = NA_integer_
+    oml_code = NA_integer_
     res = curl::curl_fetch_disk(add_auth_string(url), path)
     status_code = res$status_code
 
-    if (status_code %in% c(status_codes$ok, status_ok)) {
+    if (status_code %in% c(http_codes$ok, status_ok)) {
       return(res$status_code)
     }
 
     parsed = try(jsonlite::fromJSON(readLines(res$content, warn = FALSE)), silent = TRUE)
     if (inherits(parsed, "try-error")) {
       msg = substr(paste0(readLines(res$content, warn = FALSE), collapse = ""), 1L, 1000L)
-      oml_error_code = get_oml_error_code(msg)
+      oml_code = get_oml_code(msg)
     } else {
       msg = parsed$error$message
     }
 
-    if (retry < retries && oml_error_code %in% oml_error_codes$temp) {
+    if (retry < retries && oml_code %in% oml_codes$temp) {
       delay = abs(stats::rnorm(1L, mean = 5))
       lg$debug("Error downloading file, retrying in %.2f seconds", delay,
-        url = url, status_code = status_code, msg = msg, oml_error_code = oml_error_code)
+        url = url, status_code = status_code, msg = msg, oml_code = oml_code)
       Sys.sleep(delay)
     } else {
       stopf("Error downloading '%s' (status code: %i, message: '%s')", url, status_code, msg)
@@ -99,7 +99,7 @@ get_paginated_table = function(dots, type, limit = 5000L) {
     query = build_filter_query(type, dots)
 
     result = get_json(query, status_ok = 412L)
-    if (!is.null(result$error) && result$error$code %in% oml_error_codes$no_more_results) {
+    if (!is.null(result$error) && as.integer(result$error$code) %in% oml_codes$no_more_results) {
       # no more results
       break
     }
