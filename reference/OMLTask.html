@@ -175,7 +175,7 @@ Name of the targets, as extracted from the OpenML task description.</p></dd>
 Name of the features, as extracted from the <a href='OMLData.html'>OMLData</a> object.</p></dd>
 
 <dt><code>task</code></dt><dd><p>(<a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a>)<br />
-Creates a <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> using the target attribute of the task desc.</p></dd>
+Creates a <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> using the target attribute of the task description.</p></dd>
 
 <dt><code>resampling</code></dt><dd><p>(<a href='https://mlr3.mlr-org.com/reference/Resampling.html'>mlr3::Resampling</a>)<br />
 Creates a <a href='https://mlr3.mlr-org.com/reference/mlr_resamplings_custom.html'>ResamplingCustom</a> using the target attribute of the task description.</p></dd>
@@ -233,7 +233,7 @@ For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/refe
 <span class='va'>otask</span> <span class='op'>=</span> <span class='va'>OMLTask</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>59</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error: Error downloading 'https://www.openml.org/api/v1/json/task/59' (status code: 412, message: '&lt;oml:error xmlns:oml="http://openml.org/openml"&gt;	&lt;oml:code&gt;107&lt;/oml:code&gt;	&lt;oml:message&gt;Database connection error. Usually due to high server load. Please wait for N seconds and try again. &lt;/oml:message&gt;	&lt;/oml:error&gt;')</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>target_names</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;OMLTask:59:Task 59: iris (Supervised Classification)&gt; (150x5)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>target_names</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "class"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>feature_names</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "sepallength" "sepalwidth"  "petallength" "petalwidth" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>otask</span><span class='op'>$</span><span class='va'>tags</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "basic"     "study_1"   "study_41"  "study_50"  "study_7"   "study_89" 
