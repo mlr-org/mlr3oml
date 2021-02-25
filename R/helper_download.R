@@ -16,78 +16,120 @@ add_auth_string = function(url, api_key = get_api_key()) {
 }
 
 
-download_file = function(url, path, status_ok = integer(), api_key = get_api_key(), retries = 1L) {
-  lg$debug("Downloading to local file system", url = url, path = path)
-
-  for (retry in seq_len(retries)) {
-    oml_code = NA_integer_
-    res = curl::curl_fetch_disk(add_auth_string(url), path)
-    status_code = res$status_code
-
-    if (status_code %in% c(http_codes$ok, status_ok)) {
-      return(res$status_code)
-    }
-
-    parsed = try(jsonlite::fromJSON(readLines(res$content, warn = FALSE)), silent = TRUE)
-    if (inherits(parsed, "try-error")) {
-      msg = substr(paste0(readLines(res$content, warn = FALSE), collapse = ""), 1L, 1000L)
-      oml_code = get_oml_code(msg)
-    } else {
-      msg = parsed$error$message
-    }
-
-    if (retry < retries && oml_code %in% oml_codes$temp) {
-      delay = abs(stats::rnorm(1L, mean = 5))
-      lg$debug("Error downloading file, retrying in %.2f seconds", delay,
-        url = url, status_code = status_code, msg = msg, oml_code = oml_code)
-      Sys.sleep(delay)
-    } else {
-      stopf("Error downloading '%s' (status code: %i, message: '%s')", url, status_code, msg)
-    }
-  }
+download_error = function(response) {
+  stopf("Error downloading '%s' (http code: %i, oml code: %i, message: '%s'",
+    response$url, response$http_code, response$oml_code, response$message)
 }
 
 
-get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE, status_ok = integer()) {
+download_file = function(url, path, api_key = get_api_key()) {
+  lg$debug("Downloading to local file system", url = url, path = path, authenticated = !is.na(api_key))
+  response = curl::curl_fetch_disk(add_auth_string(url, api_key = api_key), path)
+  http_code = response$status_code
+  ok = http_code == 200L
+  oml_code = NA_integer_
+  message = NA_character_
+
+  if (!ok) {
+    lg$debug("Server response not ok", http_code = http_code)
+    content = stri_trim_both(paste0(readLines(path, warn = FALSE), collapse = "\n"))
+    if (stri_startswith_fixed(content, "{")) {
+      lg$debug("JSON response received", content = content)
+      json = jsonlite::fromJSON(content)
+      oml_code = as.integer(json$error$code)
+      message = json$error$message
+    } else if (stri_startswith_fixed(content, "<oml:error")) {
+      lg$debug("XML response received", content = content)
+      oml_code = get_oml_code(content)
+      message = get_oml_message(content)
+    } else {
+      lg$debug("Unknown response received", content = content)
+      message = content
+    }
+  }
+
+  return(set_class(list(
+    url = url,
+    ok = ok,
+    http_code = http_code,
+    oml_code = oml_code,
+    message = message
+  ), "server_response"))
+}
+
+
+get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE, api_key = get_api_key(), retries = 3L, error_on_fail = TRUE) { # nolint
   path = tempfile(fileext = ".json")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
 
-  api_key = get_api_key()
   lg$info("Retrieving JSON", url = url, authenticated = !is.na(api_key))
 
-  status = download_file(url, path, status_ok = status_ok, api_key = api_key, retries = 3L)
-  json = jsonlite::fromJSON(path, simplifyVector = simplify_vector, simplifyDataFrame = simplify_data_frame)
+  for (retry in seq_len(retries)) {
+    response = download_file(url, path, api_key = api_key)
+
+    if (response$ok) {
+      json = jsonlite::fromJSON(path, simplifyVector = simplify_vector, simplifyDataFrame = simplify_data_frame)
+      return(json)
+    } else if (retry < retries) {
+      if (response$oml_code %in% c(412L)) {
+        delay = abs(rnorm(1L, mean = 10))
+        lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
+        Sys.sleep(delay)
+      } else {
+        break
+      }
+    }
+  }
+
+  if (error_on_fail) {
+    download_error(response)
+  } else {
+    return(response)
+  }
 }
 
 
-get_arff = function(url, sparse = FALSE, ...) {
+
+get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
   path = tempfile(fileext = ".arff")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
 
-  download_file(url, path)
+  lg$info("Retrieving ARFF", url = url, authenticated = !is.na(api_key))
 
-  lg$debug("Start processing ARFF file", path = path)
-  parser = getOption("mlr3oml.arff_parser", "internal")
+  for (retry in seq_len(retries)) {
+    response = download_file(url, path, api_key = api_key)
 
-  if (sparse || parser == "RWeka") {
-    if (!requireNamespace("RWeka", quietly = TRUE)) {
-      stopf("Failed to parse arff file, install 'RWeka'")
+    if (response$ok) {
+      lg$debug("Start processing ARFF file", path = path)
+      parser = getOption("mlr3oml.arff_parser", "internal")
+
+      if (sparse || parser == "RWeka") {
+        if (!requireNamespace("RWeka", quietly = TRUE)) {
+          stopf("Failed to parse arff file, install 'RWeka'")
+        }
+        tab = setDT(RWeka::read.arff(path))
+      } else if (parser == "farff") {
+        tab = setDT(utils::getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
+      } else if (parser == "internal") {
+        tab = read_arff(path)
+      } else {
+        stopf("Unknown parser '%s'", parser)
+      }
+
+      lg$debug("Finished processing ARFF file", nrow = nrow(tab), ncol = ncol(tab),
+        colnames = names(tab))
+
+      return(tab)
+    } else if (retry < retries && response$http_code >= 500L) {
+      delay = abs(rnorm(1L, mean = 10))
+      lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
+      Sys.sleep(delay)
     }
-    tab = setDT(RWeka::read.arff(path))
-  } else if (parser == "farff") {
-    tab = setDT(utils::getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
-  } else if (parser == "internal") {
-    tab = read_arff(path)
-  } else {
-    stopf("Unknown parser '%s'", parser)
   }
 
-  lg$debug("Finished processing ARFF file", nrow = nrow(tab), ncol = ncol(tab),
-    colnames = names(tab))
-
-  return(tab)
+  download_error(response)
 }
 
 get_paginated_table = function(dots, type, limit = 5000L) {
@@ -98,15 +140,19 @@ get_paginated_table = function(dots, type, limit = 5000L) {
     dots$limit = min(limit - nrow(tab), chunk_size)
     query = build_filter_query(type, dots)
 
-    result = get_json(query, status_ok = 412L)
-    if (!is.null(result$error) && as.integer(result$error$code) %in% oml_codes$no_more_results) {
-      # no more results
-      break
+    response = get_json(query, error_on_fail = FALSE)
+    if (inherits(response, "server_response")) {
+      if (response$oml_code %in% c(372L, 482L)) {
+        # no more results
+        break
+      } else {
+        download_error(response)
+      }
     }
 
-    new_rows = setDT(result[[1L]][[1L]])
+    new_rows = setDT(response[[1L]][[1L]])
     tab = rbind(tab, new_rows)
-    if (nrow(new_rows) < limit) {
+    if (nrow(new_rows) < dots$limit) {
       # fetched all results
       break
     }
