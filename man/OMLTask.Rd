@@ -77,7 +77,7 @@ Name of the targets, as extracted from the OpenML task description.}
 Name of the features, as extracted from the \link{OMLData} object.}
 
 \item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
-Creates a \link[mlr3:Task]{mlr3::Task} using the target attribute of the task desc.}
+Creates a \link[mlr3:Task]{mlr3::Task} using the target attribute of the task description.}
 
 \item{\code{resampling}}{(\link[mlr3:Resampling]{mlr3::Resampling})\cr
 Creates a \link[mlr3:mlr_resamplings_custom]{ResamplingCustom} using the target attribute of the task description.}

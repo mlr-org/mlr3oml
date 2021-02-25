@@ -114,7 +114,7 @@ OMLTask = R6Class("OMLTask",
     },
 
     #' @field task ([mlr3::Task])\cr
-    #' Creates a [mlr3::Task] using the target attribute of the task desc.
+    #' Creates a [mlr3::Task] using the target attribute of the task description.
     task = function() {
       task = switch(self$desc$task_type,
         # FIXME: positive class?

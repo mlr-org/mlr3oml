@@ -20,9 +20,15 @@ read_arff = function(path) {
     .Call(c_remove_comment, lines)
   }
 
-  unquote = function(x, quote = "'") {
-    i = which(stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote))
-    x[i] = stri_sub(x[i], 2L, -2L)
+  unquote = function(x) {
+    # this prevents double unquoting;
+    # lines already unquoted w.r.t ' do not get unquote w.r.t. " again
+    i = FALSE
+
+    for (quote in c("'", "\"")) {
+      i = !i & stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote)
+      x[i] = stri_sub(x[i], 2L, -2L)
+    }
     x
   }
 
@@ -104,7 +110,7 @@ read_arff = function(path) {
   }
 
   for (j in which(col_classes == "character")) {
-    set(data, j = j, value = unquote(data[[j]], "\""))
+    set(data, j = j, value = unquote(data[[j]]))
   }
 
   for (j in names(lvls)) {

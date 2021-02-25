@@ -47,3 +47,8 @@ test_that("fallback for sparse files", {
     expect_error(odata$data, "RWeka")
   }
 })
+
+test_that("unquoting works", {
+  task_id = 3L
+  expect_false(anyMissing(OMLTask$new(task_id)$data$data))
+})

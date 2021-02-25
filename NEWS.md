@@ -1,3 +1,7 @@
+# mlr3oml 0.4.3
+
+* Fixed a bug regarding unquoting fields in ARFF files.
+
 # mlr3oml 0.4.2
 
 * If not set via option `mlr3oml.api_key`, the API key is retrieved from the
