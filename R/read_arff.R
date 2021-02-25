@@ -26,7 +26,7 @@ read_arff = function(path) {
     i = FALSE
 
     for (quote in c("'", "\"")) {
-      i = !i & stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote)
+      i = !i & !is.na(x) & stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote)
       x[i] = stri_sub(x[i], 2L, -2L)
     }
     x
