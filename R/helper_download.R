@@ -72,7 +72,7 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
       json = jsonlite::fromJSON(path, simplifyVector = simplify_vector, simplifyDataFrame = simplify_data_frame)
       return(json)
     } else if (retry < retries) {
-      if (response$oml_code %in% c(412L)) {
+      if (response$oml_code %in% c(107L)) {
         delay = abs(rnorm(1L, mean = 10))
         lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
         Sys.sleep(delay)
