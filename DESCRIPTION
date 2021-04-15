@@ -1,6 +1,6 @@
 Package: mlr3oml
 Title: Connector Between 'mlr3' and 'OpenML'
-Version: 0.4.2
+Version: 0.4.3
 Authors@R:
     person(given = "Michel",
            family = "Lang",
