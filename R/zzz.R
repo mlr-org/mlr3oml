@@ -1,6 +1,7 @@
 #' @import checkmate
 #' @import data.table
 #' @import mlr3misc
+#' @importFrom stats rnorm
 #' @importFrom mlr3 as_data_backend TaskClassif TaskRegr
 #' @importFrom R6 R6Class
 #'

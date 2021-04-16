@@ -73,7 +73,7 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
       return(json)
     } else if (retry < retries) {
       if (response$oml_code %in% c(107L)) {
-        delay = abs(rnorm(1L, mean = 10))
+        delay = max(rnorm(1L, mean = 10), 0)
         lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
         Sys.sleep(delay)
       } else {
@@ -123,7 +123,7 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
 
       return(tab)
     } else if (retry < retries && response$http_code >= 500L) {
-      delay = abs(rnorm(1L, mean = 10))
+      delay = max(rnorm(1L, mean = 10), 0)
       lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
       Sys.sleep(delay)
     }
