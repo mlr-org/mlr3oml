@@ -52,3 +52,10 @@ test_that("unquoting works", {
   task_id = 3L
   expect_false(anyMissing(OMLTask$new(task_id)$data$data))
 })
+
+test_that("TaskSurv creation", {
+  skip_if_not_installed("mlr3proba")
+  data_id = 1228
+  odata = OMLData$new(data_id)
+  expect_class(odata$task(c("time", "event")), "TaskSurv")
+})

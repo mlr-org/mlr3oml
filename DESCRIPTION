@@ -32,6 +32,7 @@ Suggests:
     RWeka,
     farff,
     foreign,
+    mlr3proba,
     qs,
     testthat (>= 3.0.0),
     withr

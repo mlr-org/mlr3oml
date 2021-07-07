@@ -74,7 +74,7 @@ Number of columns, as extracted from the \link{OMLData} object.}
 Name of the targets, as extracted from the OpenML task description.}
 
 \item{\code{feature_names}}{(\code{character()})\cr
-Name of the features, as extracted from the \link{OMLData} object.}
+Name of the features (without targets of this \link{OMLTask}).}
 
 \item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
 Creates a \link[mlr3:Task]{mlr3::Task} using the target attribute of the task description.}

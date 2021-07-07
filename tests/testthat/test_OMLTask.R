@@ -15,3 +15,9 @@ test_that("data backend", {
   oml_task = OMLTask$new(59)
   expect_backend(as_data_backend(oml_task))
 })
+
+test_that("TaskSurv", {
+  skip_if_not_installed("mlr3proba")
+  oml_task = OMLTask$new(7304)
+  expect_class(oml_task$task, "TaskSurv")
+})

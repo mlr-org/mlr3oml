@@ -30,3 +30,8 @@ new_task_regr = function(name, data, target) {
 
   TaskRegr$new(name, data, target)
 }
+
+new_task_surv = function(name, data, target) {
+  require_namespaces("mlr3proba")
+  mlr3proba::TaskSurv$new(name, data, target)
+}
