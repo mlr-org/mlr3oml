@@ -1,5 +1,9 @@
 message("Using API Key: ", nzchar(Sys.getenv("OPENMLAPIKEY")))
 
+if (ci_has_env("mlr3devel")) {
+  remotes::install_github("mlr-org/mlr3")
+}
+
 # installs dependencies, runs R CMD check, runs covr::codecov()
 do_package_checks()
 
