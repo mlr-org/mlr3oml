@@ -1,3 +1,7 @@
+# mlr3oml 0.5.0
+
+* Support for downloading survival tasks (via `mlr3proba`).
+
 # mlr3oml 0.4.3
 
 * Fixed a bug regarding unquoting fields in ARFF files.
