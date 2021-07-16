@@ -81,15 +81,29 @@ OMLData = R6Class("OMLData",
     #'   Name(s) of the target columns, or `NULL` for the default columns.
     task = function(target_names = NULL) {
       target = target_names %??% self$target_names
+      assert_subset(target, c(self$target_names, self$feature_names))
+
       if (length(target) == 0L) {
         stopf("Data set with id '%i' does not have a default target attribute", self$id)
       }
 
-      switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
-        "nominal" = new_task_classif(self$name, self$data, target = target),
-        "numeric" = new_task_regr(self$name, self$data, target = target),
-        stop("Unknown task type")
-      )
+      constructor = NULL
+
+      if (length(target) == 1L) {
+        constructor = switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
+          "nominal" = new_task_classif,
+          "numeric" = new_task_regr,
+          NULL
+        )
+      } else if (length(target) == 2L) {
+        constructor = new_task_surv
+      }
+
+      if (is.null(constructor)) {
+        stopf("Unable to determine the task type")
+      }
+
+      constructor(self$name, self$data, target = target)
     }
   ),
 

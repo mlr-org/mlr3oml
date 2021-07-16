@@ -104,23 +104,34 @@ OMLTask = R6Class("OMLTask",
     #' @field target_names (`character()`)\cr
     #' Name of the targets, as extracted from the OpenML task description.
     target_names = function() {
-      make.names(self$desc$input$source_data$target_feature)
+      source_data = self$desc$input$source_data
+      targets = switch(self$desc$task_type,
+        "Supervised Classification" =,
+        "Supervised Regression" = source_data$target_feature,
+        "Survival Analysis" = unlist(source_data[c("target_feature_left", "target_feature_right", "target_feature_event")], use.names = FALSE),
+        stopf("Unsupoorted task type '%s'", self$desc$task_type)
+      )
+
+      make.names(targets)
     },
 
     #' @field feature_names (`character()`)\cr
-    #' Name of the features, as extracted from the [OMLData] object.
+    #' Name of the features (without targets of this [OMLTask]).
     feature_names = function() {
-      self$data$feature_names
+      setdiff(c(self$data$target_names, self$data$feature_names), self$target_names)
     },
 
     #' @field task ([mlr3::Task])\cr
     #' Creates a [mlr3::Task] using the target attribute of the task description.
     task = function() {
-      task = switch(self$desc$task_type,
+      constructor = switch(self$desc$task_type,
         # FIXME: positive class?
-        "Supervised Classification" = new_task_classif(self$name, self$data$data, target = self$target_names),
-        "Supervised Regression" = new_task_regr(self$name, self$data$data, target = self$target_names)
+        "Supervised Classification" = new_task_classif,
+        "Supervised Regression" = new_task_regr,
+        "Survival Analysis" = new_task_surv,
+        stopf("Unsupoorted task type '%s'", self$desc$task_type)
       )
+      task = constructor(self$name, self$data$data, target = self$target_names)
       task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
       task
     },
