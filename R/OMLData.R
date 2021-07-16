@@ -93,7 +93,7 @@ OMLData = R6Class("OMLData",
         constructor = switch(as.character(self$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
           "nominal" = new_task_classif,
           "numeric" = new_task_regr,
-          stopf("Unknown task type")
+          NULL
         )
       } else if (length(target) == 2L) {
         constructor = new_task_surv
