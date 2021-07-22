@@ -206,30 +206,18 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'>list_oml_tasks</span><span class='op'>(</span>number_instances <span class='op'>=</span> <span class='fl'>150</span>, number_features <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      task_id                             task_type data_id
-#&gt;   1:      59             Supervised Classification      61
-#&gt;   2:     118                        Learning Curve      61
-#&gt;   3:     289             Supervised Classification      61
-#&gt;   4:    1758                        Learning Curve      61
-#&gt;   5:    1823             Supervised Classification      61
-#&gt;  ---                                                      
-#&gt; 487:  360896 Supervised Data Stream Classification   42535
-#&gt; 488:  360915                            Clustering      61
-#&gt; 489:  360927             Supervised Classification      61
-#&gt; 490:  360928             Supervised Classification      61
-#&gt; 491:  360929             Supervised Classification      61
-#&gt;                                  name status MajorityClassSize
-#&gt;   1:                             iris active                50
-#&gt;   2:                             iris active                50
-#&gt;   3:                             iris active                50
-#&gt;   4:                             iris active                50
-#&gt;   5:                             iris active                50
-#&gt;  ---                                                          
-#&gt; 487: TEST10e627dcde-UploadTestWithURL active                NA
-#&gt; 488:                             iris active                50
-#&gt; 489:                             iris active                50
-#&gt; 490:                             iris active                50
-#&gt; 491:                             iris active                50
+</div><div class='output co'>#&gt;      task_id                 task_type data_id name status MajorityClassSize
+#&gt;   1:      59 Supervised Classification      61 iris active                50
+#&gt;   2:     118            Learning Curve      61 iris active                50
+#&gt;   3:     289 Supervised Classification      61 iris active                50
+#&gt;   4:    1758            Learning Curve      61 iris active                50
+#&gt;   5:    1823 Supervised Classification      61 iris active                50
+#&gt;  ---                                                                        
+#&gt; 489:  360927 Supervised Classification      61 iris active                50
+#&gt; 490:  360928 Supervised Classification      61 iris active                50
+#&gt; 491:  360929 Supervised Classification      61 iris active                50
+#&gt; 492:  360943                Clustering      61 iris active                50
+#&gt; 493:  360944                Clustering      61 iris active                50
 #&gt;      MaxNominalAttDistinctValues MinorityClassSize NumberOfClasses
 #&gt;   1:                           3                50               3
 #&gt;   2:                           3                50               3
@@ -237,11 +225,11 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 #&gt;   4:                           3                50               3
 #&gt;   5:                           3                50               3
 #&gt;  ---                                                              
-#&gt; 487:                          NA                NA              NA
-#&gt; 488:                           3                50               3
 #&gt; 489:                           3                50               3
 #&gt; 490:                           3                50               3
 #&gt; 491:                           3                50               3
+#&gt; 492:                           3                50               3
+#&gt; 493:                           3                50               3
 #&gt;      NumberOfFeatures NumberOfInstances NumberOfInstancesWithMissingValues
 #&gt;   1:                5               150                                  0
 #&gt;   2:                5               150                                  0
@@ -249,11 +237,11 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 #&gt;   4:                5               150                                  0
 #&gt;   5:                5               150                                  0
 #&gt;  ---                                                                      
-#&gt; 487:                5               150                                  0
-#&gt; 488:                5               150                                  0
 #&gt; 489:                5               150                                  0
 #&gt; 490:                5               150                                  0
 #&gt; 491:                5               150                                  0
+#&gt; 492:                5               150                                  0
+#&gt; 493:                5               150                                  0
 #&gt;      NumberOfMissingValues NumberOfNumericFeatures NumberOfSymbolicFeatures
 #&gt;   1:                     0                       4                        1
 #&gt;   2:                     0                       4                        1
@@ -261,11 +249,11 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 #&gt;   4:                     0                       4                        1
 #&gt;   5:                     0                       4                        1
 #&gt;  ---                                                                       
-#&gt; 487:                     0                       4                        1
-#&gt; 488:                     0                       4                        1
 #&gt; 489:                     0                       4                        1
 #&gt; 490:                     0                       4                        1
-#&gt; 491:                     0                       4                        1</div><div class='input'><span class='co'># }</span>
+#&gt; 491:                     0                       4                        1
+#&gt; 492:                     0                       4                        1
+#&gt; 493:                     0                       4                        1</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
