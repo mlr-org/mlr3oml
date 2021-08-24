@@ -73,7 +73,9 @@ list_oml_data_sets = function(data_id = NULL, data_name = NULL, number_instances
     number_classes = number_classes,
     number_missing_values = number_missing_values,
     tag = tag,
-    limit = limit)
+    limit = limit,
+    ...
+  )
 
   if (nrow(tab)) {
     setnames(tab, "did", "data_id")

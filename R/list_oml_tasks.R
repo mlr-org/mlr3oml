@@ -12,7 +12,8 @@ list_oml_tasks = function(task_id = NULL, data_id = NULL, number_instances = NUL
     number_classes = number_classes,
     number_missing_values = number_missing_values,
     tag = tag,
-    limit = limit
+    limit = limit,
+    ...
   )
 
   if (nrow(tab)) {

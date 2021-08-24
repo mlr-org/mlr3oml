@@ -8,7 +8,9 @@ list_oml_evaluations = function(run_id = NULL, task_id = NULL, measures = NULL, 
     task = task_id,
     "function" = measures,
     tag = tag,
-    limit = limit)
+    limit = limit,
+    ...
+  )
 
   if (nrow(tab)) {
     tab[, c("upload_time", "array_data") :=

@@ -9,7 +9,8 @@ list_oml_setups = function(flow_id = NULL, setup_id = NULL, tag = NULL, limit = 
     flow = flow_id,
     setup = setup_id,
     tag = tag,
-    limit = limit
+    limit = limit,
+    ...
   )
 
   if (nrow(tab)) {

@@ -7,7 +7,8 @@ list_oml_runs = function(run_id = NULL, task_id = NULL, tag = NULL, limit = getO
     run = run_id,
     task = task_id,
     tag = tag,
-    limit = limit
+    limit = limit,
+    ...
   )
 
   return(tab)

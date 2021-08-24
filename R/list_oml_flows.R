@@ -6,7 +6,8 @@ list_oml_flows = function(uploader = NULL, tag = NULL, limit = getOption("mlr3om
   tab = get_paginated_table("flow",
     uploader = uploader,
     tag = tag,
-    limit = limit
+    limit = limit,
+    ...
   )
 
   if (nrow(tab)) {
