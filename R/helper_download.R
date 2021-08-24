@@ -132,7 +132,9 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
   download_error(response)
 }
 
-get_paginated_table = function(dots, type, limit = 5000L) {
+get_paginated_table = function(type, limit = getOption("mlr3oml.limit", 5000L), ...) {
+  limit = assert_count(limit, positive = TRUE, coerce = TRUE)
+  dots = discard(list(...), is.null)
   chunk_size = 1000L
   tab = data.table()
 
@@ -150,9 +152,10 @@ get_paginated_table = function(dots, type, limit = 5000L) {
       }
     }
 
-    new_rows = setDT(response[[1L]][[1L]])
-    tab = rbind(tab, new_rows)
-    if (nrow(new_rows) < dots$limit) {
+    response = response[[c(1L, 1L)]]
+    response = setDT(map_if(response, is.data.frame, list))
+    tab = rbind(tab, response)
+    if (nrow(response) < dots$limit) {
       # fetched all results
       break
     }
