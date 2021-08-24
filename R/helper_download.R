@@ -132,10 +132,10 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
   download_error(response)
 }
 
-get_paginated_table = function(type, limit = getOption("mlr3oml.limit", 5000L), ...) {
+get_paginated_table = function(type, ..., limit) {
   limit = assert_count(limit, positive = TRUE, coerce = TRUE)
   dots = discard(list(...), is.null)
-  chunk_size = 1000L
+  chunk_size = magic_numbers$chunk_size
   tab = data.table()
 
   while (nrow(tab) < limit) {
@@ -144,7 +144,7 @@ get_paginated_table = function(type, limit = getOption("mlr3oml.limit", 5000L), 
 
     response = get_json(query, error_on_fail = FALSE)
     if (inherits(response, "server_response")) {
-      if (response$oml_code %in% c(372L, 482L, 512L, 542L)) {
+      if (response$oml_code %in% magic_numbers$oml_no_more_results) {
         # no more results
         break
       } else {

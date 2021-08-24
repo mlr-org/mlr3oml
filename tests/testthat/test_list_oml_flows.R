@@ -6,5 +6,6 @@ test_that("list_oml_flows", {
 
   expect_names(names(tab), type = "strict",
     must.include = c("flow_id", "name", "full_name", "version", "uploader"))
-})
 
+  expect_data_table(list_oml_flows(uploader = 999999999), nrows = 0L)
+})

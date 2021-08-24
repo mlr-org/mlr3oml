@@ -6,4 +6,6 @@ test_that("list_oml_runs", {
 
   expect_names(names(tab), type = "strict",
     must.include = c("run_id", "task_id", "setup_id", "flow_id", "uploader"))
+
+  expect_data_table(list_oml_runs(run_id = 999999999), nrows = 0L)
 })
