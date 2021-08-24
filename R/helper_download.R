@@ -142,7 +142,7 @@ get_paginated_table = function(dots, type, limit = 5000L) {
 
     response = get_json(query, error_on_fail = FALSE)
     if (inherits(response, "server_response")) {
-      if (response$oml_code %in% c(372L, 482L)) {
+      if (response$oml_code %in% c(372L, 482L, 512L, 542L)) {
         # no more results
         break
       } else {

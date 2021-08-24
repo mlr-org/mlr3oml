@@ -58,6 +58,7 @@ Provide a numeric vector of length 2 (\code{c(l, u)}) to find matches in the ran
 \examples{
 \donttest{
 list_oml_tasks(number_instances = 150, number_features = c(1, 10))
+list_oml_tasks(tag = "study_99")
 }
 }
 \references{

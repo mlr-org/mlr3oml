@@ -8,7 +8,7 @@
 #' For a more feature-complete package, see \CRANpkg{OpenML}.
 #'
 #' @details
-#' Filter values can be provided as single atomic values (typically integer or character).
+#' Some filter values can be provided as single atomic values (typically integer or character).
 #' Provide a numeric vector of length 2 (`c(l, u)`) to find matches in the range \eqn{[l, u]}.
 #'
 #' @param data_id (`integer()`)\cr
@@ -38,6 +38,7 @@
 #' @examples
 #' \donttest{
 #' list_oml_data_sets(number_instances = 150, number_features = c(1, 10))
+#' list_oml_data_sets(tag = "study_99")
 #' }
 list_oml_data_sets = function(data_id = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = 5000L, ...) {
