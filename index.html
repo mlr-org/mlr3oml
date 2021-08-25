@@ -197,7 +197,7 @@
 <span id="cb24-5"><a href="#cb24-5"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list oml data sets with 5 features and 50 - 200 instances</span>
-<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data_sets</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml_data_sets.html">list_oml_data_sets</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">## INFO  [20:55:28.113] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/list/number_instances/50..200/number_features/5/limit/1000}</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="co">## INFO  [20:55:28.463] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/list/number_instances/50..200/number_features/5/limit/1000/offset/1000}</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -211,7 +211,7 @@
 <span id="cb28-7"><a href="#cb28-7"></a><span class="co">## 6:     668 witmer_census_1980</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list first 10 oml tasks</span>
-<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_tasks</a></span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml_tasks.html">list_oml_tasks</a></span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">## INFO  [20:55:28.708] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/list/limit/10}</span></span></code></pre></div>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">task_id</span>, <span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span></code></pre></div>
