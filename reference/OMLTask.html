@@ -126,9 +126,9 @@
 
     
 
-<p>A <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> is returned by the method <code>$task</code>.
-Alternatively, you can convert this object to a <a href='https://mlr3.mlr-org.com/reference/DataBackend.html'>mlr3::DataBackend</a> using
-<code><a href='https://mlr3.mlr-org.com/reference/as_data_backend.html'>mlr3::as_data_backend()</a></code>.</p>
+<p>A <a href='https://rdrr.io/pkg/mlr3/man/Task.html'>mlr3::Task</a> is returned by the method <code>$task</code>.
+Alternatively, you can convert this object to a <a href='https://rdrr.io/pkg/mlr3/man/DataBackend.html'>mlr3::DataBackend</a> using
+<code><a href='https://rdrr.io/pkg/mlr3/man/as_data_backend.html'>mlr3::as_data_backend()</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
@@ -174,11 +174,11 @@ Name of the targets, as extracted from the OpenML task description.</p></dd>
 <dt><code>feature_names</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Name of the features (without targets of this OMLTask).</p></dd>
 
-<dt><code>task</code></dt><dd><p>(<a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a>)<br />
-Creates a <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> using the target attribute of the task description.</p></dd>
+<dt><code>task</code></dt><dd><p>(<a href='https://rdrr.io/pkg/mlr3/man/Task.html'>mlr3::Task</a>)<br />
+Creates a <a href='https://rdrr.io/pkg/mlr3/man/Task.html'>mlr3::Task</a> using the target attribute of the task description.</p></dd>
 
-<dt><code>resampling</code></dt><dd><p>(<a href='https://mlr3.mlr-org.com/reference/Resampling.html'>mlr3::Resampling</a>)<br />
-Creates a <a href='https://mlr3.mlr-org.com/reference/mlr_resamplings_custom.html'>ResamplingCustom</a> using the target attribute of the task description.</p></dd>
+<dt><code>resampling</code></dt><dd><p>(<a href='https://rdrr.io/pkg/mlr3/man/Resampling.html'>mlr3::Resampling</a>)<br />
+Creates a <a href='https://rdrr.io/pkg/mlr3/man/mlr_resamplings_custom.html'>ResamplingCustom</a> using the target attribute of the task description.</p></dd>
 
 <dt><code>tags</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character()</a></code>)<br />
 Returns all tags of the task.</p></dd>
@@ -212,7 +212,7 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <p><hr>
 <a id="method-print"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code></h3>
 <p>Prints the object.
-For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/reference/Task.html'>mlr3::Task</a> via <code>$task</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+For a more detailed printer, convert to a <a href='https://rdrr.io/pkg/mlr3/man/Task.html'>mlr3::Task</a> via <code>$task</code>.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>OMLTask</span><span class='op'>$</span><span class='fu'>print</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
 <p><hr>
@@ -245,7 +245,7 @@ For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/refe
 #&gt;   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</div><div class='input'>
 <span class='co'># get a task via tsk():</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlr3"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>mlr3</span><span class='fu'>::</span><span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span><span class='op'>(</span><span class='st'>"oml"</span>, task_id <span class='op'>=</span> <span class='fl'>59</span><span class='op'>)</span>
+  <span class='fu'>mlr3</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/mlr3/man/mlr_sugar.html'>tsk</a></span><span class='op'>(</span><span class='st'>"oml"</span>, task_id <span class='op'>=</span> <span class='fl'>59</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)
 #&gt; * Target: class
