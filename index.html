@@ -86,7 +86,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3oml.mlr-org.com">"mlr3oml"</a></span><span class="op">)</span>
 
 <span class="co"># new parametrized task "oml"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">31</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">31</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## INFO  [20:55:12.445] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/31}</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">## INFO  [20:55:12.836] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/features/31}</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">## INFO  [20:55:17.364] Downloading ARFF {url: https://www.openml.org/data/v1/download/31/credit-g.arff}</span></span>
@@ -102,7 +102,7 @@
 <span id="cb2-13"><a href="#cb2-13"></a><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
 <span id="cb2-14"><a href="#cb2-14"></a><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## INFO  [20:55:17.579] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/59}</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">## INFO  [20:55:17.778] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/61}</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="co">## INFO  [20:55:17.838] Downloading ARFF {url: https://www.openml.org/data/v1/download/61/iris.arff}</span></span>
@@ -114,7 +114,7 @@
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co">##   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># same for resampling</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/mlr_sugar.html">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## INFO  [20:55:17.907] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/59}</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">## INFO  [20:55:17.971] Downloading ARFF {url: https://www.openml.org/api_splits/get/59/Task_59_splits.arff}</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="co">## INFO  [20:55:18.071] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/61}</span></span>
