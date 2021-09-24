@@ -3,8 +3,8 @@ output: github_document
 ---
 
 ```{r, include = FALSE}
-library(mlr3)
-library(mlr3oml)
+library("mlr3")
+library("mlr3oml")
 lgr::get_logger("mlr3")$set_threshold("warn")
 set.seed(1)
 options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.verbose = FALSE)
@@ -27,11 +27,16 @@ Uploading to OpenML is currently not supported, use the [OpenML package](https:/
 library("mlr3")
 library("mlr3oml")
 
-# new parametrized task "oml"
+# be less verbose
+lgr::get_logger("mlr3oml")$set_threshold("warn")
+
+# retrieve data set as task from OML
 tsk("oml", data_id = 31)
+
+# retrieve a regular task from OML
 tsk("oml", task_id = 59)
 
-# same for resampling
+# retrieve resampling from OML
 rsmp("oml", task_id = 59)
 
 # R6 class for data sets
