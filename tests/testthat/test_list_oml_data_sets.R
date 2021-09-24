@@ -9,4 +9,6 @@ test_that("list_oml_data_sets", {
 
   expect_data_table(list_oml_data_sets(data_id = c(9, 11)), nrows = 2)
   expect_data_table(list_oml_data_sets(data_id = 1), nrows = 0L, ncols = 0L)
+
+  expect_data_table(list_oml_data_sets(data_id = 999999999), nrows = 0L)
 })

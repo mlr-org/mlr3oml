@@ -132,8 +132,10 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
   download_error(response)
 }
 
-get_paginated_table = function(dots, type, limit = 5000L) {
-  chunk_size = 1000L
+get_paginated_table = function(type, ..., limit) {
+  limit = assert_count(limit, positive = TRUE, coerce = TRUE)
+  dots = discard(list(...), is.null)
+  chunk_size = magic_numbers$chunk_size
   tab = data.table()
 
   while (nrow(tab) < limit) {
@@ -142,7 +144,7 @@ get_paginated_table = function(dots, type, limit = 5000L) {
 
     response = get_json(query, error_on_fail = FALSE)
     if (inherits(response, "server_response")) {
-      if (response$oml_code %in% c(372L, 482L)) {
+      if (response$oml_code %in% magic_numbers$oml_no_more_results) {
         # no more results
         break
       } else {
@@ -150,9 +152,10 @@ get_paginated_table = function(dots, type, limit = 5000L) {
       }
     }
 
-    new_rows = setDT(response[[1L]][[1L]])
-    tab = rbind(tab, new_rows)
-    if (nrow(new_rows) < dots$limit) {
+    response = response[[c(1L, 1L)]]
+    response = setDT(map_if(response, is.data.frame, list))
+    tab = rbind(tab, response)
+    if (nrow(response) < dots$limit) {
       # fetched all results
       break
     }

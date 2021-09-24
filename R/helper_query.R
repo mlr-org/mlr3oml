@@ -3,7 +3,7 @@ build_filter_query = function(type, filters) {
 
   filters = imap_chr(filters, function(x, name) {
     if (is.numeric(x)) {
-      if (name %in% c("data_id", "task_id")) {
+      if (name %in% c("data_id", "task_id", "task", "run", "function")) {
         x = assert_integerish(x, min.len = 1L, any.missing = FALSE, coerce = TRUE)
         paste0(name, "/", paste0(x, collapse = ","))
       } else {
