@@ -1,6 +1,12 @@
 # mlr3oml 0.5.0
 
 * Support for downloading survival tasks (via `mlr3proba`).
+* More functions to list objects from OpenML:
+  - `list_oml_evaluations()`
+  - `list_oml_flows()`
+  - `list_oml_measures()`
+  - `list_oml_runs()`
+  - `list_oml_setups()`
 
 # mlr3oml 0.4.3
 
