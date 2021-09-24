@@ -85,147 +85,114 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com">"mlr3"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3oml.mlr-org.com">"mlr3oml"</a></span><span class="op">)</span>
 
-<span class="co"># new parametrized task "oml"</span>
+<span class="co"># be less verbose</span>
+<span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html">get_logger</a></span><span class="op">(</span><span class="st">"mlr3oml"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span>
+
+<span class="co"># retrieve data set as task from OML</span>
 <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">31</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## INFO  [20:55:12.445] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/31}</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">## INFO  [20:55:12.836] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/features/31}</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">## INFO  [20:55:17.364] Downloading ARFF {url: https://www.openml.org/data/v1/download/31/credit-g.arff}</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">## * Target: class</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">## * Properties: twoclass</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">## * Features (20):</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">##   - fct (13): checking_status, credit_history, employment,</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">##     savings_status</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">## * Target: class</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">## * Properties: twoclass</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">## * Features (20):</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">##   - fct (13): checking_status, credit_history, employment,</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">##     savings_status</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## INFO  [20:55:17.579] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/59}</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## INFO  [20:55:17.778] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/61}</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">## INFO  [20:55:17.838] Downloading ARFF {url: https://www.openml.org/data/v1/download/61/iris.arff}</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">## &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">## * Target: class</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">## * Properties: multiclass</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## * Features (4):</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">##   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</span></span></code></pre></div>
+<code class="sourceCode R"><span class="co"># retrieve a regular task from OML</span>
+<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## * Target: class</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">## * Properties: multiclass</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">## * Features (4):</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">##   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># same for resampling</span>
+<code class="sourceCode R"><span class="co"># retrieve resampling from OML</span>
 <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## INFO  [20:55:17.907] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/59}</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## INFO  [20:55:17.971] Downloading ARFF {url: https://www.openml.org/api_splits/get/59/Task_59_splits.arff}</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## INFO  [20:55:18.071] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/61}</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">## INFO  [20:55:18.134] Downloading ARFF {url: https://www.openml.org/data/v1/download/61/iris.arff}</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">## &lt;ResamplingCustom&gt; with 10 iterations</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">## * Instantiated: TRUE</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## &lt;ResamplingCustom&gt; with 10 iterations</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">## * Instantiated: TRUE</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># R6 class for data sets</span>
 <span class="va">oml_data</span> <span class="op">=</span> <span class="va"><a href="reference/OMLData.html">OMLData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">61</span><span class="op">)</span>
 <span class="va">oml_data</span><span class="op">$</span><span class="va">name</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">## INFO  [20:55:18.224] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/61}</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">## [1] "iris"</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">## [1] "iris"</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_data</span><span class="op">$</span><span class="va">nrow</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## INFO  [20:55:18.296] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/qualities/61}</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">## [1] 150</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## [1] 150</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_data</span><span class="op">$</span><span class="va">ncol</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">## INFO  [20:55:18.382] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/features/61}</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">## [1] 5</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">## [1] 5</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_data</span><span class="op">$</span><span class="va">data</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">## INFO  [20:55:22.961] Downloading ARFF {url: https://www.openml.org/data/v1/download/61/iris.arff}</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="co">##      sepallength sepalwidth petallength petalwidth          class</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co">##   1:         5.1        3.5         1.4        0.2    Iris-setosa</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co">##   2:         4.9        3.0         1.4        0.2    Iris-setosa</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="co">##   3:         4.7        3.2         1.3        0.2    Iris-setosa</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="co">##   4:         4.6        3.1         1.5        0.2    Iris-setosa</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="co">##   5:         5.0        3.6         1.4        0.2    Iris-setosa</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="co">##  ---                                                             </span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="co">## 146:         6.7        3.0         5.2        2.3 Iris-virginica</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a><span class="co">## 147:         6.3        2.5         5.0        1.9 Iris-virginica</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="co">## 148:         6.5        3.0         5.2        2.0 Iris-virginica</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="co">## 149:         6.2        3.4         5.4        2.3 Iris-virginica</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="co">## 150:         5.9        3.0         5.1        1.8 Iris-virginica</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">##      sepallength sepalwidth petallength petalwidth          class</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">##   1:         5.1        3.5         1.4        0.2    Iris-setosa</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">##   2:         4.9        3.0         1.4        0.2    Iris-setosa</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">##   3:         4.7        3.2         1.3        0.2    Iris-setosa</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">##   4:         4.6        3.1         1.5        0.2    Iris-setosa</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">##   5:         5.0        3.6         1.4        0.2    Iris-setosa</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">##  ---                                                             </span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">## 146:         6.7        3.0         5.2        2.3 Iris-virginica</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">## 147:         6.3        2.5         5.0        1.9 Iris-virginica</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">## 148:         6.5        3.0         5.2        2.0 Iris-virginica</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">## 149:         6.2        3.4         5.4        2.3 Iris-virginica</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="co">## 150:         5.9        3.0         5.1        1.8 Iris-virginica</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># R6 class for tasks</span>
 <span class="va">oml_task</span> <span class="op">=</span> <span class="va"><a href="reference/OMLTask.html">OMLTask</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span>
 <span class="va">oml_task</span><span class="op">$</span><span class="va">name</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">## INFO  [20:55:23.049] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/31}</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="co">## [1] "Task 31: credit-g (Supervised Classification)"</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">## [1] "Task 31: credit-g (Supervised Classification)"</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_task</span><span class="op">$</span><span class="va">nrow</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">## INFO  [20:55:23.122] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/qualities/31}</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="co">## [1] 1000</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">## [1] 1000</span></span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_task</span><span class="op">$</span><span class="va">ncol</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">## INFO  [20:55:23.204] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/features/31}</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">## INFO  [20:55:27.769] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/31}</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="co">## [1] 21</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">## [1] 21</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_task</span><span class="op">$</span><span class="va">task</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">## INFO  [20:55:27.841] Downloading ARFF {url: https://www.openml.org/data/v1/download/31/credit-g.arff}</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="co">## &lt;TaskClassif:Task 31: credit-g (Supervised Classification)&gt; (1000 x 21)</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="co">## * Target: class</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="co">## * Properties: twoclass</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="co">## * Features (20):</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="co">##   - fct (13): checking_status, credit_history, employment,</span></span>
-<span id="cb22-8"><a href="#cb22-8"></a><span class="co">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
-<span id="cb22-9"><a href="#cb22-9"></a><span class="co">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
-<span id="cb22-10"><a href="#cb22-10"></a><span class="co">##     savings_status</span></span>
-<span id="cb22-11"><a href="#cb22-11"></a><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
-<span id="cb22-12"><a href="#cb22-12"></a><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">## &lt;TaskClassif:Task 31: credit-g (Supervised Classification)&gt; (1000 x 21)</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="co">## * Target: class</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="co">## * Properties: twoclass</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="co">## * Features (20):</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="co">##   - fct (13): checking_status, credit_history, employment,</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="co">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="co">##     savings_status</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oml_task</span><span class="op">$</span><span class="va">resampling</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">## INFO  [20:55:27.990] Downloading ARFF {url: https://www.openml.org/api_splits/get/31/Task_31_splits.arff}</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="co">## &lt;ResamplingCustom&gt; with 10 iterations</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="co">## * Instantiated: TRUE</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">## &lt;ResamplingCustom&gt; with 10 iterations</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co">## * Instantiated: TRUE</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list oml data sets with 5 features and 50 - 200 instances</span>
-<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data_sets</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">## INFO  [20:55:28.113] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/list/number_instances/50..200/number_features/5/limit/1000}</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co">## INFO  [20:55:28.463] Retrieving JSON {url: https://www.openml.org/api/v1/json/data/list/number_instances/50..200/number_features/5/limit/1000/offset/1000}</span></span></code></pre></div>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data_sets</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">##    data_id               name</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="co">## 1:      61               iris</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="co">## 2:     199           fruitfly</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="co">## 3:     214           baskball</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="co">## 4:     329         hayes-roth</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="co">## 5:     346               aids</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a><span class="co">## 6:     668 witmer_census_1980</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">##    data_id               name</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">## 1:      61               iris</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co">## 2:     199           fruitfly</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="co">## 3:     214           baskball</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a><span class="co">## 4:     329         hayes-roth</span></span>
-<span id="cb28-6"><a href="#cb28-6"></a><span class="co">## 5:     346               aids</span></span>
-<span id="cb28-7"><a href="#cb28-7"></a><span class="co">## 6:     668 witmer_census_1980</span></span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list first 10 oml tasks</span>
-<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_tasks</a></span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">## INFO  [20:55:28.708] Retrieving JSON {url: https://www.openml.org/api/v1/json/task/list/limit/10}</span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">task_id</span>, <span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co">##     task_id data_id            name</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="co">##  1:       2       2          anneal</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="co">##  2:       3       3        kr-vs-kp</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a><span class="co">##  3:       4       4           labor</span></span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="co">##  4:       5       5      arrhythmia</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="co">##  5:       6       6          letter</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a><span class="co">##  6:       7       7       audiology</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a><span class="co">##  7:       8       8 liver-disorders</span></span>
-<span id="cb32-9"><a href="#cb32-9"></a><span class="co">##  8:       9       9           autos</span></span>
-<span id="cb32-10"><a href="#cb32-10"></a><span class="co">##  9:      10      10           lymph</span></span>
-<span id="cb32-11"><a href="#cb32-11"></a><span class="co">## 10:      11      11   balance-scale</span></span></code></pre></div>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_tasks</a></span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">task_id</span>, <span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">##     task_id data_id            name</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co">##  1:       2       2          anneal</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="co">##  2:       3       3        kr-vs-kp</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="co">##  3:       4       4           labor</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="co">##  4:       5       5      arrhythmia</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="co">##  5:       6       6          letter</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="co">##  6:       7       7       audiology</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="co">##  7:       8       8 liver-disorders</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="co">##  8:       9       9           autos</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="co">##  9:      10      10           lymph</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a><span class="co">## 10:      11      11   balance-scale</span></span></code></pre></div>
 </div>
 </div>
   </div>
