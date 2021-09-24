@@ -124,6 +124,15 @@ OMLTask = R6Class("OMLTask",
     #' @field task ([mlr3::Task])\cr
     #' Creates a [mlr3::Task] using the target attribute of the task description.
     task = function() {
+      name = self$name
+      data = self$data$data
+      target = self$target_names
+
+      miss = setdiff(target, names(data))
+      if (length(miss)) {
+        stopf("Task %i could not be created: target '%s' not found in data", self$id, miss[1L])
+      }
+
       constructor = switch(self$desc$task_type,
         # FIXME: positive class?
         "Supervised Classification" = new_task_classif,
@@ -131,7 +140,7 @@ OMLTask = R6Class("OMLTask",
         "Survival Analysis" = new_task_surv,
         stopf("Unsupoorted task type '%s'", self$desc$task_type)
       )
-      task = constructor(self$name, self$data$data, target = self$target_names)
+      task = constructor(name, data, target = target)
       task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
       task
     },
