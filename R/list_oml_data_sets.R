@@ -51,7 +51,11 @@
 #' print(data_sets)
 #'
 #' # search for a reduced version
-#' data_sets = list_oml_data_sets(data_name = "titanic", number_instances = c(2200, 2300), number_features = 4)
+#' data_sets = list_oml_data_sets(
+#'   data_name = "titanic",
+#'   number_instances = c(2200, 2300),
+#'   number_features = 4
+#' )
 #' print(data_sets)
 #'
 #' ### search tasks for this data set
