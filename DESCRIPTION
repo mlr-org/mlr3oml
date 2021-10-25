@@ -16,7 +16,8 @@ License: LGPL-3
 URL: https://mlr3oml.mlr-org.com, https://github.com/mlr-org/mlr3oml
 BugReports: https://github.com/mlr-org/mlr3oml
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.1.0),
+    mlr3 (>= 0.10.0)
 Imports:
     backports (>= 1.1.6),
     checkmate,
@@ -24,7 +25,6 @@ Imports:
     data.table,
     jsonlite,
     lgr,
-    mlr3 (>= 0.10.0),
     mlr3misc (>= 0.7.0),
     R6,
     stringi
