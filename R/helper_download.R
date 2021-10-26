@@ -1,7 +1,8 @@
 get_api_key = function() {
   key = getOption("mlr3oml.api_key") %??% Sys.getenv("OPENMLAPIKEY")
-  if (nzchar(key))
+  if (nzchar(key)) {
     return(key)
+  }
 
   NA_character_
 }

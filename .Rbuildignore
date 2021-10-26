@@ -19,3 +19,4 @@
 ^\.ccache$
 ^\.github$
 ^\.lintr$
+^\.pre-commit-config\.yaml$

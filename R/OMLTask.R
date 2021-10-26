@@ -44,7 +44,7 @@ OMLTask = R6Class("OMLTask",
     #' @template param_cache
     initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(cache)
+      self$cache_dir = get_cache_dir(assert_flag(cache))
       initialize_cache(self$cache_dir)
     },
 
@@ -68,7 +68,7 @@ OMLTask = R6Class("OMLTask",
     desc = function() {
       if (is.null(private$.desc)) {
         private$.desc = cached(download_task_desc, "task_desc", self$id, cache_dir = self$cache_dir)
-     }
+      }
 
       private$.desc
     },
@@ -106,7 +106,7 @@ OMLTask = R6Class("OMLTask",
     target_names = function() {
       source_data = self$desc$input$source_data
       targets = switch(self$desc$task_type,
-        "Supervised Classification" =,
+        "Supervised Classification" = ,
         "Supervised Regression" = source_data$target_feature,
         "Survival Analysis" = unlist(source_data[c("target_feature_left", "target_feature_right", "target_feature_event")], use.names = FALSE),
         stopf("Unsupoorted task type '%s'", self$desc$task_type)
