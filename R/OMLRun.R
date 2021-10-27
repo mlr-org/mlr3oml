@@ -41,8 +41,25 @@ OMLRun = R6Class("OMLRun",
       self$cache_dir = get_cache_dir(assert_flag(cache))
       initialize_cache(self$cache_dir)
 
+    },
+
+    #' @description
+    #' Prints the object.
+    print = function() {
+      catf("<OMLTask:%i:%s>", self$id, self$name)
     }
   ),
+  active = list(
+    task = function() {
+
+    }
+
+
+  ),
+
+  private = list(
+    .desc = NULL
+  )
 
   #  active = list(
   #    #' @field desc (`list()`)\cr
