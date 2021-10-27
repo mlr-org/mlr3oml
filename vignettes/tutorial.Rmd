@@ -1,0 +1,6 @@
+## How to set the API Key
+First one has to create an OpenML Account. After that the API key can either be set as the environment variable `OPENMLAPIKEY` or as the R option `mlr3oml.api_key`.
+
+```R
+options("mlr3oml.api_key" = APIKEY)
+```

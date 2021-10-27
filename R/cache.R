@@ -12,11 +12,13 @@ CACHE$versions = list(
 CACHE$initialized = character()
 
 get_cache_dir = function(cache) {
-  if (isFALSE(cache))
+  if (isFALSE(cache)) {
     return(FALSE)
+  }
 
-  if (isTRUE(cache))
+  if (isTRUE(cache)) {
     cache = R_user_dir("mlr3oml", "cache")
+  }
 
   assert(check_directory_exists(cache), check_path_for_output(cache))
   normalizePath(cache, mustWork = FALSE)
@@ -60,6 +62,19 @@ initialize_cache = function(cache_dir) {
   return(TRUE)
 }
 
+#' @title Ca
+#'
+#' @name cached
+#'
+#' @description
+#' This function
+#'
+#' @param fun
+#' Download function
+#'
+#' @param type
+#' The type that is downloaded, not really necessary
+#'
 cached = function(fun, type, id, ..., cache_dir = FALSE) {
   if (isFALSE(cache_dir)) {
     return(fun(id, ...))
@@ -71,8 +86,9 @@ cached = function(fun, type, id, ..., cache_dir = FALSE) {
   if (file.exists(file)) {
     lg$debug("Loading object from cache", type = type, id = id, file = file)
     obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
-    if (!inherits(obj, "try-error"))
+    if (!inherits(obj, "try-error")) {
       return(obj)
+    }
     lg$debug("Failed to retrieve object from cache", type = type, id = id, file = file)
   }
 

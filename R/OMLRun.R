@@ -46,20 +46,25 @@ OMLRun = R6Class("OMLRun",
     #' @description
     #' Prints the object.
     print = function() {
-      catf("<OMLTask:%i:%s>", self$id, self$name)
+      catf("<OMLRun:%i>", self$id)
     }
   ),
   active = list(
     task = function() {
+      1
 
+    },
+    desc = function() {
+      if (is.null(private$.desc)) {
+        private$.desc = cached(download_run_desc, "run_desc", self$id,
+          cache_dir = self$cache_dir)
+      }
     }
-
-
   ),
 
   private = list(
     .desc = NULL
-  )
+  ),
 
   #  active = list(
   #    #' @field desc (`list()`)\cr
@@ -77,30 +82,31 @@ OMLRun = R6Class("OMLRun",
   #      OMLTask$new(self$desc$task_id)
   #    }
   #  ),
-
-  private = list(
-    .desc = NULL
-  )
 )
 
 
-# if (FALSE) {
-#  options(mlr3oml.cache = TRUE)
-#  orun = OMLRun$new(12)
-#  # self = orun
-#  orun$desc
-#  task = orun$task
-#
-#
-#
-#  library(mlr3)
-#  task = OMLTask$new(6)
-#  l = lrn("classif.rpart")
-#  resampling = task$resampling
-#  rr = resample(task$task, l, resampling)
-#
-#  # fehlt:
-#  tab = as.data.table(rr$prediction())
-#  foreign::write.arff(tab, file = "/tmp/predictions.arff")
-#  # -> upload
-# }
+if (FALSE) {
+  options(mlr3oml.cache = TRUE)
+  orun = OMLRun$new(12)
+  # self = orun
+  orun$desc
+  task = orun$task
+
+
+
+
+  library(mlr3)
+
+
+
+
+  task = OMLTask$new(6)
+  l = lrn("classif.rpart")
+  resampling = task$resampling
+  rr = resample(task$task, l, resampling)
+
+  # fehlt:
+  tab = as.data.table(rr$prediction())
+  foreign::write.arff(tab, file = "/tmp/predictions.arff")
+  # -> upload
+}

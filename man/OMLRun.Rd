@@ -45,6 +45,7 @@ flow.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OMLRun$new()}}
+\item \href{#method-print}{\code{OMLRun$print()}}
 \item \href{#method-clone}{\code{OMLRun$clone()}}
 }
 }
@@ -69,6 +70,16 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Prints the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLRun$print()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
