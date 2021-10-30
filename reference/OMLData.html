@@ -146,10 +146,10 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
-<dt><code>id</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<dt><code>id</code></dt><dd><p>(<code>integer(1)</code>)<br />
 OpenML data id.</p></dd>
 
-<dt><code>cache_dir</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+<dt><code>cache_dir</code></dt><dd><p>(<code>logical(1)</code> | <code>character(1)</code>)<br />
 Stores the location of the cache for objects retrieved from <a href='https://openml.org'>https://openml.org</a>.
 If set to <code>FALSE</code>, caching is disabled.The package <a href='https://CRAN.R-project.org/package=qs'><span class="pkg">qs</span></a> is required for caching.</p></dd>
 
@@ -157,7 +157,7 @@ If set to <code>FALSE</code>, caching is disabled.The package <a href='https://C
     <h2 class="hasAnchor" id="active-bindings"><a class="anchor" href="#active-bindings"></a>Active bindings</h2>
 
     <p><div class="r6-active-bindings"></p><dl>
-<dt><code>name</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+<dt><code>name</code></dt><dd><p>(<code>character(1)</code>)<br />
 Name of the data set, as extracted from the data set description.</p></dd>
 
 <dt><code>desc</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>)<br />
@@ -223,10 +223,10 @@ Returns all tags of the data set.</p></dd>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>id</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+<dt><code>id</code></dt><dd><p>(<code>integer(1)</code>)<br />
 OpenML data id.</p></dd>
 
-<dt><code>cache</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> | <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+<dt><code>cache</code></dt><dd><p>(<code>logical(1)</code> | <code>character(1)</code>)<br />
 See field <code>cache</code> for an explanation of possible values.
 Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> if not set.</p></dd>
 
@@ -244,7 +244,7 @@ For a more detailed printer, convert to a <a href='https://mlr3.mlr-org.com/refe
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>name</code></dt><dd><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+<dt><code>name</code></dt><dd><p>(<code>character(1)</code>)<br />
 Name of the quality to extract.</p></dd>
 
 </dl><p></div></p>
@@ -276,49 +276,55 @@ Name(s) of the target columns, or <code>NULL</code> for the default columns.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='va'>odata</span> <span class='op'>=</span> <span class='va'>OMLData</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;OMLData:9:autos&gt; (205x26)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='va'>target_names</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "symboling"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='va'>feature_names</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "normalized.losses" "make"              "fuel.type"        
-#&gt;  [4] "aspiration"        "num.of.doors"      "body.style"       
-#&gt;  [7] "drive.wheels"      "engine.location"   "wheel.base"       
-#&gt; [10] "length"            "width"             "height"           
-#&gt; [13] "curb.weight"       "engine.type"       "num.of.cylinders" 
-#&gt; [16] "engine.size"       "fuel.system"       "bore"             
-#&gt; [19] "stroke"            "compression.ratio" "horsepower"       
-#&gt; [22] "peak.rpm"          "city.mpg"          "highway.mpg"      
-#&gt; [25] "price"            </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='va'>tags</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "study_1"  "study_41" "study_76" "uci"     </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='fu'>task</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;TaskClassif:autos&gt; (205 x 26)
-#&gt; * Target: symboling
-#&gt; * Properties: multiclass
-#&gt; * Features (25):
-#&gt;   - fct (10): aspiration, body.style, drive.wheels, engine.location,
-#&gt;     engine.type, fuel.system, fuel.type, make, num.of.cylinders,
-#&gt;     num.of.doors
-#&gt;   - int (8): city.mpg, curb.weight, engine.size, highway.mpg,
-#&gt;     horsepower, normalized.losses, peak.rpm, price
-#&gt;   - dbl (7): bore, compression.ratio, height, length, stroke,
-#&gt;     wheel.base, width</div><div class='input'>
-<span class='co'># get a task via tsk():</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlr3"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>mlr3</span><span class='fu'>::</span><span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span><span class='op'>(</span><span class='st'>"oml"</span>, data_id <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; &lt;TaskClassif:autos&gt; (205 x 26)
-#&gt; * Target: symboling
-#&gt; * Properties: multiclass
-#&gt; * Features (25):
-#&gt;   - fct (10): aspiration, body.style, drive.wheels, engine.location,
-#&gt;     engine.type, fuel.system, fuel.type, make, num.of.cylinders,
-#&gt;     num.of.doors
-#&gt;   - int (8): city.mpg, curb.weight, engine.size, highway.mpg,
-#&gt;     horsepower, normalized.losses, peak.rpm, price
-#&gt;   - dbl (7): bore, compression.ratio, height, length, stroke,
-#&gt;     wheel.base, width</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='va'>odata</span> <span class='op'>=</span> <span class='va'>OMLData</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;OMLData:9:autos&gt; (205x26)</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='va'>target_names</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "symboling"</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='va'>feature_names</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "normalized.losses" "make"              "fuel.type"        </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "aspiration"        "num.of.doors"      "body.style"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "drive.wheels"      "engine.location"   "wheel.base"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "length"            "width"             "height"           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13] "curb.weight"       "engine.type"       "num.of.cylinders" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [16] "engine.size"       "fuel.system"       "bore"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [19] "stroke"            "compression.ratio" "horsepower"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [22] "peak.rpm"          "city.mpg"          "highway.mpg"      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [25] "price"            </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='va'>tags</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "study_1"  "study_41" "study_76" "uci"     </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>odata</span><span class='op'>$</span><span class='fu'>task</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TaskClassif:autos&gt; (205 x 26)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Target: symboling</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Properties: multiclass</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Features (25):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - fct (10): aspiration, body.style, drive.wheels, engine.location,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     engine.type, fuel.system, fuel.type, make, num.of.cylinders,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     num.of.doors</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - int (8): city.mpg, curb.weight, engine.size, highway.mpg,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     horsepower, normalized.losses, peak.rpm, price</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - dbl (7): bore, compression.ratio, height, length, stroke,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     wheel.base, width</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># get a task via tsk():</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"mlr3"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'>mlr3</span><span class='fu'>::</span><span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span><span class='op'>(</span><span class='st'>"oml"</span>, data_id <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;TaskClassif:autos&gt; (205 x 26)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Target: symboling</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Properties: multiclass</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Features (25):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - fct (10): aspiration, body.style, drive.wheels, engine.location,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     engine.type, fuel.system, fuel.type, make, num.of.cylinders,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     num.of.doors</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - int (8): city.mpg, curb.weight, engine.size, highway.mpg,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     horsepower, normalized.losses, peak.rpm, price</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   - dbl (7): bore, compression.ratio, height, length, stroke,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     wheel.base, width</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -190,7 +190,7 @@ Vector of data ids to restrict to.</p></td>
     </tr>
     <tr>
       <th>data_name</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Filter for name of data set.</p></td>
     </tr>
     <tr>
@@ -246,12 +246,12 @@ Vector of evaluation measures to restrict to.</p></td>
     </tr>
     <tr>
       <th>uploader</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Filter for uploader.</p></td>
     </tr>
     <tr>
       <th>flow_id</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Filter for flow id.</p></td>
     </tr>
     <tr>
@@ -267,7 +267,7 @@ Vector of setup ids to restrict to.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Filter values are usually provided as single atomic values (typically integer or character).
-Provide a numeric vector of length 2 (<code><a href='https://rdrr.io/r/base/c.html'>c(l, u)</a></code>) to find matches in the range \([l, u]\).</p>
+Provide a numeric vector of length 2 (<code>c(l, u)</code>) to find matches in the range \([l, u]\).</p>
 <p>Note that only a subset of filters is exposed here.
 For a more feature-complete package, see <a href='https://CRAN.R-project.org/package=OpenML'><span class="pkg">OpenML</span></a>.
 Alternatively, you can pass additional filters via <code>...</code> using the names of the official API,
@@ -286,192 +286,196 @@ doi: <a href='https://doi.org/10.1145/2641190.2641198'>10.1145/2641190.2641198</
 .</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'>### query data sets</span>
-<span class='co'># search for titanic data set</span>
-<span class='va'>data_sets</span> <span class='op'>=</span> <span class='fu'>list_oml_data_sets</span><span class='op'>(</span>data_name <span class='op'>=</span> <span class='st'>"titanic"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>data_sets</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    data_id    name version status MajorityClassSize MaxNominalAttDistinctValues
-#&gt; 1:   40704 Titanic       2 active              1490                           2
-#&gt; 2:   40945 Titanic       1 active               809                           3
-#&gt; 3:   41265 Titanic       4 active                NA                          NA
-#&gt; 4:   42436 Titanic       5 active                NA                          NA
-#&gt; 5:   42437 titanic       6 active                NA                          NA
-#&gt; 6:   42438 Titanic       7 active                NA                          NA
-#&gt; 7:   42637 titanic       8 active                NA                          NA
-#&gt; 8:   42638 titanic       9 active               549                          NA
-#&gt;    MinorityClassSize NumberOfClasses NumberOfFeatures NumberOfInstances
-#&gt; 1:               711               2                4              2201
-#&gt; 2:               500               2               14              1309
-#&gt; 3:                NA               0                8              1307
-#&gt; 4:                NA               0                8               891
-#&gt; 5:                NA               0                8               891
-#&gt; 6:                NA               0                8               891
-#&gt; 7:                NA              NA                8               891
-#&gt; 8:               342               2                8               891
-#&gt;    NumberOfInstancesWithMissingValues NumberOfMissingValues
-#&gt; 1:                                  0                     0
-#&gt; 2:                               1309                  3855
-#&gt; 3:                                  0                     0
-#&gt; 4:                                  0                     0
-#&gt; 5:                                  0                     0
-#&gt; 6:                                  0                     0
-#&gt; 7:                                689                   689
-#&gt; 8:                                689                   689
-#&gt;    NumberOfNumericFeatures NumberOfSymbolicFeatures
-#&gt; 1:                       3                        1
-#&gt; 2:                       6                        3
-#&gt; 3:                       8                        0
-#&gt; 4:                       8                        0
-#&gt; 5:                       8                        0
-#&gt; 6:                       8                        0
-#&gt; 7:                       3                        5
-#&gt; 8:                       3                        5</div><div class='input'>
-<span class='co'># search for a reduced version</span>
-<span class='va'>data_sets</span> <span class='op'>=</span> <span class='fu'>list_oml_data_sets</span><span class='op'>(</span>
-  data_name <span class='op'>=</span> <span class='st'>"titanic"</span>,
-  number_instances <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2200</span>, <span class='fl'>2300</span><span class='op'>)</span>,
-  number_features <span class='op'>=</span> <span class='fl'>4</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>data_sets</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    data_id    name version status MajorityClassSize MaxNominalAttDistinctValues
-#&gt; 1:   40704 Titanic       2 active              1490                           2
-#&gt;    MinorityClassSize NumberOfClasses NumberOfFeatures NumberOfInstances
-#&gt; 1:               711               2                4              2201
-#&gt;    NumberOfInstancesWithMissingValues NumberOfMissingValues
-#&gt; 1:                                  0                     0
-#&gt;    NumberOfNumericFeatures NumberOfSymbolicFeatures
-#&gt; 1:                       3                        1</div><div class='input'>
-<span class='co'>### search tasks for this data set</span>
-<span class='va'>tasks</span> <span class='op'>=</span> <span class='fu'>list_oml_tasks</span><span class='op'>(</span>data_id <span class='op'>=</span> <span class='va'>data_sets</span><span class='op'>$</span><span class='va'>data_id</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>tasks</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     task_id                             task_type data_id    name status
-#&gt;  1:  145769                            Clustering   40704 Titanic active
-#&gt;  2:  146230             Supervised Classification   40704 Titanic active
-#&gt;  3:  146528                        Learning Curve   40704 Titanic active
-#&gt;  4:  166588                            Clustering   40704 Titanic active
-#&gt;  5:  167099             Supervised Classification   40704 Titanic active
-#&gt;  6:  167486                        Learning Curve   40704 Titanic active
-#&gt;  7:  167844                        Learning Curve   40704 Titanic active
-#&gt;  8:  168202                        Learning Curve   40704 Titanic active
-#&gt;  9:  168615                        Learning Curve   40704 Titanic active
-#&gt; 10:  188610                            Clustering   40704 Titanic active
-#&gt; 11:  189623                        Learning Curve   40704 Titanic active
-#&gt; 12:  190235 Supervised Data Stream Classification   40704 Titanic active
-#&gt; 13:  210117                            Clustering   40704 Titanic active
-#&gt; 14:  211516                        Learning Curve   40704 Titanic active
-#&gt; 15:  231791                            Clustering   40704 Titanic active
-#&gt; 16:  252906                            Clustering   40704 Titanic active
-#&gt; 17:  293680                            Clustering   40704 Titanic active
-#&gt; 18:  293693                            Clustering   40704 Titanic active
-#&gt; 19:  316179                            Clustering   40704 Titanic active
-#&gt; 20:  337306                            Clustering   40704 Titanic active
-#&gt; 21:  358461                            Clustering   40704 Titanic active
-#&gt; 22:  360401                        Learning Curve   40704 Titanic active
-#&gt;     task_id                             task_type data_id    name status
-#&gt;     MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize
-#&gt;  1:              1490                           2               711
-#&gt;  2:              1490                           2               711
-#&gt;  3:              1490                           2               711
-#&gt;  4:              1490                           2               711
-#&gt;  5:              1490                           2               711
-#&gt;  6:              1490                           2               711
-#&gt;  7:              1490                           2               711
-#&gt;  8:              1490                           2               711
-#&gt;  9:              1490                           2               711
-#&gt; 10:              1490                           2               711
-#&gt; 11:              1490                           2               711
-#&gt; 12:              1490                           2               711
-#&gt; 13:              1490                           2               711
-#&gt; 14:              1490                           2               711
-#&gt; 15:              1490                           2               711
-#&gt; 16:              1490                           2               711
-#&gt; 17:              1490                           2               711
-#&gt; 18:              1490                           2               711
-#&gt; 19:              1490                           2               711
-#&gt; 20:              1490                           2               711
-#&gt; 21:              1490                           2               711
-#&gt; 22:              1490                           2               711
-#&gt;     MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize
-#&gt;     NumberOfClasses NumberOfFeatures NumberOfInstances
-#&gt;  1:               2                4              2201
-#&gt;  2:               2                4              2201
-#&gt;  3:               2                4              2201
-#&gt;  4:               2                4              2201
-#&gt;  5:               2                4              2201
-#&gt;  6:               2                4              2201
-#&gt;  7:               2                4              2201
-#&gt;  8:               2                4              2201
-#&gt;  9:               2                4              2201
-#&gt; 10:               2                4              2201
-#&gt; 11:               2                4              2201
-#&gt; 12:               2                4              2201
-#&gt; 13:               2                4              2201
-#&gt; 14:               2                4              2201
-#&gt; 15:               2                4              2201
-#&gt; 16:               2                4              2201
-#&gt; 17:               2                4              2201
-#&gt; 18:               2                4              2201
-#&gt; 19:               2                4              2201
-#&gt; 20:               2                4              2201
-#&gt; 21:               2                4              2201
-#&gt; 22:               2                4              2201
-#&gt;     NumberOfClasses NumberOfFeatures NumberOfInstances
-#&gt;     NumberOfInstancesWithMissingValues NumberOfMissingValues
-#&gt;  1:                                  0                     0
-#&gt;  2:                                  0                     0
-#&gt;  3:                                  0                     0
-#&gt;  4:                                  0                     0
-#&gt;  5:                                  0                     0
-#&gt;  6:                                  0                     0
-#&gt;  7:                                  0                     0
-#&gt;  8:                                  0                     0
-#&gt;  9:                                  0                     0
-#&gt; 10:                                  0                     0
-#&gt; 11:                                  0                     0
-#&gt; 12:                                  0                     0
-#&gt; 13:                                  0                     0
-#&gt; 14:                                  0                     0
-#&gt; 15:                                  0                     0
-#&gt; 16:                                  0                     0
-#&gt; 17:                                  0                     0
-#&gt; 18:                                  0                     0
-#&gt; 19:                                  0                     0
-#&gt; 20:                                  0                     0
-#&gt; 21:                                  0                     0
-#&gt; 22:                                  0                     0
-#&gt;     NumberOfInstancesWithMissingValues NumberOfMissingValues
-#&gt;     NumberOfNumericFeatures NumberOfSymbolicFeatures
-#&gt;  1:                       3                        1
-#&gt;  2:                       3                        1
-#&gt;  3:                       3                        1
-#&gt;  4:                       3                        1
-#&gt;  5:                       3                        1
-#&gt;  6:                       3                        1
-#&gt;  7:                       3                        1
-#&gt;  8:                       3                        1
-#&gt;  9:                       3                        1
-#&gt; 10:                       3                        1
-#&gt; 11:                       3                        1
-#&gt; 12:                       3                        1
-#&gt; 13:                       3                        1
-#&gt; 14:                       3                        1
-#&gt; 15:                       3                        1
-#&gt; 16:                       3                        1
-#&gt; 17:                       3                        1
-#&gt; 18:                       3                        1
-#&gt; 19:                       3                        1
-#&gt; 20:                       3                        1
-#&gt; 21:                       3                        1
-#&gt; 22:                       3                        1
-#&gt;     NumberOfNumericFeatures NumberOfSymbolicFeatures</div><div class='input'>
-
-<span class='co'># query runs, group by number of runs per task_id</span>
-<span class='va'>runs</span> <span class='op'>=</span> <span class='fu'>list_oml_runs</span><span class='op'>(</span>task_id <span class='op'>=</span> <span class='va'>tasks</span><span class='op'>$</span><span class='va'>task_id</span><span class='op'>)</span>
-<span class='va'>runs</span><span class='op'>[</span>, <span class='va'>.N</span>, by <span class='op'>=</span> <span class='va'>task_id</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;    task_id  N
-#&gt; 1:  146230 35</div><div class='input'><span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'>### query data sets</span></span>
+<span class='r-in'><span class='co'># search for titanic data set</span></span>
+<span class='r-in'><span class='va'>data_sets</span> <span class='op'>=</span> <span class='fu'>list_oml_data_sets</span><span class='op'>(</span>data_name <span class='op'>=</span> <span class='st'>"titanic"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>data_sets</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    data_id    name version status MajorityClassSize MaxNominalAttDistinctValues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:   40704 Titanic       2 active              1490                           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:   40945 Titanic       1 active               809                           3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3:   41265 Titanic       4 active                NA                          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4:   42436 Titanic       5 active                NA                          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5:   42437 titanic       6 active                NA                          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6:   42438 Titanic       7 active                NA                          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7:   42637 titanic       8 active                NA                          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8:   42638 titanic       9 active               549                          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    MinorityClassSize NumberOfClasses NumberOfFeatures NumberOfInstances</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:               711               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:               500               2               14              1309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3:                NA               0                8              1307</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4:                NA               0                8               891</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5:                NA               0                8               891</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6:                NA               0                8               891</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7:                NA              NA                8               891</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8:               342               2                8               891</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    NumberOfInstancesWithMissingValues NumberOfMissingValues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:                               1309                  3855</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7:                                689                   689</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8:                                689                   689</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    NumberOfNumericFeatures NumberOfSymbolicFeatures</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2:                       6                        3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3:                       8                        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4:                       8                        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5:                       8                        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6:                       8                        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7:                       3                        5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8:                       3                        5</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># search for a reduced version</span></span>
+<span class='r-in'><span class='va'>data_sets</span> <span class='op'>=</span> <span class='fu'>list_oml_data_sets</span><span class='op'>(</span></span>
+<span class='r-in'>  data_name <span class='op'>=</span> <span class='st'>"titanic"</span>,</span>
+<span class='r-in'>  number_instances <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2200</span>, <span class='fl'>2300</span><span class='op'>)</span>,</span>
+<span class='r-in'>  number_features <span class='op'>=</span> <span class='fl'>4</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>data_sets</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    data_id    name version status MajorityClassSize MaxNominalAttDistinctValues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:   40704 Titanic       2 active              1490                           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    MinorityClassSize NumberOfClasses NumberOfFeatures NumberOfInstances</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:               711               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    NumberOfInstancesWithMissingValues NumberOfMissingValues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    NumberOfNumericFeatures NumberOfSymbolicFeatures</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:                       3                        1</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### search tasks for this data set</span></span>
+<span class='r-in'><span class='va'>tasks</span> <span class='op'>=</span> <span class='fu'>list_oml_tasks</span><span class='op'>(</span>data_id <span class='op'>=</span> <span class='va'>data_sets</span><span class='op'>$</span><span class='va'>data_id</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>tasks</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     task_id                             task_type data_id    name status</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:  145769                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:  146230             Supervised Classification   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:  146528                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:  166588                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:  167099             Supervised Classification   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:  167486                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:  167844                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:  168202                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:  168615                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:  188610                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:  189623                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:  190235 Supervised Data Stream Classification   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:  210117                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:  211516                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:  231791                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:  252906                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:  293680                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:  293693                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:  316179                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:  337306                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:  358461                            Clustering   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:  360401                        Learning Curve   40704 Titanic active</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     task_id                             task_type data_id    name status</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:              1490                           2               711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     NumberOfClasses NumberOfFeatures NumberOfInstances</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:               2                4              2201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     NumberOfClasses NumberOfFeatures NumberOfInstances</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     NumberOfInstancesWithMissingValues NumberOfMissingValues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:                                  0                     0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     NumberOfInstancesWithMissingValues NumberOfMissingValues</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     NumberOfNumericFeatures NumberOfSymbolicFeatures</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  4:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  5:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  7:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  8:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  9:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22:                       3                        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     NumberOfNumericFeatures NumberOfSymbolicFeatures</span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># query runs, group by number of runs per task_id</span></span>
+<span class='r-in'><span class='va'>runs</span> <span class='op'>=</span> <span class='fu'>list_oml_runs</span><span class='op'>(</span>task_id <span class='op'>=</span> <span class='va'>tasks</span><span class='op'>$</span><span class='va'>task_id</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>runs</span><span class='op'>[</span>, <span class='va'>.N</span>, by <span class='op'>=</span> <span class='va'>task_id</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    task_id  N</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1:  146230 35</span>
+<span class='r-in'><span class='co'># }</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
