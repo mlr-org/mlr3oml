@@ -23,6 +23,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -35,18 +37,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">mlr3oml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -56,7 +52,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mlr-org/mlr3oml/">
+  <a href="https://github.com/mlr-org/mlr3oml/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -73,23 +69,23 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="mlr3oml" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#mlr3oml" class="anchor"></a>mlr3oml</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="mlr3oml">mlr3oml<a class="anchor" aria-label="anchor" href="#mlr3oml"></a>
+</h1></div>
 
-<p><strong>mlr3oml</strong> allows to create <a href="https://mlr3.mlr-org.com/">mlr3</a> tasks directly from <a href="https://openml.org">OpenML</a> data sets. Furthermore, you can also obtain the data and the resampling for a given OpenML task. Caching can be enabled by setting the option <code>"mlr3oml.cache"</code>. Uploading to OpenML is currently not supported, use the <a href="https://cran.r-project.org/package=OpenML">OpenML package</a> package for this.</p>
-<div id="short-demo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#short-demo" class="anchor"></a>Short Demo</h2>
+<p><strong>mlr3oml</strong> allows to create <a href="https://mlr3.mlr-org.com/" class="external-link">mlr3</a> tasks directly from <a href="https://openml.org" class="external-link">OpenML</a> data sets. Furthermore, you can also obtain the data and the resampling for a given OpenML task. Caching can be enabled by setting the option <code>"mlr3oml.cache"</code>. Uploading to OpenML is currently not supported, use the <a href="https://cran.r-project.org/package=OpenML" class="external-link">OpenML package</a> package for this.</p>
+<div class="section level2">
+<h2 id="short-demo">Short Demo<a class="anchor" aria-label="anchor" href="#short-demo"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com">"mlr3"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3oml.mlr-org.com">"mlr3oml"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3oml.mlr-org.com" class="external-link">"mlr3oml"</a></span><span class="op">)</span>
 
 <span class="co"># be less verbose</span>
-<span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html">get_logger</a></span><span class="op">(</span><span class="st">"mlr3oml"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span>
+<span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"mlr3oml"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span>
 
 <span class="co"># retrieve data set as task from OML</span>
-<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">31</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">31</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">## * Target: class</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">## * Properties: twoclass</span></span>
@@ -102,7 +98,7 @@
 <span id="cb2-10"><a href="#cb2-10"></a><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve a regular task from OML</span>
-<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## &lt;TaskClassif:Task 59: iris (Supervised Classification)&gt; (150 x 5)</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">## * Target: class</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="co">## * Properties: multiclass</span></span>
@@ -110,7 +106,7 @@
 <span id="cb4-5"><a href="#cb4-5"></a><span class="co">##   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># retrieve resampling from OML</span>
-<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## &lt;ResamplingCustom&gt; with 10 iterations</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">## * Instantiated: TRUE</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
@@ -169,8 +165,8 @@
 <span id="cb24-3"><a href="#cb24-3"></a><span class="co">## * Parameters: list()</span></span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># list oml data sets with 5 features and 50 - 200 instances</span>
-<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data_sets</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data_sets</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">##    data_id               name</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="co">## 1:      61               iris</span></span>
 <span id="cb26-3"><a href="#cb26-3"></a><span class="co">## 2:     199           fruitfly</span></span>
@@ -199,48 +195,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=mlr3oml">https://​cloud.r-project.org/​package=mlr3oml</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/mlr-org/mlr3oml/">https://​github.com/​mlr-org/​mlr3oml/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/mlr-org/mlr3oml">https://​github.com/​mlr-org/​mlr3oml</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/LGPL-3">LGPL-3</a></small></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Michel Lang <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0000-0001-9754-0393" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://cloud.r-project.org/package=mlr3oml" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/mlr-org/mlr3oml/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/mlr-org/mlr3oml" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mlr-org/mlr3oml/actions?query=workflow%3Atic"><img src="https://github.com/mlr-org/mlr3oml/workflows/tic/badge.svg?branch=main" alt="tic"></a></li>
-<li><a href="https://cran.r-project.org/package=mlr3oml"><img src="https://www.r-pkg.org/badges/version-ago/mlr3oml" alt="CRAN Status Badge"></a></li>
-<li><a href="https://stackoverflow.com/questions/tagged/mlr3"><img src="https://img.shields.io/badge/stackoverflow-mlr3-orange.svg" alt="StackOverflow"></a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://www.r-project.org/Licenses/LGPL-3" class="external-link">LGPL-3</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing mlr3oml</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Michel Lang <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0000-0001-9754-0393" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/mlr-org/mlr3oml/actions?query=workflow%3Atic" class="external-link"><img src="https://github.com/mlr-org/mlr3oml/workflows/tic/badge.svg?branch=main" alt="tic"></a></li>
+<li><a href="https://cran.r-project.org/package=mlr3oml" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/mlr3oml" alt="CRAN Status Badge"></a></li>
+<li><a href="https://stackoverflow.com/questions/tagged/mlr3" class="external-link"><img src="https://img.shields.io/badge/stackoverflow-mlr3-orange.svg" alt="StackOverflow"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Michel Lang.</p>
+  <p></p>
+<p>Developed by Michel Lang.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -248,6 +254,8 @@
 
   
 
+
+  
 
   </body>
 </html>
