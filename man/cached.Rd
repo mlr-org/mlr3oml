@@ -2,7 +2,7 @@
 % Please edit documentation in R/cache.R
 \name{cached}
 \alias{cached}
-\title{Ca}
+\title{Cached}
 \usage{
 cached(fun, type, id, ..., cache_dir = FALSE)
 }

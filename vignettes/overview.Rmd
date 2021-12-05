@@ -1,0 +1,101 @@
+# Run
+#  - Task
+#    - Data
+#    - Resampling
+#    - list of measures
+#  - Setup
+#    - Flow
+#    - Parameter
+
+
+run_id = 1
+
+# Download a run
+```{r}
+orun = OMLRun$new(run_id) # OMLRun object
+```
+
+
+# Extract mlr3 objects
+
+# Task
+```{r}
+otask = run$task # OMLTask object
+task = otask$convert() # mlr3 Task object
+```
+## Data
+
+```{r}
+odata = run$task$data # OMLData object
+data = odata$convert() # mlr3 DataBackend / data.table
+```
+
+## Resampling
+
+```{r}
+oresampling = run$task$resampling # OMLResampling object
+resampling = oresampling$convert() # mlr3 Resampling object
+```
+
+## Measures
+
+```{r}
+omeasures = run$task$measures # OMLMeasure / list(OMLMeasure1, OMLMeasure2, ... )
+measures = omeasures$convert() # mlr3Measure / list(mlr3::measure1, mlr3::measure2, ... )
+```
+
+
+## Setup
+
+```{r}
+osetup = run$setup # OMLSetup
+oflow = run$setup$flow # OMLFlow
+oparams = run$setup$parameter # OMLParameter
+setup = osetup$convert() # Initilizes the learner described in oflow with the oparams
+learner = oflow$convert() # initializes learner with default values
+```
+
+
+
+# Upload to OpenML
+
+```{r}
+task = tsk("iris")
+learner = lrn("regr.rpart)
+result = resample(task, learner, resampling)
+publish_oml(result)
+```
+
+```{r}
+oml_result = run_oml(learner, otask)
+kkk
+oml_result = run_oml(osetup, otask)
+oml_result = run_oml(learner, task, resampling, list(measures))
+```
+
+
+# Upload
+oml_result$upload() # Uploads also those flows and tasks etc. that are not on OpenML yet
+
+# Collections
+run_collection = download_run_collection(1) # list of Runs
+task_collection = download_task_collection(1) # list of Tasks
+
+
+
+
+
+
+## Questions:
+# - What is the best way to upload a learner / pipeline to be able to reconstruct it after download?
+#   --> How to handle learners that are not in mlr3?
+# - What about hyperparameter tuning and OpenML?
+# --> autotuner
+# - Reproduziertbarkeit mit renv / callr
+
+
+
+
+
+
+

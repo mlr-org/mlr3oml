@@ -92,6 +92,7 @@ Returns all tags of the task.}
 \itemize{
 \item \href{#method-new}{\code{OMLTask$new()}}
 \item \href{#method-print}{\code{OMLTask$print()}}
+\item \href{#method-convert}{\code{OMLTask$convert()}}
 \item \href{#method-clone}{\code{OMLTask$clone()}}
 }
 }
@@ -125,6 +126,16 @@ Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLTask$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convert"></a>}}
+\if{latex}{\out{\hypertarget{method-convert}{}}}
+\subsection{Method \code{convert()}}{
+Converts a OMLTask to an mlr3 Task.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLTask$convert()}\if{html}{\out{</div>}}
 }
 
 }

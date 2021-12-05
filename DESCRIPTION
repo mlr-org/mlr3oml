@@ -2,42 +2,46 @@ Package: mlr3oml
 Title: Connector Between 'mlr3' and 'OpenML'
 Version: 0.5.0
 Authors@R:
-    person(given = "Michel",
-           family = "Lang",
-           role = c("cre", "aut"),
-           email = "michellang@gmail.com",
+    person("Michel", "Lang", , "michellang@gmail.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0001-9754-0393"))
-Description: Provides an interface to 'OpenML.org' to list and
-    download machine learning data and tasks. Data and tasks can be
-    automatically converted to 'mlr3' tasks. For a more sophisticated
-    interface which also allows uploading experiments, see the 'OpenML'
-    package.
+Description: Provides an interface to 'OpenML.org' to list and download
+    machine learning data and tasks. Data and tasks can be automatically
+    converted to 'mlr3' tasks. For a more sophisticated interface which
+    also allows uploading experiments, see the 'OpenML' package.
 License: LGPL-3
 URL: https://mlr3oml.mlr-org.com, https://github.com/mlr-org/mlr3oml
 BugReports: https://github.com/mlr-org/mlr3oml
 Depends:
-    R (>= 3.1.0),
-    mlr3 (>= 0.10.0)
+    mlr3 (>= 0.10.0),
+    R (>= 3.1.0)
 Imports:
     backports (>= 1.1.6),
     checkmate,
+    httr,
     curl,
     data.table,
     jsonlite,
     lgr,
     mlr3misc (>= 0.7.0),
+    progressr,
     R6,
-    stringi
+    stringi,
+    xml2
 Suggests:
-    RWeka,
     farff,
     foreign,
-    mlr3proba,
     qs,
+    RWeka,
     testthat (>= 3.0.0),
-    withr
+    withr,
+    mlr3proba,
+    mlr3pipelines,
+    mlr3extralearners,
+    mlr3keras,
+    mlr3torch,
+    mlr3filters
+Config/testthat/edition: 3
 Encoding: UTF-8
 NeedsCompilation: yes
-Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

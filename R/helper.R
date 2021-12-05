@@ -166,3 +166,46 @@ get_paginated_table = function(type, ..., limit) {
 
   return(tab)
 }
+#'
+#' @title Upload a file to OpenML
+#'
+#' @description Uploads a file to OpenML.
+#'
+#' @details
+#'
+upload = function(url, body, query = list(api_key = get_api_key())) {
+  response = httr::POST(url = url,
+                        query = query,
+                        body = body)
+
+  if (httr::http_error(response)) {
+    stop(httr::content(response)$error$message)
+  }
+
+  return(httr::content(response))
+}
+
+get_server = function() {
+  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
+  return(server)
+}
+
+# Creates the functions that checks whether a flow, task, data already exists on OpenML
+make_exists = function(type) {
+  f = function(name, ext_version) {
+    server = get_server()
+    response = httr::GET(url = sprintf("%s/%s/exists/%s/%s", server, type, name, ext_version))
+    id = id_from_response(response)
+    return(id)
+  }
+
+  return(f)
+}
+
+# extracts `flow_exists` from the response
+# is -1 if it does not exist and returns the id otherwise
+id_from_response = function(response) {
+  return(as.integer(xml2::as_list(httr::content(response))$flow_exists$id[[1]]))
+}
+
+flow_exists = make_exists("flow")

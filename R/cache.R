@@ -62,7 +62,7 @@ initialize_cache = function(cache_dir) {
   return(TRUE)
 }
 
-#' @title Ca
+#' @title Cached
 #'
 #' @name cached
 #'

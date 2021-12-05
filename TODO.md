@@ -1,35 +1,68 @@
-# TODO File for mlr3oml 
+# TODO File for mlr3oml
 
+Only check when it is properly tested
+
+- [ ] Download
+  - [ ] Flow
+  - [ ] Run
+  - [ ] Collection
+
+- [ ] Publish
+  - [ ] Learner
+  - [ ] Run
+  - [ ] Collection
+  Maybe:
+  - [ ] Task
+  - [ ] Data
+
+- [ ] Convert
+  - [ ] Flow: [Flow --> Learner]
+  - [ ] Run [Run --> ResamplingResult]
+  - [ ] Collection [Collection --> list)
+  - [ ] Resampling [Resampling --> Resampling]
+  - [ ] Setup [Setup --> ParamSet]
+
+Other tasks:
+- [ ] Verify existing functions
+- [ ] Better console output when downloading collections.
+- [ ] Add tags to flows (mlr3), must be done with seperate API Call
+- [ ] Use stringi instead of paste
+- [ ] Extend it to survival tasks and maybe also cluster
+
+
+
+Into README:
+- To test, setup mlr3oml.test_api_key
 
 ## Aufgaben
 - Existierende Funktionalität checken und Tests entwickeln (z.B.
   auf Typen checken etc.)
-- Objekt für OMLRun  --> Schauen wie es bei OMLTask gemacht wurde 
-- Task erstellen wenn vom user gewollt 
+- Objekt für OMLRun  --> Schauen wie es bei OMLTask gemacht wurde
+- Task erstellen wenn vom user gewollt
 
 ## Fragen an OpenML
- - API muss laufen 
+ - API muss laufen
 
 
-Questions: 
+Questions:
 1. Why the mlr3oml rewrite
-1. Which features from OML are to be included 
-1. How to deal with Benchmarks / Collections? 
+1. Which features from OML are to be included
+1. How to deal with Benchmarks / Collections?
 1. Difference between a collection and a benchmark suite?
-1. Connect mlr3measures with Evaluation Measures? 
-1. What is a Setup --> Flow + Hyperpa ram config. 
+1. Connect mlr3measures with Evaluation Measures?
+1. What is a Setup --> Flow + Hyperpa ram config.
 1. Is resampling part of a benchmark / collection?
-1. It should be possible to download a task without 
-loading mlr3 for "tsk("oml", task_id  = n)" ? 
+1. It should be possible to download a task without
+loading mlr3 for "tsk("oml", task_id  = n)" ?
 1. Connect measures with mlr3measures
 
 
-## Main Features 
+## Main Features
 
 ### List
 
-- Bei collections und benchmarks auf feste  API warten 
-- Existierende Funktionen: Ausprobieren + Tests 
+- Bei collections und benchmarks auf feste  API warten
+- Existierende Funktionen: Ausprobieren + Tests
 
 
 | Feature: List      | OpenML | mlr3oml | Desired |
@@ -46,8 +79,8 @@ loading mlr3 for "tsk("oml", task_id  = n)" ?
 | TaskTypes          | 1      | 0       | ?       |
 
 ### Download
-Questions: 
-- Data format for OpenML Benchmark / Collection 
+Questions:
+- Data format for OpenML Benchmark / Collection
 - Predictions: Einfach als run$prediction()
 
 | Feature: Download | OpenML | mlr3oml | Desired |
@@ -58,9 +91,9 @@ Questions:
 | Runs              | 1      | 0       | 1       |
 | Predictions       | 1      | 0       | 1       |
 
-## Run 
+## Run
 - Tasks indem man OpenML Task zu mlr3 Task konvertiert
-- Benchmarks durch mlr3benchmark 
+- Benchmarks durch mlr3benchmark
 
 | Feature: Run Model        | OpenML | mlr3oml | Desired |
 | ------------------------- | ------ | ------- | ------- |
@@ -71,7 +104,7 @@ Questions:
 | Run Setup                 | 1      | 0       | 0       |
 
 ## Upload
-zu Arf datei konvertieren und dann uploaden. 
+zu Arf datei konvertieren und dann uploaden.
 
 | Feature: Upload | OpenML | mlr3oml | Desired |
 | --------------- | ------ | ------- | ------- |

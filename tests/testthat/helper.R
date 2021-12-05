@@ -34,3 +34,9 @@ expect_oml_task = function(oml_task) {
 
   expect_subset(unlist(oml_task$resampling$instance, use.names = FALSE), oml_task$task$row_ids)
 }
+
+with_test_server = function(env = parent.frame()) {
+  op = options("mlr3oml.server" = "https://test.openml.org/api/v1",
+               "mlr3oml.api_key" = getOption("mlr3oml.test_api_key"))
+  withr::defer(options(op), env)
+}

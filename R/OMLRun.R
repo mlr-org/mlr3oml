@@ -15,6 +15,7 @@
 #' pprint(otask)
 #' }
 #'
+# TODO: Finish this class according to the docs
 OMLRun = R6Class("OMLRun",
   public = list(
     #' @field id (`integer(1)`)\cr

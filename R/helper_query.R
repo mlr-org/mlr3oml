@@ -18,6 +18,7 @@ build_filter_query = function(type, filters) {
     }
   })
 
-  paste0("https://www.openml.org/api/v1/json/", type, "/list/",
+  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
+  paste0(server, "/json/", type, "/list/",
     paste0(filters, collapse = "/"))
 }

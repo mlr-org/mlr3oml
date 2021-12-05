@@ -53,6 +53,31 @@ OMLTask = R6Class("OMLTask",
     #' For a more detailed printer, convert to a [mlr3::Task] via `$task`.
     print = function() {
       catf("<OMLTask:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
+      #catf("<OMLTask:%i>", self$id)
+    },
+
+    #' @description
+    #' Converts a OMLTask to an mlr3 Task.
+    convert = function() {
+      name = self$name
+      data = self$data$data
+      target = self$target_names
+
+      miss = setdiff(target, names(data))
+      if (length(miss)) {
+        stopf("Task %i could not be created: target '%s' not found in data", self$id, miss[1L])
+      }
+
+      constructor = switch(self$desc$task_type,
+        # FIXME: positive class?
+        "Supervised Classification" = new_task_classif,
+        "Supervised Regression" = new_task_regr,
+        "Survival Analysis" = new_task_surv,
+        stopf("Unsupoorted task type '%s'", self$desc$task_type)
+      )
+      task = constructor(name, data, target = target)
+      task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
+      task
     }
   ),
 

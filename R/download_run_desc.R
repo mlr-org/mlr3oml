@@ -1,5 +1,6 @@
 download_run_desc = function(run_id) {
-  desc = get_json("https://www.openml.org/api/v1/json/run/%i", run_id)[[1L]]
+  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
+  desc = get_json(paste0(server, "/json/run/%i"), run_id)[[1L]]
 
   desc$run_id = as.integer(desc$run_id)
   desc$uploader = as.integer(desc$uploader)
@@ -12,6 +13,3 @@ download_run_desc = function(run_id) {
 
   desc
 }
-
-# options("mlr3oml.api_key" = "91141e224e7b45a0d268ac52ad9313b0")
-# desc = download_run_desc(1)
