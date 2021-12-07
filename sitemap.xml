@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/OMLData.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/OMLData.html</loc>
   </url>
   <url>
-    <loc>/reference/OMLTask.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/OMLTask.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/list_oml.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/list_oml.html</loc>
   </url>
   <url>
-    <loc>/reference/mlr3oml-package.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/mlr3oml-package.html</loc>
   </url>
   <url>
-    <loc>/reference/read_arff.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/read_arff.html</loc>
   </url>
 </urlset>
