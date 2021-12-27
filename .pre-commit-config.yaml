@@ -8,36 +8,24 @@ repos:
         args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
         additional_dependencies:
         - mlr-org/styler.mlr
-    #    -   id: roxygenize
-    #        # roxygen requires loading pkg -> add dependencies from DESCRIPTION
-    #        additional_dependencies:
-    #        - mlr3
-    #        - backports
-    #        - checkmate
-    #        - curl
-    #        - data.table
-    #        - httr
-    #        - jsonlite
-    #        - lgr
-    #        - mlr3misc
-    #        - progressr
-    #        - R6
-    #        - stringi
-    #        - xml2
-    #        - farff
-    #        - foreign
-    #        - mlr3filters
-    #        - mlr3keras
-    #        - mlr3learners
-    #        - mlr3pipelines
-    #        - mlr3proba
-    #        - mlr3torch
-    #        - qs
-    #        - RWeka
-    #        - testthat
-    #        - withr
+    -   id: roxygenize
+      # roxygen requires loading pkg -> add dependencies from DESCRIPTION
+        additional_dependencies:
+        - mlr3
+        - backports
+        - curl
+        - data.table
+        - httr
+        - jsonlite
+        - lgr
+        - mlr3misc
+        - lgr
+        - progressr
+        - R6
+        - stringi
+        - xml2
     -   id: use-tidy-description
-        exclude: >
+        exclude:
           (?x)^(
           data/.*|
           (.*/|)\.Rprofile|
