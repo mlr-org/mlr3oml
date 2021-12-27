@@ -23,6 +23,7 @@ resampling = oresampling$convert() # mlr3::Resampling
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OMLResampling$new()}}
+\item \href{#method-convert}{\code{OMLResampling$convert()}}
 \item \href{#method-clone}{\code{OMLResampling$clone()}}
 }
 }
@@ -31,7 +32,16 @@ resampling = oresampling$convert() # mlr3::Resampling
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLResampling$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLResampling$new(task, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convert"></a>}}
+\if{latex}{\out{\hypertarget{method-convert}{}}}
+\subsection{Method \code{convert()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLResampling$convert()}\if{html}{\out{</div>}}
 }
 
 }

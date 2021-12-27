@@ -38,7 +38,7 @@ test_that("data is cached", {
 })
 
 test_that("study 99 can be loaded and parsed", {
-  data_ids = list_oml_data_sets(tag = "study_99")$data_id
+  data_ids = list_oml_data(tag = "study_99")$data_id
   cache = TRUE
   withr::local_options(list(warn = 2L))
 

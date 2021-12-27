@@ -1,5 +1,7 @@
 download_data_desc = function(data_id) {
-  desc = get_json("https://www.openml.org/api/v1/json/data/%i", data_id)[[1L]]
+  server = get_server()
+  desc = get_json(paste0(server, "/json/data/%i"), data_id,
+    simplify_data_frame = FALSE)[[1L]]
 
   desc$format = tolower(desc$format)
   if (desc$format %nin% c("arff", "sparse_arff")) {

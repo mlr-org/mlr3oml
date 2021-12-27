@@ -119,7 +119,7 @@ OMLData = R6Class("OMLData",
     desc = function() {
       if (is.null(private$.desc)) {
         private$.desc = cached(download_data_desc, "data_desc", self$id, cache_dir = self$cache_dir)
-     }
+      }
       private$.desc
     },
 

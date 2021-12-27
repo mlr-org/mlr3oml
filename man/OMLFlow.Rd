@@ -4,9 +4,7 @@
 \alias{OMLFlow}
 \title{Interface to OpenML Flows}
 \description{
-This is the class for tasks provided on \url{https://openml.org/}.
-For a description of the full xsd scheme see here:
-https://www.openml.org/api/v1/xsd/openml.implementation.upload.
+This is the class for flows provided on the \href{https://new.openml.org/search?type=flow&sort=runs}{OpenML website}.
 }
 \examples{
 \donttest{
@@ -33,6 +31,29 @@ The package \CRANpkg{qs} is required for caching.}
 }
 \if{html}{\out{</div>}}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{desc}}{(\code{list(n)})\cr
+The description as downloaded from OpenML.}
+
+\item{\code{parameter}}{(\code{data.table})\cr
+The parameters of the flow.}
+
+\item{\code{tag}}{(\code{character(n)})\cr
+The tags of the flow.}
+
+\item{\code{dependencies}}{(\code{character(n)})\cr
+The dependencies of the flow.}
+
+\item{\code{name}}{(\code{character(1)})\cr
+The name of the flow.}
+
+\item{\code{description}}{(\code{character(1)})\cr
+The description of the flow.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -56,7 +77,7 @@ Initializes a new object of class \link{OMLFlow}.
 \if{html}{\out{<a id="method-convert"></a>}}
 \if{latex}{\out{\hypertarget{method-convert}{}}}
 \subsection{Method \code{convert()}}{
-Tries to convert the flow to a mlr3 object.
+Tries to convert the OMLFlow into an \link[mlr3:Learner]{mlr3::Learner} if the name starts with mlr3.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLFlow$convert()}\if{html}{\out{</div>}}
 }
@@ -66,6 +87,7 @@ Tries to convert the flow to a mlr3 object.
 \if{html}{\out{<a id="method-print"></a>}}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
+Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLFlow$print()}\if{html}{\out{</div>}}
 }

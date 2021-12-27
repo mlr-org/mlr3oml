@@ -1,21 +1,80 @@
 # All available hooks: https://pre-commit.com/hooks.html
+# R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
 -   repo: https://github.com/lorenzwalthert/precommit
-    rev: v0.1.2
+    rev: v0.2.2.9006
     hooks:
-    # any R project
     -   id: style-files
-        args: [--style_pkg=styler, --style_fun=mlr_style]
-    -   id: lintr
+        args: [--style_pkg=styler.mlr, --style_fun=mlr_style]
+        additional_dependencies:
+        - mlr-org/styler.mlr
+    #    -   id: roxygenize
+    #        # roxygen requires loading pkg -> add dependencies from DESCRIPTION
+    #        additional_dependencies:
+    #        - mlr3
+    #        - backports
+    #        - checkmate
+    #        - curl
+    #        - data.table
+    #        - httr
+    #        - jsonlite
+    #        - lgr
+    #        - mlr3misc
+    #        - progressr
+    #        - R6
+    #        - stringi
+    #        - xml2
+    #        - farff
+    #        - foreign
+    #        - mlr3filters
+    #        - mlr3keras
+    #        - mlr3learners
+    #        - mlr3pipelines
+    #        - mlr3proba
+    #        - mlr3torch
+    #        - qs
+    #        - RWeka
+    #        - testthat
+    #        - withr
+    -   id: use-tidy-description
+        exclude: >
+          (?x)^(
+          data/.*|
+          (.*/|)\.Rprofile|
+          (.*/|)\.Renviron|
+          (.*/|)\.gitignore|
+          (.*/|)NAMESPACE|
+          (.*/|)WORDLIST|
+          (.*/|)\.travis.yml|
+          (.*/|)appveyor.yml|
+          (.*/|)\.Rbuildignore|
+          (.*/|)\.pre-commit-.*|
+          .*\.[rR]|
+          .*\.Rproj|
+          .*\.py|
+          .*\.feather|
+          .*\.rds|
+          .*\.Rds|
+          .*\.sh|
+          .*\.RData|
+          .*\.svg
+          )$
+    -   id: readme-rmd-rendered
     -   id: parsable-R
     -   id: no-browser-statement
-    -   id: readme-rmd-rendered
-    #  R package development
-    -   id: roxygenize
-    -   id: use-tidy-description
     -   id: deps-in-desc
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.1.0
+    rev: v4.0.1
     hooks:
     -   id: check-added-large-files
-        args: ['--maxkb=200']
+        args: ['--maxkb=1000']
+    -   id: end-of-file-fixer
+        exclude: '\.Rd'
+-   repo: local
+    hooks:
+    -   id: forbid-to-commit
+        name: Don't commit common R artifacts
+        entry: Cannot commit .Rhistory, .RData, .Rds or .rds.
+        language: fail
+        files: '\.Rhistory|\.RData|\.Rds|\.rds$'
+        # `exclude: <regex>` to allow committing specific files.

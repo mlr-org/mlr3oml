@@ -4,17 +4,24 @@
 \alias{OMLRun}
 \title{Interface to OpenML Runs}
 \description{
-This is the class for OpenML runs TODO: Add link of new website when done.
+This is the class for tasks provided on \url{https://openml.org/}.
 }
 \section{mlr3 Integration}{
 
-Blablab
+A \link{OMLTask} is returned by the active field \verb{$task}.
+A \link{OMLData} is returned by the active field \verb{$data} (short for $task$data)
+A \link{OMLFlow} is returned by the active field \verb{$flow}.
 }
 
 \examples{
 \donttest{
-orun = OMLRun$new(id = 1)
-pprint(otask)
+oml_run = OMLRun$new(id = 1)
+
+print(oml_run)
+print(oml_run$task) # OMLTask
+print(oml_run$data) # OMLData
+print(oml_run$flow) # OMLFlow
+print(oml_run$resampling) # OMLFlow
 }
 
 }
@@ -36,8 +43,49 @@ If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
 
-\item{\code{flow}}{(\code{integer(1)})\cr
-flow.}
+\item{\code{('data.table')}}{\n
+The parameter setting for this run.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{desc}}{(\code{list()})
+Run description (meta information) downloaded and converted from
+the JSON API response.}
+
+\item{\code{flow_id}}{(\code{integer(1)})\cr
+The id of the flow.}
+
+\item{\code{flow}}{(OMLFlow)\link[mlr3:OMLFlow]{mlr3::OMLFlow} \cr
+The \link{OMLFlow}.}
+
+\item{\code{task_id}}{(\code{character(1)})\cr
+The id of the task solved by this run.}
+
+\item{\code{task}}{(\code{character(1)})\cr
+The task solved by this run.}
+
+\item{\code{data}}{(\link{OMLData}) \cr
+The data used in this run.}
+
+\item{\code{data_id}}{(\code{character(1)})\cr
+The data id.}
+
+\item{\code{task_type}}{(\code{character(1)})\cr
+The type of task solved by this run (e.g., classification).}
+
+\item{\code{tag}}{('character(n)') \n
+A character vector containing possible tags.}
+
+\item{\code{evaluation}}{The evaluation.}
+
+\item{\code{('data.table')}}{\n
+The parameter setting for this run.}
+
+\item{\code{prediction}}{(Prediction)\link[mlr3:Prediction]{mlr3::Prediction}
+The prediction of the run.}
 }
 \if{html}{\out{</div>}}
 }
@@ -46,6 +94,7 @@ flow.}
 \itemize{
 \item \href{#method-new}{\code{OMLRun$new()}}
 \item \href{#method-print}{\code{OMLRun$print()}}
+\item \href{#method-convert}{\code{OMLRun$convert()}}
 \item \href{#method-clone}{\code{OMLRun$clone()}}
 }
 }
@@ -78,6 +127,16 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLRun$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convert"></a>}}
+\if{latex}{\out{\hypertarget{method-convert}{}}}
+\subsection{Method \code{convert()}}{
+Converts the OMLRun into a (Resampling)\link[mlr3:Resampling]{mlr3::Resampling} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLRun$convert()}\if{html}{\out{</div>}}
 }
 
 }

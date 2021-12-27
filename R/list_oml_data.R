@@ -47,11 +47,11 @@
 #' \donttest{
 #' ### query data sets
 #' # search for titanic data set
-#' data_sets = list_oml_data_sets(data_name = "titanic")
+#' data_sets = list_oml_data(data_name = "titanic")
 #' print(data_sets)
 #'
 #' # search for a reduced version
-#' data_sets = list_oml_data_sets(
+#' data_sets = list_oml_data(
 #'   data_name = "titanic",
 #'   number_instances = c(2200, 2300),
 #'   number_features = 4
@@ -67,7 +67,7 @@
 #' runs = list_oml_runs(task_id = tasks$task_id)
 #' runs[, .N, by = task_id]
 #' }
-list_oml_data_sets = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
+list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L), ...) {
   tab = get_paginated_table("data",
     data_id = data_id,

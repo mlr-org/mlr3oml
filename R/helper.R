@@ -1,3 +1,18 @@
+
+
+
+with_test_server = function(env = parent.frame()) {
+  op = options("mlr3oml.server" = "https://test.openml.org/api/v1",
+    "mlr3oml.api_key" = getOption("mlr3oml.test_api_key"))
+  withr::defer(options(op), env)
+}
+
+with_public_server = function(env = parent.frame()) {
+  op = options("mlr3oml.server" = "https://openml.org/api/v1",
+    "mlr3oml.api_key" = Sys.getenv("OPENMLAPIKEY"))
+  withr::defer(options(op), env)
+}
+
 get_api_key = function() {
   key = getOption("mlr3oml.api_key") %??% Sys.getenv("OPENMLAPIKEY")
   if (nzchar(key)) { # neither option nor ENVIRONMENT variable is set
@@ -91,6 +106,29 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
 }
 
 
+get_rds = function(url, api_key = get_api_key(), retries = 3L) {
+  path = tempfile(fileext = ".rds")
+  withr::defer(unlink(path))
+  lg$info("Retrieving rds", url = url, authenticated = !is.na(api_key))
+  for (retry in seq_len(retries)) {
+    response = download_file(url, path, api_key = api_key)
+    if (response$ok) {
+      lg$debug("Start processing rds file", path = path)
+      obj = tryCatch(readRDS(path),
+        error = function(cond) {
+          stopf("Could not read rds file.")
+        }
+      )
+      return(obj)
+    } else if (retry < retries && response$http_code >= 500L) {
+      delay = max(rnorm(1L, mean = 10), 0)
+      lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
+      Sys.sleep(delay)
+    } else {
+      stop("Error when downloading rds file.")
+    }
+  }
+}
 
 get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
   path = tempfile(fileext = ".arff")
@@ -166,7 +204,7 @@ get_paginated_table = function(type, ..., limit) {
 
   return(tab)
 }
-#'
+
 #' @title Upload a file to OpenML
 #'
 #' @description Uploads a file to OpenML.
@@ -174,11 +212,9 @@ get_paginated_table = function(type, ..., limit) {
 #' @details
 #'
 upload = function(url, body, query = list(api_key = get_api_key())) {
-  response = httr::POST(url = url,
-                        query = query,
-                        body = body)
+  response = httr::POST(url = url, query = query, body = body)
 
-  if (httr::http_error(response)) {
+  if (httr::http_error(response)) { # TODO: is this thing working?
     stop(httr::content(response)$error$message)
   }
 
@@ -190,22 +226,27 @@ get_server = function() {
   return(server)
 }
 
-# Creates the functions that checks whether a flow, task, data already exists on OpenML
-make_exists = function(type) {
-  f = function(name, ext_version) {
-    server = get_server()
-    response = httr::GET(url = sprintf("%s/%s/exists/%s/%s", server, type, name, ext_version))
-    id = id_from_response(response)
-    return(id)
-  }
-
-  return(f)
-}
-
 # extracts `flow_exists` from the response
 # is -1 if it does not exist and returns the id otherwise
-id_from_response = function(response) {
+id_from_flow_response = function(response) {
+  # TODO: write this file for different response type (run, ... ) and use it in publish.R
   return(as.integer(xml2::as_list(httr::content(response))$flow_exists$id[[1]]))
 }
 
-flow_exists = make_exists("flow")
+get_external = function(x) {
+  paste0(x$hash, "_test") # FIXME: remove this when new version is released
+}
+
+query_existance = function(x) {
+  if (inherits(x, "Learner")) {
+    response = httr::GET(url = sprintf("%s/flow/exists/%s/%s", get_server(),
+      paste0("mlr3.", x$id), get_external(x)))
+    id = id_from_flow_response(response)
+    id = max(id, 0) # response -1 is turned into 0 so that it is interpreted as FALSE
+    return(id)
+  }
+  if (inherits(x, "ResampleResult")) {
+    return(!is.null(get_private(x)$oml_id))
+  }
+  stopf("Cannot query existance for objective of class %s.", class(x)[[1L]])
+}

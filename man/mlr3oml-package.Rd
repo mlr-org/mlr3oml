@@ -44,7 +44,7 @@ Useful links:
 \itemize{
   \item \url{https://mlr3oml.mlr-org.com}
   \item \url{https://github.com/mlr-org/mlr3oml}
-  \item Report bugs at \url{https://github.com/mlr-org/mlr3oml}
+  \item Report bugs at \url{https://github.com/mlr-org/mlr3oml/issues}
 }
 
 }

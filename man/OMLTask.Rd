@@ -40,12 +40,6 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML task id.}
-
-\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
-Stores the location of the cache for objects retrieved from \url{https://openml.org}.
-If set to \code{FALSE}, caching is disabled.
-
-The package \CRANpkg{qs} is required for caching.}
 }
 \if{html}{\out{</div>}}
 }

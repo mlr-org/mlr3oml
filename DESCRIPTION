@@ -10,16 +10,16 @@ Description: Provides an interface to 'OpenML.org' to list and download
     also allows uploading experiments, see the 'OpenML' package.
 License: LGPL-3
 URL: https://mlr3oml.mlr-org.com, https://github.com/mlr-org/mlr3oml
-BugReports: https://github.com/mlr-org/mlr3oml
+BugReports: https://github.com/mlr-org/mlr3oml/issues
 Depends:
     mlr3 (>= 0.10.0),
     R (>= 3.1.0)
 Imports:
     backports (>= 1.1.6),
     checkmate,
-    httr,
     curl,
     data.table,
+    httr,
     jsonlite,
     lgr,
     mlr3misc (>= 0.7.0),
@@ -30,16 +30,17 @@ Imports:
 Suggests:
     farff,
     foreign,
+    mlr3extralearners,
+    mlr3filters,
+    mlr3keras,
+    mlr3learners,
+    mlr3pipelines,
+    mlr3proba,
+    mlr3torch,
     qs,
     RWeka,
     testthat (>= 3.0.0),
-    withr,
-    mlr3proba,
-    mlr3pipelines,
-    mlr3extralearners,
-    mlr3keras,
-    mlr3torch,
-    mlr3filters
+    withr
 Config/testthat/edition: 3
 Encoding: UTF-8
 NeedsCompilation: yes

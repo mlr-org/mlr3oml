@@ -33,7 +33,7 @@ OMLTask = R6Class("OMLTask",
     #' OpenML task id.
     id = NULL,
 
-    #' @template field_cache_dir
+    #' @temulate field_cache_dir
     cache_dir = NULL,
 
     #' @description
@@ -53,7 +53,7 @@ OMLTask = R6Class("OMLTask",
     #' For a more detailed printer, convert to a [mlr3::Task] via `$task`.
     print = function() {
       catf("<OMLTask:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
-      #catf("<OMLTask:%i>", self$id)
+      # catf("<OMLTask:%i>", self$id)
     },
 
     #' @description
@@ -77,6 +77,7 @@ OMLTask = R6Class("OMLTask",
       )
       task = constructor(name, data, target = target)
       task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
+      task$.__enclos_env__$private$oml_id = self$id
       task
     }
   ),
@@ -163,7 +164,7 @@ OMLTask = R6Class("OMLTask",
         "Supervised Classification" = new_task_classif,
         "Supervised Regression" = new_task_regr,
         "Survival Analysis" = new_task_surv,
-        stopf("Unsupoorted task type '%s'", self$desc$task_type)
+        stopf("Unsupported task type '%s'", self$desc$task_type)
       )
       task = constructor(name, data, target = target)
       task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
@@ -174,15 +175,7 @@ OMLTask = R6Class("OMLTask",
     #' Creates a [ResamplingCustom][mlr3::mlr_resamplings_custom] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
-        type = NULL
-        splits = cached(download_task_splits, "task_splits", self$id, self$desc, cache_dir = self$cache_dir)
-        train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)),
-          keyby = c("repeat.", "fold")]$row_id
-        test_sets = splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)),
-          keyby = c("repeat.", "fold")]$row_id
-
-        resampling = mlr3::ResamplingCustom$new()
-        private$.resampling = resampling$instantiate(self$task, train_sets = train_sets, test_sets = test_sets)
+        private$.resampling = OMLResampling$new(self, self$cache_dir)
       }
 
       private$.resampling
