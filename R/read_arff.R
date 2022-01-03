@@ -24,9 +24,10 @@ read_arff = function(path) {
     # this prevents double unquoting;
     # lines already unquoted w.r.t ' do not get unquote w.r.t. " again
     i = FALSE
+    not_na = !is.na(x)
 
     for (quote in c("'", "\"")) {
-      i = !i & !is.na(x) & stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote)
+      i = !i & not_na & stri_startswith_fixed(x, quote) & stri_endswith_fixed(x, quote)
       x[i] = stri_sub(x[i], 2L, -2L)
     }
     x
