@@ -38,14 +38,11 @@
 
   # We use this
 
-  save_set = function(obj) {
-    if ("oml_id" %nin% names(obj$private_fields)) {
-      obj$set("private", "oml_id", NULL)
-    }
-  }
-
-  map(list(mlr3::Learner, mlr3::Resampling, mlr3::Task, mlr3::ResampleResult,
-    mlr3::BenchmarkResult), save_set)
+  mlr3::Learner$set("private", "oml_id", NULL, overwrite = TRUE)
+  mlr3::Task$set("private", "oml_id", NULL, overwrite = TRUE)
+  mlr3::Resampling$set("private", "oml_id", NULL, overwrite = TRUE)
+  mlr3::ResampleResult$set("private", "oml_id", NULL, overwrite = TRUE)
+  mlr3::BenchmarkResult$set("private", "oml_id", NULL, overwrite = TRUE)
 
   # setup logger
   assign("lg", lgr::get_logger(pkgname), envir = parent.env(environment()))
