@@ -19,13 +19,19 @@ OMLResampling = R6Class("OMLResampling",
   public = list(
     id = NULL,
     task = NULL,
-    estimation_procedure = NULL,
     cache_dir = NULL,
-    initialize = function(task, cache = getOption("mlr3oml.cache", FALSE)) {
-      assert_r6(task, "OMLTask")
-      self$task = task
-      self$id = task$id
-      self$estimation_procedure = task$desc$input$estimation_procedure
+    initialize = function(task, task_id, cache = getOption("mlr3oml.cache", FALSE)) {
+      assert(is.null(task) || is.null(task_id))
+      if (is.null(task_id)) {
+        assert_r6(task, "OMLTask")
+        self$task = task
+        self$id = task$id
+      } else {
+        self$task = OMLTask$new(task_id, cache = cache)
+        self$id = task_id
+      }
+      # TODO: Does the caching work properly in this case? --> check, we don't want to
+      # unnecessarily download the task description twice for the resmapling and the task
       self$cache_dir = get_cache_dir(assert_flag(cache))
       initialize_cache(self$cache_dir)
     },
@@ -46,6 +52,10 @@ OMLResampling = R6Class("OMLResampling",
 
       private$.resampling
     }
+  ),
+  active = list(
+    estimation_procedure = function() self$task$desc$input$estimation_procedure
+
   ),
   private = list(
     .resampling = NULL,

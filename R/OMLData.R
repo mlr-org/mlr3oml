@@ -61,6 +61,11 @@ OMLData = R6Class("OMLData",
       catf("<OMLData:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
     },
 
+    convert = function() {
+      stop("Not implemented yet")
+      # TODO: Implement
+    },
+
     #' @description
     #' Returns the value of a single OpenML data set quality.
     #'

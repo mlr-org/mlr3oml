@@ -4,7 +4,7 @@
 \alias{publish}
 \title{Publish on OpenML}
 \usage{
-publish(x, ...)
+publish(x, confirm = TRUE, ...)
 }
 \description{
 Publishes a {Flow, Run, Dataset, Task} to OpenML.

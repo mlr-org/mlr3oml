@@ -32,7 +32,7 @@ resampling = oresampling$convert() # mlr3::Resampling
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLResampling$new(task, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLResampling$new(task, task_id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
 }
 
 }

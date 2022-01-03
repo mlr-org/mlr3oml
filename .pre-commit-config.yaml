@@ -1,3 +1,4 @@
+
 # All available hooks: https://pre-commit.com/hooks.html
 # R specific hooks: https://github.com/lorenzwalthert/precommit
 repos:
@@ -11,6 +12,7 @@ repos:
     -   id: roxygenize
       # roxygen requires loading pkg -> add dependencies from DESCRIPTION
         additional_dependencies:
+        - pkgbuild
         - mlr3
         - backports
         - curl
@@ -24,6 +26,7 @@ repos:
         - R6
         - stringi
         - xml2
+        - git2r
     -   id: use-tidy-description
         exclude:
           (?x)^(

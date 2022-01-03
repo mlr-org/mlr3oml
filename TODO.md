@@ -1,10 +1,12 @@
 # TODO File for mlr3oml
 
-Goal for today:
-- Do a commit and fix all the precommit issues
-- Pubish run and download run --> done
-- Create OMLResampling Object --> done
-
+- [ ] Better efficiency when uploading models (learner once + states)
+- [ ] Require user confirmation when uploading (only do this once on every publish
+    call, i.e. don't repeat on the recursive calls)
+- [ ] Provide possibility to delete everything once the upload failed (when e.g.
+    uploading a resample or benchmark result)
+- [ ] Add trycatch interrupt, (https://community.rstudio.com/t/how-to-catch-the-keyboard-interruption-in-r/7336)
+- [ ] Implement cleanup in tests (i.e. deleting after upload)
 
 Only check box when it is properly tested
 

@@ -112,6 +112,7 @@ Returns all tags of the data set.}
 \itemize{
 \item \href{#method-new}{\code{OMLData$new()}}
 \item \href{#method-print}{\code{OMLData$print()}}
+\item \href{#method-convert}{\code{OMLData$convert()}}
 \item \href{#method-quality}{\code{OMLData$quality()}}
 \item \href{#method-task}{\code{OMLData$task()}}
 \item \href{#method-clone}{\code{OMLData$clone()}}
@@ -147,6 +148,15 @@ Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convert"></a>}}
+\if{latex}{\out{\hypertarget{method-convert}{}}}
+\subsection{Method \code{convert()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$convert()}\if{html}{\out{</div>}}
 }
 
 }

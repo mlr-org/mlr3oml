@@ -1,4 +1,4 @@
-skip_on_cran()
+# skip_on_cran()
 
 test_that("Download mlr Flow: 3364", {
   with_public_server()
@@ -18,6 +18,7 @@ test_that("Download mlr Flow: 3364", {
 })
 
 test_that("Cannot download non-existing flow", {
+  with_public_server()
   invalid_id = 100000000L
   flow = OMLFlow$new(invalid_id)
   expect_error(flow$desc)
@@ -39,24 +40,12 @@ test_that("Autotest download", {
   }
 })
 
-test_that("Can reconstruct regr.rpart locally", {
+test_that("Can reconstruct regr.rpart", {
+  with_test_server()
+  debugonce(publish)
   learner = mlr3::lrn("regr.rpart")
-  pseudo_publish_learner(learner)
-  flow = pseudo_get_flow("regr.rpart")
+  flow_id = publish(learner, confirm = FALSE)
+  flow = OMLFlow$new(flow_id)
   expect_oml_flow(flow)
   expect_equal(learner, flow$convert())
-
-})
-
-
-skip("Don't randomly publish learners")
-# TODO: check that this is working
-test_that("Can reconstruct actual learner", {
-  with_test_server()
-  lrn = lrn("regr.rpart")
-  response = publish(lrn)
-
-  flow = OMLFlow$new(response)
-  flow$desc
-  expect_oml_flow(flow)
 })

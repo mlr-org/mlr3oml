@@ -1,11 +1,22 @@
-#' @title OML Collection
+#' @title OpenML Collection
 #'
 #' @description
-#' This is the class for collections served on \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}.
+#' This is the class for collections served on \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}. A collection can contain datasets, flows, runs and tasks.
+#' These are stored as an OMLContainer.
+#'
+#' @section mlr3 Intergration:
+#' The tasks can be converted to a list of [mlr3::Task]s by calling `$convert()` on the field
+#' `tasks`.
+#' The flows can be converted to a list of [mlr3::Learner]s by calling `$convert()` on the field
+#' `learners`.
+#' The runs can be converted to a list of [mlr3::ResampleResult]s by calling `$convert` on the
+#' field `runs`.
+#'
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
 #' @export
+#'
 OMLCollection = R6::R6Class("OMLCollection",
   public = list(
     #' @field id (`integer(1)`)\cr
@@ -35,6 +46,9 @@ OMLCollection = R6::R6Class("OMLCollection",
       catf("  * flows: %i", length(self$flow_ids))
       catf("  * runs:  %i", length(self$run_ids))
       catf("  * tasks: %i", length(self$task_ids))
+    },
+    convert = function() {
+
     }
   ),
 
@@ -42,7 +56,7 @@ OMLCollection = R6::R6Class("OMLCollection",
     desc = function() {
       if (is.null(private$.desc)) {
         private$.desc = cached(download_collection_desc, type = "collection", id = self$id,
-                               cache_dir = self$cache_dir)
+          cache_dir = self$cache_dir)
       }
       return(private$.desc)
     },
@@ -91,12 +105,17 @@ OMLCollection = R6::R6Class("OMLCollection",
     #' An vector containing the task ids of the collection.
     task_ids = function() self$desc$task$task_id,
 
+    #' @field resampling_ids (`integer(n)`)\cr
+    #' An vector containing the resampling ids of the collection.
+    #' Note that this corresponds exactly to the task ids.
+    resampling_ids = function() self$desc$task$task_id,
+
     #' @field runs (`list(n)')
     #' A list of [mlr3oml][mlr3oml::OMLRun]s.
     runs = function() {
       if (is.null(private$.runs)) {
         private$.runs = OMLContainer$new(
-          mlr3misc::map(self$run_ids, function (x) OMLRun$new(x))
+          mlr3misc::map(self$run_ids, function(x) OMLRun$new(x, cache = self$cache_dir))
         )
       }
       return(private$.runs)
@@ -107,7 +126,7 @@ OMLCollection = R6::R6Class("OMLCollection",
     flows = function() {
       if (is.null(private$.flows)) {
         private$.flows = OMLContainer$new(
-          mlr3misc::map(self$flow_ids, function (x) OMLFlow$new(x))
+          mlr3misc::map(self$flow_ids, function(x) OMLFlow$new(x, cache = self$cache_dir))
         )
       }
       return(private$.flows)
@@ -117,41 +136,58 @@ OMLCollection = R6::R6Class("OMLCollection",
     #' A list of [mlr3oml][mlr3oml::OMLData].
     data = function() {
       if (is.null(private$.data)) {
-          private$.data = OMLContainer$new(
-            mlr3misc::map(self$data_ids, function (x) OMLData$new(x))
-          )
+        private$.data = OMLContainer$new(
+          mlr3misc::map(self$data_ids, function(x) OMLData$new(x, cache = self$cache_dir))
+        )
       }
       return(private$.data)
     },
 
-    #' @field data (`list(n)')
-    #' A list of [mlr3oml][mlr3oml::OMLData].
+    #' @field tasks (`list(n)')
+    #' A list of [mlr3oml][mlr3oml::OMLTasks]s.
     tasks = function() {
       if (is.null(private$.tasks)) {
         private$.tasks = OMLContainer$new(
-          mlr3misc::map(self$task_ids, function (x) OMLTask$new(x))
+          mlr3misc::map(self$task_ids, function(x) OMLTask$new(x, cache = self$cache_dir))
         )
       }
       return(private$.tasks)
-    }
+    },
+
+    #' @field resamplings (`list(n)')
+    #' A list of [mlr3oml][mlr3oml::OMLResampling]s.
+    resamplings = function() {
+      if (is.null(private$.resamplings)) {
+        private$.resamplings = OMLContainer$new(
+          mlr3misc::map(self$task_ids, function(x) OMLResampling$new(task = NULL, task_id = x, cache = self$cache_dir))
+        )
+      }
+      return(private$.resamplings)
+    },
+
+    #' @field resampling (`integer(n)`)\cr
+    #' An vector containing the resampling ids of the collection.
+    #' Note that this corresponds exactly to the task ids.
+    resampling = function() self$desc$task$task_id
   ),
 
   private = list(
     .desc = NULL,
     .runs = NULL,
     .tasks = NULL,
+    .resamplings = NULL,
     .data = NULL,
     .flows = NULL
   )
 )
 
-#map_progress = function(xs, f) {
+# map_progress = function(xs, f) {
 #  p = progressr::progressor(along = xs)
 #  y = mlr3misc::map(xs, function(x) {
 #    p()
 #    f(x)
 #  })
 #  return(y)
-#}
-#private$.tasks = progressr::with_progress(
+# }
+# private$.tasks = progressr::with_progress(
 #  map_progress(self$task_ids, function (x) OMLTask$new(x))

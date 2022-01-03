@@ -2,10 +2,21 @@
 % Please edit documentation in R/OMLCollection.R
 \name{OMLCollection}
 \alias{OMLCollection}
-\title{OML Collection}
+\title{OpenML Collection}
 \description{
-This is the class for collections served on \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}.
+This is the class for collections served on \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}. A collection can contain datasets, flows, runs and tasks.
+These are stored as an OMLContainer.
 }
+\section{mlr3 Intergration}{
+
+The tasks can be converted to a list of \link[mlr3:Task]{mlr3::Task}s by calling \verb{$convert()} on the field
+\code{tasks}.
+The flows can be converted to a list of \link[mlr3:Learner]{mlr3::Learner}s by calling \verb{$convert()} on the field
+\code{learners}.
+The runs can be converted to a list of \link[mlr3:ResampleResult]{mlr3::ResampleResult}s by calling \verb{$convert} on the
+field \code{runs}.
+}
+
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}
@@ -69,6 +80,10 @@ An vector containing the run ids of the collection.}
 \item{\code{task_ids}}{(\code{integer(n)})\cr
 An vector containing the task ids of the collection.}
 
+\item{\code{resampling_ids}}{(\code{integer(n)})\cr
+An vector containing the resampling ids of the collection.
+Note that this corresponds exactly to the task ids.}
+
 \item{\code{runs}}{(`list(n)')
 A list of \link[=OMLRun]{mlr3oml}s.}
 
@@ -78,8 +93,15 @@ A list of \link[=OMLFlow]{mlr3oml}s.}
 \item{\code{data}}{(`list(n)')
 A list of \link[=OMLData]{mlr3oml}.}
 
-\item{\code{data}}{(`list(n)')
-A list of \link[=OMLData]{mlr3oml}.}
+\item{\code{tasks}}{(`list(n)')
+A list of \link[=OMLTasks]{mlr3oml}s.}
+
+\item{\code{resamplings}}{(`list(n)')
+A list of \link[=OMLResampling]{mlr3oml}s.}
+
+\item{\code{resampling}}{(\code{integer(n)})\cr
+An vector containing the resampling ids of the collection.
+Note that this corresponds exactly to the task ids.}
 }
 \if{html}{\out{</div>}}
 }
@@ -88,6 +110,7 @@ A list of \link[=OMLData]{mlr3oml}.}
 \itemize{
 \item \href{#method-new}{\code{OMLCollection$new()}}
 \item \href{#method-print}{\code{OMLCollection$print()}}
+\item \href{#method-convert}{\code{OMLCollection$convert()}}
 \item \href{#method-clone}{\code{OMLCollection$clone()}}
 }
 }
@@ -120,6 +143,15 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convert"></a>}}
+\if{latex}{\out{\hypertarget{method-convert}{}}}
+\subsection{Method \code{convert()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$convert()}\if{html}{\out{</div>}}
 }
 
 }

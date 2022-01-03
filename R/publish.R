@@ -5,12 +5,23 @@
 #' @details
 #' This is a generic function.
 #' @export
-publish = function(x, ...) {
-  id = query_existance(x)
-  if (id) { # nolint
-    return(id)
+publish = function(x, confirm = TRUE, ...) {
+  # TODO: remove this when package is ready
+  # if (get_server() != "https://test.openml.org/api/v1") {
+
+  if (confirm) {
+    ask_confirmation()
   }
-  UseMethod("publish", x)
+
+  if (TRUE) {
+    id = query_existance(x)
+    if (!is.null(id)) { # nolint
+      return(id)
+    }
+  }
+  id = UseMethod("publish", x)
+  get_private(x)$oml_id = id
+  return(id)
 }
 
 publish.default = function(x, ...) { # nolint
@@ -27,6 +38,7 @@ publish.GraphLearner = function(x, ...) { # nolint
 
 #' @export
 publish.Learner = function(x, ...) { # nolint
+  api_key = get_api_key()
   if (is.na(api_key)) stop("API key required for upload.")
   assert_character(api_key, any.missing = FALSE, len = 1)
 
@@ -56,7 +68,7 @@ publish.Learner = function(x, ...) { # nolint
   return(flow_id)
 }
 
-publish.Task = function(x) { # nolint
+publish.Task = function(x, resampling, ...) { # nolint
   # The plan here is as follows:
   # Tasks that are downloaded from OpenML have the private attribute `oml_id`.
   # When we upload a run we check for that attribute and for the time throw an error otherwise
@@ -69,8 +81,9 @@ publish.ResampleResult = function(x, ...) { # nolint
   task = x$task
   resampling = x$resampling
 
-  flow_id = get_oml_id(learner) %??% publish(get(class(learner)[[1]])$new()) # TODO: Initialize a fresh learner
-  task_id = get_oml_id(task) %??% publish(task, resampling = resampling)
+  flow_id = get_oml_id(learner) %??% publish(learner, confirm = FALSE)
+  task_id = get_oml_id(task) %??% publish(task, resampling = resampling, confirm = FALSE)
+
   # TODO: Take care that we first create all the descriptions and check that this is working
   # and then upload everything, otherwise we might upload only part of it which is
   # undesirable
@@ -90,6 +103,9 @@ publish.ResampleResult = function(x, ...) { # nolint
 
   model_path = tempfile(fileext = ".rds")
   withr::defer(unlink(model_path))
+
+  # TODO: Store only learner states, after downloading they can be reassambled using the binary
+  # of the flow
   saveRDS(x$learners, model_path)
 
   response = upload(
@@ -97,7 +113,7 @@ publish.ResampleResult = function(x, ...) { # nolint
     body = list(
       description = httr::upload_file(desc_path),
       predictions = httr::upload_file(pred_path),
-      model_serialized = httr::upload_file(model_path)
+      binary = httr::upload_file(model_path)
     )
   )
   run_id = as.integer(xml2::as_list(response)$upload_run$run_id[[1]])
@@ -105,8 +121,22 @@ publish.ResampleResult = function(x, ...) { # nolint
   return(run_id)
 }
 
+
+#' @export
+publish.BenchmarkResult = function(x, ...) { # nolint
+  flow_ids = map_int(x$learners$learner, publish, confirm = FALSE)
+  task_ids = map_int(x$tasks$task, publish, confirm = FALSE)
+  run_ids = map_int(x$resample_results$resample_result, publish, confirm = FALSE)
+
+  # Now we create the study
+  desc = make_description(x, ..., flow_ids = flow_ids, task_ids = task_ids, run_ids = run_ids)
+  url = paste0(get_server(), "/run")
+  desc_path = tempfile(fileext = ".xml")
+
+}
+
 get_oml_id = function(x) {
-  return(get_private(x)$oml_id)
+  get_private(x)$oml_id
 }
 
 get_task_id = function(task) {

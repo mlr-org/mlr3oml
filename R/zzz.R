@@ -37,9 +37,15 @@
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
 
   # We use this
-  mlr3::Task$set("private", "oml_id", NULL)
-  mlr3::Learner$set("private", "oml_id", NULL)
-  mlr3::Resampling$set("private", "oml_id", NULL)
+
+  save_set = function(obj) {
+    if ("oml_id" %nin% names(obj$private_fields)) {
+      obj$set("private", "oml_id", NULL)
+    }
+  }
+
+  map(list(mlr3::Learner, mlr3::Resampling, mlr3::Task, mlr3::ResampleResult,
+    mlr3::BenchmarkResult), save_set)
 
   # setup logger
   assign("lg", lgr::get_logger(pkgname), envir = parent.env(environment()))
@@ -53,6 +59,12 @@
 .onUnload = function(libpath) { # nolint
   # nocov start
   library.dynam.unload("mlr3oml", libpath)
+  mlr3::Task$private_fields$oml_id = NULL
+  mlr3::Learner$private_fields$oml_id = NULL
+  mlr3::Resampling$private_fields$oml_id = NULL
+  mlr3::ResampleResult$private_fields$oml_id = NULL
+  mlr3::BenchmarkResult$private_fields$oml_id = NULL
+
 } # nocov end
 
 

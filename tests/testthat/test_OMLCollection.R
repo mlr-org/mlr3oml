@@ -1,6 +1,7 @@
-#skip_on_cran()
+# skip_on_cran()
 
 test_that("OMLCollection CC-18", {
+  public_server()
   id = 276
   c = OMLCollection$new(id)
   tasks = c$tasks$convert()
@@ -27,3 +28,23 @@ test_that("OMLCollection CC-18", {
 id = 15
 c = OMLCollection$new(id)
 c$flows$get(1)
+
+test_that("Can benchmark <-> collection", {
+  with_test_server()
+  tasks = lapply(c("penguins", "sonar"), tsk)
+  tasks = list(OMLTask$new(1197L)$convert(), OMLTask$new(403L) $convert())
+  learners = lapply(c("classif.featureless", "classif.rpart"), lrn)
+  resamplings = rsmp("cv", folds = 3)
+
+  design = benchmark_grid(tasks, learners, resamplings)
+  print(design)
+
+  set.seed(123)
+  bmr = benchmark(design)
+  debugonce(publish.BenchmarkResult)
+  publish(bmr)
+
+  debugonce(publish)
+  publish(bmr$learners$learner[[1]])
+
+})

@@ -1,7 +1,6 @@
 #' @export
-#'
-#' TODO: Internal methods should probably not use S3
-make_description = function(x, ...) {
+mke_description = function(x, ...) {
+  # TODO: Internal methods should probably not use S3
   UseMethod("make_description")
 }
 
@@ -15,7 +14,8 @@ make_description.Learner = function(x, ...) { # nolint
   name = sprintf("mlr3.%s", x$id)
   external_version = paste0(x$hash, "_test") # FIXME: remove this when new version is released
   dependencies = get_dependencies(x$packages)
-  description = sprintf("Learner %s from package(s) %s.", x$id,
+  # TODO: remove this
+  description = sprintf("[TEST]: Learner %s from package(s) %s.", x$id,
     paste(x$packages, collapse = ", "))
   ps = as.data.table(x$param_set)
 
@@ -98,4 +98,39 @@ get_dependencies = function(x) {
   dependencies = stringi::stri_join(x, unlist(versions), sep = "_")
   dependencies = stringi::stri_join(dependencies, collapse = ", ")
   return(dependencies)
+}
+
+make_description.BenchmarkResult = function(x, ...) { # nolint
+  doc = xml2::xml_new_document()
+  args = list(...)
+  if (!hasArg("description")) {
+    # TODO: better default description
+    args$description = sprintf("Benchmark result")
+  }
+  if (!hasArg("name")) {
+    # TODO: better default name
+    args$name = "mlr3.BenchmarkResult"
+  }
+
+  study = xml2::xml_add_child(doc, "oml:study", "xmlns:oml" = "http://openml.org/openml")
+  xml2::xml_add_child(.x = study, .value = "oml:main_entity_type", "run")
+  xml2::xml_add_child(.x = study, .value = "oml:name", name)
+  xml2::xml_add_child(.x = study, .value = "oml:description", description)
+
+  add_ids(study, args$task_ids, "task")
+  add_ids(study, args$flow_ids, "flow")
+  add_ids(study, args$run_ids, "run")
+
+  return(doc)
+
+}
+
+add_ids = function(study, ids, type) {
+  if (length(task_ids)) {
+    objects = xml2::xml_add_child(study, .value = sprintf("oml:%ss", type))
+    for (id in seq_len(ids)) {
+      xml2::xml_add_child(.x = objects, sprintf("oml:%s_id", type), id)
+    }
+  }
+  return(NULL)
 }

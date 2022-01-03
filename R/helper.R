@@ -215,7 +215,7 @@ upload = function(url, body, query = list(api_key = get_api_key())) {
   response = httr::POST(url = url, query = query, body = body)
 
   if (httr::http_error(response)) { # TODO: is this thing working?
-    stop(httr::content(response)$error$message)
+    stop(xml2::as_list(httr::content(response))$error$message)
   }
 
   return(httr::content(response))
@@ -230,23 +230,37 @@ get_server = function() {
 # is -1 if it does not exist and returns the id otherwise
 id_from_flow_response = function(response) {
   # TODO: write this file for different response type (run, ... ) and use it in publish.R
-  return(as.integer(xml2::as_list(httr::content(response))$flow_exists$id[[1]]))
+  id = as.integer(xml2::as_list(httr::content(response))$flow_exists$id[[1]])
+  if (id == -1L) {
+    return(NULL)
+  }
+  return(id)
 }
 
 get_external = function(x) {
-  paste0(x$hash, "_test") # FIXME: remove this when new version is released
+  paste0(x$hash, "_test1") # FIXME: remove this when new version is released
 }
 
 query_existance = function(x) {
+  # TODO: When publishing to OpenML we set the private oml_id attribute and if we want to publish
+  # again this attribute should be checked
   if (inherits(x, "Learner")) {
     response = httr::GET(url = sprintf("%s/flow/exists/%s/%s", get_server(),
       paste0("mlr3.", x$id), get_external(x)))
     id = id_from_flow_response(response)
-    id = max(id, 0) # response -1 is turned into 0 so that it is interpreted as FALSE
+    return(id)
+  } else if (inherits(x, "ResampleResult") || inherits(x, "BenchmarkResult") || inherits(x, "Task")) {
+
+  }
+  if (inherits(x, "ResampleResult") || inherits(x, "BenchmarkResult") || inherits(x, "Task")) {
+    id = get_oml_id(x)
     return(id)
   }
-  if (inherits(x, "ResampleResult")) {
-    return(!is.null(get_private(x)$oml_id))
-  }
+
   stopf("Cannot query existance for objective of class %s.", class(x)[[1L]])
+}
+ask_confirmation = function() {
+  user_input = readline("Are you sure you want to run this? (y/n)  ")
+  if (user_input != "y") stop("Exiting since you did not press y")
+  print("Publishing the result on OpenML")
 }
