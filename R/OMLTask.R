@@ -81,7 +81,6 @@ OMLTask = R6Class("OMLTask",
       task
     }
   ),
-
   active = list(
     #' @field name (`character(1)`)\cr
     #'   Name of the task, as extracted from the task description.
@@ -175,7 +174,7 @@ OMLTask = R6Class("OMLTask",
     #' Creates a [ResamplingCustom][mlr3::mlr_resamplings_custom] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
-        private$.resampling = OMLResampling$new(self, self$cache_dir)
+        private$.resampling = OMLResampling$new(task = self, cache = self$cache_dir)
       }
 
       private$.resampling
@@ -187,7 +186,6 @@ OMLTask = R6Class("OMLTask",
       self$desc$tag
     }
   ),
-
   private = list(
     .data = NULL,
     .desc = NULL,

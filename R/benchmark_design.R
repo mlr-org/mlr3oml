@@ -25,7 +25,8 @@ benchmark_design = function(tasks, learners, resamplings) {
   design = data.table(
     task = tasks[grid$task],
     learner = learners[grid$learner],
-    resampling = resamplings[grid$task])
+    resampling = resamplings[grid$task]
+  )
 
   return(design)
 }

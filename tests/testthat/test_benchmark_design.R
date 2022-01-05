@@ -2,8 +2,10 @@ test_that("benchmark_design works on non-oml inputs", {
   tasks = tsks(c("pima", "iris"))
   learners = lrns(c("classif.featureless", "classif.rpart"))
   resampling = rsmp("cv")
-  resamplings = pmap(list(tasks, rsmps(c("cv", "holdout"))),
-    function(task, resampling) resampling$instantiate(task))
+  resamplings = pmap(
+    list(tasks, rsmps(c("cv", "holdout"))),
+    function(task, resampling) resampling$instantiate(task)
+  )
   design = benchmark_design(tasks, learners, resamplings)
   # design[, identical(task), by = task]]
   # expect(identical(design$resampling[class(learner)[[1]] ==)]))
@@ -41,8 +43,10 @@ test_that("Resamplings must be instantiated", {
 test_that("Resamplings and tasks must have the same length", {
   tasks = tsks(c("pima", "iris"))
   learners = lrns(c("classif.featureless", "classif.rpart"))
-  resamplings = pmap(list(tasks, rsmps(c("cv", "holdout"))),
-    function(task, resampling) resampling$instantiate(task))
+  resamplings = pmap(
+    list(tasks, rsmps(c("cv", "holdout"))),
+    function(task, resampling) resampling$instantiate(task)
+  )
   resamplings = c(resamplings, resamplings)
   expect_error(benchmark_design(tasks, learners, resamplings))
 })
@@ -50,8 +54,10 @@ test_that("Resamplings and tasks must have the same length", {
 test_that("Resamplings and tasks must have corresponding hashes", {
   tasks = tsks(c("pima", "iris"))
   learners = lrns(c("classif.featureless", "classif.rpart"))
-  resamplings = pmap(list(tasks, rsmps(c("cv", "holdout"))),
-    function(task, resampling) resampling$instantiate(task))
+  resamplings = pmap(
+    list(tasks, rsmps(c("cv", "holdout"))),
+    function(task, resampling) resampling$instantiate(task)
+  )
   resamplings = rev(resamplings)
   expect_error(benchmark_design(tasks, learners, resamplings))
 })

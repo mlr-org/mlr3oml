@@ -26,7 +26,8 @@ Imports:
     progressr,
     R6,
     stringi,
-    xml2
+    xml2,
+    uuid
 Suggests:
     farff,
     foreign,

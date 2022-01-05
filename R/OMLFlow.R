@@ -79,7 +79,6 @@ OMLFlow = R6Class("OMLFlow",
     #' The description of the flow.
     description = function() self$desc$description
   ),
-
   private = list(
     .desc = NULL
   )
@@ -97,8 +96,10 @@ as_learner.OMLFlow = function(flow) {
 
   # First check for the mlr3deps to be able to initialize the learner
   if (!requireNamespace(mlr3_deps)) {
-    mlr3misc::stopf("Install the required mlr3 packages: %s.",
-      paste(mlr3_deps, collapse = ", "))
+    mlr3misc::stopf(
+      "Install the required mlr3 packages: %s.",
+      paste(mlr3_deps, collapse = ", ")
+    )
   }
 
   if (length(other_deps) && !requireNamespace(other_deps)) {

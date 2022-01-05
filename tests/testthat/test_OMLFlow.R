@@ -28,7 +28,8 @@ test_that("Autotest download", {
   with_public_server()
   n = 10
   ids = sample(load_ids("flow"), n)
-  flows = mlr3misc::map(ids,
+  flows = mlr3misc::map(
+    ids,
     function(x) {
       flow = OMLFlow$new(x)
       flow$desc
@@ -42,7 +43,7 @@ test_that("Autotest download", {
 
 test_that("Can reconstruct regr.rpart", {
   with_test_server()
-  debugonce(publish)
+  withr::defer(delete("flow", flow_id))
   learner = mlr3::lrn("regr.rpart")
   flow_id = publish(learner, confirm = FALSE)
   flow = OMLFlow$new(flow_id)

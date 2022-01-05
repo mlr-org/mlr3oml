@@ -2,14 +2,18 @@
 
 
 with_test_server = function(env = parent.frame()) {
-  op = options("mlr3oml.server" = "https://test.openml.org/api/v1",
-    "mlr3oml.api_key" = getOption("mlr3oml.test_api_key"))
+  op = options(
+    mlr3oml.server = "https://test.openml.org/api/v1",
+    mlr3oml.api_key = getOption("mlr3oml.test_api_key")
+  )
   withr::defer(options(op), env)
 }
 
 with_public_server = function(env = parent.frame()) {
-  op = options("mlr3oml.server" = "https://openml.org/api/v1",
-    "mlr3oml.api_key" = Sys.getenv("OPENMLAPIKEY"))
+  op = options(
+    mlr3oml.server = "https://openml.org/api/v1",
+    mlr3oml.api_key = Sys.getenv("OPENMLAPIKEY")
+  )
   withr::defer(options(op), env)
 }
 
@@ -33,8 +37,10 @@ add_auth_string = function(url, api_key = get_api_key()) {
 
 
 download_error = function(response) {
-  stopf("Error downloading '%s' (http code: %i, oml code: %i, message: '%s'",
-    response$url, response$http_code, response$oml_code, response$message)
+  stopf(
+    "Error downloading '%s' (http code: %i, oml code: %i, message: '%s'",
+    response$url, response$http_code, response$oml_code, response$message
+  )
 }
 
 
@@ -157,8 +163,10 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
         stopf("Unknown parser '%s'", parser)
       }
 
-      lg$debug("Finished processing ARFF file", nrow = nrow(tab), ncol = ncol(tab),
-        colnames = names(tab))
+      lg$debug("Finished processing ARFF file",
+        nrow = nrow(tab), ncol = ncol(tab),
+        colnames = names(tab)
+      )
 
       return(tab)
     } else if (retry < retries && response$http_code >= 500L) {
@@ -213,13 +221,55 @@ get_paginated_table = function(type, ..., limit) {
 #'
 upload = function(url, body, query = list(api_key = get_api_key())) {
   response = httr::POST(url = url, query = query, body = body)
+  content = httr::content(response)
+  type = capitalize(tail(strsplit(url, "/")[[1]], n = 1))
 
   if (httr::http_error(response)) { # TODO: is this thing working?
-    stop(xml2::as_list(httr::content(response))$error$message)
+    content_list = xml2::as_list(content)
+    if (grepl("already exists", content_list$error$message)) {
+      additional_info = content_list$error$additional_information
+      idx = grep("implementation_id", additional_info)[[1]]
+      id = as.integer(strsplit(additional_info[[idx]], split = ":")[[1]][2])
+      messagef("%s already exists on OpenML with id %d.", type, id)
+    } else {
+      stop(xml2::as_list(httr::content(response))$error$message)
+    }
   }
 
   return(httr::content(response))
 }
+
+delete = function(type, id, query = list(api_key = get_api_key())) {
+  assert_choice(type, choices = c("flow", "run", "task", "data"))
+  url = sprintf("%s/%s/%s", get_server(), type, id)
+  response = httr::DELETE(url, query = query)
+  response
+}
+
+# TODO: remove
+# url = "https://test.openml.org/api/v1/flow/14767"
+#
+# delete("flow", 14767)
+# delete("flow", 14768)
+# delete("run", 5062)
+#
+# delete(url)
+#
+# flow_ids = 14700:17800
+#
+# for (flow_id in flow_ids) {
+#   delete("flow", flow_id)
+# }
+#
+# flow_ids = c(14746, 14747, 14745)
+#
+# v = c(5084, 5082, 5080, 5077, 5076,
+#   5070, 5069, 5067, 5068, 5064, 5065, 5061, 5063, 5060, 5078)
+# for (x in v) {
+#   delete("run", x)
+# }
+#
+# delete("run", v[1])
 
 get_server = function() {
   server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
@@ -245,8 +295,10 @@ query_existance = function(x) {
   # TODO: When publishing to OpenML we set the private oml_id attribute and if we want to publish
   # again this attribute should be checked
   if (inherits(x, "Learner")) {
-    response = httr::GET(url = sprintf("%s/flow/exists/%s/%s", get_server(),
-      paste0("mlr3.", x$id), get_external(x)))
+    response = httr::GET(url = sprintf(
+      "%s/flow/exists/%s/%s", get_server(),
+      paste0("mlr3.", x$id), get_external(x)
+    ))
     id = id_from_flow_response(response)
     return(id)
   } else if (inherits(x, "ResampleResult") || inherits(x, "BenchmarkResult") || inherits(x, "Task")) {
@@ -259,8 +311,9 @@ query_existance = function(x) {
 
   stopf("Cannot query existance for objective of class %s.", class(x)[[1L]])
 }
+
 ask_confirmation = function() {
-  user_input = readline("Are you sure you want to run this? (y/n)  ")
+  user_input = readline("Are you sure you want to publish on OpenML? (y/n)  ")
   if (user_input != "y") stop("Exiting since you did not press y")
   print("Publishing the result on OpenML")
 }

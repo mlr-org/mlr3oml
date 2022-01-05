@@ -5,7 +5,8 @@
 make_expect = function(f) {
   body_list = as.list(body(f))
   # use <- insted of = because otherwise R thinks msgs is the argument
-  body_list = mlr3misc::map(body_list[-1],
+  body_list = mlr3misc::map(
+    body_list[-1],
     function(x) {
       call("append", quote(msgs), call("show_failure", x))
     }
@@ -25,8 +26,10 @@ expect_oml_flow = make_expect(function(flow) {
   expect_posixct(flow$upload_date)
   expect_string(flow$description)
   expect_data_table(flow$parameter)
-  expect_equal(names(flow$parameter),
-    c("name", "data_type", "default_value", "description"))
+  expect_equal(
+    names(flow$parameter),
+    c("name", "data_type", "default_value", "description")
+  )
   expect_character(flow$dependencies)
   expect_integer(flow$uploader)
   expect_integer(flow$id)

@@ -32,7 +32,7 @@ c$flows$get(1)
 test_that("Can benchmark <-> collection", {
   with_test_server()
   tasks = lapply(c("penguins", "sonar"), tsk)
-  tasks = list(OMLTask$new(1197L)$convert(), OMLTask$new(403L) $convert())
+  tasks = list(OMLTask$new(1197L)$convert(), OMLTask$new(403L)$convert())
   learners = lapply(c("classif.featureless", "classif.rpart"), lrn)
   resamplings = rsmp("cv", folds = 3)
 
@@ -46,5 +46,4 @@ test_that("Can benchmark <-> collection", {
 
   debugonce(publish)
   publish(bmr$learners$learner[[1]])
-
 })

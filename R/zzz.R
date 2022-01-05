@@ -61,7 +61,6 @@
   mlr3::Resampling$private_fields$oml_id = NULL
   mlr3::ResampleResult$private_fields$oml_id = NULL
   mlr3::BenchmarkResult$private_fields$oml_id = NULL
-
 } # nocov end
 
 

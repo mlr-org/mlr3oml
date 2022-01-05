@@ -1,7 +1,8 @@
 download_task_desc = function(task_id) {
   server = get_server()
   desc = get_json(paste0(server, "/json/task/%i"), task_id,
-    simplify_data_frame = FALSE)[[1L]]
+    simplify_data_frame = FALSE
+  )[[1L]]
 
   desc$task_id = as.integer(desc$task_id)
   desc$task_type_id = as.integer(desc$task_type_id)

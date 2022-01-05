@@ -36,7 +36,6 @@ OMLCollection = R6::R6Class("OMLCollection",
       self$id = assert_count(id, coerce = TRUE)
       self$cache_dir = get_cache_dir(assert_flag(cache))
       initialize_cache(self$cache_dir)
-
     },
     #' @description
     #' Prints the object.
@@ -51,12 +50,13 @@ OMLCollection = R6::R6Class("OMLCollection",
 
     }
   ),
-
   active = list(
     desc = function() {
       if (is.null(private$.desc)) {
-        private$.desc = cached(download_collection_desc, type = "collection", id = self$id,
-          cache_dir = self$cache_dir)
+        private$.desc = cached(download_collection_desc,
+          type = "collection", id = self$id,
+          cache_dir = self$cache_dir
+        )
       }
       return(private$.desc)
     },
@@ -170,7 +170,6 @@ OMLCollection = R6::R6Class("OMLCollection",
     #' Note that this corresponds exactly to the task ids.
     resampling = function() self$desc$task$task_id
   ),
-
   private = list(
     .desc = NULL,
     .runs = NULL,

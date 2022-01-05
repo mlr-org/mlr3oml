@@ -136,7 +136,7 @@ Prints the object.
 \subsection{Method \code{convert()}}{
 Converts the OMLRun into a (Resampling)\link[mlr3:Resampling]{mlr3::Resampling} object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLRun$convert()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLRun$convert(store_backends = TRUE)}\if{html}{\out{</div>}}
 }
 
 }

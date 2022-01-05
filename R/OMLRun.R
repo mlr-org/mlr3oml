@@ -53,24 +53,34 @@ OMLRun = R6Class("OMLRun",
 
     #' @description
     #' Converts the OMLRun into a (Resampling)[mlr3::Resampling] object.
-    convert = function() {
-      assert("model_serialized" %in% self$desc$output_data$file$name)
-      learners = get_rds(
-        self$desc$output_data$file$url[self$desc$output_data$file$name == "model_serialized"]
+    convert = function(store_backends = TRUE) {
+      assert("binary" %in% self$desc$output_data$file$name)
+      states = get_rds(
+        self$desc$output_data$file$url[self$desc$output_data$file$name == "binary"]
       )
-      prediction_list = split_predictions(self$predictions, self$task$resampling)
+      learners = replicate(length(states), self$flow$convert())
+      .f = function(learner, state) {
+        learner$param_set$values = state$param_vals
+      }
+      pmap(list(learners, states), .f)
+      predictions = split_predictions(
+        self$prediction, self$task$resampling$convert(),
+        self$task_type
+      )
       resampling = self$task$resampling$convert()
       iterations = resampling$iters
       task = self$task$convert()
-      dat = mlr3::as_result_data(
-        task = task,
-        learners = learners,
-        resampling = resampling,
-        iterations = iterations,
-        predictions = prediction_list
+      data = data.table(
+        task = list(task),
+        learner = learners,
+        learner_state = states,
+        resampling = list(resampling),
+        iteration = seq_len(resampling$iters),
+        prediction = predictions,
+        uhash = uuid::UUIDgenerate()
       )
-      rr = ResampleResult$new(dat)
-      return(rr)
+
+      ResampleResult$new(ResultData$new(data, store_backends = store_backends))
     }
   ),
   active = list(
@@ -80,7 +90,8 @@ OMLRun = R6Class("OMLRun",
     desc = function() {
       if (is.null(private$.desc)) {
         private$.desc = cached(download_run_desc, "run_desc", self$id,
-          cache_dir = self$cache_dir)
+          cache_dir = self$cache_dir
+        )
       }
       return(private$.desc)
     },
@@ -148,7 +159,6 @@ OMLRun = R6Class("OMLRun",
       return(private$.prediction)
     }
   ),
-
   private = list(
     .desc = NULL,
     .task = NULL,
@@ -159,11 +169,20 @@ OMLRun = R6Class("OMLRun",
 )
 
 
-split_predictions = function(predictions, resampling) {
-  predictions = lapply(resampling$instance$test,
+split_predictions = function(predictions, resampling, task_type) {
+  # classes = switch(task_type,
+  #   "classif" = c("PredictionDataClassif", "PredictionData"),
+  #   "regr" = c("PredictionDataRegr", "PredictionData")
+  # )
+  classes = c("PredictionDataClassif", "PredictionData")
+  predictions = lapply(
+    resampling$instance$test,
     function(x) {
-      predictions[x, ]
+      test_data = as.list(predictions[row_ids %in% x, ])
+      class(test_data) = classes
+      list(test = test_data)
     }
   )
+
   return(predictions)
 }

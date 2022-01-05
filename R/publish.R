@@ -54,7 +54,7 @@ publish.Learner = function(x, ...) { # nolint
   saveRDS(x, model_path)
 
   url = paste0(get_server(), "/flow")
-  response = upload(
+  id = upload(
     url = url,
     body = list(
       description = httr::upload_file(desc_file),
@@ -62,8 +62,7 @@ publish.Learner = function(x, ...) { # nolint
     )
   )
 
-  flow_id = as.integer(xml2::as_list(response)$upload_flow$id[[1]])
-  mlr3misc::messagef("Your flow was successfully uploaded and assigned id: %i.", flow_id)
+  mlr3misc::messagef("Your flow was successfully uploaded and assigned id: %i.", id)
 
   return(flow_id)
 }
@@ -101,24 +100,25 @@ publish.ResampleResult = function(x, ...) { # nolint
   # TODO: We need to add an index for the resampling iteration (?)
   foreign::write.arff(tab, pred_path)
 
-  model_path = tempfile(fileext = ".rds")
-  withr::defer(unlink(model_path))
+  states_path = tempfile(fileext = ".rds")
+  withr::defer(unlink(states_path))
+  states = map(x$learners, "state")
 
   # TODO: Store only learner states, after downloading they can be reassambled using the binary
   # of the flow
-  saveRDS(x$learners, model_path)
+  saveRDS(states, states_path)
 
-  response = upload(
+  id = upload(
     url = url,
     body = list(
       description = httr::upload_file(desc_path),
       predictions = httr::upload_file(pred_path),
-      binary = httr::upload_file(model_path)
+      binary = httr::upload_file(states_path)
     )
   )
-  run_id = as.integer(xml2::as_list(response)$upload_run$run_id[[1]])
-  messagef("Your run was successfully uploaded and assigned id: %i.", run_id)
-  return(run_id)
+  messagef("Your run was successfully uploaded and assigned id: %i.", id)
+  output = list(run_id = run_id, flow_id = flow_id, task_id = task_id)
+  return(output)
 }
 
 
@@ -132,7 +132,6 @@ publish.BenchmarkResult = function(x, ...) { # nolint
   desc = make_description(x, ..., flow_ids = flow_ids, task_ids = task_ids, run_ids = run_ids)
   url = paste0(get_server(), "/run")
   desc_path = tempfile(fileext = ".xml")
-
 }
 
 get_oml_id = function(x) {

@@ -1,7 +1,8 @@
 download_data_desc = function(data_id) {
   server = get_server()
   desc = get_json(paste0(server, "/json/data/%i"), data_id,
-    simplify_data_frame = FALSE)[[1L]]
+    simplify_data_frame = FALSE
+  )[[1L]]
 
   desc$format = tolower(desc$format)
   if (desc$format %nin% c("arff", "sparse_arff")) {

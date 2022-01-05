@@ -14,8 +14,10 @@ parse_flow_desc = function(desc) {
 
 
   if (is.null(desc$parameter)) {
-    desc$parameter = data.table(name = character(0), data_type = character(0),
-      default_value = list())
+    desc$parameter = data.table(
+      name = character(0), data_type = character(0),
+      default_value = list()
+    )
   } else {
     desc$parameter = as.data.table(desc$parameter)[, list(name, data_type, default_value)]
   }

@@ -9,14 +9,16 @@
 make_expect = function(f, catch_id = TRUE) {
   body_list = as.list(body(f))[-1]
   # create testthat::show_failure(expect_xx(...))
-  body_list = lapply(body_list,
+  body_list = lapply(
+    body_list,
     function(x) {
       ns_call = call("::", as.symbol("testthat"), as.symbol("show_failure"))
       as.call(list(ns_call, x))
     }
   )
   # create msgs <- append(testthat::show_failure(expect_xx(...)))
-  body_list = lapply(body_list,
+  body_list = lapply(
+    body_list,
     function(x) call("<-", as.symbol("msgs"), call("append", as.symbol("msgs"), x))
   )
 
@@ -33,7 +35,8 @@ make_expect = function(f, catch_id = TRUE) {
   }
   body_list = append(body_list, call("<-", as.symbol("failure_message"), failure_expr))
   body_list = append(body_list, call("expect", quote(length(msgs) == 0),
-    failure_message = quote(failure_message)))
+    failure_message = quote(failure_message)
+  ))
   body(f) = as.call(c(as.name("{"), body_list))
   return(f)
 }
@@ -45,8 +48,10 @@ expect_oml_flow = make_expect(function(flow) {
   expect_list(flow$desc)
   expect_character(flow$description)
   expect_data_table(flow$parameter)
-  testthat::expect_equal(names(flow$parameter),
-    c("name", "data_type", "default_value"))
+  testthat::expect_equal(
+    names(flow$parameter),
+    c("name", "data_type", "default_value")
+  )
   expect_character(flow$dependencies)
   expect_integer(flow$id)
   expect_string(flow$name)
@@ -66,7 +71,6 @@ expect_oml_run = make_expect(function(run) {
   expect_posixct(run$upload_date)
   expect_string(run$description)
   expect_data_table(run$prediction)
-
 })
 
 expect_oml_data = function(oml_data) {
@@ -102,7 +106,8 @@ expect_oml_task = function(oml_task) {
   expect_r6(oml_task$task, "Task")
   expect_r6(oml_task$resampling, "ResamplingCustom")
   expect_subset(
-    unlist(oml_task$resampling$instance, use.names = FALSE), oml_task$task$row_ids)
+    unlist(oml_task$resampling$instance, use.names = FALSE), oml_task$task$row_ids
+  )
 }
 
 
@@ -114,5 +119,4 @@ expect_oml_run = make_expect(function(run) {
   expect_posixct(run$upload_date)
   expect_string(run$description)
   expect_data_table(run$prediction)
-
 })

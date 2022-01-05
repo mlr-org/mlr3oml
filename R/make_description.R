@@ -1,5 +1,5 @@
 #' @export
-mke_description = function(x, ...) {
+make_description = function(x, ...) {
   # TODO: Internal methods should probably not use S3
   UseMethod("make_description")
 }
@@ -11,12 +11,14 @@ make_description.default = function(x, ...) { # nolint
 
 #' @export
 make_description.Learner = function(x, ...) { # nolint
-  name = sprintf("mlr3.%s", x$id)
+  name = sprintf("mlr3.%s_test", x$id)
   external_version = paste0(x$hash, "_test") # FIXME: remove this when new version is released
   dependencies = get_dependencies(x$packages)
   # TODO: remove this
-  description = sprintf("[TEST]: Learner %s from package(s) %s.", x$id,
-    paste(x$packages, collapse = ", "))
+  description = sprintf(
+    "[TEST]: Learner %s from package(s) %s.", x$id,
+    paste(x$packages, collapse = ", ")
+  )
   ps = as.data.table(x$param_set)
 
   doc = xml2::xml_new_document()
@@ -29,8 +31,10 @@ make_description.Learner = function(x, ...) { # nolint
     par = xml2::xml_add_child(flow, .value = "oml:parameter")
     xml2::xml_add_child(.x = par, .value = "oml:name", ps[[i, "id"]])
     xml2::xml_add_child(.x = par, .value = "oml:data_type", ps[[i, "class"]])
-    xml2::xml_add_child(.x = par, .value = "oml:default_value",
-      format_default(ps[[i, "default"]]))
+    xml2::xml_add_child(
+      .x = par, .value = "oml:default_value",
+      format_default(ps[[i, "default"]])
+    )
   }
   return(doc)
 }
@@ -93,8 +97,10 @@ format_default = function(x) {
 
 #' Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
 get_dependencies = function(x) {
-  versions = mlr3misc::map(x,
-    function(x) getNamespace(x)$.__NAMESPACE__.$spec["version"])
+  versions = mlr3misc::map(
+    x,
+    function(x) getNamespace(x)$.__NAMESPACE__.$spec["version"]
+  )
   dependencies = stringi::stri_join(x, unlist(versions), sep = "_")
   dependencies = stringi::stri_join(dependencies, collapse = ", ")
   return(dependencies)
@@ -122,7 +128,6 @@ make_description.BenchmarkResult = function(x, ...) { # nolint
   add_ids(study, args$run_ids, "run")
 
   return(doc)
-
 }
 
 add_ids = function(study, ids, type) {

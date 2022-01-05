@@ -1,12 +1,15 @@
 # TODO File for mlr3oml
 
-- [ ] Better efficiency when uploading models (learner once + states)
-- [ ] Require user confirmation when uploading (only do this once on every publish
+- [x] Better efficiency when uploading models (learner once + states)
+- [x] Require user confirmation when uploading (only do this once on every publish
     call, i.e. don't repeat on the recursive calls)
 - [ ] Provide possibility to delete everything once the upload failed (when e.g.
     uploading a resample or benchmark result)
 - [ ] Add trycatch interrupt, (https://community.rstudio.com/t/how-to-catch-the-keyboard-interruption-in-r/7336)
-- [ ] Implement cleanup in tests (i.e. deleting after upload)
+- [x] Implement cleanup in tests (i.e. deleting after upload)
+- [ ] When stuff already exists during upload, don't throw an error but simply return the id
+  --> do we even need the manual checking for flow? probably not
+- [ ] Add evaluations when publishing resample result
 
 Only check box when it is properly tested
 

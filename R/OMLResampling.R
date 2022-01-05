@@ -20,7 +20,7 @@ OMLResampling = R6Class("OMLResampling",
     id = NULL,
     task = NULL,
     cache_dir = NULL,
-    initialize = function(task, task_id, cache = getOption("mlr3oml.cache", FALSE)) {
+    initialize = function(task = NULL, task_id = NULL, cache = getOption("mlr3oml.cache", FALSE)) {
       assert(is.null(task) || is.null(task_id))
       if (is.null(task_id)) {
         assert_r6(task, "OMLTask")
@@ -38,16 +38,22 @@ OMLResampling = R6Class("OMLResampling",
     convert = function() {
       if (is.null(private$.resampling)) {
         splits = cached(download_task_splits, "task_splits",
-          self$estimation_procedure, cache_dir = self$cache_dir)
+          self$estimation_procedure,
+          cache_dir = self$cache_dir
+        )
 
         train_sets = splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)),
-          keyby = c("repeat.", "fold")]$row_id
+          keyby = c("repeat.", "fold")
+        ]$row_id
         test_sets = splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)),
-          keyby = c("repeat.", "fold")]$row_id
+          keyby = c("repeat.", "fold")
+        ]$row_id
 
         resampling = mlr3::ResamplingCustom$new()
-        private$.resampling = resampling$instantiate(self$task, train_sets = train_sets,
-          test_sets = test_sets)
+        private$.resampling = resampling$instantiate(self$task,
+          train_sets = train_sets,
+          test_sets = test_sets
+        )
       }
 
       private$.resampling
@@ -55,7 +61,6 @@ OMLResampling = R6Class("OMLResampling",
   ),
   active = list(
     estimation_procedure = function() self$task$desc$input$estimation_procedure
-
   ),
   private = list(
     .resampling = NULL,

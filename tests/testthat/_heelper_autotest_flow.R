@@ -29,9 +29,7 @@ autotest_flow = function(n_upload = 10, n_download = 0, n_local = 10) {
       flow_id = publish(lrn)
       flow = OMLFlow$new(flow_id)
       all.equal(flow$convert(), lrn)
-
     }
-
   }
 }
 

@@ -12,8 +12,7 @@ bibentries = c( # nolint start
     title     = "OpenML",
     journal   = "ACM SIGKDD Explorations Newsletter"
   ),
-
-  openml_r    = bibentry("article",
+  openml_r = bibentry("article",
     title     = "{OpenML}: An {R} Package to Connect to the Machine Learning Platform {OpenML}",
     author    = "Giuseppe Casalicchio and Jakob Bossek and Michel Lang and Dominik Kirchhoff and Pascal Kerschke and Benjamin Hofner and Heidi Seibold and Joaquin Vanschoren and Bernd Bischl",
     journal   = "Computational Statistics",
