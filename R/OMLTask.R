@@ -73,7 +73,7 @@ OMLTask = R6Class("OMLTask",
         "Supervised Classification" = new_task_classif,
         "Supervised Regression" = new_task_regr,
         "Survival Analysis" = new_task_surv,
-        stopf("Unsupoorted task type '%s'", self$desc$task_type)
+        stopf("Unsupported task type '%s'", self$desc$task_type)
       )
       task = constructor(name, data, target = target)
       task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
@@ -87,6 +87,11 @@ OMLTask = R6Class("OMLTask",
     name = function() {
       self$desc$task_name
     },
+
+    task_type = function() {
+      self$desc$task_type
+    },
+
 
     #' @field desc (`list()`)\cr
     #'   Task description (meta information), downloaded and converted from the JSON API response.
@@ -174,7 +179,7 @@ OMLTask = R6Class("OMLTask",
     #' Creates a [ResamplingCustom][mlr3::mlr_resamplings_custom] using the target attribute of the task description.
     resampling = function() {
       if (is.null(private$.resampling)) {
-        private$.resampling = OMLResampling$new(task = self, cache = self$cache_dir)
+        private$.resampling = OMLResampling$new(task = self, cache = is.character(self$cache_dir))
       }
 
       private$.resampling

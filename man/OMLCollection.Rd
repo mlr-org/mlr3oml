@@ -35,6 +35,8 @@ If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
 
+\item{\code{(`logical(1))\cr}}{Whether the downloaded data is cached.}
+
 \item{\code{(`character(1)`)}}{name\cr
 The name of the study.}
 
@@ -48,6 +50,8 @@ The datetime that the dataset was uploaded.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
+\item{\code{(`logical(1))\cr}}{Whether the downloaded data is cached.}
+
 \item{\code{(`character(1)`)}}{name\cr
 The name of the study.}
 
@@ -95,13 +99,6 @@ A list of \link[=OMLData]{mlr3oml}.}
 
 \item{\code{tasks}}{(`list(n)')
 A list of \link[=OMLTasks]{mlr3oml}s.}
-
-\item{\code{resamplings}}{(`list(n)')
-A list of \link[=OMLResampling]{mlr3oml}s.}
-
-\item{\code{resampling}}{(\code{integer(n)})\cr
-An vector containing the resampling ids of the collection.
-Note that this corresponds exactly to the task ids.}
 }
 \if{html}{\out{</div>}}
 }

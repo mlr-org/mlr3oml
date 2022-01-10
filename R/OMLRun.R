@@ -32,6 +32,7 @@ OMLRun = R6Class("OMLRun",
     #' @template field_cache_dir
     cache_dir = NULL,
 
+
     #' @description
     #'  Creates a new object of class `OMLRun`.
     #'
@@ -104,7 +105,7 @@ OMLRun = R6Class("OMLRun",
     #'  The [mlr3oml::OMLFlow].
     flow = function() {
       if (is.null(private$.flow)) {
-        private$.flow = OMLFlow$new(self$flow_id, cache = self$cache_dir)
+        private$.flow = OMLFlow$new(self$flow_id, cache = is.character(self$cache_dir))
       }
       private$.flow
     },

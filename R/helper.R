@@ -240,6 +240,7 @@ upload = function(url, body, query = list(api_key = get_api_key())) {
 }
 
 delete = function(type, id, query = list(api_key = get_api_key())) {
+  ask_confirmation("delete")
   assert_choice(type, choices = c("flow", "run", "task", "data"))
   url = sprintf("%s/%s/%s", get_server(), type, id)
   response = httr::DELETE(url, query = query)
@@ -312,8 +313,7 @@ query_existance = function(x) {
   stopf("Cannot query existance for objective of class %s.", class(x)[[1L]])
 }
 
-ask_confirmation = function() {
-  user_input = readline("Are you sure you want to publish on OpenML? (y/n)  ")
+ask_confirmation = function(action = "publish") {
+  user_input = readline(sprintf("Are you sure you want to %s on OpenML? (y/n)  ", action))
   if (user_input != "y") stop("Exiting since you did not press y")
-  print("Publishing the result on OpenML")
 }

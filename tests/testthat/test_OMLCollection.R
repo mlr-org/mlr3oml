@@ -1,10 +1,21 @@
 # skip_on_cran()
 
 test_that("OMLCollection CC-18", {
-  public_server()
+  with_public_server()
+  if (FALSE) {
+    public_server()
+  }
   id = 276
   c = OMLCollection$new(id)
-  tasks = c$tasks$convert()
+  tasks_dt = as.data.table(c$tasks)
+  expect_data_table(tasks_dt)
+  flows_dt = as.data.table(c$flows)
+  expect_data_table(flows_dt)
+  data_dt = as.data.table(c$dat)
+  expect_data_table(data_dt)
+  runs_dt = as.data.table(c$runs)
+  expect_data_table(runs_dt)
+
   expect_equal(c$name, "CC18-Example")
   expect_equal(c$creator, 869L)
   # has no creation_date

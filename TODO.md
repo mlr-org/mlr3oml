@@ -1,5 +1,8 @@
 # TODO File for mlr3oml
 
+Benchmark:
+- Each dataset should appear only as one task
+
 - [x] Better efficiency when uploading models (learner once + states)
 - [x] Require user confirmation when uploading (only do this once on every publish
     call, i.e. don't repeat on the recursive calls)
@@ -7,9 +10,11 @@
     uploading a resample or benchmark result)
 - [ ] Add trycatch interrupt, (https://community.rstudio.com/t/how-to-catch-the-keyboard-interruption-in-r/7336)
 - [x] Implement cleanup in tests (i.e. deleting after upload)
-- [ ] When stuff already exists during upload, don't throw an error but simply return the id
+- [x] When stuff already exists during upload, don't throw an error but simply return the id
   --> do we even need the manual checking for flow? probably not
 - [ ] Add evaluations when publishing resample result
+- [ ] mlr3oml.cache should also accept a directory
+- [ ] Check that caching is working properly
 
 Only check box when it is properly tested
 
