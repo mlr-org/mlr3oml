@@ -113,7 +113,7 @@ OMLTask = R6Class("OMLTask",
     #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$data_id, cache = self$cache_dir)
+        private$.data = OMLData$new(self$data_id, cache = is.character(self$cache_dir))
       }
 
       private$.data
