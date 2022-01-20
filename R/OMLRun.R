@@ -118,7 +118,7 @@ OMLRun = R6Class("OMLRun",
     #' The task solved by this run.
     task = function() {
       if (is.null(private$.task)) {
-        private$.task = OMLTask$new(self$task_id, self$cache_dir)
+        private$.task = OMLTask$new(self$task_id, is.character(self$cache_dir))
       }
       private$.task
     },

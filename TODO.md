@@ -3,6 +3,9 @@
 Benchmark:
 - Each dataset should appear only as one task
 
+- [ ] implement list_oml_estimation_procedures
+- [ ] implement list_oml_benchmark_suites
+- [ ] Extract task and resampling from Task dictionary
 - [x] Better efficiency when uploading models (learner once + states)
 - [x] Require user confirmation when uploading (only do this once on every publish
     call, i.e. don't repeat on the recursive calls)
@@ -26,17 +29,13 @@ Only check box when it is properly tested
 - [ ] Publish
   - [ ] Learner
   - [ ] Run
-  - [ ] Collection
-  Maybe:
-  - [ ] Task
-  - [ ] Data
+  - [ ] BenchmarkSuite
 
 - [ ] Convert
   - [ ] Flow: [Flow --> Learner]
   - [ ] Run [Run --> ResamplingResult]
   - [ ] Collection [Collection --> list)
   - [ ] Resampling [Resampling --> Resampling]
-  - [ ] Setup [Setup --> ParamSet]
 
 Other tasks:
 - [ ] Verify existing functions

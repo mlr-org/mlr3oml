@@ -11,9 +11,9 @@
 #' @export
 #'
 benchmark_design = function(tasks, learners, resamplings) {
-  tasks = assert_tasks(as_tasks(tasks))
-  learners = assert_learners(as_learners(learners))
-  resamplings = assert_resamplings(as_resamplings(resamplings))
+  tasks = assert_tasks(mlr3::as_tasks(tasks))
+  learners = assert_learners(mlr3::as_learners(learners))
+  resamplings = assert_resamplings(mlr3::as_resamplings(resamplings))
   assert_true(length(tasks) == length(resamplings))
   assert_true(all(map_lgl(resamplings, "is_instantiated")))
   same_hash = function(task, resampling) task$hash == resampling$task_hash

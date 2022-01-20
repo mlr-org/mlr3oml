@@ -1,5 +1,8 @@
+#' @title OpenML Dictionary
+#' @description
 #' @export
-OMLDictionary = R6Class("OMLDictionaryTask",
+#' @example
+OMLDictionary = R6Class("OMLDictionary",
   public = list(
     items = NULL,
     initialize = function() {
@@ -8,14 +11,15 @@ OMLDictionary = R6Class("OMLDictionaryTask",
     #' @description get an element
     #' @param key Can either be the name (data) of the task or the id.
     #' @param convert Whether the resulting object
-    get = function(key, convert = FALSE) {
+    get = function(key, convert = TRUE) {
       key = as.character(assert_integerish(key, coerce = TRUE))
       item = self$items[[key]]
       if (convert) {
-        return(item$convert())
+        item = item$convert()
       }
       return(item)
     },
+    #'
     keys = function() {
       as.integer(names(self$items))
     },
@@ -25,8 +29,6 @@ OMLDictionary = R6Class("OMLDictionaryTask",
     },
     add = function(task) {
       assert_r6(task, private$.type)
-      # TODO: pay attention with duplicate names
-      # If there are name clashes append the id to the name
       id = as.character(task$id)
       assert_false(id %in% self$keys())
       assign(x = id, value = task, envir = self$items)
@@ -34,7 +36,6 @@ OMLDictionary = R6Class("OMLDictionaryTask",
     }
   ),
   private = list(
-    .id2name = list(),
     .type = NULL
   )
 )
@@ -42,6 +43,18 @@ OMLDictionary = R6Class("OMLDictionaryTask",
 #' @export
 OMLDictionaryTask = R6Class("OMLDictionaryTask",
   inherit = OMLDictionary,
+  public = list(
+    get_rsmp = function(key, convert = TRUE) {
+      oml_task = self$get(key, convert = FALSE)
+      item = oml_task$resampling
+      if (convert) item = item$convert()
+      return(item)
+    },
+    mget_rsmp = function(key, convert = TRUE) {
+      if (is.null(keys)) keys = self$keys()
+      map(keys, self$get_rsmp, convert = convert)
+    }
+  ),
   private = list(
     .type = "OMLTask"
   )
@@ -80,6 +93,10 @@ as.data.table.OMLDictionaryTask = function(x, ...) { # nolint
     "Supervised Regression" = "regr",
     "Supervised Classification" = "classif"
   )
+  eptt = list( # estimatino procedure type translation
+    crossvalidation = "cv",
+    holdout = "ho"
+  )
   g = function(key) {
     t = tryCatch(x$get(key), missingDefaultError = function(e) NULL)
     if (is.null(t)) {
@@ -88,7 +105,7 @@ as.data.table.OMLDictionaryTask = function(x, ...) { # nolint
     list(
       id = t$id,
       data = truncate_name(t$data$name, width = 15L),
-      task_type = ttt[t$task_type],
+      task_type = ttt[[t$task_type]],
       target = truncate_vector(t$target_names), # can have length > 1
       nrow = as.integer(t$data$quality("NumberOfInstances")),
       ncol = t$data$quality("NumberOfFeatures"),
@@ -96,11 +113,12 @@ as.data.table.OMLDictionaryTask = function(x, ...) { # nolint
       num = t$data$quality("NumberOfNumericFeatures"),
       sym = t$data$quality("NumberOfSymbolicFeatures"),
       bin = t$data$quality("NumberOfBinaryFeatures"),
-      rsmp = t$resampling$estimation_procedure$type
+      rsmp = eptt[[t$resampling$estimation_procedure$type]]
     )
   }
   setkeyv(map_dtr(x$keys(), g, .fill = TRUE), "id")[]
 }
+
 
 #' @export
 as.data.table.OMLDictionaryFlow = function(x, ...) { # nolint

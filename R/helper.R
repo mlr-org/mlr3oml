@@ -4,7 +4,7 @@
 with_test_server = function(env = parent.frame()) {
   op = options(
     mlr3oml.server = "https://test.openml.org/api/v1",
-    mlr3oml.api_key = getOption("mlr3oml.test_api_key")
+    mlr3oml.api_key = Sys.getenv("TESTOPENMLAPIKEY")
   )
   withr::defer(options(op), env)
 }
@@ -239,11 +239,18 @@ upload = function(url, body, query = list(api_key = get_api_key())) {
   return(httr::content(response))
 }
 
-delete = function(type, id, query = list(api_key = get_api_key())) {
-  ask_confirmation("delete")
-  assert_choice(type, choices = c("flow", "run", "task", "data"))
-  url = sprintf("%s/%s/%s", get_server(), type, id)
-  response = httr::DELETE(url, query = query)
+#' @export
+delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
+  if (is.null(api_key)) api_key = get_api_key()
+  if (is.null(server)) server = get_server()
+
+  if (confirm) {
+    ask_confirmation("delete")
+  }
+  assert_choice(type, choices = c("flow", "run", "task", "data", "study", "collection"))
+  if (type == "collection") type = "study"
+  url = sprintf("%s/%s/%s", server, type, id)
+  response = httr::DELETE(url, query = list(api_key = api_key))
   response
 }
 

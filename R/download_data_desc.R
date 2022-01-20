@@ -14,5 +14,6 @@ download_data_desc = function(data_id) {
   desc$default_target_attribute = make.names(desc$default_target_attribute)
   desc$upload_date = strptime(desc$upload_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   desc$processing_date = strptime(desc$processing_date, format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
-  remove_named(desc, c("file_id", "description", "md5_checksum"))
+  # remove_named(desc, c("file_id", "description", "md5_checksum"))
+  desc
 }

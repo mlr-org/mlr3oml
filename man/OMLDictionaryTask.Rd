@@ -13,24 +13,44 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \doi{10.1145/2641190.2641198}.
 }
 \section{Super class}{
-\code{\link[mlr3oml:OMLDictionaryTask]{mlr3oml::OMLDictionaryTask}} -> \code{OMLDictionaryTask}
+\code{\link[mlr3oml:OMLDictionary]{mlr3oml::OMLDictionary}} -> \code{OMLDictionaryTask}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-get_rsmp}{\code{OMLDictionaryTask$get_rsmp()}}
+\item \href{#method-mget_rsmp}{\code{OMLDictionaryTask$mget_rsmp()}}
 \item \href{#method-clone}{\code{OMLDictionaryTask$clone()}}
 }
 }
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionaryTask" data-id="add">}\href{../../mlr3oml/html/OMLDictionaryTask.html#method-add}{\code{mlr3oml::OMLDictionaryTask$add()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionaryTask" data-id="get">}\href{../../mlr3oml/html/OMLDictionaryTask.html#method-get}{\code{mlr3oml::OMLDictionaryTask$get()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionaryTask" data-id="initialize">}\href{../../mlr3oml/html/OMLDictionaryTask.html#method-initialize}{\code{mlr3oml::OMLDictionaryTask$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionaryTask" data-id="keys">}\href{../../mlr3oml/html/OMLDictionaryTask.html#method-keys}{\code{mlr3oml::OMLDictionaryTask$keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionaryTask" data-id="mget">}\href{../../mlr3oml/html/OMLDictionaryTask.html#method-mget}{\code{mlr3oml::OMLDictionaryTask$mget()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionary" data-id="add">}\href{../../mlr3oml/html/OMLDictionary.html#method-add}{\code{mlr3oml::OMLDictionary$add()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionary" data-id="get">}\href{../../mlr3oml/html/OMLDictionary.html#method-get}{\code{mlr3oml::OMLDictionary$get()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionary" data-id="initialize">}\href{../../mlr3oml/html/OMLDictionary.html#method-initialize}{\code{mlr3oml::OMLDictionary$initialize()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionary" data-id="keys">}\href{../../mlr3oml/html/OMLDictionary.html#method-keys}{\code{mlr3oml::OMLDictionary$keys()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLDictionary" data-id="mget">}\href{../../mlr3oml/html/OMLDictionary.html#method-mget}{\code{mlr3oml::OMLDictionary$mget()}}\out{</span>}
 }
 \out{</details>}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_rsmp"></a>}}
+\if{latex}{\out{\hypertarget{method-get_rsmp}{}}}
+\subsection{Method \code{get_rsmp()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLDictionaryTask$get_rsmp(key, convert = TRUE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-mget_rsmp"></a>}}
+\if{latex}{\out{\hypertarget{method-mget_rsmp}{}}}
+\subsection{Method \code{mget_rsmp()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLDictionaryTask$mget_rsmp(key, convert = TRUE)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

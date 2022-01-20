@@ -55,12 +55,12 @@
 
 .onUnload = function(libpath) { # nolint
   # nocov start
-  library.dynam.unload("mlr3oml", libpath)
   mlr3::Task$private_fields$oml_id = NULL
   mlr3::Learner$private_fields$oml_id = NULL
   mlr3::Resampling$private_fields$oml_id = NULL
   mlr3::ResampleResult$private_fields$oml_id = NULL
   mlr3::BenchmarkResult$private_fields$oml_id = NULL
+  library.dynam.unload("mlr3oml", libpath)
 } # nocov end
 
 

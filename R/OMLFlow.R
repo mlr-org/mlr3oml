@@ -84,7 +84,7 @@ OMLFlow = R6Class("OMLFlow",
   )
 )
 
-#' importFrom mlr3 as_learner
+#' @importFrom mlr3 as_learner
 #' @export
 as_learner.OMLFlow = function(flow) {
   # use grepl in case versions are addeda
