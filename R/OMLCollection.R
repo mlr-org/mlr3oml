@@ -52,6 +52,12 @@ OMLCollection = R6::R6Class("OMLCollection",
       catf(" * tasks: %i", length(self$task_ids))
     },
     convert = function() {
+      if (self$main_entity_type == "task") {
+        message("Main entity is task, returning NULL.")
+        return(NULL)
+      }
+      rrs = self$runs$mget(self$run_ids, convert = TRUE)
+      bmr = as_benchmark_result(invoke(c, .args = rrs))
 
     }
   ),

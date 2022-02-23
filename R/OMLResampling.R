@@ -37,8 +37,7 @@ OMLResampling = R6Class("OMLResampling",
     },
     convert = function() {
       if (is.null(private$.resampling)) {
-        splits = cached(download_task_splits, "task_splits",
-          self$estimation_procedure,
+        splits = cached(download_task_splits, "task_splits", self$id, self$task$desc,
           cache_dir = self$cache_dir
         )
 
@@ -60,7 +59,7 @@ OMLResampling = R6Class("OMLResampling",
     }
   ),
   active = list(
-    estimation_procedure = function() self$task$desc$input$estimation_procedure
+    estimation_procedure = function() self$task$desc$input$estimation_procedure$type
   ),
   private = list(
     .resampling = NULL,

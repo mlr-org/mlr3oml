@@ -53,24 +53,54 @@ OMLRun = R6Class("OMLRun",
     },
 
     #' @description
-    #' Converts the OMLRun into a (Resampling)[mlr3::Resampling] object.
+    #' Converts the OMLRun into a [mlr3::ResamplingResult].
     convert = function(store_backends = TRUE) {
-      assert("binary" %in% self$desc$output_data$file$name)
-      states = get_rds(
-        self$desc$output_data$file$url[self$desc$output_data$file$name == "binary"]
-      )
-      learners = replicate(length(states), self$flow$convert())
-      .f = function(learner, state) {
-        learner$param_set$values = state$param_vals
-      }
-      pmap(list(learners, states), .f)
+      task = self$task$convert()
+      # convert the predictions into mlr3-readable format
       predictions = split_predictions(
         self$prediction, self$task$resampling$convert(),
         self$task_type
       )
+      n = length(predictions)
+      learners = map(seq(n), function(x) self$flow$convert(self$task_type))
+      states = tryCatch(
+        get_rds(self$desc$output_data$file$url[self$desc$output_data$file$name == "binary"]),
+        error = function(x) {
+          if (test_subset(self$parameter_setting[["name"]], self$flow$parameter[["name"]])) {
+            param_vals = set_names(
+              x = self$parameter_setting[["value"]],
+              nm = make.names(self$parameter_setting[["name"]])
+            )
+          } else {
+            # Run has parameters that don't exist in flow
+            warning("Parameter setting of run contains unknown parameters.")
+            param_vals = set_names(
+              x = as.list(rep(NA, learners[[1]]$param_set$length)),
+              learners[[1]]$param_set$ids()
+            )
+          }
+          map(seq_len(n), function(x) {
+            state = list(
+              param_vals = param_vals,
+              task_hash = task$hash,
+              mlr3_version = NA_character_,
+              task_prototype = task$data(rows = integer())
+            )
+            if (store_backends) {
+              state$train_task = task
+            }
+            return(state)
+          })
+        }
+      )
+
+      .f = function(learner, state) {
+        learner$param_set$values = state$param_vals
+      }
+      pmap(list(learners, states), .f)
+
       resampling = self$task$resampling$convert()
       iterations = resampling$iters
-      task = self$task$convert()
       data = data.table(
         task = list(task),
         learner = learners,
@@ -139,9 +169,9 @@ OMLRun = R6Class("OMLRun",
     #' A character vector containing possible tags.
     tag = function() self$desc$tag,
 
-    #' @field evaluation
-    #' The evaluation.
-    evaluation = function() self$desc$output_data$evaluation,
+    # #' @field evaluation
+    # #' The evaluation.
+    # evaluation = function() self$desc$output_data$evaluation,
 
     #' @field  ('data.table') \n
     #' The parameter setting for this run.
@@ -171,15 +201,25 @@ OMLRun = R6Class("OMLRun",
 
 
 split_predictions = function(predictions, resampling, task_type) {
-  # classes = switch(task_type,
-  #   "classif" = c("PredictionDataClassif", "PredictionData"),
-  #   "regr" = c("PredictionDataRegr", "PredictionData")
-  # )
   classes = c("PredictionDataClassif", "PredictionData")
+  names = colnames(predictions)
   predictions = lapply(
     resampling$instance$test,
     function(x) {
-      test_data = as.list(predictions[row_ids %in% x, ])
+      if (test_subset(c("row_ids", "truth", "response"), names)) { # mlr3
+        test_data = predictions[row_ids %in% x, c("row_ids", "truth", "response")]
+      } else if (test_subset(c("row_ids", "truth", "reponse", "se"), names)) {
+        test_data = predictions[row_ids %in% x, c("row_ids", "truth", "response", "se")]
+      } else if (test_subset(c("row_id", "truth", "prediction"), names)) {
+        test_data = predictions[row_id %in% x, c("row_id", "truth", "prediction")]
+        colnames(test_data) = c("row_ids", "truth", "response")
+      } else if (test_subset(c("row_id", "correct", "prediction"), names)) {
+        test_data = predictions[row_id %in% x, c("row_id", "correct", "prediction")]
+        colnames(test_data) = c("row_ids", "truth", "response")
+      } else {
+        stop("Could not parse prediction.")
+      }
+      test_data = as.list(test_data)
       class(test_data) = classes
       list(test = test_data)
     }

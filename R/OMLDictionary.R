@@ -11,7 +11,7 @@ OMLDictionary = R6Class("OMLDictionary",
     #' @description get an element
     #' @param key Can either be the name (data) of the task or the id.
     #' @param convert Whether the resulting object
-    get = function(key, convert = TRUE) {
+    get = function(key, convert = FALSE) {
       key = as.character(assert_integerish(key, coerce = TRUE))
       item = self$items[[key]]
       if (convert) {
@@ -23,7 +23,7 @@ OMLDictionary = R6Class("OMLDictionary",
     keys = function() {
       as.integer(names(self$items))
     },
-    mget = function(keys = NULL, convert = TRUE) {
+    mget = function(keys = NULL, convert = FALSE) {
       if (is.null(keys)) keys = self$keys()
       map(keys, self$get, convert = convert)
     },
@@ -44,13 +44,13 @@ OMLDictionary = R6Class("OMLDictionary",
 OMLDictionaryTask = R6Class("OMLDictionaryTask",
   inherit = OMLDictionary,
   public = list(
-    get_rsmp = function(key, convert = TRUE) {
+    get_rsmp = function(key, convert = FALSE) {
       oml_task = self$get(key, convert = FALSE)
       item = oml_task$resampling
       if (convert) item = item$convert()
       return(item)
     },
-    mget_rsmp = function(key, convert = TRUE) {
+    mget_rsmp = function(key, convert = FALSE) {
       if (is.null(keys)) keys = self$keys()
       map(keys, self$get_rsmp, convert = convert)
     }
@@ -84,36 +84,36 @@ OMLDictionaryRun = R6Class("OMLDictionaryRun",
   )
 )
 
+ttt = list( # task type translator
+  "Supervised Regression" = "regr",
+  "Supervised Classification" = "classif"
+)
 
 
 #' @export
 as.data.table.OMLDictionaryTask = function(x, ...) { # nolint
   # TODO: What about resampling?
-  ttt = list( # task type translator
-    "Supervised Regression" = "regr",
-    "Supervised Classification" = "classif"
-  )
-  eptt = list( # estimatino procedure type translation
+  eptt = list( # estimation procedure type translation
     crossvalidation = "cv",
     holdout = "ho"
   )
   g = function(key) {
-    t = tryCatch(x$get(key), missingDefaultError = function(e) NULL)
+    t = tryCatch(x$get(key, convert = FALSE), missingDefaultError = function(e) NULL)
     if (is.null(t)) {
       return(list(key = key))
     }
     list(
       id = t$id,
-      data = truncate_name(t$data$name, width = 15L),
+      data = t$data$name, width = 15L,
       task_type = ttt[[t$task_type]],
-      target = truncate_vector(t$target_names), # can have length > 1
+      target = t$target_names, # can have length > 1
       nrow = as.integer(t$data$quality("NumberOfInstances")),
       ncol = t$data$quality("NumberOfFeatures"),
       nas = t$data$quality("NumberOfMissingValues"),
       num = t$data$quality("NumberOfNumericFeatures"),
       sym = t$data$quality("NumberOfSymbolicFeatures"),
       bin = t$data$quality("NumberOfBinaryFeatures"),
-      rsmp = eptt[[t$resampling$estimation_procedure$type]]
+      rsmp = eptt[[t$resampling$estimation_procedure]]
     )
   }
   setkeyv(map_dtr(x$keys(), g, .fill = TRUE), "id")[]
@@ -123,13 +123,13 @@ as.data.table.OMLDictionaryTask = function(x, ...) { # nolint
 #' @export
 as.data.table.OMLDictionaryFlow = function(x, ...) { # nolint
   g = function(key) {
-    t = tryCatch(x$get(key), missingDefaultError = function(e) NULL)
+    t = tryCatch(x$get(key, convert = FALSE), missingDefaultError = function(e) NULL)
     if (is.null(t)) {
       return(list(key = key))
     }
     list(
       id = t$id,
-      name = truncate_name(t$name)
+      name = t$name
     )
   }
   setkeyv(map_dtr(x$keys(), g, .fill = TRUE), "id")[]
@@ -138,13 +138,13 @@ as.data.table.OMLDictionaryFlow = function(x, ...) { # nolint
 #' @export
 as.data.table.OMLDictionaryData = function(x, ...) { # nolint
   g = function(key) {
-    t = tryCatch(x$get(key), missingDefaultError = function(e) NULL)
+    t = tryCatch(x$get(key, convert = FALSE), missingDefaultError = function(e) NULL)
     if (is.null(t)) {
       return(list(key = key))
     }
     list(
       id = t$id,
-      name = truncate_name(t$name),
+      name = t$name,
       nrow = as.integer(t$quality("NumberOfInstances")),
       ncol = t$quality("NumberOfFeatures"),
       nas = t$quality("NumberOfMissingValues"),
@@ -159,13 +159,15 @@ as.data.table.OMLDictionaryData = function(x, ...) { # nolint
 #' @export
 as.data.table.OMLDictionaryRun = function(x, ...) { # nolint
   g = function(key) {
-    t = tryCatch(x$get(key), missingDefaultError = function(e) NULL)
+    t = tryCatch(x$get(key, convert = FALSE), missingDefaultError = function(e) NULL)
     if (is.null(t)) {
       return(list(key = key))
     }
     list(
       id = t$id,
-      name = t$name
+      type = ttt[[t$task_type]],
+      task = t$desc$input_data$dataset$name,
+      flow = t$desc$flow_name
     )
   }
   setkeyv(map_dtr(x$keys(), g, .fill = TRUE), "id")[]

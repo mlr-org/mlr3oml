@@ -50,3 +50,33 @@ test_that("Can reconstruct regr.rpart", {
   expect_oml_flow(flow)
   expect_equal(learner, flow$convert())
 })
+
+test_that("Can convert pseudo OML Learner", {
+  with_public_server()
+  oml_flow = OMLFlow$new(1)
+  learner_classif = oml_flow$convert("classif")
+  learner_regr = oml_flow$convert("regr")
+  learner_null = oml_flow$convert()
+  expect_r6(learner_classif, "LearnerClassifOML1")
+  expect_r6(learner_regr, "LearnerRegrOML1")
+  expect_true(is.null(learner_null))
+})
+
+test_that("Can convert pseudo OML Learner", {
+  with_public_server()
+  oml_flow = OMLFlow$new(1)
+  learner_classif = oml_flow$convert("classif")
+  learner_regr = oml_flow$convert("regr")
+  learner_null = oml_flow$convert()
+  expect_r6(learner_classif, "LearnerClassifOML1")
+  expect_r6(learner_regr, "LearnerRegrOML1")
+  expect_true(is.null(learner_null))
+})
+
+test_that("Can convert actual mlr3 learner", {
+  with_public_server()
+  id = 19069L
+  oml_flow = OMLFlow$new(id)
+  learner = oml_flow$convert()
+  expect_r6(learner, "LearnerRegrRpart")
+})

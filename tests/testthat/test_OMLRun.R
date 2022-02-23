@@ -1,14 +1,10 @@
-# skip_on_cran()
-run_ids = c(10560781, 10560247, 99999999)
-
+skip_on_cran()
 test_that("Download run 538858", {
   with_public_server()
   id = 538858L
-  set.seed(1)
-  ids = load_ids("run")
-  id = sample(ids, 1)
   run = OMLRun$new(id)
   expect_oml_run(run)
+  rr = run$convert()
 })
 
 test_that("Randomized download test", {
@@ -97,4 +93,39 @@ test_that("Can publish run of flow mlr3.rpart on task 1308 (Iris)", {
   ce = rr$score(msr("classif.ce"))$classif.ce
   ce_rec = rr_rec$score(msr("classif.ce"))$classif.ce
   expect_true(all(ce == ce_rec))
+})
+
+ids = c()
+
+test_that("Warning when parameters of run and flow don't match", {
+  id = 2081174L
+  with_public_server()
+  run = OMLRun$new(id)
+  expect_warning(rr <- run$convert(), "Parameter setting of run contains unknown parameters.")
+  expect_true(all(is.na(rr$learners[[1]]$param_set$values)))
+  expect_error(rr$score(msr("classif.ce")), regexp = NA)
+})
+
+test_that("Can extract prediction for sklearn", {
+  # id = 10587703L # sklearn
+  id = 10587656L
+  with_public_server()
+  run = OMLRun$new(id)
+  expect_error(rr <- run$convert(), regexp = NA)
+  expect_error(rr$score(msr("classif.ce")), regexp = NA)
+})
+
+test_that("Can extract prediction for mlr", {
+  id = 10587674L
+  with_public_server()
+  run = OMLRun$new(id)
+  run$convert()
+  expect_error(run$convert(), regexp = NA)
+})
+
+test_that("Can extract prediction for mlr3", {
+  id = 10587701L # mlr3
+  with_public_server()
+  run = OMLRun$new(id)
+  expect_error(run$convert(), regexp = NA)
 })

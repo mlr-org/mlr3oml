@@ -27,17 +27,14 @@ Imports:
     R6,
     stringi,
     xml2,
-    uuid
+    uuid,
+    paradox
 Suggests:
     farff,
     foreign,
-    mlr3extralearners,
-    mlr3filters,
-    mlr3keras,
     mlr3learners,
     mlr3pipelines,
     mlr3proba,
-    mlr3torch,
     qs,
     RWeka,
     testthat (>= 3.0.0),

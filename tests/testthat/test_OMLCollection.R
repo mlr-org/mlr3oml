@@ -5,19 +5,6 @@ test_that("OMLCollection CC-18", {
   if (FALSE) {
     public_server()
   }
-  id = 276
-  c = OMLCollection$new(id)
-  tasks_dt = as.data.table(c$tasks)
-  expect_data_table(tasks_dt)
-  flows_dt = as.data.table(c$flows)
-  expect_data_table(flows_dt)
-  data_dt = as.data.table(c$dat)
-  expect_data_table(data_dt)
-  runs_dt = as.data.table(c$runs)
-  expect_data_table(runs_dt)
-
-  expect_equal(c$name, "CC18-Example")
-  expect_equal(c$creator, 869L)
   # has no creation_date
   # has no alias
   # has no tag
@@ -36,9 +23,6 @@ test_that("OMLCollection CC-18", {
   expect_true(c$data$contains == "OMLData")
   expect_true(c$tasks$contains == "OMLTask")
 })
-id = 15
-c = OMLCollection$new(id)
-c$flows$get(1)
 
 test_that("Can benchmark <-> collection", {
   with_test_server()
@@ -57,4 +41,17 @@ test_that("Can benchmark <-> collection", {
 
   debugonce(publish)
   publish(bmr$learners$learner[[1]])
+})
+
+
+test_that("Can convert run collection to benchmark result", {
+  col = OMLCollection$new(232)
+  bmr = suppressWarnings(col$convert())
+  expect_r6(bmr, "BenchmarkResult")
+  expect_error(bmr$score(msr("classif.ce")), regexp = NA)
+})
+
+test_that("Cannot convert task collection", {
+  col = OMLCollection$new(258)
+  expect_message(col$convert(), regexp = "Main entity is task, returning NULL.")
 })
