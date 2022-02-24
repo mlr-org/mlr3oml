@@ -8,7 +8,7 @@ This is the class for OpenML splits that belong to task.
 }
 \section{mlr3Intergration}{
 
-Intermediary object that can be converted to mlr3::Resampling.
+A (instantiated) \link[mlr3:Resampling]{mlr3::Resampling} can be obtained using the method \verb{$convert()}.
 }
 
 \examples{
@@ -17,7 +17,29 @@ otask = OMLTask$new(59) # mlr3oml::OMLTask
 oresampling = otask$resampling # [mlr3oml::OMLResampling]
 resampling = oresampling$convert() # mlr3::Resampling
 }
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{id}}{(\code{integer(1)})
+The id of the task to which the resampling belons.}
 
+\item{\code{task}}{(\code{OMLTask}) to which the resampling belongs.}
+
+\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
+Stores the location of the cache for objects retrieved from \url{https://openml.org}.
+If set to \code{FALSE}, caching is disabled.
+
+The package \CRANpkg{qs} is required for caching.}
+}
+\if{html}{\out{</div>}}
+}
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{estimation_procedure}}{(\code{character(1)}) The OpenML estimation procedure.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -31,6 +53,7 @@ resampling = oresampling$convert() # mlr3::Resampling
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Initializes an  instance of class OMLResampling. Requires either
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLResampling$new(
   task = NULL,
@@ -39,11 +62,25 @@ resampling = oresampling$convert() # mlr3::Resampling
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{task}}{(`OMLTask) Either the OpenML Task or task_id have to be provided.}
+
+\item{\code{task_id}}{(\code{integer(1)}) The OpenML task ID (if no task is provided).}
+
+\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
+See field \code{cache} for an explanation of possible values.
+Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-convert"></a>}}
 \if{latex}{\out{\hypertarget{method-convert}{}}}
 \subsection{Method \code{convert()}}{
+Returns an instantiated \link[mlr3:Resampling]{mlr3::Resampling} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLResampling$convert()}\if{html}{\out{</div>}}
 }

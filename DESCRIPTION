@@ -12,9 +12,9 @@ License: LGPL-3
 URL: https://mlr3oml.mlr-org.com, https://github.com/mlr-org/mlr3oml
 BugReports: https://github.com/mlr-org/mlr3oml/issues
 Depends:
-    mlr3 (>= 0.10.0),
     R (>= 3.1.0)
 Imports:
+    mlr3 (>= 0.10.0),
     backports (>= 1.1.6),
     checkmate,
     curl,

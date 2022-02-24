@@ -3,5 +3,5 @@ OMLResamplingConnector = function(task_id = NULL, cache = getOption("mlr3oml.cac
     stop(errorCondition("Argument 'task_id' must be provided", class = "missingDefaultError"))
   }
 
-  OMLTask$new(task_id, cache)$resampling
+  OMLTask$new(task_id, cache)$resampling$convert()
 }

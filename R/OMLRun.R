@@ -1,12 +1,13 @@
 #' @title Interface to OpenML Runs
 #'
 #' @description
-#' This is the class for tasks provided on \url{https://openml.org/}.
+#' This is the class for OpenML [Runs](https://new.openml.org/search?type=run).
+#'  * A [OMLTask] is returned by the active field `$task`.
+#'  * A [OMLData] is returned by the active field `$data` (short for $task$data)
+#'  * A [OMLFlow] is returned by the active field `$flow`.
 #'
 #' @section mlr3 Integration:
-#' A [mlr3oml::OMLTask] is returned by the active field `$task`.
-#' A [mlr3oml::OMLData] is returned by the active field `$data` (short for $task$data)
-#' A [mlr3oml::OMLFlow] is returned by the active field `$flow`.
+#' A [ResampleResult] is obtained by calling the method `$convert()`
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -20,7 +21,7 @@
 #' print(oml_run$task) # OMLTask
 #' print(oml_run$data) # OMLData
 #' print(oml_run$flow) # OMLFlow
-#' print(oml_run$resampling) # OMLFlow
+#' print(oml_run$resampling) # OMLResampling
 #' }
 #'
 OMLRun = R6Class("OMLRun",
@@ -53,33 +54,45 @@ OMLRun = R6Class("OMLRun",
     },
 
     #' @description
-    #' Converts the OMLRun into a [mlr3::ResamplingResult].
+    #' Converts the OMLRun into a [mlr3::ResampleResult].
+    #' In case the flow is not a mlr3 learner, a pseudo learner is created (see [OMLFlow])
+    #' and the resamplign result can still be used for some operations.
+    #' @param store_backends (`logical(1)`) Whether to store the backends
     convert = function(store_backends = TRUE) {
       task = self$task$convert()
+      resampling = self$task$resampling$convert()
+      iterations = resampling$iters
+
       # convert the predictions into mlr3-readable format
       predictions = split_predictions(
         self$prediction, self$task$resampling$convert(),
         self$task_type
       )
       n = length(predictions)
-      learners = map(seq(n), function(x) self$flow$convert(self$task_type))
+      learner = self$flow$convert(self$task_type)
+      learners = map(seq(n), function(x) learner$clone(deep = TRUE))
+
       states = tryCatch(
+        # mlr or mlr3
         get_rds(self$desc$output_data$file$url[self$desc$output_data$file$name == "binary"]),
         error = function(x) {
-          if (test_subset(self$parameter_setting[["name"]], self$flow$parameter[["name"]])) {
+          # two problematic cases: some Weka learners have duplicate parameter names and sometimes
+          # the parameter_setting of a run does not match the parameters of the flow
+          valid_params = test_subset(self$parameter_setting$name, self$flow$parameters$name) &&
+            length(unique(self$parameter_setting$name)) == length(self$parameter_setting$name)
+          if (valid_params) {
             param_vals = set_names(
               x = self$parameter_setting[["value"]],
               nm = make.names(self$parameter_setting[["name"]])
             )
           } else {
-            # Run has parameters that don't exist in flow
-            warning("Parameter setting of run contains unknown parameters.")
+            warning("Problematic parameter setting, setting all parameters to NA.")
             param_vals = set_names(
               x = as.list(rep(NA, learners[[1]]$param_set$length)),
               learners[[1]]$param_set$ids()
             )
           }
-          map(seq_len(n), function(x) {
+          states = map(seq_len(n), function(x) {
             state = list(
               param_vals = param_vals,
               task_hash = task$hash,
@@ -91,16 +104,14 @@ OMLRun = R6Class("OMLRun",
             }
             return(state)
           })
+          return(states)
         }
       )
-
-      .f = function(learner, state) {
-        learner$param_set$values = state$param_vals
-      }
-      pmap(list(learners, states), .f)
-
-      resampling = self$task$resampling$convert()
-      iterations = resampling$iters
+      pmap(list(learners, states),
+        function(learner, state) {
+          learner$param_set$values = state$param_vals
+        }
+      )
       data = data.table(
         task = list(task),
         learner = learners,
@@ -111,7 +122,8 @@ OMLRun = R6Class("OMLRun",
         uhash = uuid::UUIDgenerate()
       )
 
-      ResampleResult$new(ResultData$new(data, store_backends = store_backends))
+      rr = ResampleResult$new(ResultData$new(data, store_backends = store_backends))
+      return(rr)
     }
   ),
   active = list(
@@ -131,8 +143,8 @@ OMLRun = R6Class("OMLRun",
     #'  The id of the flow.
     flow_id = function() self$desc$flow_id,
 
-    #' @field flow (OMLFlow)[mlr3::OMLFlow] \cr
-    #'  The [mlr3oml::OMLFlow].
+    #' @field flow (OMLFlow)[OMLFlow] \cr
+    #'  The OpenML Flow.
     flow = function() {
       if (is.null(private$.flow)) {
         private$.flow = OMLFlow$new(self$flow_id, cache = is.character(self$cache_dir))
@@ -165,15 +177,15 @@ OMLRun = R6Class("OMLRun",
     #' The type of task solved by this run (e.g., classification).
     task_type = function() self$desc$task_type,
 
-    #' @field tag ('character(n)') \n
+    #' @field tags ('character(n)') \cr
     #' A character vector containing possible tags.
-    tag = function() self$desc$tag,
+    tags = function() self$desc$tag,
 
     # #' @field evaluation
     # #' The evaluation.
     # evaluation = function() self$desc$output_data$evaluation,
 
-    #' @field  ('data.table') \n
+    #' @field parameter_setting ('data.table') \cr
     #' The parameter setting for this run.
     parameter_setting = function() self$desc$parameter_setting,
 
@@ -200,11 +212,14 @@ OMLRun = R6Class("OMLRun",
 )
 
 
+#' splits the predictions from OpenML into mlr3 readable forat
 split_predictions = function(predictions, resampling, task_type) {
   classes = c("PredictionDataClassif", "PredictionData")
   names = colnames(predictions)
   predictions = lapply(
     resampling$instance$test,
+    # Weka, sklearn and mlr(3) have different formats for uploading predictions,
+    # here we capture some (probably not all formats) and also discard unknown columns
     function(x) {
       if (test_subset(c("row_ids", "truth", "response"), names)) { # mlr3
         test_data = predictions[row_ids %in% x, c("row_ids", "truth", "response")]

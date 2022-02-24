@@ -59,3 +59,8 @@ test_that("TaskSurv creation", {
   odata = OMLData$new(data_id)
   expect_class(odata$task(c("time", "event")), "TaskSurv")
 })
+
+test_that("convert works", {
+  backend = OMLData$new(1)$convert()
+  expect_backend(backend)
+})

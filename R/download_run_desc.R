@@ -43,8 +43,12 @@ parse_run_desc = function(desc) {
     # TODO: Why do we need to parse safely? --> better comments
     desc$output_data$evaluation[, array_data := map(array_data, .f = parse_json_safely)]
     desc$output_data$evaluation[, value := as.numeric(value)]
-    desc$output_data$evaluation[, rep := as.integer(rep)] # nolint
-    desc$output_data$evaluation[, fold := as.integer(fold)] # nolint
+    if ("rep" %in% colnames(desc$output_data$evaluation)) {
+      desc$output_data$evaluation[, rep := as.integer(rep)] # nolint
+    }
+    if ("fold" %in% colnames(desc$output_data$evaluation)) {
+      desc$output_data$evaluation[, fold := as.integer(fold)] # nolint
+    }
   }
   # Now the parameters: name | value | component
 

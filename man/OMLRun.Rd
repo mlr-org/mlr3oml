@@ -4,13 +4,16 @@
 \alias{OMLRun}
 \title{Interface to OpenML Runs}
 \description{
-This is the class for tasks provided on \url{https://openml.org/}.
+This is the class for OpenML \href{https://new.openml.org/search?type=run}{Runs}.
+\itemize{
+\item A \link{OMLTask} is returned by the active field \verb{$task}.
+\item A \link{OMLData} is returned by the active field \verb{$data} (short for $task$data)
+\item A \link{OMLFlow} is returned by the active field \verb{$flow}.
+}
 }
 \section{mlr3 Integration}{
 
-A \link{OMLTask} is returned by the active field \verb{$task}.
-A \link{OMLData} is returned by the active field \verb{$data} (short for $task$data)
-A \link{OMLFlow} is returned by the active field \verb{$flow}.
+A \link{ResampleResult} is obtained by calling the method \verb{$convert()}
 }
 
 \examples{
@@ -21,7 +24,7 @@ print(oml_run)
 print(oml_run$task) # OMLTask
 print(oml_run$data) # OMLData
 print(oml_run$flow) # OMLFlow
-print(oml_run$resampling) # OMLFlow
+print(oml_run$resampling) # OMLResampling
 }
 
 }
@@ -42,9 +45,6 @@ Stores the location of the cache for objects retrieved from \url{https://openml.
 If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
-
-\item{\code{('data.table')}}{\n
-The parameter setting for this run.}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,8 +58,8 @@ the JSON API response.}
 \item{\code{flow_id}}{(\code{integer(1)})\cr
 The id of the flow.}
 
-\item{\code{flow}}{(OMLFlow)\link[mlr3:OMLFlow]{mlr3::OMLFlow} \cr
-The \link{OMLFlow}.}
+\item{\code{flow}}{(OMLFlow)\link{OMLFlow} \cr
+The OpenML Flow.}
 
 \item{\code{task_id}}{(\code{character(1)})\cr
 The id of the task solved by this run.}
@@ -76,12 +76,10 @@ The data id.}
 \item{\code{task_type}}{(\code{character(1)})\cr
 The type of task solved by this run (e.g., classification).}
 
-\item{\code{tag}}{('character(n)') \n
+\item{\code{tags}}{('character(n)') \cr
 A character vector containing possible tags.}
 
-\item{\code{evaluation}}{The evaluation.}
-
-\item{\code{('data.table')}}{\n
+\item{\code{parameter_setting}}{('data.table') \cr
 The parameter setting for this run.}
 
 \item{\code{prediction}}{(Prediction)\link[mlr3:Prediction]{mlr3::Prediction}
@@ -134,11 +132,20 @@ Prints the object.
 \if{html}{\out{<a id="method-convert"></a>}}
 \if{latex}{\out{\hypertarget{method-convert}{}}}
 \subsection{Method \code{convert()}}{
-Converts the OMLRun into a (Resampling)\link[mlr3:Resampling]{mlr3::Resampling} object.
+Converts the OMLRun into a \link[mlr3:ResampleResult]{mlr3::ResampleResult}.
+In case the flow is not a mlr3 learner, a pseudo learner is created (see \link{OMLFlow})
+and the resamplign result can still be used for some operations.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLRun$convert(store_backends = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{store_backends}}{(\code{logical(1)}) Whether to store the backends}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

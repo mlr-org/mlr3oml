@@ -1,6 +1,3 @@
-
-
-
 with_test_server = function(env = parent.frame()) {
   op = options(
     mlr3oml.server = "https://test.openml.org/api/v1",
@@ -223,20 +220,27 @@ upload = function(url, body, query = list(api_key = get_api_key())) {
   response = httr::POST(url = url, query = query, body = body)
   content = httr::content(response)
   type = capitalize(tail(strsplit(url, "/")[[1]], n = 1))
+  content_list = xml2::as_list(content)
 
   if (httr::http_error(response)) { # TODO: is this thing working?
-    content_list = xml2::as_list(content)
-    if (grepl("already exists", content_list$error$message)) {
+    error_message = content_list$error$message
+    if (!is.null(error_message) && grepl("already exists", error_message)) {
       additional_info = content_list$error$additional_information
       idx = grep("implementation_id", additional_info)[[1]]
       id = as.integer(strsplit(additional_info[[idx]], split = ":")[[1]][2])
       messagef("%s already exists on OpenML with id %d.", type, id)
     } else {
-      stop(xml2::as_list(httr::content(response))$error$message)
+      stop(xml2::as_list(httr::content(response))$error$message %??% "Unknown error")
     }
+  } else {
+    id = switch(tolower(type),
+      flow = as.integer(content_list$upload_flow$id[[1]]),
+      run = as.integer(content_list$upload_run$run_id[[1]])
+    )
+    mlr3misc::messagef("Your %s was successfully uploaded and assigned id: %i.", type, id)
   }
 
-  return(httr::content(response))
+  return(id)
 }
 
 #' @export
@@ -254,30 +258,6 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
   response
 }
 
-# TODO: remove
-# url = "https://test.openml.org/api/v1/flow/14767"
-#
-# delete("flow", 14767)
-# delete("flow", 14768)
-# delete("run", 5062)
-#
-# delete(url)
-#
-# flow_ids = 14700:17800
-#
-# for (flow_id in flow_ids) {
-#   delete("flow", flow_id)
-# }
-#
-# flow_ids = c(14746, 14747, 14745)
-#
-# v = c(5084, 5082, 5080, 5077, 5076,
-#   5070, 5069, 5067, 5068, 5064, 5065, 5061, 5063, 5060, 5078)
-# for (x in v) {
-#   delete("run", x)
-# }
-#
-# delete("run", v[1])
 
 get_server = function() {
   server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"

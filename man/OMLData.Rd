@@ -155,6 +155,7 @@ For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb
 \if{html}{\out{<a id="method-convert"></a>}}
 \if{latex}{\out{\hypertarget{method-convert}{}}}
 \subsection{Method \code{convert()}}{
+Converts the OpenML data object into an \link[mlr3:DataBackend]{mlr3::DataBackend}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$convert()}\if{html}{\out{</div>}}
 }

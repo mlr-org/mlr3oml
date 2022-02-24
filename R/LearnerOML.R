@@ -1,47 +1,6 @@
-#' TODO: This should actually be a R6 Metaclass that generates classes for each id with the
-#' respective parameters
-LearnerRegrOML = R6Class("LearnerRegrOML",
-  inherit = LearnerRegr,
-  public = list(
-    initialize = function() {
-      param_set = paradox::ps(
-        name = paradox::p_uty(),
-        id = paradox::p_int()
-      )
-      super$initialize(id = "regr.oml", param_set = param_set)
-    }
-  ),
-  private = list(
-    .train = function(task) {
-      stop("This is only a pseudo learner and cannot be trained.")
-    },
-    .predict = function(task) {
-      stop("This is only a pseudo learner and cannot be used for prediction.")
-    }
-  )
-)
-
-LearnerClassifOML = R6Class("LearnerClassifOML",
-  inherit = LearnerClassif,
-  public = list(
-    initialize = function() {
-      param_set = paradox::ps(
-        name = paradox::p_uty(),
-        id = paradox::p_int()
-      )
-      super$initialize(id = "classif.oml", param_set = param_set)
-    }
-  ),
-  private = list(
-    .train = function(task) {
-      stop("This is only a pseudo learner and cannot be trained.")
-    },
-    .predict = function(task) {
-      stop("This is only a pseudo learner and cannot be used for prediction.")
-    }
-  )
-)
-
+#' Creates a pseudo OpenML Learner
+#' This object is used to create A learner for a flow that is not from R, but the results are used
+#' in a resample or benchmark result
 make_oml_learner = function(flow, task_type) {
   if (task_type %nin% c("regr", "classif")) {
     warning("No learner (not even pseudo learner) could be constructed.")
@@ -72,6 +31,7 @@ make_oml_learner = function(flow, task_type) {
   return(learner)
 }
 
+#' this constructs a paramset for the parameter field of a OMLFlow
 construct_paramset = function(parameter) {
   names = make.names(parameter[["name"]])
   if (!all(names == parameter[["name"]])) {

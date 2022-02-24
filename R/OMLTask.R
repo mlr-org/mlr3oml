@@ -4,9 +4,9 @@
 #' This is the class for tasks served on \url{https://openml.org/t}.
 #'
 #' @section mlr3 Integration:
-#' A [mlr3::Task] is returned by the method `$task`.
-#' Alternatively, you can convert this object to a [mlr3::DataBackend] using
-#' `mlr3::as_data_backend()`.
+#'  * A [mlr3::Task] is returned by either calling `$convert()` or accessing `$task`.
+#'  * Alternatively, you can convert this object to a [mlr3::DataBackend] using
+#' `  mlr3::as_data_backend()`.
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -33,7 +33,7 @@ OMLTask = R6Class("OMLTask",
     #' OpenML task id.
     id = NULL,
 
-    #' @temulate field_cache_dir
+    #' @template field_cache_dir
     cache_dir = NULL,
 
     #' @description
@@ -88,6 +88,8 @@ OMLTask = R6Class("OMLTask",
       self$desc$task_name
     },
 
+    #' @field task_type (`character(1)`)\cr
+    #'   The OpenML task type.
     task_type = function() {
       self$desc$task_type
     },
@@ -154,25 +156,7 @@ OMLTask = R6Class("OMLTask",
     #' @field task ([mlr3::Task])\cr
     #' Creates a [mlr3::Task] using the target attribute of the task description.
     task = function() {
-      name = self$name
-      data = self$data$data
-      target = self$target_names
-
-      miss = setdiff(target, names(data))
-      if (length(miss)) {
-        stopf("Task %i could not be created: target '%s' not found in data", self$id, miss[1L])
-      }
-
-      constructor = switch(self$desc$task_type,
-        # FIXME: positive class?
-        "Supervised Classification" = new_task_classif,
-        "Supervised Regression" = new_task_regr,
-        "Survival Analysis" = new_task_surv,
-        stopf("Unsupported task type '%s'", self$desc$task_type)
-      )
-      task = constructor(name, data, target = target)
-      task$backend$hash = sprintf("mlr3oml::task_%i", self$id)
-      task
+      self$convert()
     },
 
     #' @field resampling ([mlr3::Resampling])\cr

@@ -4,17 +4,17 @@
 \alias{OMLCollection}
 \title{OpenML Collection}
 \description{
-This is the class for collections served on \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}. A collection can contain datasets, flows, runs and tasks.
-These are stored as an OMLContainer.
+This is the class for collections (previously known as studies) served on
+\url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}.
+A collection can contain datasets, flows, runs and tasks. These are stored as a \link{OMLDictionary}.
 }
 \section{mlr3 Intergration}{
 
-The tasks can be converted to a list of \link[mlr3:Task]{mlr3::Task}s by calling \verb{$convert()} on the field
-\code{tasks}.
-The flows can be converted to a list of \link[mlr3:Learner]{mlr3::Learner}s by calling \verb{$convert()} on the field
-\code{learners}.
-The runs can be converted to a list of \link[mlr3:ResampleResult]{mlr3::ResampleResult}s by calling \verb{$convert} on the
-field \code{runs}.
+\itemize{
+\item In caste the \code{main_entity_type}is \code{run}, \verb{$convert()}$ returns a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}.
+\item In caste the \code{main_entity_type}is \code{task}, \verb{$convert()}$ returns a list of \link[mlr3:Task]{mlr3::Task}s and
+corresponding \link[mlr3:Resampling]{mlr3::Resampling}s.
+}
 }
 
 \references{
@@ -34,43 +34,23 @@ Stores the location of the cache for objects retrieved from \url{https://openml.
 If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
-
-\item{\code{(`logical(1))\cr}}{Whether the downloaded data is cached.}
-
-\item{\code{(`character(1)`)}}{name\cr
-The name of the study.}
-
-\item{\code{(`integer(n)`)\cr}}{The study creators.}
-
-\item{\code{datetime}}{(\code{.POSIXct(1)})\cr
-The datetime that the dataset was uploaded.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{(`logical(1))\cr}}{Whether the downloaded data is cached.}
+\item{\code{desc}}{(\code{list()})\cr
+Colllection description (meta information), downloaded and converted from the JSON API response.}
 
-\item{\code{(`character(1)`)}}{name\cr
-The name of the study.}
+\item{\code{name}}{(\code{character(1)}) \cr
+The name of the collection.}
 
-\item{\code{(`integer(n)`)\cr}}{The study creators.}
-
-\item{\code{datetime}}{(\code{.POSIXct(1)})\cr
-The datetime that the dataset was uploaded.}
-
-\item{\code{alias}}{(\code{character(n)})\cr
-The alias of the study.}
-
-\item{\code{tag}}{(\code{character(n)})\cr
-A character vector containing the tags.}
+\item{\code{tags}}{(\code{character(n)})\cr
+The tags of the OpenML collection.}
 
 \item{\code{main_entity_type}}{(\code{character(1)})\cr
-The main entity type of the collection.}
-
-\item{\code{description}}{(\code{character(1)}) \cr
-Description of the collection.}
+The main entity type of the collection (either "run" or "task").}
 
 \item{\code{flow_ids}}{(\code{integer(n)})\cr
 An vector containing the flow ids of the collection.}
@@ -84,21 +64,17 @@ An vector containing the run ids of the collection.}
 \item{\code{task_ids}}{(\code{integer(n)})\cr
 An vector containing the task ids of the collection.}
 
-\item{\code{resampling_ids}}{(\code{integer(n)})\cr
-An vector containing the resampling ids of the collection.
-Note that this corresponds exactly to the task ids.}
-
 \item{\code{runs}}{(`list(n)')
-A list of \link[=OMLRun]{mlr3oml}s.}
+A list of \link{OMLRun}s.}
 
 \item{\code{flows}}{(`list(n)')
-A list of \link[=OMLFlow]{mlr3oml}s.}
+A Dictionary of \link{OMLFlow}s.}
 
 \item{\code{data}}{(`list(n)')
-A list of \link[=OMLData]{mlr3oml}.}
+A Dictionary of \link{Data} Sets.}
 
 \item{\code{tasks}}{(`list(n)')
-A list of \link[=OMLTasks]{mlr3oml}s.}
+A Dictionary of \link{OMLTasks}s and the corresponding \link{OMLResampling}s.}
 }
 \if{html}{\out{</div>}}
 }
@@ -147,6 +123,8 @@ Prints the object.
 \if{html}{\out{<a id="method-convert"></a>}}
 \if{latex}{\out{\hypertarget{method-convert}{}}}
 \subsection{Method \code{convert()}}{
+Converts the object to either a list of \link[mlr3:Task]{mlr3::Task}s (main_entity_type = "task") or a
+\link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} (main_entity_type = "run").
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$convert()}\if{html}{\out{</div>}}
 }

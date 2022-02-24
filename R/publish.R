@@ -6,21 +6,12 @@
 #' This is a generic function.
 #' @export
 publish = function(x, confirm = TRUE, ...) {
-  # TODO: remove this when package is ready
-  # if (get_server() != "https://test.openml.org/api/v1") {
-
   if (confirm) {
     ask_confirmation()
   }
-
-  if (TRUE) {
-    id = query_existance(x)
-    if (!is.null(id)) { # nolint
-      return(id)
-    }
-  }
   id = UseMethod("publish", x)
-  get_private(x)$oml_id = id
+  # get_private(x)$oml_id = id
+  x$.__enclos_env__$private$oml_id = id
   return(id)
 }
 
@@ -62,16 +53,16 @@ publish.Learner = function(x, ...) { # nolint
     )
   )
 
-  mlr3misc::messagef("Your flow was successfully uploaded and assigned id: %i.", id)
 
-  return(flow_id)
+  return(id)
 }
 
 publish.Task = function(x, resampling, ...) { # nolint
-  # The plan here is as follows:
-  # Tasks that are downloaded from OpenML have the private attribute `oml_id`.
-  # When we upload a run we check for that attribute and for the time throw an error otherwise
   stop("Not implemented yet!")
+}
+
+publish.Resampling = function(x, resampling, ...) { # nolint
+  stop("Not possible with current OpenML API.")
 }
 
 #' @export
@@ -108,7 +99,7 @@ publish.ResampleResult = function(x, ...) { # nolint
   # of the flow
   saveRDS(states, states_path)
 
-  id = upload(
+  run_id = upload(
     url = url,
     body = list(
       description = httr::upload_file(desc_path),
@@ -116,9 +107,7 @@ publish.ResampleResult = function(x, ...) { # nolint
       binary = httr::upload_file(states_path)
     )
   )
-  messagef("Your run was successfully uploaded and assigned id: %i.", id)
-  output = list(run_id = run_id, flow_id = flow_id, task_id = task_id)
-  return(output)
+  return(list(run_id = run_id, flow_id = flow_id, task_id = task_id))
 }
 
 

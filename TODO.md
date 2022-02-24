@@ -1,10 +1,5 @@
 # TODO File for mlr3oml
 
-Benchmark:
-- Each dataset should appear only as one task
-
-- [ ] implement list_oml_estimation_procedures
-- [ ] implement list_oml_benchmark_suites
 - [ ] Extract task and resampling from Task dictionary
 - [x] Better efficiency when uploading models (learner once + states)
 - [x] Require user confirmation when uploading (only do this once on every publish

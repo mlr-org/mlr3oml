@@ -8,9 +8,11 @@ This is the class for tasks served on \url{https://openml.org/t}.
 }
 \section{mlr3 Integration}{
 
-A \link[mlr3:Task]{mlr3::Task} is returned by the method \verb{$task}.
-Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::DataBackend} using
-\code{mlr3::as_data_backend()}.
+\itemize{
+\item A \link[mlr3:Task]{mlr3::Task} is returned by either calling \verb{$convert()} or accessing \verb{$task}.
+\item Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::DataBackend} using
+\code{  mlr3::as_data_backend()}.
+}
 }
 
 \examples{
@@ -40,6 +42,12 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML task id.}
+
+\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
+Stores the location of the cache for objects retrieved from \url{https://openml.org}.
+If set to \code{FALSE}, caching is disabled.
+
+The package \CRANpkg{qs} is required for caching.}
 }
 \if{html}{\out{</div>}}
 }
@@ -48,6 +56,9 @@ OpenML task id.}
 \describe{
 \item{\code{name}}{(\code{character(1)})\cr
 Name of the task, as extracted from the task description.}
+
+\item{\code{task_type}}{(\code{character(1)})\cr
+The OpenML task type.}
 
 \item{\code{desc}}{(\code{list()})\cr
 Task description (meta information), downloaded and converted from the JSON API response.}

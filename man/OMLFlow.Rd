@@ -4,11 +4,17 @@
 \alias{OMLFlow}
 \title{Interface to OpenML Flows}
 \description{
-This is the class for flows provided on the \href{https://new.openml.org/search?type=flow&sort=runs}{OpenML website}.
+This is the class for flows served on the \href{https://new.openml.org/search?type=flow}{OpenML website}.
 }
+\section{mlr3 Integration}{
+
+It can be converted to a \link[mlr3:Learner]{mlr3::Learner} by calling the method \verb{$convert()}.
+}
+
 \examples{
 \donttest{
-flow = OMLFlow$new(id = 1)
+flow = OMLFlow$new(id = 19081)
+learner = flow$convert()
 }
 }
 \references{
@@ -34,23 +40,20 @@ The package \CRANpkg{qs} is required for caching.}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{desc}}{(\code{list(n)})\cr
+\item{\code{desc}}{(\code{list()})\cr
 The description as downloaded from OpenML.}
 
 \item{\code{parameter}}{(\code{data.table})\cr
 The parameters of the flow.}
 
-\item{\code{tag}}{(\code{character(n)})\cr
+\item{\code{tags}}{(\code{character()})\cr
 The tags of the flow.}
 
-\item{\code{dependencies}}{(\code{character(n)})\cr
+\item{\code{dependencies}}{(\code{character()})\cr
 The dependencies of the flow.}
 
 \item{\code{name}}{(\code{character(1)})\cr
 The name of the flow.}
-
-\item{\code{description}}{(\code{character(1)})\cr
-The description of the flow.}
 }
 \if{html}{\out{</div>}}
 }
@@ -72,16 +75,34 @@ Initializes a new object of class \link{OMLFlow}.
 \if{html}{\out{<div class="r">}}\preformatted{OMLFlow$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{(\code{integeger(1)}) The id of the Flow}
+
+\item{\code{cache}}{(\code{logical(1)}) whether to use caching.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-convert"></a>}}
 \if{latex}{\out{\hypertarget{method-convert}{}}}
 \subsection{Method \code{convert()}}{
-Tries to convert the OMLFlow into an \link[mlr3:Learner]{mlr3::Learner} if the name starts with mlr3.
+Converts the flow into an \link[mlr3:Learner]{mlr3::Learner} if possible.
+In case the flow is not an \link[mlr3:Learner]{mlr3::Learner} a pseudo OpenML learner is constructed if
+for the provided task type. If no task type is given it returns NULL.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$convert()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$convert(task_type = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{task_type}}{(\code{character(1)}) The task_type as described above.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-print"></a>}}

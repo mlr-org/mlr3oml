@@ -6,10 +6,19 @@
 #'
 #' @param tasks list of [mlr3::Task]s
 #' @param learners list of [mlr3::Learner]s
-#' @param resamplings list of [mlr::Resampling]s for the tasks.
+#' @param resamplings list of [mlr3::Resampling]s for the tasks.
 #'
+#' @examples
+#' \dontrun{
+#' oml_suite = OMLCollection$new(99)
+#' tasks = oml_suite$tasks$mget(c(31L, 10101L), convert = TRUE)
+#' resamplings = oml_suite$tasks$mget_rsmp(c(31L, 10101L), convert = TRUE)
+#' learners = lrns(c("classif.rpart", "classif.featureless"))
+#' design = benchmark_design(tasks, learners, resamplings)
+#' print(design)
+#' bmr = benchmark(design)
+#' }
 #' @export
-#'
 benchmark_design = function(tasks, learners, resamplings) {
   tasks = assert_tasks(mlr3::as_tasks(tasks))
   learners = assert_learners(mlr3::as_learners(learners))

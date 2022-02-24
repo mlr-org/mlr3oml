@@ -60,9 +60,12 @@ OMLData = R6Class("OMLData",
     print = function() {
       catf("<OMLData:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
     },
+
+    #' @description
+    #' Converts the OpenML data object into an [mlr3::DataBackend].
     convert = function() {
-      stop("Not implemented yet")
-      # TODO: Implement
+      backend = as_data_backend(self)
+      return(backend)
     },
 
     #' @description

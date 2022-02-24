@@ -11,12 +11,12 @@ make_description.default = function(x, ...) { # nolint
 
 #' @export
 make_description.Learner = function(x, ...) { # nolint
-  name = sprintf("mlr3.%s_test", x$id)
+  name = sprintf("mlr3.%s", x$id)
   external_version = paste0(x$hash, "_test") # FIXME: remove this when new version is released
   dependencies = get_dependencies(x$packages)
   # TODO: remove this
   description = sprintf(
-    "[TEST]: Learner %s from package(s) %s.", x$id,
+    "Learner %s from package(s) %s.", x$id,
     paste(x$packages, collapse = ", ")
   )
   ps = as.data.table(x$param_set)
@@ -59,32 +59,6 @@ make_description.ResampleResult = function(x, ...) { # nolint
   }
   return(doc)
 }
-
-#' @export
-# make_description.GraphLearner = function(x) {
-#  name = sprintf("mlr3pipeline.%s", x$id)
-#  dependencies = get_dependencies(x$packages)
-#  description = sprintf("GraphLearner from package mlr3pipelines", x$id,
-#                        paste(x$packages, collapse = ", "))
-#
-#  full_description = jsonlite::toJSON(x$graph$edges)
-#
-#  ps = as.data.table(x$param_set)
-#  doc = xml2::xml_new_document()
-#  flow = xml2::xml_add_child(doc, "oml:flow", "xmlns:oml" = "http://openml.org/openml")
-#  xml2::xml_add_child(.x = flow, .value = "oml:name", name)
-#  xml2::xml_add_child(.x = flow, .value = "oml:description", description)
-#  xml2::xml_add_child(.x = flow, .value = "oml:dependencies", dependencies)
-#  for (i in seq_len(nrow(ps))) {
-#    par = xml2::xml_add_child(flow, .value = "oml:parameter")
-#    xml2::xml_add_child(.x = par, .value = "oml:name", ps[[i, "id"]])
-#    xml2::xml_add_child(.x = par, .value = "oml:data_type", ps[[i, "class"]])
-#    xml2::xml_add_child(.x = par, .value = "oml:default_value",
-#                        format_default(ps[[i, "default"]]))
-#  }
-#  xml2::xml_add_child(.x = flow, .value = "oml:full_description", full_description)
-#  return(doc)
-# }
 
 format_default = function(x) {
   if (is.character(x) || is.numeric(x) || is.logical(x) || is.factor(x)) {

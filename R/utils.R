@@ -9,3 +9,8 @@ truncate_vector = function(name, width = 30L) {
   name = name[[1]]
   ifelse(nchar(name) < width, name, paste0(strtrim(name, width), ", ..."))
 }
+
+task_type_translator = list( # task type translator
+  "Supervised Regression" = "regr",
+  "Supervised Classification" = "classif"
+)

@@ -37,7 +37,6 @@
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
 
   # We use this
-
   mlr3::Learner$set("private", "oml_id", NULL, overwrite = TRUE)
   mlr3::Task$set("private", "oml_id", NULL, overwrite = TRUE)
   mlr3::Resampling$set("private", "oml_id", NULL, overwrite = TRUE)
@@ -55,11 +54,12 @@
 
 .onUnload = function(libpath) { # nolint
   # nocov start
-  mlr3::Task$private_fields$oml_id = NULL
-  mlr3::Learner$private_fields$oml_id = NULL
-  mlr3::Resampling$private_fields$oml_id = NULL
-  mlr3::ResampleResult$private_fields$oml_id = NULL
-  mlr3::BenchmarkResult$private_fields$oml_id = NULL
+  # We remove the private field oml_id
+  Task$private_fields$oml_id = NULL
+  Learner$private_fields$oml_id = NULL
+  Resampling$private_fields$oml_id = NULL
+  ResampleResult$private_fields$oml_id = NULL
+  BenchmarkResult$private_fields$oml_id = NULL
   library.dynam.unload("mlr3oml", libpath)
 } # nocov end
 

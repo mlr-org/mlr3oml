@@ -21,3 +21,30 @@ test_that("TaskSurv", {
   oml_task = OMLTask$new(7304)
   expect_class(oml_task$task, "TaskSurv")
 })
+
+test_that("Task 1 works", {
+  oml_task = OMLTask$new(1)
+  expect_oml_task(oml_task)
+})
+
+test_that("Task 100 works", {
+  oml_task = OMLTask$new(1)
+  expect_oml_task(oml_task)
+})
+
+test_that("Randomized download test", {
+  # this almost never runs
+  n = 10
+  task_types = c(
+    "Supervised Regression",
+    "Supervised Classification",
+    "Survival Analysis"
+  )
+  task_ids = sample(load_ids("task"), size = n)
+  for (task_id in task_ids) {
+    task = OMLTask$new(task_id)
+    if (task$task_type %in% task_types) {
+      expect_oml_task(OMLTask$new(task_id))
+    }
+  }
+})

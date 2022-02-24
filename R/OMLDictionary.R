@@ -1,37 +1,57 @@
 #' @title OpenML Dictionary
 #' @description
-#' @export
-#' @example
+#' Dictionaries for [OMLTask]s, [OMLFlow]s, [OMLData] and [OMLRun]s.
+#' Can each be converted do `data.table` using `as.data.table()`.
 OMLDictionary = R6Class("OMLDictionary",
   public = list(
+    #' @field items (`environment`)
+    #'   Items of the dictionary.
     items = NULL,
+    #' @description
+    #' Initializes an instance of class OMLDictionary.
     initialize = function() {
       self$items = new.env(parent = emptyenv())
     },
-    #' @description get an element
-    #' @param key Can either be the name (data) of the task or the id.
-    #' @param convert Whether the resulting object
+    #' @description
+    #' Get an element from the dictionary using its ID.
+    #' @param key (`integer(1)`) ID of the OpenML object.
+    #' @param convert (`logical(1)`) Whether to convert the resulting object to an mlr3 object.
     get = function(key, convert = FALSE) {
-      key = as.character(assert_integerish(key, coerce = TRUE))
+      key = as.character(assert_integerish(key, coerce = TRUE, len = 1))
+      assert_flag(convert)
       item = self$items[[key]]
       if (convert) {
         item = item$convert()
       }
       return(item)
     },
-    #'
+    #' @description
+    #' Prints the object.
+    print = function() {
+      print(as.data.table(self))
+    },
+    #' @description
+    #' Returns the OpenML IDs, which are the keys for the dictionary.
     keys = function() {
       as.integer(names(self$items))
     },
+    #' @description
+    #' Retrieves multiple items from the dictionary.
+    #' @param keys (`integer`) IDs of the OpenML object.
+    #' @param convert (`logical(1)`) Whether to convert the resulting object to an mlr3 object.
     mget = function(keys = NULL, convert = FALSE) {
+      keys = assert_integerish(keys, coerce = TRUE)
       if (is.null(keys)) keys = self$keys()
       map(keys, self$get, convert = convert)
     },
-    add = function(task) {
-      assert_r6(task, private$.type)
-      id = as.character(task$id)
+    #' @description
+    #' Adds An OML object to the dictionary.
+    #' @param x An OpenML object (specified by the subclass).
+    add = function(x) {
+      assert_r6(x, private$.type)
+      id = as.character(x$id)
       assert_false(id %in% self$keys())
-      assign(x = id, value = task, envir = self$items)
+      assign(x = id, value = x, envir = self$items)
       invisible(self)
     }
   ),
@@ -50,8 +70,10 @@ OMLDictionaryTask = R6Class("OMLDictionaryTask",
       if (convert) item = item$convert()
       return(item)
     },
-    mget_rsmp = function(key, convert = FALSE) {
-      if (is.null(keys)) keys = self$keys()
+    mget_rsmp = function(keys, convert = FALSE) {
+      if (is.null(keys)) {
+        keys = self$keys()
+      }
       map(keys, self$get_rsmp, convert = convert)
     }
   ),
@@ -60,7 +82,6 @@ OMLDictionaryTask = R6Class("OMLDictionaryTask",
   )
 )
 
-#' @export
 OMLDictionaryData = R6Class("OMLDictionaryData",
   inherit = OMLDictionary,
   private = list(
@@ -68,7 +89,6 @@ OMLDictionaryData = R6Class("OMLDictionaryData",
   )
 )
 
-#' @export
 OMLDictionaryFlow = R6Class("OMLDictionaryFlow",
   inherit = OMLDictionary,
   private = list(
@@ -76,17 +96,11 @@ OMLDictionaryFlow = R6Class("OMLDictionaryFlow",
   )
 )
 
-#' @export
 OMLDictionaryRun = R6Class("OMLDictionaryRun",
   inherit = OMLDictionary,
   private = list(
     .type = "OMLRun"
   )
-)
-
-ttt = list( # task type translator
-  "Supervised Regression" = "regr",
-  "Supervised Classification" = "classif"
 )
 
 
@@ -104,8 +118,8 @@ as.data.table.OMLDictionaryTask = function(x, ...) { # nolint
     }
     list(
       id = t$id,
-      data = t$data$name, width = 15L,
-      task_type = ttt[[t$task_type]],
+      data = t$data$name,
+      task_type = task_type_translator[[t$task_type]],
       target = t$target_names, # can have length > 1
       nrow = as.integer(t$data$quality("NumberOfInstances")),
       ncol = t$data$quality("NumberOfFeatures"),
@@ -134,6 +148,7 @@ as.data.table.OMLDictionaryFlow = function(x, ...) { # nolint
   }
   setkeyv(map_dtr(x$keys(), g, .fill = TRUE), "id")[]
 }
+
 
 #' @export
 as.data.table.OMLDictionaryData = function(x, ...) { # nolint
@@ -165,7 +180,7 @@ as.data.table.OMLDictionaryRun = function(x, ...) { # nolint
     }
     list(
       id = t$id,
-      type = ttt[[t$task_type]],
+      type = task_type_translator[[t$task_type]],
       task = t$desc$input_data$dataset$name,
       flow = t$desc$flow_name
     )

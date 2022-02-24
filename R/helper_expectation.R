@@ -46,7 +46,6 @@ expect_oml_flow = make_expect(function(flow) {
   expect_true(test_logical(flow$cache_dir) || test_character(flow$cache_dir))
   expect_integer(flow$id)
   expect_list(flow$desc)
-  expect_character(flow$description)
   expect_data_table(flow$parameter)
   testthat::expect_equal(
     names(flow$parameter),
@@ -54,26 +53,19 @@ expect_oml_flow = make_expect(function(flow) {
   )
   expect_character(flow$dependencies)
   expect_integer(flow$id)
-  expect_string(flow$name)
   if (startsWith(flow$name, "mlr3.")) {
     expect_r6(flow$convert(), "Learner")
   } else {
     expect_true(is.null(flow$convert()))
+    expect_r6(flow$convert("classif"), "LearnerRegr")
+    expect_r6(flow$convert("regr"), "LearnerRegr")
   }
   expect_posixct(flow$desc$upload_date)
   expect_integer(flow$desc$version)
   expect_integer(flow$desc$uploader)
 })
 
-expect_oml_run = make_expect(function(run) {
-  expect_r6(run, "OMLRun")
-  expect_integer(run$id)
-  expect_posixct(run$upload_date)
-  expect_string(run$description)
-  expect_data_table(run$prediction)
-})
-
-expect_oml_data = function(oml_data) {
+expect_oml_data = make_expect(function(oml_data) {
   expect_r6(oml_data, "OMLData")
   expect_string(oml_data$name)
   expect_count(oml_data$nrow)
@@ -88,10 +80,10 @@ expect_oml_data = function(oml_data) {
   if (length(oml_data$target_names)) {
     expect_r6(oml_data$task(), "Task")
   }
-}
+})
 
 
-expect_oml_task = function(oml_task) {
+expect_oml_task = make_expect(function(oml_task) {
   expect_r6(oml_task, "OMLTask")
   expect_string(oml_task$name)
   expect_count(oml_task$nrow)
@@ -104,14 +96,12 @@ expect_oml_task = function(oml_task) {
   expect_subset(oml_task$feature_names, colnames(oml_task$data$data))
   expect_disjunct(oml_task$target_names, oml_task$feature_names)
   expect_r6(oml_task$task, "Task")
-  expect_r6(oml_task$resampling, "ResamplingCustom")
+  expect_r6(oml_task$resampling, "OMLResampling")
+  expect_r6(oml_task$resampling$convert(), "ResamplingCustom")
   expect_subset(
-    unlist(oml_task$resampling$instance, use.names = FALSE), oml_task$task$row_ids
+    unlist(oml_task$resampling$convert()$instance, use.names = FALSE), oml_task$task$row_ids
   )
-}
-
-
-# TODO :remoce the checkmate:: (because we import it) and import the relevant testthat expect files
+})
 
 expect_oml_run = make_expect(function(run) {
   expect_r6(run, "OMLRun")
@@ -119,7 +109,7 @@ expect_oml_run = make_expect(function(run) {
   expect_int(run$flow_id)
   expect_int(run$task_id)
   expect_character(run$task_type)
-  expect_character(run$tag)
+  expect_character(run$tags, null.ok = TRUE)
   expect_integer(run$id)
   # expect_posixct(run$upload_date)
   # expect_string(run$desc)
@@ -129,6 +119,19 @@ expect_oml_run = make_expect(function(run) {
   expect_oml_data(run$data)
   expect_data_table(run$parameter_setting)
   expect_list(run$desc)
-  expect_r6(run$convert(), "ResampleResult")
-  expect_r6(run$convert(), "ResampleResult")
+  rr = suppressWarnings(run$convert())
+  expect_r6(rr, "ResampleResult")
+  task_type = task_type_translator[[run$task_type]]
+  if (task_type == "classif") {
+    expect_error(rr$score(msr("classif.ce")), regexp = NA)
+  }
+  if (task_type == "regr") {
+    expect_error(rr$score(msr("classif.ce")), regexp = NA)
+  }
+})
+
+expect_oml_resampling = make_expect(function(resampling) {
+  expect_r6(resampling, "OMLResampling")
+  expect_character(resampling$estimation_procedure)
+  expect_r6(resampling$convert(), "Resampling")
 })

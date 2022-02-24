@@ -11,10 +11,21 @@ benchmark_design(tasks, learners, resamplings)
 
 \item{learners}{list of \link[mlr3:Learner]{mlr3::Learner}s}
 
-\item{resamplings}{list of \link[mlr:Resampling]{mlr::Resampling}s for the tasks.}
+\item{resamplings}{list of \link[mlr3:Resampling]{mlr3::Resampling}s for the tasks.}
 }
 \description{
 \link{OMLTasks}s contain tasks as well as resamplings. In order to create
 a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 function can be used.
+}
+\examples{
+\dontrun{
+oml_suite = OMLCollection$new(99)
+tasks = oml_suite$tasks$mget(c(31L, 10101L), convert = TRUE)
+resamplings = oml_suite$tasks$mget_rsmp(c(31L, 10101L), convert = TRUE)
+learners = lrns(c("classif.rpart", "classif.featureless"))
+design = benchmark_design(tasks, learners, resamplings)
+print(design)
+bmr = benchmark(design)
+}
 }

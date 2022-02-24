@@ -4,15 +4,23 @@
 \alias{OMLDictionary}
 \title{OpenML Dictionary}
 \description{
-OpenML Dictionary
-
-OpenML Dictionary
+Dictionaries for \link{OMLTask}s, \link{OMLFlow}s, \link{OMLData} and \link{OMLRun}s.
+Can each be converted do \code{data.table} using \code{as.data.table()}.
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{items}}{(\code{environment})
+Items of the dictionary.}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OMLDictionary$new()}}
 \item \href{#method-get}{\code{OMLDictionary$get()}}
+\item \href{#method-print}{\code{OMLDictionary$print()}}
 \item \href{#method-keys}{\code{OMLDictionary$keys()}}
 \item \href{#method-mget}{\code{OMLDictionary$mget()}}
 \item \href{#method-add}{\code{OMLDictionary$add()}}
@@ -23,6 +31,7 @@ OpenML Dictionary
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
+Initializes an instance of class OMLDictionary.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$new()}\if{html}{\out{</div>}}
 }
@@ -32,25 +41,36 @@ OpenML Dictionary
 \if{html}{\out{<a id="method-get"></a>}}
 \if{latex}{\out{\hypertarget{method-get}{}}}
 \subsection{Method \code{get()}}{
-get an element
+Get an element from the dictionary using its ID.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$get(key, convert = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$get(key, convert = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{key}}{Can either be the name (data) of the task or the id.}
+\item{\code{key}}{(\code{integer(1)}) ID of the OpenML object.}
 
-\item{\code{convert}}{Whether the resulting object}
+\item{\code{convert}}{(\code{logical(1)}) Whether to convert the resulting object to an mlr3 object.}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-print"></a>}}
+\if{latex}{\out{\hypertarget{method-print}{}}}
+\subsection{Method \code{print()}}{
+Prints the object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-keys"></a>}}
 \if{latex}{\out{\hypertarget{method-keys}{}}}
 \subsection{Method \code{keys()}}{
+Returns the OpenML IDs, which are the keys for the dictionary.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$keys()}\if{html}{\out{</div>}}
 }
@@ -60,19 +80,37 @@ get an element
 \if{html}{\out{<a id="method-mget"></a>}}
 \if{latex}{\out{\hypertarget{method-mget}{}}}
 \subsection{Method \code{mget()}}{
+Retrieves multiple items from the dictionary.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$mget(keys = NULL, convert = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$mget(keys = NULL, convert = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{keys}}{(\code{integer}) IDs of the OpenML object.}
+
+\item{\code{convert}}{(\code{logical(1)}) Whether to convert the resulting object to an mlr3 object.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-add"></a>}}
 \if{latex}{\out{\hypertarget{method-add}{}}}
 \subsection{Method \code{add()}}{
+Adds An OML object to the dictionary.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$add(task)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLDictionary$add(x)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{An OpenML object (specified by the subclass).}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
