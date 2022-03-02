@@ -54,7 +54,7 @@ OMLCollection = R6::R6Class("OMLCollection",
         return(output)
       }
       rrs = self$runs$mget(self$run_ids, convert = TRUE)
-      bmr = as_benchmark_result(invoke(c, .args = rrs))
+      bmr = mlr3::as_benchmark_result(invoke(c, .args = rrs))
       return(bmr)
     }
   ),

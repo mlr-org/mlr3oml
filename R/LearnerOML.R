@@ -7,7 +7,7 @@ make_oml_learner = function(flow, task_type) {
     return(NULL)
   }
   learner = R6Class(sprintf("Learner%sOML%s", capitalize(task_type), flow$id),
-    inherit = c(classif = LearnerClassif, regr = LearnerRegr)[[task_type]],
+    inherit = c(classif = mlr3::LearnerClassif, regr = mlr3::LearnerRegr)[[task_type]],
     public = list(
       initialize = function() {
         super$initialize(

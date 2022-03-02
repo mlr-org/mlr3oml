@@ -78,7 +78,7 @@ OMLRun = R6Class("OMLRun",
         error = function(x) {
           # two problematic cases: some Weka learners have duplicate parameter names and sometimes
           # the parameter_setting of a run does not match the parameters of the flow
-          valid_params = test_subset(self$parameter_setting$name, self$flow$parameters$name) &&
+          valid_params = test_subset(self$parameter_setting$name, self$flow$parameter$name) &&
             length(unique(self$parameter_setting$name)) == length(self$parameter_setting$name)
           if (valid_params) {
             param_vals = set_names(
@@ -122,7 +122,7 @@ OMLRun = R6Class("OMLRun",
         uhash = uuid::UUIDgenerate()
       )
 
-      rr = ResampleResult$new(ResultData$new(data, store_backends = store_backends))
+      rr = mlr3::ResampleResult$new(mlr3::ResultData$new(data, store_backends = store_backends))
       return(rr)
     }
   ),

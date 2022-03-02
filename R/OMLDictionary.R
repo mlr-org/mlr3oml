@@ -40,8 +40,8 @@ OMLDictionary = R6Class("OMLDictionary",
     #' @param keys (`integer`) IDs of the OpenML object.
     #' @param convert (`logical(1)`) Whether to convert the resulting object to an mlr3 object.
     mget = function(keys = NULL, convert = FALSE) {
-      keys = assert_integerish(keys, coerce = TRUE)
       if (is.null(keys)) keys = self$keys()
+      keys = assert_integerish(keys, coerce = TRUE)
       map(keys, self$get, convert = convert)
     },
     #' @description
@@ -70,7 +70,7 @@ OMLDictionaryTask = R6Class("OMLDictionaryTask",
       if (convert) item = item$convert()
       return(item)
     },
-    mget_rsmp = function(keys, convert = FALSE) {
+    mget_rsmp = function(keys = NULL, convert = FALSE) {
       if (is.null(keys)) {
         keys = self$keys()
       }

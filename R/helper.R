@@ -259,6 +259,7 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
 }
 
 
+#' @export
 get_server = function() {
   server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
   return(server)
