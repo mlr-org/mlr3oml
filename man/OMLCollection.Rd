@@ -6,17 +6,41 @@
 \description{
 This is the class for collections (previously known as studies) served on
 \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}.
-A collection can contain datasets, flows, runs and tasks. These are stored as a \link{OMLDictionary}.
+It is used both for Run Collections and Task Collections.
+(Note that all Benchmark Suites on OpenML are also Collections).
+A Run Collection (\code{main_entity_type = "run"}) contains runs, flows, datasets and tasks.
+A Task Collection (\code{main_entity_type = "task"}) contains tasks and datasets.
 }
 \section{mlr3 Intergration}{
 
 \itemize{
-\item In caste the \code{main_entity_type}is \code{run}, \verb{$convert()}$ returns a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}.
-\item In caste the \code{main_entity_type}is \code{task}, \verb{$convert()}$ returns a list of \link[mlr3:Task]{mlr3::Task}s and
-corresponding \link[mlr3:Resampling]{mlr3::Resampling}s.
+\item Obtain a list of \link[mlr3:Task]{mlr3::Task}s using \code{as_tasks()}.
+\item Obtain a list of \link[mlr3:Resampling]{mlr3::Resampling}s using \code{as_resamplings()}.
+\item Obtain a list of \link[mlr3:Learner]{mlr3::Learner}s using \code{as_learners()} (if main_entity_type is "run").
+\item Obtain a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} using \code{as_benchmark_result()} (if main_entity_type is "run").
 }
 }
 
+\examples{
+\donttest{
+# OpenML Run Collection:
+collection = OMLCollection$new(232L)
+collection$tasks
+collection$data
+collection$flows
+collection$runs
+
+# mlr3 conversion:
+tasks = as_tasks(collection)
+resamplings = as_resamplings(collection)
+# construct pseudo-learners as these are sklearn flows
+learners = as_learners(collection, "classif")
+
+# Although pseudo-learners are non-executable the runs can still be analyzed.
+bmr = as_benchmark_result(collection)
+bmr$score(msr("classif.ce"))
+}
+}
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}
@@ -64,17 +88,19 @@ An vector containing the run ids of the collection.}
 \item{\code{task_ids}}{(\code{integer(n)})\cr
 An vector containing the task ids of the collection.}
 
-\item{\code{runs}}{(`list(n)')
-A list of \link{OMLRun}s.}
+\item{\code{runs}}{(\code{data.table()})
+A data.table summarizing the runs included in the collection. Returns NULL for
+Task Collections.}
 
-\item{\code{flows}}{(`list(n)')
-A Dictionary of \link{OMLFlow}s.}
+\item{\code{flows}}{(\code{data.table()})
+A data.table summarizing the flows included in the collection. Returns NULL for
+Task Collections.}
 
-\item{\code{data}}{(`list(n)')
-A Dictionary of \link{Data} Sets.}
+\item{\code{data}}{(\code{data.table()})
+A data.table summarizing the datasets included in the collection.}
 
-\item{\code{tasks}}{(`list(n)')
-A Dictionary of \link{OMLTasks}s and the corresponding \link{OMLResampling}s.}
+\item{\code{tasks}}{(\code{data.table()})
+A data.table summarizing the tasks included in the collection.}
 }
 \if{html}{\out{</div>}}
 }
@@ -83,7 +109,6 @@ A Dictionary of \link{OMLTasks}s and the corresponding \link{OMLResampling}s.}
 \itemize{
 \item \href{#method-new}{\code{OMLCollection$new()}}
 \item \href{#method-print}{\code{OMLCollection$print()}}
-\item \href{#method-convert}{\code{OMLCollection$convert()}}
 \item \href{#method-clone}{\code{OMLCollection$clone()}}
 }
 }
@@ -116,17 +141,6 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$print()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-convert"></a>}}
-\if{latex}{\out{\hypertarget{method-convert}{}}}
-\subsection{Method \code{convert()}}{
-Converts the object to either a list of \link[mlr3:Task]{mlr3::Task}s (main_entity_type = "task") or a
-\link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} (main_entity_type = "run").
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$convert()}\if{html}{\out{</div>}}
 }
 
 }

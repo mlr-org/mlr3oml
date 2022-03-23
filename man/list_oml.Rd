@@ -47,6 +47,7 @@ list_oml_runs(
   run_id = NULL,
   task_id = NULL,
   tag = NULL,
+  flow_id = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
   ...
 )

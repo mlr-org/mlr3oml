@@ -28,10 +28,9 @@ Imports:
     stringi,
     xml2,
     uuid,
-    paradox
+    paradox,
+    farff
 Suggests:
-    farff,
-    foreign,
     mlr3learners,
     mlr3pipelines,
     mlr3proba,

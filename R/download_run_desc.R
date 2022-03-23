@@ -33,15 +33,15 @@ parse_run_desc = function(desc) {
       "fold" = integer(0)
     )
   } else {
-    # In R it is ugly to work with `repeat` because it is a control flow symbol
-
+    # In R it is ugly to work with `repeat` because it is a key word
     names(desc$output_data$evaluation)[names(desc$output_data$evaluation) == "repeat"] = "rep"
     desc$output_data$evaluation = as.data.table(desc$output_data$evaluation)
 
-    # The contents of the file are stored as strings again that correspond to json
-    # therefore we need to parse it again
-    # TODO: Why do we need to parse safely? --> better comments
-    desc$output_data$evaluation[, array_data := map(array_data, .f = parse_json_safely)]
+    # The contents of the file are stored as strings again that correspond (mostly) to json
+    # format and therefore have to be parsed again
+    if ("array_data" %in% colnames(desc$output_data$evaluation)) {
+      desc$output_data$evaluation[, array_data := map(array_data, .f = parse_json_safely)]
+    }
     desc$output_data$evaluation[, value := as.numeric(value)]
     if ("rep" %in% colnames(desc$output_data$evaluation)) {
       desc$output_data$evaluation[, rep := as.integer(rep)] # nolint
@@ -53,12 +53,15 @@ parse_run_desc = function(desc) {
   # Now the parameters: name | value | component
 
   desc$parameter_setting = as.data.table(desc$parameter_setting)
+  desc$para
   # if (length(desc$parameter_setting)) {
   #  desc$parameter_setting = map(desc$parameter_setting, parse_json_safely)
   # }
   if (nrow(desc$parameter_setting)) {
     desc$parameter_setting[, value := map(value, .f = parse_json_safely)]
+    desc$parameter_setting[["component"]] = as.integer(desc$parameter_setting[["component"]])
   }
+  desc$parameter_setting[["name"]] = make.names(desc$parameter_setting[["name"]])
   return(desc)
 }
 

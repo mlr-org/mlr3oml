@@ -1,18 +1,19 @@
-#' Helper function to create a benchmark design
+#' @title Helper function to create a benchmark design
 #'
 #' @description [mlr3oml::OMLTasks]s contain tasks as well as resamplings. In order to create
 #' a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 #' function can be used.
 #'
-#' @param tasks list of [mlr3::Task]s
-#' @param learners list of [mlr3::Learner]s
-#' @param resamplings list of [mlr3::Resampling]s for the tasks.
+#' @param tasks A list of [mlr3::Task]s
+#' @param learners A list of [mlr3::Learner]s
+#' @param resamplings A list of [mlr3::Resampling]s that are instantiated on the tasks.
 #'
 #' @examples
 #' \dontrun{
-#' oml_suite = OMLCollection$new(99)
-#' tasks = oml_suite$tasks$mget(c(31L, 10101L), convert = TRUE)
-#' resamplings = oml_suite$tasks$mget_rsmp(c(31L, 10101L), convert = TRUE)
+#' collection = OMLCollection$new(99)
+#' otasks = collection$tasks[nrow <= 550, ][["task"]]
+#' tasks = as_tasks(otasks)
+#' resamplings = as_resamplings(otasks)
 #' learners = lrns(c("classif.rpart", "classif.featureless"))
 #' design = benchmark_design(tasks, learners, resamplings)
 #' print(design)
@@ -20,9 +21,9 @@
 #' }
 #' @export
 benchmark_design = function(tasks, learners, resamplings) {
-  tasks = assert_tasks(mlr3::as_tasks(tasks))
-  learners = assert_learners(mlr3::as_learners(learners))
-  resamplings = assert_resamplings(mlr3::as_resamplings(resamplings))
+  tasks = assert_tasks(as_tasks(tasks))
+  learners = assert_learners(as_learners(learners))
+  resamplings = assert_resamplings(as_resamplings(resamplings))
   assert_true(length(tasks) == length(resamplings))
   assert_true(all(map_lgl(resamplings, "is_instantiated")))
   same_hash = function(task, resampling) task$hash == resampling$task_hash

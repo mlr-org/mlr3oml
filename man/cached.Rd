@@ -7,10 +7,14 @@
 cached(fun, type, id, ..., cache_dir = FALSE)
 }
 \arguments{
-\item{fun}{Download function}
+\item{fun}{Download function, e.g. download_data_desc.}
 
 \item{type}{The type that is downloaded, not really necessary}
+
+\item{id}{The id of the object that is being downloaded, this can also be an url, as this is needed}
 }
 \description{
-This function
+This function performs a cached version of the function 'fun'. I.e. it first checks whether
+the objects is already stored in cache and returns it, otherwise it downloads it and stores it
+in the cache folder.
 }

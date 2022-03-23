@@ -27,6 +27,7 @@ repos:
         - stringi
         - xml2
         - git2r
+        - farff
     -   id: use-tidy-description
         exclude:
           (?x)^(

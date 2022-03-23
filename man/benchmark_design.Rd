@@ -7,11 +7,11 @@
 benchmark_design(tasks, learners, resamplings)
 }
 \arguments{
-\item{tasks}{list of \link[mlr3:Task]{mlr3::Task}s}
+\item{tasks}{A list of \link[mlr3:Task]{mlr3::Task}s}
 
-\item{learners}{list of \link[mlr3:Learner]{mlr3::Learner}s}
+\item{learners}{A list of \link[mlr3:Learner]{mlr3::Learner}s}
 
-\item{resamplings}{list of \link[mlr3:Resampling]{mlr3::Resampling}s for the tasks.}
+\item{resamplings}{A list of \link[mlr3:Resampling]{mlr3::Resampling}s that are instantiated on the tasks.}
 }
 \description{
 \link{OMLTasks}s contain tasks as well as resamplings. In order to create
@@ -20,9 +20,10 @@ function can be used.
 }
 \examples{
 \dontrun{
-oml_suite = OMLCollection$new(99)
-tasks = oml_suite$tasks$mget(c(31L, 10101L), convert = TRUE)
-resamplings = oml_suite$tasks$mget_rsmp(c(31L, 10101L), convert = TRUE)
+collection = OMLCollection$new(99)
+otasks = collection$tasks[nrow <= 550, ][["task"]]
+tasks = as_tasks(otasks)
+resamplings = as_resamplings(otasks)
 learners = lrns(c("classif.rpart", "classif.featureless"))
 design = benchmark_design(tasks, learners, resamplings)
 print(design)

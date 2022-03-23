@@ -2,10 +2,19 @@
 % Please edit documentation in R/OMLRun.R
 \name{split_predictions}
 \alias{split_predictions}
-\title{splits the predictions from OpenML into mlr3 readable forat}
+\title{Splits the predictions from OpenML into mlr3 readable format.}
 \usage{
 split_predictions(predictions, resampling, task_type)
 }
+\arguments{
+\item{predictions}{(\code{data.table()} The \verb{$prediction} field of a run.)}
+
+\item{resampling}{(mlr3::Resampling). Result of calling as_resampling(otask).}
+
+\item{task_type}{(\code{character(1)}). Result of calling \code{otask$task_type}.}
+}
 \description{
-splits the predictions from OpenML into mlr3 readable forat
+Returns a list, where each item is a list with the elements row_id, truth,
+prediction and in case the predict_type is 'prob' an element prob containing the probability
+matrix.
 }

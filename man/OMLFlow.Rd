@@ -4,17 +4,33 @@
 \alias{OMLFlow}
 \title{Interface to OpenML Flows}
 \description{
-This is the class for flows served on the \href{https://new.openml.org/search?type=flow}{OpenML website}.
+This is the class for flows served on \href{https://new.openml.org/search?type=flow}{OpenML}.
+Flows are similar to pipelines as defined in the mlr3pipeline package.
+Uploading of learners to OpenML has currently only limited supported but can be extended on
+request.
 }
 \section{mlr3 Integration}{
 
-It can be converted to a \link[mlr3:Learner]{mlr3::Learner} by calling the method \verb{$convert()}.
+\itemize{
+\item Obtain a \link[mlr3:Learner]{mlr3::Learner} using \code{as_learner()}. mlr3 Flows are converted into proper mlr3
+learners, while other flows are converted to non-executable pseudo-learners, where the
+task type has to be passed to \code{as_task()} as OpenML Flows are task-agnostic. While these learners
+are not directly useful, this allows sklearn runs to be converted to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s and
+run collections can be converted to \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}s. Their paramset corresponds to the
+union of the parameter set of the flow and it's subcomponents, where the id of the component
+is appended to the name of the parameter.
+}
 }
 
 \examples{
 \donttest{
-flow = OMLFlow$new(id = 19081)
-learner = flow$convert()
+# mlr3 flow:
+flow = OMLFlow$new(id = 19082L)
+learner = as_learner(flow)
+# python flow
+python_flow = OMLFlow$new(19090L)
+# conversion to pseudo Learner
+plearner = as_learner(python_flow, "classif")
 }
 }
 \references{
@@ -43,7 +59,7 @@ The package \CRANpkg{qs} is required for caching.}
 \item{\code{desc}}{(\code{list()})\cr
 The description as downloaded from OpenML.}
 
-\item{\code{parameter}}{(\code{data.table})\cr
+\item{\code{parameters}}{(\code{data.table})\cr
 The parameters of the flow.}
 
 \item{\code{tags}}{(\code{character()})\cr
@@ -61,7 +77,6 @@ The name of the flow.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{OMLFlow$new()}}
-\item \href{#method-convert}{\code{OMLFlow$convert()}}
 \item \href{#method-print}{\code{OMLFlow$print()}}
 \item \href{#method-clone}{\code{OMLFlow$clone()}}
 }
@@ -81,25 +96,6 @@ Initializes a new object of class \link{OMLFlow}.
 \item{\code{id}}{(\code{integeger(1)}) The id of the Flow}
 
 \item{\code{cache}}{(\code{logical(1)}) whether to use caching.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-convert"></a>}}
-\if{latex}{\out{\hypertarget{method-convert}{}}}
-\subsection{Method \code{convert()}}{
-Converts the flow into an \link[mlr3:Learner]{mlr3::Learner} if possible.
-In case the flow is not an \link[mlr3:Learner]{mlr3::Learner} a pseudo OpenML learner is constructed if
-for the provided task type. If no task type is given it returns NULL.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$convert(task_type = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{task_type}}{(\code{character(1)}) The task_type as described above.}
 }
 \if{html}{\out{</div>}}
 }

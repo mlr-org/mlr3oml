@@ -10,33 +10,56 @@ publish = function(x, confirm = TRUE, ...) {
     ask_confirmation()
   }
   id = UseMethod("publish", x)
-  # get_private(x)$oml_id = id
   x$.__enclos_env__$private$oml_id = id
   return(id)
 }
 
+#' @export
 publish.default = function(x, ...) { # nolint
   stopf("Objects of class %s cannot be published.", class(x)[[1]])
 }
 
+#' @export
 publish.AutoTuner = function(x, ...) { # nolint
   stopf("Objects of class %s cannot be published.", class(x)[[1]])
 }
 
+#' @export
 publish.GraphLearner = function(x, ...) { # nolint
   stopf("Objects of class %s cannot be published.", class(x)[[1]])
 }
 
 #' @export
 publish.Learner = function(x, ...) { # nolint
+  if (!learner_is_publishable(x)) {
+    warningf(
+      paste0(
+        "Learner cannot be published as the installed package versions don't match the\n",
+        "versions under which the flow (was constructed from binary rds file) was created."
+      )
+    )
+  }
   api_key = get_api_key()
   if (is.na(api_key)) stop("API key required for upload.")
   assert_character(api_key, any.missing = FALSE, len = 1)
 
-  # Publish a new learner
-  x = get(class(x)[[1]])$new()
+  # we get the hash from the class of the learner,
+  if (inherits(x, "LearnerSurv")) {
+    require_namespaces("mlr3proba")
+  }
+  cls = try(get(class(x)[[1L]]), TRUE)
 
-  description = make_description(x)
+  if (inherits(cls, "try-error")) {
+    stopf("Cannot find class of learner %s, but needed for upload.", class(learner)[[1L]])
+  }
+
+  # for e.g. TorchLearner this does not work as
+  # it has initialization parameters such as the optimizer etc.
+  if (length(formalArgs(cls$public_methods$initialize)) > 0) {
+    stop("Learner reqires arguments to be initialized, currently not supported.")
+  }
+
+  description = make_description(cls$new())
   desc_file = tempfile(fileext = ".xml")
   withr::defer(unlink(desc_file))
   xml2::write_xml(x = description, file = desc_file)
@@ -52,15 +75,23 @@ publish.Learner = function(x, ...) { # nolint
       binary = httr::upload_file(model_path)
     )
   )
-
-
   return(id)
 }
 
+learner_is_publishable = function(learner) {
+  oml_id = learner$.__enclos_env__$private$oml_id
+  if (is.null(oml_id) || test_count(oml_id)) {
+    return(TRUE)
+  }
+  return(FALSE)
+}
+
+#' @export
 publish.Task = function(x, resampling, ...) { # nolint
   stop("Not implemented yet!")
 }
 
+#' @export
 publish.Resampling = function(x, resampling, ...) { # nolint
   stop("Not possible with current OpenML API.")
 }
@@ -70,9 +101,17 @@ publish.ResampleResult = function(x, ...) { # nolint
   learner = x$learner
   task = x$task
   resampling = x$resampling
+  # First we check whether the task and the resampling are from OpenML and that they have not
+  # been modified since the download
+  resampling_id = get_oml_id_resampling(resampling)
+  task_id = get_oml_id_task(task)
+  if (is.null(resampling_id) || is.null(task_id)) {
+    stopf("Aborting...")
+  }
+  # if (!)
+  # TODO: Finish this, abort if not both have a oml id and were not changed in a relevant way.
 
-  flow_id = get_oml_id(learner) %??% publish(learner, confirm = FALSE)
-  task_id = get_oml_id(task) %??% publish(task, resampling = resampling, confirm = FALSE)
+  flow_id = publish(learner, confirm = FALSE)
 
   # TODO: Take care that we first create all the descriptions and check that this is working
   # and then upload everything, otherwise we might upload only part of it which is
@@ -87,16 +126,15 @@ publish.ResampleResult = function(x, ...) { # nolint
 
   pred_path = tempfile(fileext = ".arff")
   withr::defer(unlink(pred_path))
-  tab = as.data.table(x$prediction())
-  # TODO: We need to add an index for the resampling iteration (?)
-  foreign::write.arff(tab, pred_path)
+  oml_pred = make_oml_prediction(x)
+  # Note that it has to be this ARFF writer because with e.g. foreign::write.arff the evaluation
+  # engine does not work (arff is not fully specified)
+  farff::writeARFF(oml_pred, pred_path)
 
   states_path = tempfile(fileext = ".rds")
   withr::defer(unlink(states_path))
   states = map(x$learners, "state")
 
-  # TODO: Store only learner states, after downloading they can be reassambled using the binary
-  # of the flow
   saveRDS(states, states_path)
 
   run_id = upload(
@@ -123,12 +161,39 @@ publish.BenchmarkResult = function(x, ...) { # nolint
   desc_path = tempfile(fileext = ".xml")
 }
 
-get_oml_id = function(x) {
-  get_private(x)$oml_id
+get_oml_id_learner = function(x) {
+  x$.__enclos_env__$private$oml_id
 }
 
-get_task_id = function(task) {
-  split = strsplit(task$backend$hash, "_")[[1L]]
-  assert(split[[1L]] == "mlr3oml::task" && split[[2L]])
-  return(split[[2L]])
+
+get_oml_id_task = function(task) {
+  private = get_private(task)
+  oml_id = private$oml_id
+  if (is.null(oml_id)) {
+    return(NULL)
+  }
+  current_hash = calculate_hash(
+    class(task), task$id, task$backend$hash, task$col_info,
+    private$.row_roles, private$.col_roles, private$.properties
+  )
+  if (private$oml_hash == current_hash) {
+    return(oml_id)
+  }
+  warningf("This task was constructed from an OpenML task but was modified.")
+  return(NULL)
+}
+
+get_oml_id_resampling = function(resampling) {
+  oml_id = get_private(resampling)$oml_id
+  if (is.null(oml_id)) {
+    return(NULL)
+  }
+  current_hash = calculate_hash(
+    list(class(resampling), resampling$id, resampling$param_set$values, resampling$instance)
+  )
+  if (get_private(resampling)$oml_hash == current_hash) {
+    return(oml_id)
+  }
+  warningf("This resampling was constructed from an OpenML task split but was modified.")
+  return(NULL)
 }

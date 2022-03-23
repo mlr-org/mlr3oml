@@ -1,137 +1,166 @@
-#' @title make_expect
-#' @description Make a custom expectation function.
-#' @details This function takes a function that consists of expectations in each line,
-#' wraps them around show_failure and does one expect that checks that all tests
-#' passed. If it does not it prints the failure messages that were collected along
-#' the way. Because testthat and ceckmate expectations are mixed, we cannot rely on the
-#' test_xxx function from checkmate but have to use expect + show_failure
-
-make_expect = function(f, catch_id = TRUE) {
-  body_list = as.list(body(f))[-1]
-  # create testthat::show_failure(expect_xx(...))
-  body_list = lapply(
-    body_list,
-    function(x) {
-      ns_call = call("::", as.symbol("testthat"), as.symbol("show_failure"))
-      as.call(list(ns_call, x))
-    }
-  )
-  # create msgs <- append(testthat::show_failure(expect_xx(...)))
-  body_list = lapply(
-    body_list,
-    function(x) call("<-", as.symbol("msgs"), call("append", as.symbol("msgs"), x))
-  )
-
-  # don't use = in quote because it is taken as the argument name
-  body_list = append(body_list, quote(msgs <- list()), after = 0) # nolint
-  if (catch_id) { # extract if of the tested object
-    # when f = function(flow) ... obj becomes flow
-    obj = as.symbol(formalArgs(eval(sys.call()[[2]]))[1])
-    # extract the id from the oml object (e.g. flow)
-    id_info = substitute(sprintf("id = %s\n", obj$id))
-    failure_expr = call("paste0", id_info, quote(msgs), collapse = "\n")
-  } else {
-    failure_expr = call("paste0", quote(msgs), collapse = "\n")
-  }
-  body_list = append(body_list, call("<-", as.symbol("failure_message"), failure_expr))
-  body_list = append(body_list, call("expect", quote(length(msgs) == 0),
-    failure_message = quote(failure_message)
-  ))
-  body(f) = as.call(c(as.name("{"), body_list))
-  return(f)
-}
-
-expect_oml_flow = make_expect(function(flow) {
+expect_oml_flow = function(flow) {
   expect_r6(flow, "OMLFlow")
   expect_true(test_logical(flow$cache_dir) || test_character(flow$cache_dir))
-  expect_integer(flow$id)
+  expect_count(flow$id)
   expect_list(flow$desc)
-  expect_data_table(flow$parameter)
+  expect_data_table(flow$parameters)
   testthat::expect_equal(
-    names(flow$parameter),
+    names(flow$parameters),
     c("name", "data_type", "default_value")
   )
   expect_character(flow$dependencies)
-  expect_integer(flow$id)
+  expect_string(flow$name, min.chars = 1L)
   if (startsWith(flow$name, "mlr3.")) {
-    expect_r6(flow$convert(), "Learner")
+    expect_r6(as_learner(flow), "Learner")
   } else {
-    expect_true(is.null(flow$convert()))
-    expect_r6(flow$convert("classif"), "LearnerRegr")
-    expect_r6(flow$convert("regr"), "LearnerRegr")
+    expect_true(is.null(as_learner(flow)))
+    expect_r6(as_learner(flow, "classif"), "LearnerClassif")
+    expect_r6(as_learner(flow, "regr"), "LearnerRegr")
+    expect_r6(as_learner(flow, "surv"), "LearnerSurv")
   }
-  expect_posixct(flow$desc$upload_date)
-  expect_integer(flow$desc$version)
-  expect_integer(flow$desc$uploader)
-})
+}
 
-expect_oml_data = make_expect(function(oml_data) {
-  expect_r6(oml_data, "OMLData")
-  expect_string(oml_data$name)
-  expect_count(oml_data$nrow)
-  expect_count(oml_data$ncol)
-  expect_list(oml_data$desc, names = "unique")
-  expect_data_table(oml_data$data, nrow = oml_data$nrow, ncol = oml_data$ncol)
-  expect_character(oml_data$target_names, any.missing = FALSE, unique = TRUE)
-  expect_character(oml_data$feature_names, any.missing = FALSE, unique = TRUE)
-  expect_subset(oml_data$target_names, colnames(oml_data$data))
-  expect_subset(oml_data$feature_names, colnames(oml_data$data))
-  expect_disjunct(oml_data$target_names, oml_data$feature_names)
-  if (length(oml_data$target_names)) {
-    expect_r6(oml_data$task(), "Task")
+expect_oml_data = function(data) {
+  expect_r6(data, "OMLData")
+  expect_true(test_logical(data$cache_dir) || test_character(data$cache_dir))
+  expect_count(data$quality("NumberOfInstances"))
+  expect_string(data$name, min.chars = 1L)
+  expect_list(data$desc, names = "unique")
+  expect_data_table(data$qualities, ncols = 2L)
+  expect_equal(colnames(data$qualities), c("name", "value"))
+  expect_data_table(data$features)
+  expect_data_table(data$data, nrow = data$nrow, ncol = data$ncol)
+  expect_names(data$target_names, "strict")
+  expect_subset(data$target_names, colnames(data$data))
+  expect_names(data$feature_names, "strict")
+  expect_subset(data$feature_names, colnames(data$data))
+  expect_disjunct(data$target_names, data$feature_names)
+  expect_set_equal(names(data$data), c(data$feature_names, data$target_names))
+  expect_count(data$nrow)
+  expect_count(data$ncol)
+  expect_character(data$tags, null.ok = TRUE)
+  expect_character(data$license)
+  expect_r6(as_data_backend(data), "DataBackendDataTable")
+  if (length(data$target_names)) {
+    expect_r6(as_task(data), "Task")
   }
-})
+  expect_r6(as_data_backend(data), "DataBackendDataTable")
+}
 
+expect_oml_task = function(task) {
+  expect_r6(task, "OMLTask")
+  testthat::expect_true(test_logical(task$cache_dir) || test_character(task$cache_dir))
+  expect_string(task$data_name, min.chars = 1L)
+  expect_string(task$name, min.chars = 1L)
+  expect_choice(task$task_type, oml_reflections$task_types)
+  expect_list(task$desc, names = "unique")
+  expect_count(task$data_id)
+  expect_r6(task$data, "OMLData")
+  expect_count(task$nrow)
+  expect_count(task$ncol)
+  expect_data_table(task$data$data, nrow = task$nrow, ncol = task$ncol)
+  expect_names(task$target_names, "strict")
+  expect_names(task$feature_names, "strict")
+  expect_choice(task$target_names, colnames(task$data$data))
+  expect_subset(task$feature_names, colnames(task$data$data))
+  expect_disjunct(task$target_names, task$feature_names)
+  expect_r6(task$data_split, "OMLDataSplit")
+  tt = task_type_translator(task$task_type)
+  if (!is.null(tt)) {
+    if (tt == "regr") {
+      expect_r6(as_task(task), "TaskRegr")
+    }
+    if (tt == "classif") {
+      expect_r6(as_task(task), "TaskClassif")
+    }
+    if (tt == "surv") {
+      expect_r6(as_task(task), "TaskSurv")
+    }
+  }
+  if (!is.null(task$desc$input$estimation_procedure$data_splits_url)) {
+    expect_r6(as_resampling(task), "Resampling")
+  }
+  expect_character(task$tags)
+  expect_identical(task$data_id, task$data$id)
+}
 
-expect_oml_task = make_expect(function(oml_task) {
-  expect_r6(oml_task, "OMLTask")
-  expect_string(oml_task$name)
-  expect_count(oml_task$nrow)
-  expect_count(oml_task$ncol)
-  expect_list(oml_task$desc, names = "unique")
-  expect_data_table(oml_task$data$data, nrow = oml_task$nrow, ncol = oml_task$ncol)
-  expect_character(oml_task$target_names, any.missing = FALSE, unique = TRUE)
-  expect_character(oml_task$feature_names, any.missing = FALSE, unique = TRUE)
-  expect_choice(oml_task$target_names, colnames(oml_task$data$data))
-  expect_subset(oml_task$feature_names, colnames(oml_task$data$data))
-  expect_disjunct(oml_task$target_names, oml_task$feature_names)
-  expect_r6(oml_task$task, "Task")
-  expect_r6(oml_task$resampling, "OMLResampling")
-  expect_r6(oml_task$resampling$convert(), "ResamplingCustom")
-  expect_subset(
-    unlist(oml_task$resampling$convert()$instance, use.names = FALSE), oml_task$task$row_ids
-  )
-})
-
-expect_oml_run = make_expect(function(run) {
+expect_oml_run = function(run) {
   expect_r6(run, "OMLRun")
-  expect_int(run$id)
-  expect_int(run$flow_id)
-  expect_int(run$task_id)
-  expect_character(run$task_type)
-  expect_character(run$tags, null.ok = TRUE)
-  expect_integer(run$id)
-  # expect_posixct(run$upload_date)
-  # expect_string(run$desc)
-  expect_data_table(run$prediction)
-  expect_oml_flow(run$flow)
-  expect_oml_task(run$task)
-  expect_oml_data(run$data)
+  expect_count(run$id)
+  testthat::expect_true(test_logical(run$cache_dir) || test_character(run$cache_dir))
+  expect_list(run$desc, names = "unique")
+  expect_count(run$flow_id)
+  expect_r6(run$flow, "OMLFlow")
+  expect_count(run$task_id)
+  expect_r6(run$task, "OMLTask")
+  expect_count(run$data_id)
+  expect_r6(run$data, "OMLData")
+  expect_r6(run$data_split, "OMLDataSplit")
+  expect_choice(run$task_type, oml_reflections$task_types)
   expect_data_table(run$parameter_setting)
-  expect_list(run$desc)
-  rr = suppressWarnings(run$convert())
+  expect_data_table(run$prediction)
+  rr = suppressWarnings(as_resample_result(run))
   expect_r6(rr, "ResampleResult")
-  task_type = task_type_translator[[run$task_type]]
-  if (task_type == "classif") {
-    expect_error(rr$score(msr("classif.ce")), regexp = NA)
+  task_type = task_type_translator(run$task_type, to = "mlr3")
+  if (!is.null(task_type)) {
+    if (task_type == "classif") {
+      expect_error(rr$score(msr("classif.ce")), regexp = NA)
+    }
+    if (task_type == "regr") {
+      expect_error(rr$score(msr("regr.mse")), regexp = NA)
+    }
+    expect_r6(as_learner(run, task_type), "Learner")
   }
-  if (task_type == "regr") {
-    expect_error(rr$score(msr("classif.ce")), regexp = NA)
-  }
-})
+  expect_r6(as_resampling(run), "Resampling")
+  expect_r6(as_task(run), "Task")
+  expect_character(run$tags, null.ok = TRUE)
+}
 
-expect_oml_resampling = make_expect(function(resampling) {
-  expect_r6(resampling, "OMLResampling")
-  expect_character(resampling$estimation_procedure)
-  expect_r6(resampling$convert(), "Resampling")
-})
+expect_oml_data_split = function(data_split) {
+  expect_r6(data_split, "OMLDataSplit")
+  expect_count(data_split$task_id)
+  expect_r6(data_split$task, "OMLTask")
+  expect_choice(data_split$type, oml_reflections$estimation_procedures)
+  expect_data_table(data_split$parameters, nrows = 4L, ncols = 2L)
+  expect_equal(colnames(data_split$parameters), c("name", "value"))
+  expect_r6(as_resampling(data_split), "Resampling")
+}
+
+expect_oml_collection = function(collection) {
+  expect_count(collection$id)
+  testthat::expect_true(test_logical(collection$cache_dir) || test_character(collection$cache_dir))
+  expect_list(collection$desc, names = "unique")
+  expect_string(collection$name, min.chars = 1L)
+  expect_character(collection$tags, null.ok = TRUE)
+  expect_choice(collection$main_entity_type, c("task", "run"))
+  expect_integer(collection$task_ids)
+  expect_integer(collection$data_ids)
+  expect_data_table(collection$tasks, key = "id", nrows = length(collection$task_ids), ncols = 12L)
+  expect_named(collection$tasks,
+    c("id", "task", "data", "task_type", "target", "nrow", "ncol", "missing", "numeric",
+      "symbolic", "binary", "data_split"
+    )
+  )
+  expect_data_table(collection$data, key = "id")
+  expect_named(collection$data,
+    c("id", "data", "name", "nrow", "ncol", "missing", "numeric", "symbolic", "binary")
+  )
+  if (collection$main_entity_type == "run") {
+    expect_integer(collection$flow_ids)
+    expect_data_table(collection$flows, key = "id", nrows = length(collection$flow_ids), ncols = 3L)
+    expect_named(collection$flows,
+      c("id", "flow", "name")
+    )
+    expect_integer(collection$run_ids)
+    expect_data_table(collection$runs, key = "id", nrows = length(collection$run_ids), ncols = 6L)
+    expect_named(collection$runs,
+      c("id", "run", "task_type", "data", "flow", "data_split")
+    )
+  } else {
+    testthat::expect_message(collection$runs, "Main entity type is task, returning NULL.")
+    expect_true(is.null(collection$runs))
+    testthat::expect_message(collection$flows, "Main entity type is task, returning NULL.")
+    expect_true(is.null(collection$flows))
+  }
+  expect_benchmark_result(suppressWarnings(as_benchmark_result(collection)))
+}

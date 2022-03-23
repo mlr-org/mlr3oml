@@ -12,8 +12,9 @@ make_description.default = function(x, ...) { # nolint
 #' @export
 make_description.Learner = function(x, ...) { # nolint
   name = sprintf("mlr3.%s", x$id)
-  external_version = paste0(x$hash, "_test") # FIXME: remove this when new version is released
-  dependencies = get_dependencies(x$packages)
+  external_version = paste0(calculate_hash(x), "_test") # FIXME: when it is released
+  R_version = paste0("R", paste0(R.Version()[c("major", "minor")], collapse = "."))
+  dependencies = paste(R_version, get_dependencies(x$packages), sep = ", ")
   # TODO: remove this
   description = sprintf(
     "Learner %s from package(s) %s.", x$id,
@@ -49,12 +50,16 @@ make_description.ResampleResult = function(x, ...) { # nolint
   xml2::xml_add_child(.x = run, .value = "oml:task_id", args[["task_id"]])
   xml2::xml_add_child(.x = run, .value = "oml:flow_id", args[["flow_id"]])
 
-  if (length(par_list <- x$learner$param_set$values)) {
-    # TODO: take care of funtions
-    for (i in seq_along(par_list)) {
+  pars = x$learner$param_set$get_values()
+  if (length(pars)) {
+    for (i in seq_along(pars)) {
       par = xml2::xml_add_child(run, .value = "oml:parameter_setting")
-      xml2::xml_add_child(.x = par, .value = "oml:name", names(par_list)[[i]])
-      xml2::xml_add_child(.x = par, .value = "oml:value", par_list[[i]])
+      xml2::xml_add_child(.x = par, .value = "oml:name", names(pars)[[i]])
+      if (is_simple_pvalue(pars[[i]])) {
+        xml2::xml_add_child(.x = par, .value = "oml:value", jsonlite::toJSON(pars[[i]]))
+      } else {
+        xml2::xml_add_child(.x = par, .value = "oml:value", "<complex>")
+      }
     }
   }
   return(doc)
@@ -69,6 +74,14 @@ format_default = function(x) {
   }
 }
 
+is_simple_pvalue = function(value) {
+  test_numeric(value) ||
+    test_character(value) ||
+    test_logical(value) ||
+    test_complex(value) ||
+    test_posixct(value)
+}
+
 #' Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
 get_dependencies = function(x) {
   versions = mlr3misc::map(
@@ -80,36 +93,36 @@ get_dependencies = function(x) {
   return(dependencies)
 }
 
-make_description.BenchmarkResult = function(x, ...) { # nolint
-  doc = xml2::xml_new_document()
-  args = list(...)
-  if (!hasArg("description")) {
-    # TODO: better default description
-    args$description = sprintf("Benchmark result")
-  }
-  if (!hasArg("name")) {
-    # TODO: better default name
-    args$name = "mlr3.BenchmarkResult"
-  }
-
-  study = xml2::xml_add_child(doc, "oml:study", "xmlns:oml" = "http://openml.org/openml")
-  xml2::xml_add_child(.x = study, .value = "oml:main_entity_type", "run")
-  xml2::xml_add_child(.x = study, .value = "oml:name", name)
-  xml2::xml_add_child(.x = study, .value = "oml:description", description)
-
-  add_ids(study, args$task_ids, "task")
-  add_ids(study, args$flow_ids, "flow")
-  add_ids(study, args$run_ids, "run")
-
-  return(doc)
-}
-
-add_ids = function(study, ids, type) {
-  if (length(task_ids)) {
-    objects = xml2::xml_add_child(study, .value = sprintf("oml:%ss", type))
-    for (id in seq_len(ids)) {
-      xml2::xml_add_child(.x = objects, sprintf("oml:%s_id", type), id)
-    }
-  }
-  return(NULL)
-}
+# make_description.BenchmarkResult = function(x, ...) { # nolint
+#   doc = xml2::xml_new_document()
+#   args = list(...)
+#   if (!hasArg("description")) {
+#     # TODO: better default description
+#     args$description = sprintf("Benchmark result")
+#   }
+#   if (!hasArg("name")) {
+#     # TODO: better default name
+#     args$name = "mlr3.BenchmarkResult"
+#   }
+#
+#   study = xml2::xml_add_child(doc, "oml:study", "xmlns:oml" = "http://openml.org/openml")
+#   xml2::xml_add_child(.x = study, .value = "oml:main_entity_type", "run")
+#   xml2::xml_add_child(.x = study, .value = "oml:name", name)
+#   xml2::xml_add_child(.x = study, .value = "oml:description", description)
+#
+#   add_ids(study, args$task_ids, "task")
+#   add_ids(study, args$flow_ids, "flow")
+#   add_ids(study, args$run_ids, "run")
+#
+#   return(doc)
+# }
+#
+# add_ids = function(study, ids, type) {
+#   if (length(task_ids)) {
+#     objects = xml2::xml_add_child(study, .value = sprintf("oml:%ss", type))
+#     for (id in seq_len(ids)) {
+#       xml2::xml_add_child(.x = objects, sprintf("oml:%s_id", type), id)
+#     }
+#   }
+#   return(NULL)
+# }

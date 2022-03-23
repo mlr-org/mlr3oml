@@ -12,11 +12,5 @@ download_collection_desc = function(collection_id) {
   if (!is.null(desc$runs)) desc$runs$run_id = as.integer(desc$runs$run_id)
   if (!is.null(desc$data)) desc$data$data_id = as.integer(desc$data$data_id)
 
-
   return(desc)
-}
-
-if (FALSE) {
-  load_all()
-  desc = download_collection_desc(99)
 }

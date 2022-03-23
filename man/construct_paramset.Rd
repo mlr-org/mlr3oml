@@ -2,10 +2,14 @@
 % Please edit documentation in R/LearnerOML.R
 \name{construct_paramset}
 \alias{construct_paramset}
-\title{this constructs a paramset for the parameter field of a OMLFlow}
+\title{this constructs a paramset for the parameter field of a OMLFlow
+the ids of the flows are appended to the names of the parameters to make their names unique
+(A flow can contain various components which are themselves flows)}
 \usage{
-construct_paramset(parameter)
+construct_paramset(flow)
 }
 \description{
 this constructs a paramset for the parameter field of a OMLFlow
+the ids of the flows are appended to the names of the parameters to make their names unique
+(A flow can contain various components which are themselves flows)
 }

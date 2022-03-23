@@ -6,7 +6,7 @@
 This object is used to create A learner for a flow that is not from R, but the results are used
 in a resample or benchmark result}
 \usage{
-make_oml_learner(flow, task_type)
+make_oml_learner(flow, task_type = NULL)
 }
 \description{
 Creates a pseudo OpenML Learner

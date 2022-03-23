@@ -23,7 +23,10 @@ get_api_key = function() {
   NA_character_
 }
 
-add_auth_string = function(url, api_key = get_api_key()) {
+add_auth_string = function(url, api_key = NULL) {
+  if (is.null(api_key)) {
+    api_key = get_api_key()
+  }
   if (is.na(api_key)) {
     return(url)
   }
@@ -32,7 +35,6 @@ add_auth_string = function(url, api_key = get_api_key()) {
   sprintf("%s?api_key=%s", url, api_key)
 }
 
-
 download_error = function(response) {
   stopf(
     "Error downloading '%s' (http code: %i, oml code: %i, message: '%s'",
@@ -40,8 +42,10 @@ download_error = function(response) {
   )
 }
 
-
-download_file = function(url, path, api_key = get_api_key()) {
+download_file = function(url, path, api_key = NULL) {
+  if (is.null(api_key)) {
+    api_key = get_api_key()
+  }
   lg$debug("Downloading to local file system", url = url, path = path, authenticated = !is.na(api_key))
   response = curl::curl_fetch_disk(add_auth_string(url, api_key = api_key), path)
   http_code = response$status_code
@@ -77,7 +81,8 @@ download_file = function(url, path, api_key = get_api_key()) {
 }
 
 
-get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE, api_key = get_api_key(), retries = 3L, error_on_fail = TRUE) { # nolint
+get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE,
+  api_key = get_api_key(), retries = 3L, error_on_fail = TRUE) {
   path = tempfile(fileext = ".json")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
@@ -210,19 +215,13 @@ get_paginated_table = function(type, ..., limit) {
   return(tab)
 }
 
-#' @title Upload a file to OpenML
-#'
-#' @description Uploads a file to OpenML.
-#'
-#' @details
-#'
 upload = function(url, body, query = list(api_key = get_api_key())) {
   response = httr::POST(url = url, query = query, body = body)
   content = httr::content(response)
   type = capitalize(tail(strsplit(url, "/")[[1]], n = 1))
   content_list = xml2::as_list(content)
 
-  if (httr::http_error(response)) { # TODO: is this thing working?
+  if (httr::http_error(response)) {
     error_message = content_list$error$message
     if (!is.null(error_message) && grepl("already exists", error_message)) {
       additional_info = content_list$error$additional_information
@@ -243,6 +242,21 @@ upload = function(url, body, query = list(api_key = get_api_key())) {
   return(id)
 }
 
+#' @title Delete an object from OpenML
+#' @description This function can be used to delete objects from the OpenML server.
+#'
+#' @param type (`character(1)`)
+#'  What type of object should be deleted ("flow", "run", "task", "data", "study" / "collection")
+#' @param id (`integer(1)`)
+#'  The id of the object that will be deleted.
+#' @param api_key (`character(1)`)
+#'  The API key to perform the action, if left NULL it first tries getOption("mlr3oml.api_key") and
+#'  then Sys.getenv("OMLAPIKEY").
+#' @param server (`character(1)`)
+#'  The server address, defaults to `get_server()`.
+#' @param confirm (`logical(1)`)
+#'  Whether the deletion has to be confirmed interactively.
+#'
 #' @export
 delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
   if (is.null(api_key)) api_key = get_api_key()
@@ -259,6 +273,11 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
 }
 
 
+#' @title Returns the currently active server
+#'
+#' @description Returns the server that can be configures via the option `mlr3oml.server`.
+#' Returns "https://www.openml.org/api/v1" by default.
+#'
 #' @export
 get_server = function() {
   server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
@@ -276,32 +295,7 @@ id_from_flow_response = function(response) {
   return(id)
 }
 
-get_external = function(x) {
-  paste0(x$hash, "_test1") # FIXME: remove this when new version is released
-}
-
-query_existance = function(x) {
-  # TODO: When publishing to OpenML we set the private oml_id attribute and if we want to publish
-  # again this attribute should be checked
-  if (inherits(x, "Learner")) {
-    response = httr::GET(url = sprintf(
-      "%s/flow/exists/%s/%s", get_server(),
-      paste0("mlr3.", x$id), get_external(x)
-    ))
-    id = id_from_flow_response(response)
-    return(id)
-  } else if (inherits(x, "ResampleResult") || inherits(x, "BenchmarkResult") || inherits(x, "Task")) {
-
-  }
-  if (inherits(x, "ResampleResult") || inherits(x, "BenchmarkResult") || inherits(x, "Task")) {
-    id = get_oml_id(x)
-    return(id)
-  }
-
-  stopf("Cannot query existance for objective of class %s.", class(x)[[1L]])
-}
-
 ask_confirmation = function(action = "publish") {
   user_input = readline(sprintf("Are you sure you want to %s on OpenML? (y/n)  ", action))
-  if (user_input != "y") stop("Exiting since you did not press y")
+  if (user_input != "y") stop("Exiting since you did not press y.")
 }

@@ -1,8 +1,7 @@
 #' @import checkmate
 #' @import data.table
 #' @import mlr3misc
-#' @importFrom stats rnorm
-#' @importFrom mlr3 as_data_backend TaskClassif TaskRegr
+#' @import mlr3
 #' @importFrom R6 R6Class
 #'
 #' @section mlr3 Integration:
@@ -10,6 +9,10 @@
 #' [mlr3::mlr_tasks] and [mlr3::mlr_resamplings], respectively.
 #' For the former you may pass either a `data_id` or a `task_id`, the latter requires
 #' a `task_id`.
+#' Furthermore it allows to convert the OpenML objects to mlr3 objects using the usual S3 generics
+#' such as [mlr3::as_task], [mlr3::as_learner], [mlr3::as_resampling], [mlr3::as_resample_result],
+#' [mlr3::as_benchmark_result] or [mlr3::as_data_backend]. This allows for a frictionless
+#' integration of OpenML and mlr3.
 #'
 #' @section Options:
 #' * `mlr3oml.cache`: Enables or disables caching globally.
@@ -23,6 +26,8 @@
 #' * `mlr3oml.arff_parser`: ARFF parser to use, defaults to the internal one relies
 #'   on [data.table::fread()]. Can also be set to `"RWeka"` for the parser in
 #'   \CRANpkg{RWeka} or `"farff"` for the reader implemented in \CRANpkg{farff}.
+#' * `mlr3oml.server`: Address for the server that should be used. Can be the test server or the
+#'   usual OpenML server.
 #'
 #' @section Logging:
 #' The \CRANpkg{lgr} package is used for logging.
@@ -35,13 +40,15 @@
   backports::import(pkgname, "R_user_dir", force = TRUE)
   mlr3::mlr_tasks$add("oml", OMLTaskConnector)
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
+  mlr3::mlr_learners$add("oml", OMLLearnerConnector)
 
-  # We use this
   mlr3::Learner$set("private", "oml_id", NULL, overwrite = TRUE)
   mlr3::Task$set("private", "oml_id", NULL, overwrite = TRUE)
   mlr3::Resampling$set("private", "oml_id", NULL, overwrite = TRUE)
   mlr3::ResampleResult$set("private", "oml_id", NULL, overwrite = TRUE)
   mlr3::BenchmarkResult$set("private", "oml_id", NULL, overwrite = TRUE)
+  mlr3::Task$set("private", "oml_hash", NULL, overwrite = TRUE)
+  mlr3::Resampling$set("private", "oml_hash", NULL, overwrite = TRUE)
 
   # setup logger
   assign("lg", lgr::get_logger(pkgname), envir = parent.env(environment()))
@@ -54,7 +61,6 @@
 
 .onUnload = function(libpath) { # nolint
   # nocov start
-  # We remove the private field oml_id
   Task$private_fields$oml_id = NULL
   Learner$private_fields$oml_id = NULL
   Resampling$private_fields$oml_id = NULL
