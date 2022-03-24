@@ -1,4 +1,4 @@
-#' @title Read ARFF file
+#' @title Read ARFF files
 #'
 #' @description
 #' Parses a file located at `path` and returns a [data.table()].
@@ -66,6 +66,7 @@ read_arff = function(path) {
   # extract and translate col classes
   col_classes = declarations[, 3L]
   is_factor = stri_startswith_fixed(col_classes, "{")
+  is_date = grep("^date", col_classes, ignore.case = TRUE)
   lvls = set_names(lapply(col_classes[is_factor], parse_arff_levels), col_names[is_factor])
   col_classes = ifelse(is_factor, "character", tolower(col_classes))
 
