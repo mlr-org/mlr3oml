@@ -87,7 +87,7 @@ oml_data$data
     ##   3:         4.7        3.2         1.3        0.2    Iris-setosa
     ##   4:         4.6        3.1         1.5        0.2    Iris-setosa
     ##   5:         5.0        3.6         1.4        0.2    Iris-setosa
-    ##  ---                                                             
+    ##  ---
     ## 146:         6.7        3.0         5.2        2.3 Iris-virginica
     ## 147:         6.3        2.5         5.0        1.9 Iris-virginica
     ## 148:         6.5        3.0         5.2        2.0 Iris-virginica
@@ -139,7 +139,7 @@ oml_task$resampling
 
 ``` r
 # list oml data sets with 5 features and 50 - 200 instances
-tab = list_oml_data_sets(number_features = 5, number_instances = c(50, 200))
+tab = list_oml_data(number_features = 5, number_instances = c(50, 200))
 head(tab[, .(data_id, name)])
 ```
 

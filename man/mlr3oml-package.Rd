@@ -14,6 +14,10 @@ This package adds the \link[mlr3:Task]{mlr3::Task} \code{"oml"} and the \link[ml
 \link[mlr3:mlr_tasks]{mlr3::mlr_tasks} and \link[mlr3:mlr_resamplings]{mlr3::mlr_resamplings}, respectively.
 For the former you may pass either a \code{data_id} or a \code{task_id}, the latter requires
 a \code{task_id}.
+Furthermore it allows to convert the OpenML objects to mlr3 objects using the usual S3 generics
+such as \link[mlr3:as_task]{mlr3::as_task}, \link[mlr3:as_learner]{mlr3::as_learner}, \link[mlr3:as_resampling]{mlr3::as_resampling}, \link[mlr3:as_resample_result]{mlr3::as_resample_result},
+\link[mlr3:as_benchmark_result]{mlr3::as_benchmark_result} or \link[mlr3:as_data_backend]{mlr3::as_data_backend}. This allows for a frictionless
+integration of OpenML and mlr3.
 }
 
 \section{Options}{
@@ -30,6 +34,8 @@ If not set, defaults to the value of the environment variable \code{OPENMLAPIKEY
 \item \code{mlr3oml.arff_parser}: ARFF parser to use, defaults to the internal one relies
 on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code{"RWeka"} for the parser in
 \CRANpkg{RWeka} or \code{"farff"} for the reader implemented in \CRANpkg{farff}.
+\item \code{mlr3oml.server}: Address for the server that should be used. Can be the test server or the
+usual OpenML server.
 }
 }
 
@@ -44,7 +50,7 @@ Useful links:
 \itemize{
   \item \url{https://mlr3oml.mlr-org.com}
   \item \url{https://github.com/mlr-org/mlr3oml}
-  \item Report bugs at \url{https://github.com/mlr-org/mlr3oml}
+  \item Report bugs at \url{https://github.com/mlr-org/mlr3oml/issues}
 }
 
 }

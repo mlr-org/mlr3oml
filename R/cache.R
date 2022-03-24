@@ -12,12 +12,12 @@ CACHE$versions = list(
 CACHE$initialized = character()
 
 get_cache_dir = function(cache) {
-  if (isFALSE(cache))
+  if (isFALSE(cache)) {
     return(FALSE)
-
-  if (isTRUE(cache))
+  }
+  if (isTRUE(cache)) {
     cache = R_user_dir("mlr3oml", "cache")
-
+  }
   assert(check_directory_exists(cache), check_path_for_output(cache))
   normalizePath(cache, mustWork = FALSE)
 }
@@ -60,19 +60,43 @@ initialize_cache = function(cache_dir) {
   return(TRUE)
 }
 
+#' @title Cached
+#'
+#' @description
+#' This function performs a cached version of the function 'fun'. I.e. it first checks whether
+#' the objects is already stored in cache and returns it, otherwise it downloads it and stores it
+#' in the cache folder.
+#'
+#' @param fun
+#'   Download function, e.g. download_data_desc.
+#' @param type
+#'   The type of object that is downloaded by fun. This is the subfolder where the object will be
+#'   stored (relative to the cache folder R_user_dir("mlr3oml", "cache")).
+#' @param id
+#'   The id of the object that is being downloaded, this can also be an url, as this is needed
+#'
+#'
+#' @param type
+#' The type that is downloaded, not really necessary
+#'
 cached = function(fun, type, id, ..., cache_dir = FALSE) {
   if (isFALSE(cache_dir)) {
     return(fun(id, ...))
   }
 
   path = file.path(cache_dir, type)
-  file = file.path(path, sprintf("%i.qs", id))
+  if (is.integer(id)) {
+    file = file.path(path, sprintf("%i.qs", id))
+  } else { # url is passed as id
+    file = file.path(path, url_to_filename(id))
+  }
 
   if (file.exists(file)) {
     lg$debug("Loading object from cache", type = type, id = id, file = file)
     obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
-    if (!inherits(obj, "try-error"))
+    if (!inherits(obj, "try-error")) {
       return(obj)
+    }
     lg$debug("Failed to retrieve object from cache", type = type, id = id, file = file)
   }
 
@@ -85,4 +109,14 @@ cached = function(fun, type, id, ..., cache_dir = FALSE) {
   qs::qsave(obj, file = file, nthreads = getOption("Ncpus", 1L))
 
   return(obj)
+}
+
+#' When an url is passed to the download function, this constructs the name how the element is
+#' saved when caching is enabled
+url_to_filename = function(url) {
+  name = gsub("https://www.openml.org/data/download/", "", url)
+  name = gsub(".rds", "", name)
+  name = gsub(".arff", "", name)
+  name = gsub("/", "_", name)
+  return(name)
 }

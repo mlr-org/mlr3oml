@@ -70,8 +70,8 @@ read_arff = function(path) {
   col_classes = ifelse(is_factor, "character", tolower(col_classes))
 
   mapped_col_classes = map_values(col_classes,
-    old = c("integer", "real",    "numeric", "string",    "date"),
-    new = c(NA,        NA,        NA,        "character", "character")
+    old = c("integer", "real", "numeric", "string", "date"),
+    new = c(NA, NA, NA, "character", "character")
   )
 
   # read data in chunks with workaround for missing comment char functionality
@@ -83,9 +83,11 @@ read_arff = function(path) {
   counter = 1L
 
   while (length(lines) > 0L) {
-    tmp = try(fread(text = lines, col.names = col_names,
+    tmp = try(fread(
+      text = lines, col.names = col_names,
       sep = ",", quote = quote_char, na.strings = "?", blank.lines.skip = TRUE,
-      header = FALSE, colClasses = mapped_col_classes), silent = TRUE)
+      header = FALSE, colClasses = mapped_col_classes
+    ), silent = TRUE)
 
     if (inherits(tmp, "try-error")) {
       if (quote_char != "'") {

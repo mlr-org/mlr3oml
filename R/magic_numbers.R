@@ -7,6 +7,5 @@ magic_numbers = list(
     run = 512L,
     evaluations = 542L
   ),
-
   chunk_size = 1000L
 )

@@ -21,4 +21,3 @@ list_oml_evaluations = function(run_id = NULL, task_id = NULL, measures = NULL, 
 
   return(tab[])
 }
-

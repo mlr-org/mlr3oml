@@ -5,8 +5,8 @@ OMLTaskConnector = function(task_id = NULL, data_id = NULL, target_names = NULL,
   }
 
   if (!is.null(task_id)) {
-    OMLTask$new(task_id, cache)$task
+    as_task(OMLTask$new(task_id, cache), target_names)
   } else {
-    OMLData$new(data_id, cache)$task(target_names)
+    as_task(OMLData$new(data_id, cache), target_names)
   }
 }

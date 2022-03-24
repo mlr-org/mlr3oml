@@ -1,5 +1,6 @@
 download_data_features = function(data_id, desc = download_task_desc(data_id)) {
-  features = get_json("https://www.openml.org/api/v1/json/data/features/%i", data_id)[[1L]][[1L]]
+  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
+  features = get_json(paste0(server, "/json/data/features/%i"), data_id)[[1L]][[1L]]
 
   features$index = as.integer(features$index)
   features$name = make.names(features$name)

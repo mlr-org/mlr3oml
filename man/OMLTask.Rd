@@ -4,29 +4,32 @@
 \alias{OMLTask}
 \title{Interface to OpenML Tasks}
 \description{
-This is the class for tasks served on \url{https://openml.org/t}.
+This is the class for tasks served on \href{https://new.openml.org/search?type=task&sort=runs}{OpenML}.
+It consists of a dataset and other meta-information such as the target variable for supervised
+problems.
 }
 \section{mlr3 Integration}{
 
-A \link[mlr3:Task]{mlr3::Task} is returned by the method \verb{$task}.
-Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::DataBackend} using
-\code{mlr3::as_data_backend()}.
+\itemize{
+\item Obtain a \link[mlr3:Task]{mlr3::Task} by calling \code{as_task()}.
+\item Obtain a \link[mlr3:Resampling]{mlr3::Resampling} by calling \code{as_resampling()}.
+}
 }
 
 \examples{
 \donttest{
-otask = OMLTask$new(id = 59)
+# Get a task from OpenML:
+otask = OMLTask$new(id = 31L)
+otask$data
+otask$data_split
+otask$target_names
+otask$feature_names
 
-print(otask)
-print(otask$target_names)
-print(otask$feature_names)
-print(otask$tags)
-print(otask$task)
+# convert to mlr3 Task:
+task = as_task(otask)
 
 # get a task via tsk():
-if (requireNamespace("mlr3")) {
-  mlr3::tsk("oml", task_id = 59)
-}
+tsk("oml", task_id = 31L)
 }
 }
 \references{
@@ -53,7 +56,10 @@ The package \CRANpkg{qs} is required for caching.}
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{name}}{(\code{character(1)})\cr
-Name of the task, as extracted from the task description.}
+Name of the task, extracted from the task description.}
+
+\item{\code{task_type}}{(\code{character(1)})\cr
+The OpenML task type.}
 
 \item{\code{desc}}{(\code{list()})\cr
 Task description (meta information), downloaded and converted from the JSON API response.}
@@ -65,7 +71,7 @@ Data id, extracted from the task description.}
 Access to the underlying OpenML data set via a \link{OMLData} object.}
 
 \item{\code{nrow}}{(\code{integer()})\cr
-Number of rows, as extracted from the \link{OMLData} object.}
+Number of rows, extracted from the \link{OMLData} object.}
 
 \item{\code{ncol}}{(\code{integer()})\cr
 Number of columns, as extracted from the \link{OMLData} object.}
@@ -76,14 +82,14 @@ Name of the targets, as extracted from the OpenML task description.}
 \item{\code{feature_names}}{(\code{character()})\cr
 Name of the features (without targets of this \link{OMLTask}).}
 
-\item{\code{task}}{(\link[mlr3:Task]{mlr3::Task})\cr
-Creates a \link[mlr3:Task]{mlr3::Task} using the target attribute of the task description.}
-
-\item{\code{resampling}}{(\link[mlr3:Resampling]{mlr3::Resampling})\cr
-Creates a \link[mlr3:mlr_resamplings_custom]{ResamplingCustom} using the target attribute of the task description.}
+\item{\code{data_split}}{(\link{OMLDataSplit})\cr
+Access to the OpenML Evaluation Procedure.}
 
 \item{\code{tags}}{(\code{character()})\cr
 Returns all tags of the task.}
+
+\item{\code{data_name}}{(\code{character()})\cr
+Name of the dataset (inferred from the task name).}
 }
 \if{html}{\out{</div>}}
 }

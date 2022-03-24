@@ -55,7 +55,7 @@ oml_task$task
 oml_task$resampling
 
 # list oml data sets with 5 features and 50 - 200 instances
-tab = list_oml_data_sets(number_features = 5, number_instances = c(50, 200))
+tab = list_oml_data(number_features = 5, number_instances = c(50, 200))
 head(tab[, .(data_id, name)])
 
 # list first 10 oml tasks

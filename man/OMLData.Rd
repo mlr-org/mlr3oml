@@ -4,13 +4,14 @@
 \alias{OMLData}
 \title{Interface to OpenML Data Sets}
 \description{
-This is the class for data sets served on \url{https://openml.org/d}.
+This is the class for data sets served on \href{https://new.openml.org/search?type=data&sort=runs&status=active}{OpenML}.
 }
 \section{mlr3 Integration}{
 
-A \link[mlr3:Task]{mlr3::Task} is returned by the method \verb{$task}.
-Alternatively, you can convert this object to a \link[mlr3:DataBackend]{mlr3::DataBackend} using
-\code{mlr3::as_data_backend()}.
+\itemize{
+\item A \link[mlr3:Task]{mlr3::Task} can be obtained by calling \code{as_task()}.
+\item A \link[mlr3:DataBackend]{mlr3::DataBackend} can be obtained by calling \code{as_data_backend()}.
+}
 }
 
 \section{ARFF Files}{
@@ -22,18 +23,19 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 
 \examples{
 \donttest{
+# OpenML Data object
 odata = OMLData$new(id = 9)
-
 print(odata)
 print(odata$target_names)
 print(odata$feature_names)
 print(odata$tags)
-print(odata$task())
+
+# mlr3 conversion:
+task = as_task(odata)
+backend = as_data_backend(odata)
 
 # get a task via tsk():
-if (requireNamespace("mlr3")) {
-  mlr3::tsk("oml", data_id = 9)
-}
+tsk("oml", data_id = 9)
 }
 }
 \references{
@@ -104,6 +106,9 @@ This excludes row identifiers and ignored columns.}
 
 \item{\code{tags}}{(\code{character()})\cr
 Returns all tags of the data set.}
+
+\item{\code{license}}{(\code{character()})\cr
+Returns all license of the dataset.}
 }
 \if{html}{\out{</div>}}
 }
@@ -113,7 +118,6 @@ Returns all tags of the data set.}
 \item \href{#method-new}{\code{OMLData$new()}}
 \item \href{#method-print}{\code{OMLData$print()}}
 \item \href{#method-quality}{\code{OMLData$quality()}}
-\item \href{#method-task}{\code{OMLData$task()}}
 \item \href{#method-clone}{\code{OMLData$clone()}}
 }
 }
@@ -164,27 +168,6 @@ Returns the value of a single OpenML data set quality.
 \describe{
 \item{\code{name}}{(\code{character(1)})\cr
 Name of the quality to extract.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-task"></a>}}
-\if{latex}{\out{\hypertarget{method-task}{}}}
-\subsection{Method \code{task()}}{
-Creates a \link[mlr3:Task]{mlr3::Task} using the provided target column, defaulting to the default target attribute
-of the task description.
-Note that if the target column is incorrectly encoded, e.g. as numeric 0/1 for classification,
-this will result in a task of the wrong type.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLData$task(target_names = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{target_names}}{(\code{character()})\cr
-Name(s) of the target columns, or \code{NULL} for the default columns.}
 }
 \if{html}{\out{</div>}}
 }

@@ -7,17 +7,24 @@ build_filter_query = function(type, filters) {
         x = assert_integerish(x, min.len = 1L, any.missing = FALSE, coerce = TRUE)
         paste0(name, "/", paste0(x, collapse = ","))
       } else {
-        x = assert_integerish(x, min.len = 1L, max.len = 2L, any.missing = FALSE,
-          .var.name = sprintf("filter value of '%s'", name), coerce = TRUE)
+        x = assert_integerish(x,
+          min.len = 1L, max.len = 2L, any.missing = FALSE,
+          .var.name = sprintf("filter value of '%s'", name), coerce = TRUE
+        )
         paste0(name, "/", paste0(x, collapse = ".."))
       }
     } else {
-      assert_character(x, min.len = 1L, min.chars = 1L, any.missing = FALSE,
-        .var.name = sprintf("filter value of '%s'", name))
+      assert_character(x,
+        min.len = 1L, min.chars = 1L, any.missing = FALSE,
+        .var.name = sprintf("filter value of '%s'", name)
+      )
       paste0(name, "/", x, collapse = "/")
     }
   })
 
-  paste0("https://www.openml.org/api/v1/json/", type, "/list/",
-    paste0(filters, collapse = "/"))
+  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
+  paste0(
+    server, "/json/", type, "/list/",
+    paste0(filters, collapse = "/")
+  )
 }

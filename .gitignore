@@ -1,5 +1,4 @@
-# History files
-.Rhistory
+# History files .Rhistory
 .Rapp.history
 
 # Session Data files
@@ -14,8 +13,7 @@
 # Output files from R CMD check
 /*.Rcheck/
 
-# RStudio files
-.Rproj.user/
+# RStudio files .Rproj.user/
 
 # produced vignettes
 vignettes/*.html
@@ -42,3 +40,6 @@ inst/doc
 revdep
 
 README.html
+
+TODO.md
+lolz.R
