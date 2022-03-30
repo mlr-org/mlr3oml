@@ -3,6 +3,10 @@
 #' @description
 #' Writes a `data.frame()` to an ARFF file.
 #'
+#' Limitations:
+#' * Logicals are written as categorical features.
+#' * [POSIXct] columns are converted to UTC.
+#'
 #' @param data (`data.frame()`)\cr
 #'   Data to write.
 #' @param path (`character(1)`)\cr
@@ -44,11 +48,11 @@ write_arff = function(data, path, relation = deparse(substitute(data))) {
         sprintf("{%s}", paste0(lvls, collapse = ","))
       },
       "Date" = {
-        data[[cn]] = strftime(x, "%Y-%m-%d")
+        data[[cn]] = strftime(x, "%Y-%m-%d", tz = "UTC")
         "date \"yyyy-MM-dd\""
       },
       "POSIXct" = {
-        data[[cn]] = strftime(x, "%Y-%m-%d %H:%M:%S")
+        data[[cn]] = strftime(x, "%Y-%m-%d %H:%M:%S", tz = "UTC")
         "date \"yyyy-MM-dd HH:mm:ss\""
       },
       default = stopf("Unsupported column format: '%s'", cl)

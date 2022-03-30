@@ -3,6 +3,14 @@
 #' @description
 #' Parses a file located at `path` and returns a [data.table()].
 #'
+#' Limitations:
+#'
+#' * Only works for dense files, no support for sparse data.
+#'   Use \CRANpkg{RWeka} instead.
+#' * Dates (even if there is no time component) are read in as [POSIXct].
+#' * The `date-format` from the ARFF specification is currently ignored.
+#'   Instead, we rely on the auto-detection of \CRANpkg{data.table}'s [fread()]..
+#'
 #' @param path (`character(1)`)\cr
 #'   Path or URI of the ARFF file, passed to [file()].
 #'
@@ -66,13 +74,17 @@ read_arff = function(path) {
   # extract and translate col classes
   col_classes = declarations[, 3L]
   is_factor = stri_startswith_fixed(col_classes, "{")
-  is_date = grep("^date", col_classes, ignore.case = TRUE)
+  is_date = grepl("^date", col_classes, ignore.case = TRUE)
   lvls = set_names(lapply(col_classes[is_factor], parse_arff_levels), col_names[is_factor])
-  col_classes = ifelse(is_factor, "character", tolower(col_classes))
+
+  ii = !is_factor & !is_date
+  col_classes[ii] = tolower(col_classes[ii])
+  col_classes[is_factor] = "character"
+  col_classes[is_date] = "date"
 
   mapped_col_classes = map_values(col_classes,
     old = c("integer", "real", "numeric", "string", "date"),
-    new = c(NA, NA, NA, "character", "character")
+    new = c(NA, NA, NA, "character", "POSIXct")
   )
 
   # read data in chunks with workaround for missing comment char functionality
