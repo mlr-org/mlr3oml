@@ -63,8 +63,11 @@ write_arff = function(data, path, relation = deparse(substitute(data))) {
   }
 
   writeLines("@data", handle)
-  flush(handle)
+  close(handle)
+  on.exit()
+
   fwrite(data, file = path, na = "?", eol = "\n", append = TRUE,
     col.names = FALSE, row.names = FALSE)
+
   invisible(NULL)
 }
