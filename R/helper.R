@@ -42,6 +42,7 @@ download_error = function(response) {
   )
 }
 
+
 download_file = function(url, path, api_key = NULL) {
   if (is.null(api_key)) {
     api_key = get_api_key()
@@ -122,7 +123,7 @@ get_rds = function(url, api_key = get_api_key(), retries = 3L) {
     response = download_file(url, path, api_key = api_key)
     if (response$ok) {
       lg$debug("Start processing rds file", path = path)
-      obj = tryCatch(readRDS(path),
+      obj = tryCatch(qs::readqs(path),
         error = function(cond) {
           stopf("Could not read rds file.")
         }
@@ -179,6 +180,23 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
   }
 
   download_error(response)
+}
+
+get_parquet = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
+  if (sparse) {
+    stopf("Sparse files not supported for parquet yet.")
+  }
+  path = tempfile(fileext = ".parquet")
+  on.exit(file.remove(path[file.exists(path)]))
+  url = sprintf(url, ...)
+  lg$info("Retrieving parquet", url = url, authenticated = !is.na(api_key))
+  for (retry in seq_len(retries)) {
+    lg$debug("Start processing parquet file", path = path)
+    db = dbConnect(duckdb::duckdb())
+    data = dbGetQuery(db, sprintf("SELECT * FROM read_parquet(['%s']);", path))
+    data = as.data.table(data)
+
+  }
 }
 
 get_paginated_table = function(type, ..., limit) {

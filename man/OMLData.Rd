@@ -88,8 +88,7 @@ Row identifiers are removed automatically from the data set.
 }}
 
 \item{\code{data}}{(\code{data.table()})\cr
-Data as \code{\link[data.table:data.table]{data.table::data.table()}}.
-Columns marked as row identifiers or marked with the ignore flag are automatically removed.}
+Data as \code{\link[data.table:data.table]{data.table::data.table()}}.}
 
 \item{\code{target_names}}{(\code{character()})\cr
 Name of the default target, as extracted from the OpenML data set description.}

@@ -79,24 +79,29 @@ OMLDataSplit = R6Class("OMLDataSplit",
 
 #' @importFrom mlr3 as_resampling
 #' @export
-as_resampling.OMLDataSplit = function(x, ...) {
+as_resampling.OMLDataSplit = function(x, task = NULL, ...) {
   splits = cached(download_task_splits, "task_splits", x$task_id, x$task$desc,
     cache_dir = x$cache_dir
   )
-  resampling = convert_data_split(x, splits)
+  resampling = convert_data_split(x, splits, task)
   resampling$.__enclos_env__$private$oml_id = x$task_id
   resampling$.__enclos_env__$private$oml_hash = resampling$hash
   return(resampling)
 }
 
-convert_data_split = function(data_split, splits) {
+convert_data_split = function(data_split, splits, task = NULL) {
   resampling = switch(data_split$type,
     crossvalidation = convert_cv(data_split, splits),
     leaveoneout = convert_loo(data_split, splits),
     holdout = convert_holdout(data_split, splits),
     stop("Estimation procedure not (yet) supported.")
   )
-  resampling$task_hash = as_task(data_split$task)$hash
+  # this is expensive when we do no caching because the dataset has to be downloaded
+  if (is.null(task)) {
+    resampling$task_hash = as_task(data_split$task)$hash
+  } else {
+    resampling$task_hash = task$hash
+  }
   resampling$task_nrow = data_split$task$nrow
   return(resampling)
 }

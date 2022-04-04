@@ -1,3 +1,4 @@
+# When names can be very long (e.g. flows) this function can be used for better formatting
 truncate_name = function(name, width = 30L) {
   ifelse(nchar(name) < width, name, paste0(strtrim(name, width), "[...]"))
 }
