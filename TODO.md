@@ -23,16 +23,24 @@
 - Test Matrix erstellen: Was soll alles klappen --> dann tests implementieren
   - Schauen, dass die ganzen Warnungen auch wirklich klappen
 - delete all the invalid mlr3 Objects from OpenML
-- Make upload of binary file to run optional
 - make construct_paramset recursive
 - as_resample_result caching für .rds files funktioniert nicht (.rds vs .qs Endung?)
 - Do caching of the description download in the default args desc = download_run_desc
+- Don't always upload the whole model when publishing a run (make it an argument that is FALSE by default)
+- Ich finde nicht, dass die ignore_attribute und die row_identifier Spalte gelöscht werden sollen
+    --> make it an optional argument "discard"
+- Check that the predictions for the correct predict set are being uploaded
+
+- Parquet: sparse parquet
+
+How to install it
+Sys.setenv(NOT_CRAN = TRUE)
+install.packages("arrow", repos = "https://arrow-r-nightly.s3.amazonaws.com")
 
 
 Für Michel:
 FIXME: positive class? <-- Was heißt das
 - Checke das alles mit den Namespaces passt (suggest vs import)
-- Ich finde nicht, dass die ignore_attribute und die row_identifier Spalte gelöscht werden sollen
 (in der download_data). Sie werden ja entsprechend behandelt wenn as_data_backend gecalled wird.
 Was hier noch passieren muss: Die primary_key Spalte muss entsprechend gesetzt werden und bei
 as_task muss dann as_data_backend gecalled werden und die ignore_attribute features aus den features
@@ -53,6 +61,6 @@ Other tasks:
 - [ ] Extend it to survival tasks and maybe also cluster
 
 
-Optional:
-- When doing multiuploads that fails, provide the possibility to delete those that were
-uploaded. Most important for uploading benchmark results.
+<!-- Optional: -->
+<!-- - When doing multiuploads that fails, provide the possibility to delete those that were -->
+<!-- uploaded. Most important for uploading benchmark results. -->

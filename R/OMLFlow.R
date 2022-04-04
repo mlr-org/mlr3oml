@@ -121,7 +121,9 @@ as_learner.OMLFlow = function(x, task_type = NULL, from_binary = FALSE, verbose 
   }
 
   if (is_mlr3 && from_binary) {
-    learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir)
+    learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir,
+      desc = x$desc
+    )
     # in case the versions don't match and the flow was downloaded from OpenML, the
     if (check_dependencies(x, verbose)) { # this throws appropriate warnings and returns TRUE if everyhing
       # is correctly installed.

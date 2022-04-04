@@ -114,13 +114,22 @@ OMLData = R6Class("OMLData",
     },
     #' @field data (`data.table()`)\cr
     #' Data as [data.table::data.table()].
-    #' Columns marked as row identifiers or marked with the ignore flag are automatically removed.
-    data = function() {
+    #' @param remove (`logical(1)`) Whether to remove columns that are marked with row_identifier or
+    #' the ignore flag.
+    #' @param parquet (`logical(1)`) Whether to use the parquet file
+    data = function(remove = TRUE, parquet = TRUE) {
+      # when we do this with parquet: note that we should only retrieve the relevant columns
+      # (depending on the `remove` flag), this is different from arff because there we first have
+      # to load the full data.freame and then select the columns
       if (is.null(private$.data)) {
-        private$.data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
       }
+      if (remove) {
+        data = remove_named(data, c(desc$row_id_attribute, desc$ignore_attribute))
+      }
+      private$.data = data
 
-      private$.data
+      return(private$.data)
     },
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.

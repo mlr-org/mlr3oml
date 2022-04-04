@@ -131,7 +131,7 @@ OMLRun = R6Class("OMLRun",
         return(private$.prediction)
       }
       private$.prediction = cached(download_prediction, "prediction", self$id,
-        cache_dir = self$cache_dir
+        cache_dir = self$cache_dir, desc = self$desc
       )
       return(private$.prediction)
     },
@@ -238,63 +238,62 @@ as_resampling.OMLRun = function(x, ...) {
 #' @export
 as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
   task = as_task(x, ...)
-  resampling = as_resampling(x, ...)
+  resampling = as_resampling(x, task = task, ...)
+  flow = x$flow
   iterations = resampling$iters
 
   # convert raw predictoins into mlr3 PredictionData
   predictions = split_predictions(x$prediction, resampling, x$task_type)
   n = length(predictions)
-  learner = as_learner(x$flow, task$task_type, ...)
+  learner = as_learner(flow, task$task_type, ...)
   learners = map(seq(n), function(x) learner$clone(deep = TRUE))
-  # get mlr3 learner states
-  states = tryCatch(
-    cached(download_run_binary, "learner_state", x$id, cache_dir = x$cache_dir),
-    error = function(e) {
-      # if for some reason the states uploaded by mlr3 are buggy we have to catch it here,
+  # get mlr3 learner states, do it savely in case something goes wrong
+  if (startsWith(x$flow$name, "mlr3")) {
+    states = cached(download_run_binary, "learner_state", x$id, cache_dir = x$cache_dir,
+      desc = x$desc
+    )
+    if (inherits(states, "try-error")) {
       # because for mlr3 runs we don't append the ids to the parameter names this requires
       # different treatment
-      if (!grepl("OML", class(learner)[[1L]])) { # is mlr3 Learner
-        param_vals = set_names(
-          x = x$parameter_setting[["value"]],
-          nm = x$parameter_setting[["name"]]
-        )
-      } else { # is no mlr3 Learner
-        # first we have to check that the parameter_setting actually matches the parameters
-        # of the flow and its subcomponents
-        param_vals = set_names(
-          x = x$parameter_setting[["value"]],
-          nm = make.names(
-            paste(x$parameter_setting[["name"]], x$parameter_setting[["component"]], sep = "_")
-          )
-        )
-        if (!all(names(param_vals) %in% learner$param_set$ids())) {
-          warningf("Problem assigning parameter_setting to learner, setting all params to NA.")
-          param_vals = set_names(
-            x = as.list(rep(NA, learner$param_set$length)),
-            learners[[1]]$param_set$ids()
-          )
-        }
-      }
-      states = map(seq_len(n), function(x) {
-        state = list(
-          param_vals = param_vals,
-          task_hash = task$hash,
-          mlr3_version = NA_character_,
-          task_prototype = task$data(rows = integer())
-        )
-        if (store_backends) {
-          state$train_task = task
-        }
-        return(state)
-      })
-      return(states)
+      param_vals = set_names(
+        x = x$parameter_setting[["value"]],
+        nm = x$parameter_setting[["name"]]
+      )
     }
-  )
+  } else { # no mlr3 learners
+    param_vals = set_names(
+      x = x$parameter_setting[["value"]],
+      nm = make.names(
+        paste(x$parameter_setting[["name"]], x$parameter_setting[["component"]], sep = "_")
+      )
+    )
+    if (!all(names(param_vals) %in% learner$param_set$ids())) {
+      warningf("Problem assigning parameter_setting to learner, setting all parameter values to NA.")
+      param_vals = set_names(
+        x = as.list(rep(NA, learner$param_set$length)),
+        learners[[1]]$param_set$ids()
+      )
+    }
+    states = map(seq_len(n), function(x) {
+      state = list(
+        param_vals = param_vals,
+        task_hash = task$hash,
+        mlr3_version = NA_character_,
+        task_prototype = task$data(rows = integer())
+      )
+      if (store_backends) {
+        state$train_task = task
+      }
+      return(state)
+    })
+  }
+
   pmap(list(learners, states),
     function(learner, state) {
       learner$param_set$values = state$param_vals
     }
   )
+
   data = data.table(
     task = list(task),
     learner = learners,

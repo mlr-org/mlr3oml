@@ -35,7 +35,7 @@ publish.Learner = function(x, ...) { # nolint
     warningf(
       paste0(
         "Learner cannot be published as the installed package versions don't match the\n",
-        "versions under which the flow (was constructed from binary rds file) was created."
+        "versions under which the flow (was constructed from binary file) was created."
       )
     )
   }
@@ -97,7 +97,8 @@ publish.Resampling = function(x, resampling, ...) { # nolint
 }
 
 #' @export
-publish.ResampleResult = function(x, ...) { # nolint
+#' @param keep_model (`logical(1)`) Whether to upload the model with the resample result.
+publish.ResampleResult = function(x, keep_model = FALSE, ...) { # nolint
   learner = x$learner
   task = x$task
   resampling = x$resampling
@@ -134,6 +135,12 @@ publish.ResampleResult = function(x, ...) { # nolint
   states_path = tempfile(fileext = ".rds")
   withr::defer(unlink(states_path))
   states = map(x$learners, "state")
+  if (!keep_model) {
+    states = map(states, function(state) {
+      state$model = NULL
+      return(state)
+    })
+  }
 
   saveRDS(states, states_path)
 
