@@ -10,7 +10,7 @@ publish = function(x, confirm = TRUE, ...) {
     ask_confirmation()
   }
   id = UseMethod("publish", x)
-  x$.__enclos_env__$private$oml_id = id
+  x$.__enclos_env__$private$oml$id = id
   return(id)
 }
 
@@ -20,22 +20,12 @@ publish.default = function(x, ...) { # nolint
 }
 
 #' @export
-publish.AutoTuner = function(x, ...) { # nolint
-  stopf("Objects of class %s cannot be published.", class(x)[[1]])
-}
-
-#' @export
-publish.GraphLearner = function(x, ...) { # nolint
-  stopf("Objects of class %s cannot be published.", class(x)[[1]])
-}
-
-#' @export
 publish.Learner = function(x, ...) { # nolint
   if (!learner_is_publishable(x)) {
     warningf(
       paste0(
         "Learner cannot be published as the installed package versions don't match the\n",
-        "versions under which the flow (was constructed from binary file) was created."
+        "versions under which the flow was created."
       )
     )
   }
@@ -47,25 +37,16 @@ publish.Learner = function(x, ...) { # nolint
   if (inherits(x, "LearnerSurv")) {
     require_namespaces("mlr3proba")
   }
-  cls = try(get(class(x)[[1L]]), TRUE)
 
-  if (inherits(cls, "try-error")) {
-    stopf("Cannot find class of learner %s, but needed for upload.", class(learner)[[1L]])
-  }
+  empty_learner = nullify_learner(x)
 
-  # for e.g. TorchLearner this does not work as
-  # it has initialization parameters such as the optimizer etc.
-  if (length(formalArgs(cls$public_methods$initialize)) > 0) {
-    stop("Learner reqires arguments to be initialized, currently not supported.")
-  }
-
-  description = make_description(cls$new())
+  description = make_description(empty_learner)
   desc_file = tempfile(fileext = ".xml")
   withr::defer(unlink(desc_file))
   xml2::write_xml(x = description, file = desc_file)
 
   model_path = tempfile(fileext = ".rds")
-  saveRDS(x, model_path)
+  saveRDS(empty_learner, model_path)
 
   url = paste0(get_server(), "/flow")
   id = upload(
@@ -79,7 +60,7 @@ publish.Learner = function(x, ...) { # nolint
 }
 
 learner_is_publishable = function(learner) {
-  oml_id = learner$.__enclos_env__$private$oml_id
+  oml_id = get_private(learner)$oml$id
   if (is.null(oml_id) || test_count(oml_id)) {
     return(TRUE)
   }
@@ -97,15 +78,15 @@ publish.Resampling = function(x, resampling, ...) { # nolint
 }
 
 #' @export
-#' @param keep_model (`logical(1)`) Whether to upload the model with the resample result.
-publish.ResampleResult = function(x, keep_model = FALSE, ...) { # nolint
+#' @param upload_model (`logical(1)`) Whether to upload the model with the resample result.
+publish.ResampleResult = function(x, uploda_model = FALSE, ...) { # nolint
   learner = x$learner
   task = x$task
   resampling = x$resampling
   # First we check whether the task and the resampling are from OpenML and that they have not
   # been modified since the download
-  resampling_id = get_oml_id_resampling(resampling)
-  task_id = get_oml_id_task(task)
+  resampling_id = get_id(resampling)
+  task_id = get_id(task)
   if (is.null(resampling_id) || is.null(task_id)) {
     stopf("Aborting...")
   }
@@ -135,7 +116,7 @@ publish.ResampleResult = function(x, keep_model = FALSE, ...) { # nolint
   states_path = tempfile(fileext = ".rds")
   withr::defer(unlink(states_path))
   states = map(x$learners, "state")
-  if (!keep_model) {
+  if (!upload_model) {
     states = map(states, function(state) {
       state$model = NULL
       return(state)
@@ -155,6 +136,15 @@ publish.ResampleResult = function(x, keep_model = FALSE, ...) { # nolint
   return(list(run_id = run_id, flow_id = flow_id, task_id = task_id))
 }
 
+nullify_learner = function(learner) {
+  learner = learner$clone(TRUE)
+  learner$reset()
+  learner$param_set = NULL
+  return(learner)
+}
+
+
+
 
 #' @export
 publish.BenchmarkResult = function(x, ...) { # nolint
@@ -166,41 +156,4 @@ publish.BenchmarkResult = function(x, ...) { # nolint
   desc = make_description(x, ..., flow_ids = flow_ids, task_ids = task_ids, run_ids = run_ids)
   url = paste0(get_server(), "/run")
   desc_path = tempfile(fileext = ".xml")
-}
-
-get_oml_id_learner = function(x) {
-  x$.__enclos_env__$private$oml_id
-}
-
-
-get_oml_id_task = function(task) {
-  private = get_private(task)
-  oml_id = private$oml_id
-  if (is.null(oml_id)) {
-    return(NULL)
-  }
-  current_hash = calculate_hash(
-    class(task), task$id, task$backend$hash, task$col_info,
-    private$.row_roles, private$.col_roles, private$.properties
-  )
-  if (private$oml_hash == current_hash) {
-    return(oml_id)
-  }
-  warningf("This task was constructed from an OpenML task but was modified.")
-  return(NULL)
-}
-
-get_oml_id_resampling = function(resampling) {
-  oml_id = get_private(resampling)$oml_id
-  if (is.null(oml_id)) {
-    return(NULL)
-  }
-  current_hash = calculate_hash(
-    list(class(resampling), resampling$id, resampling$param_set$values, resampling$instance)
-  )
-  if (get_private(resampling)$oml_hash == current_hash) {
-    return(oml_id)
-  }
-  warningf("This resampling was constructed from an OpenML task split but was modified.")
-  return(NULL)
 }

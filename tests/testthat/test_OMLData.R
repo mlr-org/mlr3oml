@@ -56,3 +56,11 @@ test_that("TaskSurv creation", {
   odata = OMLData$new(data_id)
   expect_class(as_task(odata, c("time", "event")), "TaskSurv")
 })
+
+test_that("row_id_attribute and ignore_attribute", {
+  odata = OMLData$new(61)
+  odata$desc
+  get_private(odata)$.desc$ignore_attribute
+  get_private(odata)$.desc$row_id_attribute
+
+})

@@ -21,10 +21,9 @@ test_that("Cannot download non-existing flow", {
   expect_error(flow$desc)
 })
 
-test_that("Autotest download", {
+test_that("Flows 17374 17369", {
   with_public_server()
-  n = 2
-  ids = OMLCollection$new(279)$flow_ids
+  ids = OMLCollection$new(232, FALSE)$flow_ids
 
   flows = mlr3misc::map(
     ids,
@@ -44,12 +43,11 @@ test_that("Can convert pseudo OML Learner", {
   oml_flow = OMLFlow$new(1, F)
   learner_classif = as_learner(oml_flow, "classif")
   learner_regr = as_learner(oml_flow, "regr")
-  learner_null = as_learner(oml_flow)
+  expect_warning(learner_null <<- as_learner(oml_flow))
   expect_r6(learner_classif, "LearnerClassifOML1")
   expect_r6(learner_regr, "LearnerRegrOML1")
   expect_true(is.null(learner_null))
 })
-
 
 
 test_that("Conversion of mlr flow works as intended", {
@@ -59,33 +57,44 @@ test_that("Conversion of mlr flow works as intended", {
   expect_r6(learner, "LearnerClassifOML19052")
 })
 
-test_that("as_learner is working", {
-  mlr3_id = 19082L
-  mlr_id = 19052L
-  random_id = 1L
-  expect_r6(as_learner(OMLFlow$new(mlr3_id)), "LearnerRegrCatboost")
-  expect_r6(as_learner(OMLFlow$new(mlr_id), "regr"), "LearnerRegrOML19052")
+test_that("Test publish, download convert, publish lifecycle", {
+  with_test_server()
+  # TODO:
+  # 1. publish flow
+  # 2. Download flow
+  # 3. convert flow using as_learner and compare
+  # 4. Upload again and check that same id is returned
+  # 5. delete flow
 })
 
 test_that("Correct warning message regarding dependencies.", {
   flow = OMLFlow$new(19082)
-  # flow$.__enclos_env__$private$.desc$dependencies = c("aaa", "bbb")
-  # as_learner(flow)
-})
+  flow$desc # need to touch it so that the desc is loaded
 
-if (FALSE) {
-  test_that("Uploading flow works correctly", {
-    # We test that:
-    # 1. We can uppload a flow.
-    # 2. Uploading it again returns the 2. id.
-    # 3. We can convert it and it is identical to the learner
-    with_test_server()
-    withr::defer(delete("flow", flow_id, confirm = FALSE))
-    learner = lrn("regr.rpart")
-    flow_id = publish(learner, confirm = FALSE)
-    flow_id_second = publish(learner, confirm = FALSE)
-    flow = OMLFlow$new(flow_id)
-    expect_equal(flow_id, flow_id_second)
-    expect_equal(as_learner(flow), learner)
-  })
-}
+  # flow$.__enclos_env__$private$.desc$dependencies = c("aaa_1")
+  pkg_correct = paste0(paste(installed.packages()["utils", c("Package", "Built")], collapse = "_"))
+  pkg_wrong_version = paste0(paste(installed.packages()["utils", c("Package", "Built")], collapse = "_"), ".3")
+  R_version_running = paste0("R_", paste0(R.Version()[c("major", "minor")], collapse = "."))
+
+
+  # Correct package but version conflict
+  flow$.__enclos_env__$private$.desc$dependencies = pkg_wrong_version
+  expect_message(as_learner(flow, verbose = TRUE), regexp = "Version conflicts")
+
+  # missing dependencies + a version conflict
+  flow$.__enclos_env__$private$.desc$dependencies = c(pkg_wrong_version, "aa_1")
+  expect_message(as_learner(flow, verbose = TRUE), regexp = "has uninstalled dependencies")
+  expect_message(as_learner(flow, verbose = TRUE), regexp = "Version conflicts")
+
+
+  # wrong R version and missing all required dependencies
+  flow$.__enclos_env__$private$.desc$dependencies = c("R_1.1", ".abcdefg_1")
+  expect_message(as_learner(flow, verbose = TRUE), regexp = "Flow's R version")
+  expect_message(as_learner(flow, verbose = TRUE), regexp = "Missing all required dependencies")
+
+  # everything as expected
+  flow$.__enclos_env__$private$.desc$dependencies = c(
+    R_version_running, pkg_correct
+  )
+  expect_message(as_learner(flow, verbose = TRUE), regexp = NA)
+})

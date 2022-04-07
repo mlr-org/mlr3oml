@@ -1,12 +1,20 @@
 # Michel Codereview:
+
+https://github.com/openml/OpenML/issues/1145
+
+- Add support for Test then train data-split
 - [ ] Alle Tests laufen + fehlende Tests hinzufügen
       - row_ids checken --> primary_key muss auf die rowidentifier column gesetzt werden falls die
       existiert
       - Schauen dass das mit den parametern und den appendeten ids wirklich klappt
         --> an einem konkreten Beispiel testen
+      - Das mit den row_ids kann man auch manuell testen
+
 - [ ] Den ganzen Code selbst in Ruhe Korrektur lesen + Doku korrigieren
+
 - [ ] vignette erstellen sowas in Richtung: wir laden ne run study runter,
 - Checken dass alle Funktionen / Objekte die definiert sind auch hergenommen werden.
+
 - [ ] Upload checken (inklusive evaluations)
       - oml_ids --> upload (wo wird das eigentlich herngnomm)
         hash integrieren um checken ob das verändert wird, das wird von der S3 methode get_oml_id erledigt
@@ -20,21 +28,28 @@
 - Bei den Tests einen eigenen Cache Ordner erstellen und wieder löschen nach den Tests
   Loakle Tests: kein caching
   Github actoins tests: caching
-- Test Matrix erstellen: Was soll alles klappen --> dann tests implementieren
-  - Schauen, dass die ganzen Warnungen auch wirklich klappen
+
 - delete all the invalid mlr3 Objects from OpenML
-- make construct_paramset recursive
+
 - as_resample_result caching für .rds files funktioniert nicht (.rds vs .qs Endung?)
+
 - Do caching of the description download in the default args desc = download_run_desc
+
 - Don't always upload the whole model when publishing a run (make it an argument that is FALSE by default)
+
 - Ich finde nicht, dass die ignore_attribute und die row_identifier Spalte gelöscht werden sollen
     --> make it an optional argument "discard"
+
 - Check that the predictions for the correct predict set are being uploaded
+
 
 - Parquet: sparse parquet
 
 
 Für Michel:
+
+- Maybe change $data from active field to method to allow obtaining the whole dataset and immediately remove
+ignore_attribute and row_id_attribute (ask Michel)
 FIXME: positive class? <-- Was heißt das
 - Checke das alles mit den Namespaces passt (suggest vs import)
 (in der download_data). Sie werden ja entsprechend behandelt wenn as_data_backend gecalled wird.

@@ -4,7 +4,7 @@
 \alias{OMLRun}
 \title{Interface to OpenML Runs}
 \description{
-This is the class for OpenML \href{https://new.openml.org/search?type=run}{Runs}, which are
+This is the class for OpenML \href{https://openml.org/search?type=run}{Runs}, which are
 conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 }
 \section{OpenML Integration}{

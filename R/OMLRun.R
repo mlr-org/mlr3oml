@@ -1,7 +1,7 @@
 #' @title Interface to OpenML Runs
 #'
 #' @description
-#' This is the class for OpenML [Runs](https://new.openml.org/search?type=run), which are
+#' This is the class for OpenML [Runs](https://openml.org/search?type=run), which are
 #' conceptually analogous to [mlr3::ResampleResult]s.
 #'
 #' @section OpenML Integration:

@@ -1,5 +1,8 @@
 skip_on_cran()
 
+# What we want to test:
+# `expect_oml_task` forks for: classif, regr, surv
+
 test_that("OMLTask iris", {
   oml_task = OMLTask$new(59, FALSE)
   expect_oml_task(oml_task)
@@ -47,14 +50,6 @@ test_that("Randomized download test", {
   }
 })
 
-test_that("oml_hash changes when task is modified and get_oml_id returns NULL", {
-  otask = OMLTask$new(31)
-  task = as_task(otask)
-  expect_warning(get_oml_id_task(task), NA)
-  task$set_col_roles("job", roles = "target")
-  task$set_col_roles("class", roles = "feature")
-  expect_warning(
-    get_oml_id_task(task),
-    "This task was constructed from an OpenML task but was modified."
-  )
+test_that("row_id_attribute and ignore_attribute are being respected by task", {
+
 })

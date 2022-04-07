@@ -69,25 +69,37 @@ OMLDataSplit = R6Class("OMLDataSplit",
     type = function() self$task$desc$input$estimation_procedure$type,
     #' @field parameters (`list()`)\cr
     #' List of Parameters for the Estimation Procedure.
-    parameters = function() self$task$desc$input$estimation_procedure$parameter
+    parameters = function() self$task$desc$input$estimation_procedure$parameter,
+    #' @field splits (`data.table()`)\cr
+    #' A data.table containing the splits as provided by OpenML.
+    splits = function() {
+      if (is.null(private$.split)) {
+        private$.split = cached(download_task_splits, "task_splits", self$task_id, self$task$desc,
+          cache_dir = self$cache_dir
+        )
+      }
+      return(private$.split)
+    }
   ),
   private = list(
-    .resampling = NULL,
-    .url = NULL
+    .split = NULL
   )
 )
 
 #' @importFrom mlr3 as_resampling
 #' @export
 as_resampling.OMLDataSplit = function(x, task = NULL, ...) {
-  splits = cached(download_task_splits, "task_splits", x$task_id, x$task$desc,
-    cache_dir = x$cache_dir
-  )
+  if (x$type == "testthentrain") {
+    stopf("Not supported yet.")
+    # https://github.com/openml/openml.org/issues/252
+  }
+  splits = x$splits
   resampling = convert_data_split(x, splits, task)
-  resampling$.__enclos_env__$private$oml_id = x$task_id
-  resampling$.__enclos_env__$private$oml_hash = resampling$hash
+  resampling$.__enclos_env__$private$oml$id = x$task_id
+  resampling$.__enclos_env__$private$oml$hash = resampling$hash
   return(resampling)
 }
+
 
 convert_data_split = function(data_split, splits, task = NULL) {
   resampling = switch(data_split$type,
@@ -105,6 +117,7 @@ convert_data_split = function(data_split, splits, task = NULL) {
   resampling$task_nrow = data_split$task$nrow
   return(resampling)
 }
+
 
 convert_cv = function(data_split, splits) {
   nfolds = as.integer(data_split$parameters[name == "number_folds", "value"][[1]])
@@ -166,8 +179,8 @@ convert_loo = function(data_split, splits) {
 
 convert_holdout = function(data_split, splits) {
   resampling = ResamplingHoldout$new()
-  train_ids = splits[type == "TRAIN", "rowid"][[1L]]
-  test_ids = splits[type == "TEST", "rowid"][[1L]]
+  train_ids = splits[type == "TRAIN", "rowid"][[1L]] + 1L
+  test_ids = splits[type == "TEST", "rowid"][[1L]] + 1L
   # this needs to be done to ensure that instantiating a resampling with this ratio parameter
   # leads to the same train / test size (the problem is mlr3_ratio = 1 - oml_ratio + rounding)
   eps = 1 / nrow(splits)

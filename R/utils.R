@@ -100,16 +100,84 @@ make_oml_prediction = function(rr) {
   return(prediction_oml)
 }
 
-get_mlr3_package = function(flow) {
-  packages = flow$dependencies
-  packages = packages[!startsWith(packages, "R_")]
-  packages = map_chr(strsplit(packages, "_"), 1L)
-  if ("mlr3extralearners" %in% packages) {
-    return("mlr3extralearners")
-  } else if ("mlr3learners" %in% packages) {
-    return("mlr3learners")
-  } else if ("mlr3" %in% packages) {
-    return("mlr3")
+
+#' @title Check the dependencies of the flow and compare it with the installed versions
+#' @description
+#' Compares the dependencies of the flow with those installed.
+#' @param flow (`OMLFLow`) The flow whose dependencies are checked. Should only  be called on
+#' mlr3 Flows.
+#' @param versbose (`logical(1)`) Whether to be verbose.
+#'
+#' @return Returns TRUE if the dependencies match and FALSE otherwise
+check_dependencies = function(flow, verbose) {
+  dependencies = flow$dependencies
+  is_R = startsWith(dependencies, "R_")
+  R_version = dependencies[is_R]
+  R_version_running = paste0("R_", paste0(R.Version()[c("major", "minor")], collapse = "."))
+
+  if (length(R_version) && (R_version != R_version_running && verbose)) {
+    messagef("Flow's R version (%s), differs from running R version (%s).", R_version,
+      R_version_running
+    )
   }
 
+  dependencies = dependencies[!is_R]
+
+  # deps_flow = c(mlr = "0.1.1", rpart = "0.2.3")
+  pkgs_flow = map_chr(strsplit(dependencies, split = "_"), 1)
+  versions_flow = map_chr(strsplit(dependencies, split = "_"), 2)
+  deps_flow = set_names(versions_flow, pkgs_flow)
+
+  installed_pkgs = installed.packages()
+  installed_pkgs = installed_pkgs[rownames(installed_pkgs) %in% pkgs_flow, , drop = FALSE]
+  installed_pkgs = paste(
+    installed_pkgs[, "Package", drop = FALSE],
+    installed_pkgs[, "Version", drop = FALSE],
+    sep = "_"
+  )
+
+  if (!length(installed_pkgs)) {
+    if (verbose) {
+      messagef("Missing all required dependencies: %s", paste(dependencies, collapse = ", "))
+    }
+    return(FALSE)
+  }
+
+  pkgs_lrn = map_chr(strsplit(installed_pkgs, split = "_"), 1)
+  versions_lrn = map_chr(strsplit(installed_pkgs, split = "_"), 2)
+  deps_lrn = set_names(versions_lrn, pkgs_lrn)
+
+  everything_correct = length(dependencies) == length(installed_pkgs) &&
+    all(sort(dependencies) == sort(installed_pkgs)) && R_version == R_version_running
+
+  if (everything_correct) {
+    return(TRUE)
+  }
+
+  # now two cases: either all are correctly installed or not
+  missing_pkgs = setdiff(pkgs_flow, pkgs_lrn)
+
+  if (length(missing_pkgs) && verbose) {
+    messagef(
+      "Flow has has uninstalled dependencies: %s",
+      paste(paste(missing_pkgs, deps_flow[missing_pkgs], sep = "_"), collapse = ", ")
+    )
+  }
+
+  pkgs_with_conflicts = names(which(deps_lrn[pkgs_lrn] != deps_flow[pkgs_lrn]))
+  warning = map(
+    pkgs_with_conflicts,
+    function(pkg) {
+      paste0(" * ", pkg, ": ", deps_lrn[pkg], " != ", deps_flow[pkg])
+    }
+  )
+  message = paste(
+    paste0("Version conflicts (installed != required)\n", paste(warning, collapse = "\n")),
+    "Due to these conflicts, new results using this learner cannot be published.", sep = "\n"
+  )
+  if (verbose) {
+    messagef(message)
+
+  }
+  return(FALSE)
 }

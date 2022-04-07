@@ -14,7 +14,7 @@ parse_task_desc = function(desc) {
   desc$input = set_names(map(desc$input, function(x) x[[2L]]), map_chr(desc$input, "name"))
   desc$input$source_data$data_set_id = as.integer(desc$input$source_data$data_set_id)
   est_params = desc$input$estimation_procedure$parameter
-  for (i in seq(length(est_params))) {
+  for (i in seq_len(length(est_params))) {
     if (is.null(est_params[[i]]$value)) {
       est_params[[i]]$value = NA
     } else {

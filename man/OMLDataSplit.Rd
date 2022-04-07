@@ -46,6 +46,9 @@ The type of the estimation procedure.}
 
 \item{\code{parameters}}{(\code{list()})\cr
 List of Parameters for the Estimation Procedure.}
+
+\item{\code{splits}}{(\code{data.table()})\cr
+A data.table containing the splits as provided by OpenML.}
 }
 \if{html}{\out{</div>}}
 }

@@ -39,6 +39,8 @@ Suggests:
     withr,
     duckdb,
     qs
+Remotes:
+  mlr-org/mlr3extralearners
 Config/testthat/edition: 3
 Encoding: UTF-8
 NeedsCompilation: yes

@@ -1,14 +1,24 @@
 skip_on_cran()
-test_that("Download run 538858", {
+
+# What we want to test:
+# For task types: classif, regr, surv
+# expect_oml_run works
+#
+# When the test server works:
+# 1. Create run for clasisf, regr and surv (for different predict_types)
+# 2. Publish the run.
+# 3. Download the run and convert it.
+#
+
+test_that("Run 538858", {
   with_public_server()
   id = 538858L
   run = OMLRun$new(id)
   expect_oml_run(run)
 })
 
-test_that("Randomized download test", {
+test_that("Runs 10417460 10417461 10417462 10417463", {
   with_public_server()
-  set.seed(1)
   ids = OMLCollection$new(232L)$run_ids
   runs = map(
     ids,
@@ -50,22 +60,19 @@ test_that("classification, mlr, 8000000", {
   expect_data_table(run$parameter_setting)
 })
 
-
-
-test_that("Warning when parameters of run and flow don't match", {
+test_that("id = 2081174L", {
   with_public_server()
   id = 2081174L
   run = OMLRun$new(id)
-  expect_error(rr <- as_resample_result(run), regexp = NA)
-  expect_true(all(is.na(rr$learners[[1]]$param_set$values)))
-  expect_error(rr$score(msr("classif.ce")), regexp = NA)
+  flow = run$flow
+  expect_error(as_resample_result(run), regexp = NA)
 })
 
 test_that("Can extract prediction for sklearn", {
   with_public_server()
   id = 10587656L
   run = OMLRun$new(id, FALSE)
-  expect_warning(rr <- as_resample_result(run), "Problematic parameter setting, setting all parameters to NA.")
+  expect_error(rr <- as_resample_result(run), regexp = NA)
   expect_error(rr$score(msr("classif.ce")), regexp = NA)
 })
 
@@ -76,6 +83,21 @@ test_that("Can extract prediction for mlr", {
   expect_error(as_resample_result(run), regexp = NA)
 })
 
+test_that("OMLFlow conversion throws the correct warnings", {
+  run = OMLRun$new(10587742L)
+  learner = as_learner(run$flow, "classif")
+  valid_params = run$parameter_setting
+  invalid_params = data.table(
+    name = "xyz",
+    value = list(1),
+    component = 1
+  )
+  run$.__enclos_env__$private$.desc$parameter_setting = invalid_params
+  expect_warning(
+    as_resample_result(run),
+    regexp = "Problem assigning"
+  )
+})
 
 if (FALSE) { # Upload tests
   # TODO: check that it works also with weird parameters (lists and functions)
@@ -119,24 +141,3 @@ if (FALSE) { # Upload tests
     expect_true(all(ce == ce_rec))
   })
 }
-
-
-test_that("OMLFlow conversion throws the correct warnings", {
-  run = OMLRun$new(10587742L)
-  learner = as_learner(run$flow, "classif")
-  expect_message(as_resample_result(run), regexp =
-    "Constructed non-executable pseudo-learner."
-  )
-  valid_params = run$parameter_setting
-  invalid_params = data.table(
-    name = "xyz",
-    value = list(1),
-    component = 1
-  )
-  run$.__enclos_env__$private$.desc$parameter_setting = invalid_params
-  expect_warning(
-    as_resample_result(run),
-    regexp = "Problem assigning parameter_setting to learner, setting all params to NA."
-  )
-
-})

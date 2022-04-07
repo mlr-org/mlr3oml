@@ -13,7 +13,8 @@ expect_oml_flow = function(flow) {
   if (startsWith(flow$name, "mlr3.")) {
     expect_r6(as_learner(flow), "Learner")
   } else {
-    expect_true(is.null(as_learner(flow)))
+    expect_warning(null_learner <<- as_learner(flow))
+    expect_true(is.null(null_learner))
     expect_r6(as_learner(flow, "classif"), "LearnerClassif")
     expect_r6(as_learner(flow, "regr"), "LearnerRegr")
     expect_r6(as_learner(flow, "surv"), "LearnerSurv")
@@ -124,6 +125,9 @@ expect_oml_data_split = function(data_split) {
   expect_data_table(data_split$parameters, nrows = 4L, ncols = 2L)
   expect_equal(colnames(data_split$parameters), c("name", "value"))
   expect_r6(as_resampling(data_split), "Resampling")
+  expect_data_table(data_split$splits)
+  expect_named(data_split$splits, c("type", "rowid", "rep", "fold"))
+  expect_data_table(data_split$splits)
 }
 
 expect_oml_collection = function(collection) {

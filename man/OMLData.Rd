@@ -4,7 +4,7 @@
 \alias{OMLData}
 \title{Interface to OpenML Data Sets}
 \description{
-This is the class for data sets served on \href{https://new.openml.org/search?type=data&sort=runs&status=active}{OpenML}.
+This is the class for data sets served on \href{https://openml.org/search?type=data&sort=runs&status=active}{OpenML}.
 }
 \section{mlr3 Integration}{
 
@@ -147,7 +147,7 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
-For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task()}.
+For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code{as_task()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$print()}\if{html}{\out{</div>}}
 }

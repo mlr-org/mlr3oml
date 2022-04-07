@@ -4,12 +4,16 @@
 \alias{construct_paramset}
 \title{this constructs a paramset for the parameter field of a OMLFlow
 the ids of the flows are appended to the names of the parameters to make their names unique
-(A flow can contain various components which are themselves flows)}
+Note that this only works because the way the parameter-setting is stored in OpenML, a flow
+cannot contain itself (otherwise the assignment from parameter -> flow is non-unique using only
+the id of the component)}
 \usage{
 construct_paramset(flow)
 }
 \description{
 this constructs a paramset for the parameter field of a OMLFlow
 the ids of the flows are appended to the names of the parameters to make their names unique
-(A flow can contain various components which are themselves flows)
+Note that this only works because the way the parameter-setting is stored in OpenML, a flow
+cannot contain itself (otherwise the assignment from parameter -> flow is non-unique using only
+the id of the component)
 }

@@ -2,7 +2,7 @@
 #'
 #' @description
 #' This is the class for collections (previously known as studies) served on
-#' \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}.
+#' \url{https://openml.org/search?type=study&study_type=task&sort=tasks_included}.
 #' It is used both for Run Collections and Task Collections.
 #' (Note that all Benchmark Suites on OpenML are also Collections).
 #' A Run Collection (`main_entity_type = "run"`) contains runs, flows, datasets and tasks.

@@ -4,10 +4,10 @@
 \alias{OMLFlow}
 \title{Interface to OpenML Flows}
 \description{
-This is the class for flows served on \href{https://new.openml.org/search?type=flow}{OpenML}.
-Flows are similar to pipelines as defined in the mlr3pipeline package.
-Uploading of learners to OpenML has currently only limited supported but can be extended on
-request.
+This is the class for flows served on \href{https://www.openml.org/search?type=flow&sort=runs}{OpenML}.
+Flows are conceptually similar to \link[mlr3pipelines:Graph]{mlr3pipelines::Graph}s.
+The support for publishing learners on OpenML (as flows) is currently limited but can be
+extended upon request.
 }
 \section{mlr3 Integration}{
 
@@ -16,9 +16,9 @@ request.
 learners, while other flows are converted to non-executable pseudo-learners, where the
 task type has to be passed to \code{as_task()} as OpenML Flows are task-agnostic. While these learners
 are not directly useful, this allows sklearn runs to be converted to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s and
-run collections can be converted to \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}s. Their paramset corresponds to the
-union of the parameter set of the flow and it's subcomponents, where the id of the component
-is appended to the name of the parameter.
+run collections can be converted to \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult}s.
+The parameters of the flow include the parameters of all subcomponents, where the name
+c.123.par  means that this is the parameter 'par' of the component with id 123.
 }
 }
 

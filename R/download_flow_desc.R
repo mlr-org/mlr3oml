@@ -21,6 +21,9 @@ parse_flow_desc = function(desc) {
     desc$parameter = as.data.table(
       desc$parameter)[, c("name", "data_type", "default_value")]
     desc$parameter[["name"]] = make.names(desc$parameter[["name"]])
+    if (!(length(desc$parameter$name) == length(unique(desc$parameter$name)))) {
+      stopf("Non-unique parameter names after conversion via make.names().")
+    }
   }
   if (!is.null(desc$dependencies) && startsWith(desc$name, "mlr")) {
     desc$dependencies = stringi::stri_split(desc$dependencies, fixed = ", ")[[1]]

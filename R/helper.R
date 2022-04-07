@@ -123,7 +123,7 @@ get_rds = function(url, api_key = get_api_key(), retries = 3L) {
     response = download_file(url, path, api_key = api_key)
     if (response$ok) {
       lg$debug("Start processing rds file", path = path)
-      obj = tryCatch(qs::readqs(path),
+      obj = tryCatch(readRDS(path),
         error = function(cond) {
           stopf("Could not read rds file.")
         }

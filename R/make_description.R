@@ -13,7 +13,7 @@ make_description.default = function(x, ...) { # nolint
 make_description.Learner = function(x, ...) { # nolint
   name = sprintf("mlr3.%s", x$id)
   external_version = paste0(calculate_hash(x), "_test") # FIXME: when it is released
-  R_version = paste0("R", paste0(R.Version()[c("major", "minor")], collapse = "."))
+  R_version = paste0("R_", paste0(R.Version()[c("major", "minor")], collapse = "."))
   dependencies = paste(R_version, get_dependencies(x$packages), sep = ", ")
   # TODO: remove this
   description = sprintf(
