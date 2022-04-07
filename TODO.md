@@ -33,10 +33,6 @@
 
 - Parquet: sparse parquet
 
-How to install it
-Sys.setenv(NOT_CRAN = TRUE)
-install.packages("arrow", repos = "https://arrow-r-nightly.s3.amazonaws.com")
-
 
 Für Michel:
 FIXME: positive class? <-- Was heißt das

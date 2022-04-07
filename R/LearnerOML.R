@@ -63,6 +63,14 @@ construct_paramset = function(flow) {
   # In this case (sklearn pipelines) the learner consists of other components, we append
   # these id to the parameter name, e.g. cp from component
   sub_ids = as.integer(flow$desc$component$flow$id)
+  flows = map(seq_along(sub_ids),
+    function(i) {
+      parnames = OMLFlow$new(as.integer(flow$desc$component$flow$id[[i]]))
+    }
+  )
+  # param_set_total = invoke(paradox::ps, .args = )
+
+
   names = map(seq_along(sub_ids),
     function(i) {
       parnames = OMLFlow$new(as.integer(flow$desc$component$flow$id[[i]]))$parameters[["name"]]
