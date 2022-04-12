@@ -30,7 +30,7 @@ test_that("S3 converter work for data", {
 })
 
 test_that("S3 converter work for collection", {
-  id = 279
+  id = 232
   collection = OMLCollection$new(id)
   collection$runs
   expect_r6(as_benchmark_result(collection), "BenchmarkResult")

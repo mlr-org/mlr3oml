@@ -120,6 +120,10 @@ OMLTask = R6Class("OMLTask",
     #' @field data_split ([mlr3oml::OMLDataSplit])\cr
     #' Access to the OpenML Evaluation Procedure.
     data_split = function() {
+      if (!length(self$desc$inpu$estimation_procedure$id)) { # integer(0)
+        warningf("Task %s does not provide data split, returning NULL.", self$id)
+        return(NULL)
+      }
       if (is.null(private$.data_split)) {
         private$.data_split = OMLDataSplit$new(task = self, cache = is.character(self$cache_dir))
       }
@@ -172,5 +176,9 @@ as_task.OMLTask = function(x, ...) {
 
 #' @export
 as_resampling.OMLTask = function(x, ...) {
+  data_split = x$data_split
+  if (is.null(data_split)) {
+    return(NULL)
+  }
   as_resampling(x$data_split, ...)
 }

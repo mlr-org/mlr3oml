@@ -3,19 +3,21 @@ test_that("Can extract params from recursive components", {
   id = 5668
   flow = OMLFlow$new(id)
   psc = construct_paramset(flow)
+
   expected_ids = c(
-    "steps",
-    "c5508.axis",
-    "c5508.copy",
-    "c5508.missing_values",
-    "c5508.strategy",
-    "c5508.verbose",
-    "c5509.categorical_features",
-    "c5509.dtype",
-    "c5509.handle_unknown",
-    "c5509.n_values",
-    "c5509.sparse",
-    "c5669.threshold"
+    "steps_5668",
+    "axis_5508",
+    "copy_5508",
+    "missing_values_5508",
+    "strategy_5508",
+    "verbose_5508",
+    "categorical_features_5509",
+    "dtype_5509",
+    "handle_unknown_5509",
+    "n_values_5509",
+    "sparse_5509",
+    "threshold_5669"
   )
+
   expect_equal(psc$ids(), expected_ids)
 })

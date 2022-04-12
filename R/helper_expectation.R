@@ -166,5 +166,5 @@ expect_oml_collection = function(collection) {
     testthat::expect_message(collection$flows, "Main entity type is task, returning NULL.")
     expect_true(is.null(collection$flows))
   }
-  expect_benchmark_result(suppressWarnings(as_benchmark_result(collection)))
+  test_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
 }

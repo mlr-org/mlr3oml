@@ -77,9 +77,10 @@ publish.Resampling = function(x, resampling, ...) { # nolint
   stop("Not possible with current OpenML API.")
 }
 
-#' @export
+#' @title Publishes a ResampleResult
 #' @param upload_model (`logical(1)`) Whether to upload the model with the resample result.
-publish.ResampleResult = function(x, uploda_model = FALSE, ...) { # nolint
+#' @export
+publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
   learner = x$learner
   task = x$task
   resampling = x$resampling

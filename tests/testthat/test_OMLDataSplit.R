@@ -19,9 +19,10 @@ test_that("Basic test: iris", {
 })
 
 test_that("Error when task does not provide task_splits", {
-  expect_error(as_resampling(OMLTask$new(147517)),
-    regexp = "Task not providing datasplits"
+  expect_warning(res <<- as_resampling(OMLTask$new(147517)),
+    regexp = "Task 147517 does not"
   )
+  expect_true(is.null(res))
 })
 
 test_that("Multiple tests", {
