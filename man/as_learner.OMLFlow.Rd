@@ -7,10 +7,14 @@
 \method{as_learner}{OMLFlow}(x, task_type = NULL, verbose = TRUE, ...)
 }
 \arguments{
+\item{x}{(OMLFlow) The OMLFlow that is converted to a mlr3::Learner.}
+
 \item{task_type}{(\code{character(1)})
 The task type to constrct a pseudo-learner. For more information see \link{OMLFlow}.}
 
 \item{verbose}{(\code{logical(1)}) Whether to give informative print output}
+
+\item{...}{Additional arguments}
 }
 \description{
 If it is not an mlr3 Flow it creates a pseudo learner (if \code{task_type} is given, otherwise

@@ -3,6 +3,9 @@
 #' @import mlr3misc
 #' @import mlr3
 #' @importFrom R6 R6Class
+#' @importFrom methods hasArg
+#' @importFrom stats rnorm
+#' @importFrom utils installed.packages tail
 #'
 #' @section mlr3 Integration:
 #' This package adds the [mlr3::Task] `"oml"` and the [mlr3::Resampling] `"oml"` to

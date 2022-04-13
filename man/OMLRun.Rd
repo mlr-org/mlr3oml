@@ -33,7 +33,6 @@ conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 \examples{
 \donttest{
 orun = OMLRun$new(id = 10587724)
-
 print(orun)
 print(orun$task) # OMLTask
 print(orun$data) # OMLData
@@ -45,9 +44,9 @@ as_resampling(orun)
 as_learner(orun)
 as_data_backend(orun)
 rr = as_resample_result(orun)
-rr$score(msr("classif.ce"))
+orun$score(msr("classif.ce"))
 }
-
+#
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).

@@ -1,6 +1,6 @@
 #' @title Helper function to create a benchmark design
 #'
-#' @description [mlr3oml::OMLTasks]s contain tasks as well as resamplings. In order to create
+#' @description [mlr3oml::OMLTask]s contain tasks as well as resamplings. In order to create
 #' a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 #' function can be used.
 #'

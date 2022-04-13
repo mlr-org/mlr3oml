@@ -51,12 +51,12 @@ OMLDataSplit = R6Class("OMLDataSplit",
       catf(" * Task: %i (%s)", self$task_id, self$task$data_name)
       if (self$type == "crossvalidation") {
         catf(" * Type: crossvalidation (repeats = %s, folds = %s)",
-          self$parameters[name == "number_repeats", "value"][[1L]],
-          self$parameters[name == "number_folds", "value"][[1L]]
+          self$parameters[get("name") == "number_repeats", "value"][[1L]],
+          self$parameters[get("name") == "number_folds", "value"][[1L]]
         )
       } else if (self$type == "holdout") {
         catf(" * Type: holdout (test_percentage = %s)",
-          self$parameters[name == "percentage", "value"][[1L]]
+          self$parameters[get("name") == "percentage", "value"][[1L]]
         )
       } else if (self$type == "leaveoneout") {
         catf(" * Type: leaveoneout")
@@ -120,8 +120,8 @@ convert_data_split = function(data_split, splits, task = NULL) {
 
 
 convert_cv = function(data_split, splits) {
-  nfolds = as.integer(data_split$parameters[name == "number_folds", "value"][[1]])
-  repeats = as.integer(data_split$parameters[name == "number_repeats", "value"][[1]])
+  nfolds = as.integer(data_split$parameters[get("name") == "number_folds", "value"][[1]])
+  repeats = as.integer(data_split$parameters[get("name") == "number_repeats", "value"][[1]])
 
   if (repeats == 1) {
     resampling = convert_cv_simple(data_split, splits, nfolds)
@@ -135,10 +135,10 @@ convert_cv_simple = function(data_split, splits, nfolds) {
   # instance: [row_id | fold ]
   resampling = ResamplingCV$new()
   resampling$param_set$values$folds = nfolds
-  splits_subset = splits[type == "TEST",
+  splits_subset = splits[get("type") == "TEST",
     list(
-      row_id = as.integer(rowid) + 1L,
-      fold = as.integer(fold) + 1L
+      row_id = as.integer(get("rowid")) + 1L,
+      fold = as.integer(get("fold")) + 1L
     )
   ]
   resampling$instance = data.table(
@@ -155,11 +155,11 @@ convert_repeated_cv = function(data_split, splits, nfolds, repeats) {
   resampling = ResamplingRepeatedCV$new()
   resampling$param_set$values$folds = nfolds
   resampling$param_set$values$repeats = repeats
-  splits_subset = splits[type == "TEST",
+  splits_subset = splits[get("type") == "TEST",
     list(
-      row_id = as.integer(rowid) + 1L,
-      fold = as.integer(fold) + 1L,
-      rep = as.integer(rep) + 1L
+      row_id = as.integer(get("rowid")) + 1L,
+      fold = as.integer(get("fold")) + 1L,
+      rep = as.integer(get("rep")) + 1L
     )
   ]
   resampling$instance = data.table(
@@ -173,14 +173,14 @@ convert_repeated_cv = function(data_split, splits, nfolds, repeats) {
 convert_loo = function(data_split, splits) {
   # instance: vector with the test ids
   resampling = ResamplingLOO$new()
-  resampling$instance = splits[type == "TEST", "rowid"][[1L]] + 1L
+  resampling$instance = splits[get("type") == "TEST", "rowid"][[1L]] + 1L
   return(resampling)
 }
 
 convert_holdout = function(data_split, splits) {
   resampling = ResamplingHoldout$new()
-  train_ids = splits[type == "TRAIN", "rowid"][[1L]] + 1L
-  test_ids = splits[type == "TEST", "rowid"][[1L]] + 1L
+  train_ids = splits[get("type") == "TRAIN", "rowid"][[1L]] + 1L
+  test_ids = splits[get("type") == "TEST", "rowid"][[1L]] + 1L
   # this needs to be done to ensure that instantiating a resampling with this ratio parameter
   # leads to the same train / test size (the problem is mlr3_ratio = 1 - oml_ratio + rounding)
   eps = 1 / nrow(splits)

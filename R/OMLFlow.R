@@ -52,7 +52,7 @@ OMLFlow = R6Class("OMLFlow",
     #' Prints the object.
     print = function() {
       catf("<OMLFlow:%i>", self$id)
-      catf(" * Name: %s", truncate_name(self$name))
+      catf(" * Name: %s", as_short_string(self$name))
       catf(" * Dependencies: %s", paste(self$desc$dependencies, collapse = ", "))
     }
   ),
@@ -98,30 +98,33 @@ OMLFlow = R6Class("OMLFlow",
 #'   flow with the installed packages and the running R version (gives informative print output if
 #'   the verbose flag is set).
 #'
+#' @param x (OMLFlow) The OMLFlow that is converted to a mlr3::Learner.
 #' @param task_type (`character(1)`)
 #'    The task type to constrct a pseudo-learner. For more information see [mlr3oml::OMLFlow].
 #' @param verbose (`logical(1)`) Whether to give informative print output
+#' @param ... Additional arguments
 #' @importFrom mlr3 as_learner
 #' @export
 as_learner.OMLFlow = function(x, task_type = NULL, verbose = TRUE, ...) {
   assert_choice(task_type, c("regr", "classif", "surv"), null.ok = TRUE)
   assert_flag(verbose)
 
-  if (!startsWith(x$name, "mlr3.")) {
-    learner = make_oml_learner(x, task_type)
-    return(learner)
-  }
-
-  learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir, desc = x$desc)
-  if (!check_dependencies(x, verbose)) {
-    try({
-      learner$.__enclos_env__$private$oml = list(id = x$id, info = "dependency_mismatch")
-    })
-  } else {
-    try({
-      learner$.__enclos_env__$private$oml = list(id = x$id)
-    })
-  }
+  learner = make_oml_learner(x, task_type)
+  # if (!startsWith(x$name, "mlr3.")) {
+  #   learner = make_oml_learner(x, task_type)
+  #   return(learner)
+  # }
+  #
+  # learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir, desc = x$desc)
+  # if (!check_dependencies(x, verbose)) {
+  #   try({
+  #     learner$.__enclos_env__$private$oml = list(id = x$id, info = "dependency_mismatch")
+  #   })
+  # } else {
+  #   try({
+  #     learner$.__enclos_env__$private$oml = list(id = x$id)
+  #   })
+  # }
 
   return(learner)
 }

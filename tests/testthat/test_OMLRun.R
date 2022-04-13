@@ -65,14 +65,14 @@ test_that("id = 2081174L", {
   id = 2081174L
   run = OMLRun$new(id)
   flow = run$flow
-  expect_error(as_resample_result(run), regexp = NA)
+  expect_error(mlr3::as_resample_result(run), regexp = NA)
 })
 
 test_that("Can extract prediction for sklearn", {
   with_public_server()
   id = 10587656L
   run = OMLRun$new(id, FALSE)
-  expect_error(rr <- as_resample_result(run), regexp = NA)
+  expect_error(rr <- mlr3::as_resample_result(run), regexp = NA)
   expect_error(rr$score(msr("classif.ce")), regexp = NA)
 })
 
@@ -80,12 +80,12 @@ test_that("Can extract prediction for mlr", {
   with_public_server()
   id = 10587674L
   run = OMLRun$new(id, FALSE)
-  expect_error(as_resample_result(run), regexp = NA)
+  expect_error(mlr3::as_resample_result(run), regexp = NA)
 })
 
 test_that("OMLFlow conversion throws the correct warnings", {
   run = OMLRun$new(10587742L)
-  learner = as_learner(run$flow, "classif")
+  learner = mlr3::as_learner(run$flow, task_type = "classif")
   valid_params = run$parameter_setting
   invalid_params = data.table(
     name = "xyz",
@@ -94,7 +94,7 @@ test_that("OMLFlow conversion throws the correct warnings", {
   )
   run$.__enclos_env__$private$.desc$parameter_setting = invalid_params
   expect_warning(
-    as_resample_result(run),
+    mlr3::as_resample_result(run),
     regexp = "Problem assigning"
   )
 })
@@ -107,12 +107,12 @@ if (FALSE) { # Upload tests
     with_test_server()
     learner = lrn("classif.rpart", predict_type = "prob")
     otask = OMLTask$new(31)
-    task = as_task(otask)
-    resampling = as_resampling(otask)
+    task = mlr3::as_task(otask)
+    resampling = mlr3::as_resampling(otask)
     rr = resample(task, learner, resampling)
     run_id = publish(rr, confirm = FALSE)$run_id
     run = OMLRun$new(run_id)
-    rr_rec = as_resample_result(run)
+    rr_rec = mlr3::as_resample_result(run)
   })
 
   test_that("Can publish run of flow mlr3.rpart on task 1308 (Iris)", {
@@ -123,13 +123,13 @@ if (FALSE) { # Upload tests
     })
     learner = lrn("classif.rpart", cp = 0.5)
     oml_task = OMLTask$new(1308L)
-    task = as_task(oml_task)
-    resampling = as_resampling(oml_task)
+    task = mlr3::as_task(oml_task)
+    resampling = mlr3::as_resampling(oml_task)
     rr = resample(task, learner, resampling)
     ids = publish(rr, confirm = FALSE)
     # OMLRun$debug("convert")
     run = OMLRun$new(ids[["run_id"]])
-    rr_rec = as_resample_result(run)
+    rr_rec = mlr3::as_resample_result(run)
     expect_equal(rr_rec$task, rr$task)
     expect_equal(rr_rec$task_type, rr$task_type)
     expect_equal(rr_rec$learners, rr$learners)

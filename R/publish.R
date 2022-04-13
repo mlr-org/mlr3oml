@@ -2,6 +2,9 @@
 #'
 #' @description
 #' Publishes a {Flow, Run, Dataset, Task} to OpenML.
+#' @param x (`any`) Object to publish to OpenML.
+#' @param confirm (`logical(1)`) Whether to confirm the upload.
+#' @param ... Additional arguments.
 #' @details
 #' This is a generic function.
 #' @export
@@ -68,17 +71,15 @@ learner_is_publishable = function(learner) {
 }
 
 #' @export
-publish.Task = function(x, resampling, ...) { # nolint
+publish.Task = function(x, ...) { # nolint
   stop("Not implemented yet!")
 }
 
 #' @export
-publish.Resampling = function(x, resampling, ...) { # nolint
+publish.Resampling = function(x, ...) { # nolint
   stop("Not possible with current OpenML API.")
 }
 
-#' @title Publishes a ResampleResult
-#' @param upload_model (`logical(1)`) Whether to upload the model with the resample result.
 #' @export
 publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
   learner = x$learner

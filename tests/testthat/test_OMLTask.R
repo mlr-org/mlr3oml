@@ -14,13 +14,13 @@ test_that("OMLTask iris", {
 
 test_that("data backend", {
   oml_task = OMLTask$new(59)
-  expect_backend(as_data_backend(oml_task))
+  expect_backend(mlr3::as_data_backend(oml_task))
 })
 
 test_that("TaskSurv", {
   skip_if_not_installed("mlr3proba")
   oml_task = OMLTask$new(7304)
-  expect_class(as_task(oml_task), "TaskSurv")
+  expect_class(mlr3::as_task(oml_task), "TaskSurv")
 })
 
 test_that("Task 1 works", {

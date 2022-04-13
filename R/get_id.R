@@ -1,3 +1,24 @@
+#' @title Gets the OpenML id of an mlr3 object (if it exists).
+#' @description OpenML objects can be converted to mlr3 objects. After this conversion the id is
+#' added to a private slot of the object. This S3 generic retries this id and checks whether the
+#' object has been modified since conversion (by comparing the hashes). If it was modified
+#' (hash changed), NULL is returned.
+#'
+#' @param x (`any`) The mlr3 object whose OpenML id is queried.
+#' @param ... Currently unused.
+#' @return
+#' Id of the object.
+#' @examples
+#' \donttest{
+#' otask = OMLTask$new(31)
+#' task = as_task(otask)
+#' # returns the id
+#' get_id(task)
+#' task$col_roles$features = "duration"
+#' # returns NULL
+#' get_id(task)
+#' }
+#'
 #' @export
 get_id = function(x, ...) {
   UseMethod("get_id")
@@ -5,6 +26,7 @@ get_id = function(x, ...) {
 
 #' @export
 get_id.Learner = function(x, ...) {
+  # TODO: we don't really need that?
   get_private(x)$oml$id
 }
 

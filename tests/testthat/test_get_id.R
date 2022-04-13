@@ -1,6 +1,3 @@
-test_that("get_id works for Learner", {
-  # TODO: Add this when the test-server is working
-})
 
 test_that("get_id works for Task", {
   otask = OMLTask$new(31)

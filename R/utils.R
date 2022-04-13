@@ -5,7 +5,7 @@ truncate_name = function(name, width = 30L) {
 
 task_type_translator = function(tt, to = "mlr3") {
   if (to == "mlr3") {
-    switch(tt,
+    converted = switch(tt,
       "Supervised Regression" = "regr",
       "Supervised Classification" = "classif",
       "Survival Analysis" = "surv",
@@ -14,7 +14,7 @@ task_type_translator = function(tt, to = "mlr3") {
     )
   }
   if (to == "oml") {
-    switch(tt,
+    converted = switch(tt,
       "regr" = "Supervised Regression",
       "classif" = "Supervised Classification",
       "surv" = "Survival Analysis",
@@ -22,19 +22,20 @@ task_type_translator = function(tt, to = "mlr3") {
       NULL
     )
   }
+  return(converted)
 }
 
 
-#' When uploading predictions to OpenML, they have to satisfy a specific format.
-#' This function takes a mlr3 Prediction and converts it into that format
-#' TODO: check whether the -1L is really necessary for the fold_ids when the test server
-#' is up and running again
-#' Every OpenML prediction is a data.table with:
-#' [repeat | fold | row_id | prediction | truth]
-#' For classification tasks there are additional columns
-#' [confidence.class1 | confidence.class2 | ...]
-#' In mlr3 these are set to the probabilities if they are available and otherwise to 1 for the
-#' predicted class and 0 for everything else.
+# When uploading predictions to OpenML, they have to satisfy a specific format.
+# This function takes a mlr3 Prediction and converts it into that format
+# TODO: check whether the -1L is really necessary for the fold_ids when the test server
+# is up and running again
+# Every OpenML prediction is a data.table with:
+# repeat | fold | row_id | prediction | truth
+# For classification tasks there are additional columns
+# confidence.class1 | confidence.class2 | ...
+# In mlr3 these are set to the probabilities if they are available and otherwise to 1 for the
+# predicted class and 0 for everything else.
 make_oml_prediction = function(rr) {
   resampling = rr$resampling
   prediction = rr$prediction()
@@ -101,14 +102,14 @@ make_oml_prediction = function(rr) {
 }
 
 
-#' @title Check the dependencies of the flow and compare it with the installed versions
-#' @description
-#' Compares the dependencies of the flow with those installed.
-#' @param flow (`OMLFLow`) The flow whose dependencies are checked. Should only  be called on
-#' mlr3 Flows.
-#' @param versbose (`logical(1)`) Whether to be verbose.
-#'
-#' @return Returns TRUE if the dependencies match and FALSE otherwise
+# @title Check the dependencies of the flow and compare it with the installed versions
+# @description
+# Compares the dependencies of the flow with those installed.
+# @param flow (`OMLFLow`) The flow whose dependencies are checked. Should only  be called on
+# mlr3 Flows.
+# @param versbose (`logical(1)`) Whether to be verbose.
+#
+# @return Returns TRUE if the dependencies match and FALSE otherwise
 check_dependencies = function(flow, verbose) {
   dependencies = flow$dependencies
   is_R = startsWith(dependencies, "R_")

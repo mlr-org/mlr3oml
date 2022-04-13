@@ -6,6 +6,13 @@
 \usage{
 publish(x, confirm = TRUE, ...)
 }
+\arguments{
+\item{x}{(\code{any}) Object to publish to OpenML.}
+
+\item{confirm}{(\code{logical(1)}) Whether to confirm the upload.}
+
+\item{...}{Additional arguments.}
+}
 \description{
 Publishes a {Flow, Run, Dataset, Task} to OpenML.
 }

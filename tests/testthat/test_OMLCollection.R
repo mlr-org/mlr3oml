@@ -15,15 +15,15 @@ test_that("Collection 232", {
 
 test_that("Can convert run collection to benchmark result", {
   col = OMLCollection$new(232, FALSE)
-  bmr = suppressWarnings(as_benchmark_result(col))
+  bmr = suppressWarnings(mlr3::as_benchmark_result(col))
   expect_r6(bmr, "BenchmarkResult")
   expect_error(bmr$score(msr("classif.ce")), regexp = NA)
 })
 
 test_that("Can convert main_entity_type task to list of tasks and resamplings", {
   collection = OMLCollection$new(279, FALSE)
-  tasks = as_tasks(collection)
-  resamplings = as_resamplings(collection)
+  tasks = mlr3::as_tasks(collection)
+  resamplings = mlr3::as_resamplings(collection)
   expect_true(all(map_lgl(tasks, function(x) inherits(x, "Task"))))
   expect_true(all(map_lgl(resamplings, function(x) inherits(x, "Resampling"))))
 })

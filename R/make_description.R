@@ -1,3 +1,9 @@
+#' @title Create OpenmL xml description
+#' @description Creates the xml description for an mlr3 object so that it can be uploaded to
+#' OpenML.
+#'
+#' @param x (any) Object for which to make the xml description.
+#' @param ... Additional arguments.
 #' @export
 make_description = function(x, ...) {
   # TODO: Internal methods should probably not use S3
@@ -82,7 +88,7 @@ is_simple_pvalue = function(value) {
     test_posixct(value)
 }
 
-#' Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
+# Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
 get_dependencies = function(x) {
   versions = mlr3misc::map(
     x,

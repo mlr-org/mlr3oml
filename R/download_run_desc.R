@@ -40,26 +40,25 @@ parse_run_desc = function(desc) {
     # The contents of the file are stored as strings again that correspond (mostly) to json
     # format and therefore have to be parsed again
     if ("array_data" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, array_data := map(array_data, .f = parse_json_safely)]
+      desc$output_data$evaluation[, array_data := map(get("array_data"), .f = parse_json_safely)]
     }
-    desc$output_data$evaluation[, value := as.numeric(value)]
+    desc$output_data$evaluation[, value := as.numeric(get("value"))]
     if ("rep" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, rep := as.integer(rep)] # nolint
+      desc$output_data$evaluation[, rep := as.integer(get("rep"))] # nolint
     }
     if ("fold" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, fold := as.integer(fold)] # nolint
+      desc$output_data$evaluation[, fold := as.integer(get("fold"))] # nolint
     }
   }
   # Now the parameters: name | value | component
 
   desc$parameter_setting = as.data.table(desc$parameter_setting)
-  desc$para
-  # if (length(desc$parameter_setting)) {
-  #  desc$parameter_setting = map(desc$parameter_setting, parse_json_safely)
-  # }
   if (nrow(desc$parameter_setting)) {
-    desc$parameter_setting[, value := map(value, .f = parse_json_safely)]
+    # need to convert to list to ensure that it is a list column (otherwise if only e.g. integer params
+    # it turns into an integer column making it unpredictable later)
+    desc$parameter_setting[, value := map(value, .f = function(x) list(parse_json_safely(x)))]
     desc$parameter_setting[["component"]] = as.integer(desc$parameter_setting[["component"]])
+
   }
   desc$parameter_setting[["name"]] = make.names(desc$parameter_setting[["name"]])
   return(desc)

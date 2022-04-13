@@ -1,9 +1,9 @@
 test_that("benchmark_design works on non-oml inputs", {
-  tasks = tsks(c("pima", "iris"))
-  learners = lrns(c("classif.featureless", "classif.rpart"))
-  resampling = rsmp("cv")
+  tasks = mlr3::tsks(c("pima", "iris"))
+  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
+  resampling = mlr3::rsmp("cv")
   resamplings = pmap(
-    list(tasks, rsmps(c("cv", "holdout"))),
+    list(tasks, mlr3::rsmps(c("cv", "holdout"))),
     function(task, resampling) resampling$instantiate(task)
   )
   design = benchmark_design(tasks, learners, resamplings)
@@ -25,26 +25,26 @@ test_that("benchmark_design works on non-oml inputs", {
 
 test_that("benchmark_design works on oml inputs", {
   with_public_server()
-  learners = lrns(c("classif.featureless", "classif.rpart"))
+  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
   suite = OMLCollection$new(268L)
-  tasks = as_tasks(suite)
-  resamplings = as_resamplings(suite)
+  tasks = mlr3::as_tasks(suite)
+  resamplings = mlr3::as_resamplings(suite)
   design = benchmark_design(tasks, learners, resamplings)
   expect_true(nrow(design) == 16L)
 })
 
 test_that("Resamplings must be instantiated", {
-  tasks = tsks(c("pima", "iris"))
-  learners = lrns(c("classif.featureless", "classif.rpart"))
-  resamplings = rsmps(c("cv", "holdout"))
+  tasks = mlr3::tsks(c("pima", "iris"))
+  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
+  resamplings = mlr3::rsmps(c("cv", "holdout"))
   expect_error(benchmark_design(tasks, learners, resamplings))
 })
 
 test_that("Resamplings and tasks must have the same length", {
-  tasks = tsks(c("pima", "iris"))
-  learners = lrns(c("classif.featureless", "classif.rpart"))
+  tasks = mlr3::tsks(c("pima", "iris"))
+  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
   resamplings = pmap(
-    list(tasks, rsmps(c("cv", "holdout"))),
+    list(tasks, mlr3::rsmps(c("cv", "holdout"))),
     function(task, resampling) resampling$instantiate(task)
   )
   resamplings = c(resamplings, resamplings)
@@ -52,10 +52,10 @@ test_that("Resamplings and tasks must have the same length", {
 })
 
 test_that("Resamplings and tasks must have corresponding hashes", {
-  tasks = tsks(c("pima", "iris"))
-  learners = lrns(c("classif.featureless", "classif.rpart"))
+  tasks = mlr3::tsks(c("pima", "iris"))
+  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
   resamplings = pmap(
-    list(tasks, rsmps(c("cv", "holdout"))),
+    list(tasks, mlr3::rsmps(c("cv", "holdout"))),
     function(task, resampling) resampling$instantiate(task)
   )
   resamplings = rev(resamplings)

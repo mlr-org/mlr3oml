@@ -251,7 +251,7 @@ make_run_table = function(runs) {
       run = list(run),
       task_type = run$task_type,
       data = run$desc$input_data$dataset$name,
-      flow = truncate_name(run$desc$flow_name),
+      flow = as_short_string(run$desc$flow_name),
       data_split = run$task$data_split$type
     )
   }

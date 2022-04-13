@@ -1,26 +1,29 @@
-#' Creates a pseudo OpenML Learner
-#' This object is used to create A learner for a flow that is not from R, but the results are used
-#' in a resample or benchmark result
+# Creates a pseudo OpenML Learner
+# This object is used to create A learner for a flow that is not from R, but the results are used
+# in a resample or benchmark result
 make_oml_learner = function(flow, task_type = NULL) {
-  if (is.null(task_type) || task_type %nin% c("classif", "regr", "surv")) {
+  if (is.null(task_type) || task_type %nin% c("regr", "classif", "surv")) {
     warningf("Please provide a task tape ('regr', 'classif', 'surv').\nReturning NULL")
     return(NULL)
-  }
-  if (task_type == "surv") {
-    require_namespaces("mlr3proba")
-    super_class = mlr3proba::LearnerSurv
   } else {
-    super_class = switch(task_type,
-      regr = LearnerRegr,
-      classif = LearnerClassif
-    )
+    if (task_type == "surv") {
+      require_namespaces("mlr3proba")
+      super_class = mlr3proba::LearnerSurv
+    } else {
+      super_class = switch(task_type,
+        regr = LearnerRegr,
+        classif = LearnerClassif
+      )
+    }
+    class_name = sprintf("Learner%sOML%i", capitalize(task_type), flow$id)
   }
-  learner = R6Class(sprintf("Learner%sOML%i", capitalize(task_type), flow$id),
+
+  learner = R6Class(class_name,
     inherit = super_class,
     public = list(
       initialize = function() {
         super$initialize(
-          id = sprintf("%s.oml_%s", task_type, flow$id),
+          id = sprintf("oml.%s", flow$id),
           param_set = construct_paramset(flow)
         )
       }
@@ -41,11 +44,11 @@ make_oml_learner = function(flow, task_type = NULL) {
   return(learner)
 }
 
-#' this constructs a paramset for the parameter field of a OMLFlow
-#' the ids of the flows are appended to the names of the parameters to make their names unique
-#' Note that this only works because the way the parameter-setting is stored in OpenML, a flow
-#' cannot contain itself (otherwise the assignment from parameter -> flow is non-unique using only
-#' the id of the component)
+# this constructs a paramset for the parameter field of a OMLFlow
+# the ids of the flows are appended to the names of the parameters to make their names unique
+# Note that this only works because the way the parameter-setting is stored in OpenML, a flow
+# cannot contain itself (otherwise the assignment from parameter -> flow is non-unique using only
+# the id of the component)
 construct_paramset = function(flow) {
   # first we construct the parameters for the flow itself
   if (nrow(flow$parameters)) {
