@@ -1,3 +1,9 @@
+#' @title Create OpenmL xml description
+#' @description Creates the xml description for an mlr3 object so that it can be uploaded to
+#' OpenML.
+#'
+#' @param x (any) Object for which to make the xml description.
+#' @param ... Additional arguments.
 #' @export
 make_description = function(x, ...) {
   # TODO: Internal methods should probably not use S3
@@ -13,7 +19,7 @@ make_description.default = function(x, ...) { # nolint
 make_description.Learner = function(x, ...) { # nolint
   name = sprintf("mlr3.%s", x$id)
   external_version = paste0(calculate_hash(x), "_test") # FIXME: when it is released
-  R_version = paste0("R", paste0(R.Version()[c("major", "minor")], collapse = "."))
+  R_version = paste0("R_", paste0(R.Version()[c("major", "minor")], collapse = "."))
   dependencies = paste(R_version, get_dependencies(x$packages), sep = ", ")
   # TODO: remove this
   description = sprintf(
@@ -82,7 +88,7 @@ is_simple_pvalue = function(value) {
     test_posixct(value)
 }
 
-#' Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
+# Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
 get_dependencies = function(x) {
   versions = mlr3misc::map(
     x,

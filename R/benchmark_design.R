@@ -1,6 +1,6 @@
 #' @title Helper function to create a benchmark design
 #'
-#' @description [mlr3oml::OMLTasks]s contain tasks as well as resamplings. In order to create
+#' @description [mlr3oml::OMLTask]s contain tasks as well as resamplings. In order to create
 #' a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 #' function can be used.
 #'
@@ -10,6 +10,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' library("mlr3")
 #' collection = OMLCollection$new(99)
 #' otasks = collection$tasks[nrow <= 550, ][["task"]]
 #' tasks = as_tasks(otasks)

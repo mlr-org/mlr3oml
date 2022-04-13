@@ -3,6 +3,9 @@
 #' @import mlr3misc
 #' @import mlr3
 #' @importFrom R6 R6Class
+#' @importFrom methods hasArg
+#' @importFrom stats rnorm
+#' @importFrom utils installed.packages tail
 #'
 #' @section mlr3 Integration:
 #' This package adds the [mlr3::Task] `"oml"` and the [mlr3::Resampling] `"oml"` to
@@ -42,13 +45,11 @@
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
   mlr3::mlr_learners$add("oml", OMLLearnerConnector)
 
-  mlr3::Learner$set("private", "oml_id", NULL, overwrite = TRUE)
-  mlr3::Task$set("private", "oml_id", NULL, overwrite = TRUE)
-  mlr3::Resampling$set("private", "oml_id", NULL, overwrite = TRUE)
-  mlr3::ResampleResult$set("private", "oml_id", NULL, overwrite = TRUE)
-  mlr3::BenchmarkResult$set("private", "oml_id", NULL, overwrite = TRUE)
-  mlr3::Task$set("private", "oml_hash", NULL, overwrite = TRUE)
-  mlr3::Resampling$set("private", "oml_hash", NULL, overwrite = TRUE)
+  mlr3::Learner$set("private", "oml", NULL, overwrite = TRUE)
+  mlr3::Task$set("private", "oml", NULL, overwrite = TRUE)
+  mlr3::Resampling$set("private", "oml", NULL, overwrite = TRUE)
+  mlr3::ResampleResult$set("private", "oml", NULL, overwrite = TRUE)
+  mlr3::BenchmarkResult$set("private", "oml", NULL, overwrite = TRUE)
 
   # setup logger
   assign("lg", lgr::get_logger(pkgname), envir = parent.env(environment()))
@@ -61,11 +62,11 @@
 
 .onUnload = function(libpath) { # nolint
   # nocov start
-  Task$private_fields$oml_id = NULL
-  Learner$private_fields$oml_id = NULL
-  Resampling$private_fields$oml_id = NULL
-  ResampleResult$private_fields$oml_id = NULL
-  BenchmarkResult$private_fields$oml_id = NULL
+  Task$private_fields$oml = NULL
+  Learner$private_fields$oml = NULL
+  Resampling$private_fields$oml = NULL
+  ResampleResult$private_fields$oml = NULL
+  BenchmarkResult$private_fields$oml = NULL
   library.dynam.unload("mlr3oml", libpath)
 } # nocov end
 

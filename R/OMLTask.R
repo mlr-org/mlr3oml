@@ -1,7 +1,7 @@
 #' @title Interface to OpenML Tasks
 #'
 #' @description
-#' This is the class for tasks served on [OpenML](https://new.openml.org/search?type=task&sort=runs).
+#' This is the class for tasks served on [OpenML](https://openml.org/search?type=task&sort=runs).
 #' It consists of a dataset and other meta-information such as the target variable for supervised
 #' problems.
 #'
@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @examples
+#' library("mlr3")
 #' \donttest{
 #' # Get a task from OpenML:
 #' otask = OMLTask$new(id = 31L)
@@ -120,6 +121,10 @@ OMLTask = R6Class("OMLTask",
     #' @field data_split ([mlr3oml::OMLDataSplit])\cr
     #' Access to the OpenML Evaluation Procedure.
     data_split = function() {
+      if (!length(self$desc$inpu$estimation_procedure$id)) { # integer(0)
+        warningf("Task %s does not provide data split, returning NULL.", self$id)
+        return(NULL)
+      }
       if (is.null(private$.data_split)) {
         private$.data_split = OMLDataSplit$new(task = self, cache = is.character(self$cache_dir))
       }
@@ -148,6 +153,7 @@ OMLTask = R6Class("OMLTask",
 as_task.OMLTask = function(x, ...) {
   name = x$data$name
   data = x$data$data
+  data = remove_named(data, c(x$desc$row_id_attribute, x$desc$ignore_attribute))
   target = x$target_names
 
   miss = setdiff(target, names(data))
@@ -164,12 +170,16 @@ as_task.OMLTask = function(x, ...) {
   )
   task = constructor(name, data, target = target)
   task$backend$hash = sprintf("mlr3oml::task_%i", x$id)
-  task$.__enclos_env__$private$oml_id = x$id
-  task$.__enclos_env__$private$oml_hash = task$hash
+  task$.__enclos_env__$private$oml$id = x$id
+  task$.__enclos_env__$private$oml$hash = task$hash
   return(task)
 }
 
 #' @export
 as_resampling.OMLTask = function(x, ...) {
+  data_split = x$data_split
+  if (is.null(data_split)) {
+    return(NULL)
+  }
   as_resampling(x$data_split, ...)
 }

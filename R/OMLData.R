@@ -1,7 +1,7 @@
 #' @title Interface to OpenML Data Sets
 #'
 #' @description
-#' This is the class for data sets served on [OpenML](https://new.openml.org/search?type=data&sort=runs&status=active).
+#' This is the class for data sets served on [OpenML](https://openml.org/search?type=data&sort=runs&status=active).
 #'
 #' @section mlr3 Integration:
 #' * A [mlr3::Task] can be obtained by calling `as_task()`.
@@ -17,6 +17,7 @@
 #'
 #' @export
 #' @examples
+#' library("mlr3")
 #' \donttest{
 #' # OpenML Data object
 #' odata = OMLData$new(id = 9)
@@ -52,7 +53,7 @@ OMLData = R6Class("OMLData",
     },
     #' @description
     #' Prints the object.
-    #' For a more detailed printer, convert to a [mlr3::Task] via `$task()`.
+    #' For a more detailed printer, convert to a [mlr3::Task] via `as_task()`.
     print = function() {
       catf("<OMLData:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
       catf(" * Default target: %s", self$target_names)
@@ -114,13 +115,17 @@ OMLData = R6Class("OMLData",
     },
     #' @field data (`data.table()`)\cr
     #' Data as [data.table::data.table()].
-    #' Columns marked as row identifiers or marked with the ignore flag are automatically removed.
     data = function() {
+      # when we do this with parquet: note that we should only retrieve the relevant columns
+      # (depending on the `remove` flag), this is different from arff because there we first have
+      # to load the full data.freame and then select the columns
       if (is.null(private$.data)) {
-        private$.data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        data = remove_named(data, c(self$desc$row_id_attribute, self$desc$ignore_attribute))
+        private$.data = data
       }
 
-      private$.data
+      return(private$.data)
     },
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.
@@ -164,13 +169,13 @@ OMLData = R6Class("OMLData",
 
 #' @importFrom mlr3 as_data_backend
 #' @export
-as_data_backend.OMLData = function(x, ...) {
-  primary_key = x$features[(get("is_row_identifier"))][["name"]]
-  if (!length(primary_key)) {
-    primary_key = NULL
-  }
-  backend = as_data_backend(x$data, primary_key, ...)
-  return(backend)
+as_data_backend.OMLData = function(data, primary_key = NULL, ...) { # nolint
+  as_data_backend(data$data)
+}
+
+#' @export
+as_data_backend.OMLTask = function(data, primary_key = NULL, ...) { # nolint
+  as_data_backend(data$data$data)
 }
 
 #' @importFrom mlr3 as_task

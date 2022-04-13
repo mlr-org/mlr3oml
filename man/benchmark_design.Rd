@@ -14,12 +14,13 @@ benchmark_design(tasks, learners, resamplings)
 \item{resamplings}{A list of \link[mlr3:Resampling]{mlr3::Resampling}s that are instantiated on the tasks.}
 }
 \description{
-\link{OMLTasks}s contain tasks as well as resamplings. In order to create
+\link{OMLTask}s contain tasks as well as resamplings. In order to create
 a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 function can be used.
 }
 \examples{
 \dontrun{
+library("mlr3")
 collection = OMLCollection$new(99)
 otasks = collection$tasks[nrow <= 550, ][["task"]]
 tasks = as_tasks(otasks)

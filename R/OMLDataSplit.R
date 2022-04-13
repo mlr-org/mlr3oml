@@ -9,6 +9,7 @@
 #'
 #' @examples
 #' \donttest{
+#' library("mlr3")
 #' otask = OMLTask$new(31L)
 #' data_split = otask$data_split
 #' data_split$type
@@ -51,12 +52,12 @@ OMLDataSplit = R6Class("OMLDataSplit",
       catf(" * Task: %i (%s)", self$task_id, self$task$data_name)
       if (self$type == "crossvalidation") {
         catf(" * Type: crossvalidation (repeats = %s, folds = %s)",
-          self$parameters[name == "number_repeats", "value"][[1L]],
-          self$parameters[name == "number_folds", "value"][[1L]]
+          self$parameters[get("name") == "number_repeats", "value"][[1L]],
+          self$parameters[get("name") == "number_folds", "value"][[1L]]
         )
       } else if (self$type == "holdout") {
         catf(" * Type: holdout (test_percentage = %s)",
-          self$parameters[name == "percentage", "value"][[1L]]
+          self$parameters[get("name") == "percentage", "value"][[1L]]
         )
       } else if (self$type == "leaveoneout") {
         catf(" * Type: leaveoneout")
@@ -69,41 +70,59 @@ OMLDataSplit = R6Class("OMLDataSplit",
     type = function() self$task$desc$input$estimation_procedure$type,
     #' @field parameters (`list()`)\cr
     #' List of Parameters for the Estimation Procedure.
-    parameters = function() self$task$desc$input$estimation_procedure$parameter
+    parameters = function() self$task$desc$input$estimation_procedure$parameter,
+    #' @field splits (`data.table()`)\cr
+    #' A data.table containing the splits as provided by OpenML.
+    splits = function() {
+      if (is.null(private$.split)) {
+        private$.split = cached(download_task_splits, "task_splits", self$task_id, self$task$desc,
+          cache_dir = self$cache_dir
+        )
+      }
+      return(private$.split)
+    }
   ),
   private = list(
-    .resampling = NULL,
-    .url = NULL
+    .split = NULL
   )
 )
 
 #' @importFrom mlr3 as_resampling
 #' @export
-as_resampling.OMLDataSplit = function(x, ...) {
-  splits = cached(download_task_splits, "task_splits", x$task_id, x$task$desc,
-    cache_dir = x$cache_dir
-  )
-  resampling = convert_data_split(x, splits)
-  resampling$.__enclos_env__$private$oml_id = x$task_id
-  resampling$.__enclos_env__$private$oml_hash = resampling$hash
+as_resampling.OMLDataSplit = function(x, task = NULL, ...) {
+  if (x$type == "testthentrain") {
+    stopf("Not supported yet.")
+    # https://github.com/openml/openml.org/issues/252
+  }
+  splits = x$splits
+  resampling = convert_data_split(x, splits, task)
+  resampling$.__enclos_env__$private$oml$id = x$task_id
+  resampling$.__enclos_env__$private$oml$hash = resampling$hash
   return(resampling)
 }
 
-convert_data_split = function(data_split, splits) {
+
+convert_data_split = function(data_split, splits, task = NULL) {
   resampling = switch(data_split$type,
     crossvalidation = convert_cv(data_split, splits),
     leaveoneout = convert_loo(data_split, splits),
     holdout = convert_holdout(data_split, splits),
     stop("Estimation procedure not (yet) supported.")
   )
-  resampling$task_hash = as_task(data_split$task)$hash
+  # this is expensive when we do no caching because the dataset has to be downloaded
+  if (is.null(task)) {
+    resampling$task_hash = as_task(data_split$task)$hash
+  } else {
+    resampling$task_hash = task$hash
+  }
   resampling$task_nrow = data_split$task$nrow
   return(resampling)
 }
 
+
 convert_cv = function(data_split, splits) {
-  nfolds = as.integer(data_split$parameters[name == "number_folds", "value"][[1]])
-  repeats = as.integer(data_split$parameters[name == "number_repeats", "value"][[1]])
+  nfolds = as.integer(data_split$parameters[get("name") == "number_folds", "value"][[1]])
+  repeats = as.integer(data_split$parameters[get("name") == "number_repeats", "value"][[1]])
 
   if (repeats == 1) {
     resampling = convert_cv_simple(data_split, splits, nfolds)
@@ -117,10 +136,10 @@ convert_cv_simple = function(data_split, splits, nfolds) {
   # instance: [row_id | fold ]
   resampling = ResamplingCV$new()
   resampling$param_set$values$folds = nfolds
-  splits_subset = splits[type == "TEST",
+  splits_subset = splits[get("type") == "TEST",
     list(
-      row_id = as.integer(rowid) + 1L,
-      fold = as.integer(fold) + 1L
+      row_id = as.integer(get("rowid")) + 1L,
+      fold = as.integer(get("fold")) + 1L
     )
   ]
   resampling$instance = data.table(
@@ -137,11 +156,11 @@ convert_repeated_cv = function(data_split, splits, nfolds, repeats) {
   resampling = ResamplingRepeatedCV$new()
   resampling$param_set$values$folds = nfolds
   resampling$param_set$values$repeats = repeats
-  splits_subset = splits[type == "TEST",
+  splits_subset = splits[get("type") == "TEST",
     list(
-      row_id = as.integer(rowid) + 1L,
-      fold = as.integer(fold) + 1L,
-      rep = as.integer(rep) + 1L
+      row_id = as.integer(get("rowid")) + 1L,
+      fold = as.integer(get("fold")) + 1L,
+      rep = as.integer(get("rep")) + 1L
     )
   ]
   resampling$instance = data.table(
@@ -155,14 +174,14 @@ convert_repeated_cv = function(data_split, splits, nfolds, repeats) {
 convert_loo = function(data_split, splits) {
   # instance: vector with the test ids
   resampling = ResamplingLOO$new()
-  resampling$instance = splits[type == "TEST", "rowid"][[1L]] + 1L
+  resampling$instance = splits[get("type") == "TEST", "rowid"][[1L]] + 1L
   return(resampling)
 }
 
 convert_holdout = function(data_split, splits) {
   resampling = ResamplingHoldout$new()
-  train_ids = splits[type == "TRAIN", "rowid"][[1L]]
-  test_ids = splits[type == "TEST", "rowid"][[1L]]
+  train_ids = splits[get("type") == "TRAIN", "rowid"][[1L]] + 1L
+  test_ids = splits[get("type") == "TEST", "rowid"][[1L]] + 1L
   # this needs to be done to ensure that instantiating a resampling with this ratio parameter
   # leads to the same train / test size (the problem is mlr3_ratio = 1 - oml_ratio + rounding)
   eps = 1 / nrow(splits)
