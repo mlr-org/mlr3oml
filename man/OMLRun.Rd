@@ -45,7 +45,7 @@ as_resampling(orun)
 as_learner(orun)
 as_data_backend(orun)
 rr = as_resample_result(orun)
-orun$score(msr("classif.ce"))
+rr$score(msr("classif.ce"))
 }
 #
 }
