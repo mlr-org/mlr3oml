@@ -86,7 +86,11 @@
 <p>This package adds the <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a> <code>"oml"</code> and the <a href="https://mlr3.mlr-org.com/reference/Resampling.html" class="external-link">mlr3::Resampling</a> <code>"oml"</code> to
 <a href="https://mlr3.mlr-org.com/reference/mlr_tasks.html" class="external-link">mlr3::mlr_tasks</a> and <a href="https://mlr3.mlr-org.com/reference/mlr_resamplings.html" class="external-link">mlr3::mlr_resamplings</a>, respectively.
 For the former you may pass either a <code>data_id</code> or a <code>task_id</code>, the latter requires
-a <code>task_id</code>.</p>
+a <code>task_id</code>.
+Furthermore it allows to convert the OpenML objects to mlr3 objects using the usual S3 generics
+such as <a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">mlr3::as_task</a>, <a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">mlr3::as_learner</a>, <a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">mlr3::as_resampling</a>, <a href="https://mlr3.mlr-org.com/reference/as_resample_result.html" class="external-link">mlr3::as_resample_result</a>,
+<a href="https://mlr3.mlr-org.com/reference/as_benchmark_result.html" class="external-link">mlr3::as_benchmark_result</a> or <a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">mlr3::as_data_backend</a>. This allows for a frictionless
+integration of OpenML and mlr3.</p>
     </div>
     <div class="section level2">
     <h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a></h2>
@@ -103,6 +107,8 @@ If not set, defaults to the value of the environment variable <code>OPENMLAPIKEY
 <li><p><code>mlr3oml.arff_parser</code>: ARFF parser to use, defaults to the internal one relies
 on <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">data.table::fread()</a></code>. Can also be set to <code>"RWeka"</code> for the parser in
 <a href="https://CRAN.R-project.org/package=RWeka" class="external-link"><span class="pkg">RWeka</span></a> or <code>"farff"</code> for the reader implemented in <a href="https://CRAN.R-project.org/package=farff" class="external-link"><span class="pkg">farff</span></a>.</p></li>
+<li><p><code>mlr3oml.server</code>: Address for the server that should be used. Can be the test server or the
+usual OpenML server.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="logging">Logging<a class="anchor" aria-label="anchor" href="#logging"></a></h2>
@@ -115,7 +121,7 @@ To change the threshold, use <code>lgr::get_logger("mlr3oml")$set_threshold()</c
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Useful links:</p><ul><li><p><a href="https://mlr3oml.mlr-org.com">https://mlr3oml.mlr-org.com</a></p></li>
 <li><p><a href="https://github.com/mlr-org/mlr3oml" class="external-link">https://github.com/mlr-org/mlr3oml</a></p></li>
-<li><p>Report bugs at <a href="https://github.com/mlr-org/mlr3oml" class="external-link">https://github.com/mlr-org/mlr3oml</a></p></li>
+<li><p>Report bugs at <a href="https://github.com/mlr-org/mlr3oml/issues" class="external-link">https://github.com/mlr-org/mlr3oml/issues</a></p></li>
 </ul></div>
     </div>
     <div class="section level2">
