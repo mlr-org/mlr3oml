@@ -23,6 +23,7 @@ A Task Collection (\code{main_entity_type = "task"}) contains tasks and datasets
 
 \examples{
 \donttest{
+library("mlr3")
 # OpenML Run Collection:
 collection = OMLCollection$new(232L)
 collection$tasks

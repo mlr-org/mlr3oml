@@ -19,6 +19,7 @@
 #' @export
 #' @examples
 #' \donttest{
+#' library("mlr3")
 #' # OpenML Run Collection:
 #' collection = OMLCollection$new(232L)
 #' collection$tasks
