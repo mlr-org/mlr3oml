@@ -22,6 +22,7 @@ object has been modified since conversion (by comparing the hashes). If it was m
 }
 \examples{
 \donttest{
+library("mlr3")
 otask = OMLTask$new(31)
 task = as_task(otask)
 # returns the id

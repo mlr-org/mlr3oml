@@ -21,6 +21,7 @@
 #' @export
 #' @examples
 #' \donttest{
+#' library("mlr3")
 #' # mlr3 flow:
 #' flow = OMLFlow$new(id = 19082L)
 #' learner = as_learner(flow)

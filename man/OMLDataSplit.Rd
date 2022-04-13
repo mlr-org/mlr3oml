@@ -16,6 +16,7 @@ Note that the percentage in holdout is inverse to the ratio in mlr3.
 
 \examples{
 \donttest{
+library("mlr3")
 otask = OMLTask$new(31L)
 data_split = otask$data_split
 data_split$type

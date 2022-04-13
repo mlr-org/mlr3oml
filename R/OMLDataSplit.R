@@ -9,6 +9,7 @@
 #'
 #' @examples
 #' \donttest{
+#' library("mlr3")
 #' otask = OMLTask$new(31L)
 #' data_split = otask$data_split
 #' data_split$type

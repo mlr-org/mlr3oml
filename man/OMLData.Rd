@@ -22,6 +22,7 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 }
 
 \examples{
+library("mlr3")
 \donttest{
 # OpenML Data object
 odata = OMLData$new(id = 9)

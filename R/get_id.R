@@ -10,6 +10,7 @@
 #' Id of the object.
 #' @examples
 #' \donttest{
+#' library("mlr3")
 #' otask = OMLTask$new(31)
 #' task = as_task(otask)
 #' # returns the id

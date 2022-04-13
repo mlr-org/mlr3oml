@@ -24,6 +24,7 @@ c.123.par  means that this is the parameter 'par' of the component with id 123.
 
 \examples{
 \donttest{
+library("mlr3")
 # mlr3 flow:
 flow = OMLFlow$new(id = 19082L)
 learner = as_learner(flow)

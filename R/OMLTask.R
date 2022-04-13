@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @examples
+#' library("mlr3")
 #' \donttest{
 #' # Get a task from OpenML:
 #' otask = OMLTask$new(id = 31L)

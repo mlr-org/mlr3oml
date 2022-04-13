@@ -32,6 +32,7 @@ conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 
 \examples{
 \donttest{
+library("mlr3")
 orun = OMLRun$new(id = 10587724)
 print(orun)
 print(orun$task) # OMLTask

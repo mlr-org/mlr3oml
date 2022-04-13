@@ -20,6 +20,7 @@ function can be used.
 }
 \examples{
 \dontrun{
+library("mlr3")
 collection = OMLCollection$new(99)
 otasks = collection$tasks[nrow <= 550, ][["task"]]
 tasks = as_tasks(otasks)

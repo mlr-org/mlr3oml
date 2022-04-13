@@ -17,6 +17,7 @@
 #'
 #' @export
 #' @examples
+#' library("mlr3")
 #' \donttest{
 #' # OpenML Data object
 #' odata = OMLData$new(id = 9)
