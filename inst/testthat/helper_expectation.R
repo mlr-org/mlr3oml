@@ -115,6 +115,9 @@ expect_oml_run = function(run) {
       expect_error(rr$score(msr("regr.mse")), regexp = NA)
     }
     expect_r6(as_learner(run, task_type = task_type), "Learner")
+    if (task_type %in% c("regr", "classif", "surv")) {
+      expect_r6(as_resample_result(run))
+    }
   }
   expect_r6(as_resampling(run), "Resampling")
   expect_r6(as_task(run), "Task")

@@ -17,6 +17,17 @@ test_that("Run 538858", {
   expect_oml_run(run)
 })
 
+test_that("Cannot publish run with non-atomic parameter values", {
+  learner = mlr3learners::LearnerClassifNnet$new()
+  learner$param_set$values$na.action = na.omit
+  task = tsk("oml", task_id = 59)
+  resampling = rsmp("oml", task_id = 59)
+  rr = resample(task, learner, resampling)
+  expect_error(publish(rr, confirm = FALSE),
+    regex = "Can currently only publish flows with atomic parameter values."
+  )
+})
+
 test_that("Runs 10417460 10417461 10417462 10417463", {
   with_public_server()
   ids = OMLCollection$new(232L)$run_ids
@@ -100,7 +111,6 @@ test_that("OMLFlow conversion throws the correct warnings", {
 })
 
 if (FALSE) { # Upload tests
-  # TODO: check that it works also with weird parameters (lists and functions)
   # TODO: Check that this works for regression, classification and survival for the various
   # predict types (especially probs for classification)
   test_that("Upload + download for mlr3 classif (prob) works", {

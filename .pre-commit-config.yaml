@@ -59,6 +59,7 @@ repos:
           .*\.Rds|
           .*\.sh|
           .*\.RData
+          TODO.md
           )$
     -   id: readme-rmd-rendered
     -   id: parsable-R

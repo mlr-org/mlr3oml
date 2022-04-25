@@ -1,7 +1,9 @@
 #' @title Publish on OpenML
 #'
 #' @description
-#' Publishes a {Flow, Run, Dataset, Task} to OpenML.
+#'   Publishes a  [mlr3::Learner] (as a Flow) or [mlr3::ResampleResult] (as a Run) to OpenML.
+#'   Currently only resample results with atomic parameters can be uploaded, as it has to be
+#'   possible to represent the parameter values in json format.
 #' @param x (`any`) Object to publish to OpenML.
 #' @param confirm (`logical(1)`) Whether to confirm the upload.
 #' @param ... Additional arguments.
@@ -41,7 +43,10 @@ publish.Learner = function(x, ...) { # nolint
     require_namespaces("mlr3proba")
   }
 
-  empty_learner = nullify_learner(x)
+  empty_learner = learner$clone(TRUE)
+  empty_learner$reset()
+  empty_learner$param_set$values = list()
+  # ideally this resets the param values to the defaults but this is currently not possible
 
   description = make_description(empty_learner)
   desc_file = tempfile(fileext = ".xml")
@@ -79,6 +84,9 @@ publish.Resampling = function(x, ...) { # nolint
 #' @export
 publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
   learner = x$learner
+  if (!all(map_lgl(learner$param_set$values, is.atomic))) {
+    stopf("Can currently only publish flows with atomic parameter values.")
+  }
   task = x$task
   resampling = x$resampling
   # First we check whether the task and the resampling are from OpenML and that they have not
@@ -86,16 +94,15 @@ publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
   resampling_id = get_id(resampling)
   task_id = get_id(task)
   if (is.null(resampling_id) || is.null(task_id)) {
-    stopf("Aborting...")
+    stopf(
+      paste0(
+        "Can only publish ResampleResults using a (Task, Resampling) combination obtained from\n",
+        "OpenML, as currently no custom data-splits can be uploaded to OpenML."
+      )
+    )
   }
-  # if (!)
-  # TODO: Finish this, abort if not both have a oml id and were not changed in a relevant way.
 
   flow_id = publish(learner, confirm = FALSE)
-
-  # TODO: Take care that we first create all the descriptions and check that this is working
-  # and then upload everything, otherwise we might upload only part of it which is
-  # undesirable
 
   url = paste0(get_server(), "/run")
   description = make_description(x, flow_id = flow_id, task_id = task_id)
@@ -111,48 +118,12 @@ publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
   # engine does not work (arff is not fully specified)
   farff::writeARFF(oml_pred, pred_path)
 
-  states_path = tempfile(fileext = ".rds")
-  withr::defer(unlink(states_path))
-  states = map(x$learners, "state")
-  if (!upload_model) {
-    states = map(states, function(state) {
-      state$model = NULL
-      return(state)
-    })
-  }
-
-  saveRDS(states, states_path)
-
   run_id = upload(
     url = url,
     body = list(
       description = httr::upload_file(desc_path),
-      predictions = httr::upload_file(pred_path),
-      binary = httr::upload_file(states_path)
+      predictions = httr::upload_file(pred_path)
     )
   )
   return(list(run_id = run_id, flow_id = flow_id, task_id = task_id))
-}
-
-nullify_learner = function(learner) {
-  learner = learner$clone(TRUE)
-  learner$reset()
-  # ideally this resets the param values to the defaults but this is currently not possible
-  learner$param_set$values = list()
-  return(learner)
-}
-
-
-
-
-#' @export
-publish.BenchmarkResult = function(x, ...) { # nolint
-  flow_ids = map_int(x$learners$learner, publish, confirm = FALSE)
-  task_ids = map_int(x$tasks$task, publish, confirm = FALSE)
-  run_ids = map_int(x$resample_results$resample_result, publish, confirm = FALSE)
-
-  # Now we create the study
-  desc = make_description(x, ..., flow_ids = flow_ids, task_ids = task_ids, run_ids = run_ids)
-  url = paste0(get_server(), "/run")
-  desc_path = tempfile(fileext = ".xml")
 }

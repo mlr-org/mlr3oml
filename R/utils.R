@@ -49,8 +49,7 @@ make_oml_prediction = function(rr) {
       prediction = prediction$response,
       truth = prediction$truth
     )
-  }
-  if (test_r6(resampling, "ResamplingRepeatedCV")) {
+  } else if (test_r6(resampling, "ResamplingRepeatedCV")) {
     prediction_oml = data.table(
       "repeat" = resampling$instance$rep - 1L,
       fold = prediction$instance$fold - 1L,
@@ -58,8 +57,7 @@ make_oml_prediction = function(rr) {
       prediction = prediction$response,
       truth = prediction$truth
     )
-  }
-  if (test_r6(resampling, "ResamplingLOO")) {
+  } else if (test_r6(resampling, "ResamplingLOO")) {
     prediction_oml = data.table(
       "repeat" = 0L, # repeat is a keyword in R
       fold = seq(0L, nrow(prediction) - 1L),
@@ -67,8 +65,7 @@ make_oml_prediction = function(rr) {
       prediction = prediction$response,
       truth = prediction$truth
     )
-  }
-  if (test_r6(resampling, "ResamplingHoldout")) {
+  } else if (test_r6(resampling, "ResamplingHoldout")) {
     prediction_oml = data.table(
       "repeat" = 0L, # repeat is a keyword in R
       fold = 0L,

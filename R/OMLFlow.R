@@ -90,8 +90,6 @@ OMLFlow = R6Class("OMLFlow",
 #'   By default this function creates a Pseudo-Learner (that cannot be used for training or
 #'   prediction) for the given task type. This enables the conversion of OpenML Runs to
 #'   [mlr3::ResampleResult]s.
-#'   The parameters of the flow include the parameters of all subcomponents, where the name
-#'   c.123.par means that this is the parameter 'par' of the component with id 123.
 #'   This is well defined because each ids can only appear once in a Flow.
 #'
 #' @param x (OMLFlow) The OMLFlow that is converted to a mlr3::Learner.
