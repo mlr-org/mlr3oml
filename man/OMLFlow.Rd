@@ -5,7 +5,7 @@
 \title{Interface to OpenML Flows}
 \description{
 This is the class for flows served on \href{https://www.openml.org/f}{OpenML}.
-Flows are conceptually similar to \link[mlr3pipelines:GraphLearner]{mlr3pipelines::GraphLearner}s.
+Flows are conceptually similar to \link[mlr3pipelines:mlr_learners_graph]{mlr3pipelines::GraphLearner}s.
 The support for publishing learners on OpenML (as flows) is currently limited but can be
 extended upon request.
 }

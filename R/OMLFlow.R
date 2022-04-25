@@ -92,18 +92,19 @@ OMLFlow = R6Class("OMLFlow",
 #'   [mlr3::ResampleResult]s.
 #'   The parameters of the flow include the parameters of all subcomponents, where the name
 #'   c.123.par means that this is the parameter 'par' of the component with id 123.
+#'   This is well defined because each ids can only appear once in a Flow.
 #'
 #' @param x (OMLFlow) The OMLFlow that is converted to a mlr3::Learner.
 #' @param task_type (`character(1)`)
 #'    The task type to constrct a pseudo-learner. For more information see [mlr3oml::OMLFlow].
-#' @param verbose (`logical(1)`) Whether to give informative print output,
-#' @param from_binary (`logical(1)`) Whether to try to construct an actual mlr3 Learner from the
+#' @param from_binary (`logical(1)`) Whether to construct an actual mlr3 learner.
 #' flow (works of course only for mlr3 Flows).
-#'
+#' @param verbose (`logical(1)`) Whether to be verbose.
 #' @param ... Additional arguments
+#'
 #' @importFrom mlr3 as_learner
 #' @export
-as_learner.OMLFlow = function(x, task_type = NULL, verbose = TRUE, from_binary = FALSE, ...) {
+as_learner.OMLFlow = function(x, task_type = NULL, from_binary = FALSE, verbose = TRUE, ...) {
   assert_choice(task_type, c("regr", "classif", "surv"), null.ok = TRUE)
   assert_flag(verbose)
 
