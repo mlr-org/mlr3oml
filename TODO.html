@@ -75,18 +75,13 @@
 
 
 <div id="michel-codereview" class="section level1">
-
 <p><a href="https://github.com/openml/OpenML/issues/1145" class="external-link uri">https://github.com/openml/OpenML/issues/1145</a></p>
 <ul><li><p>Add support for Test then train data-split</p></li>
-<li><p><input type="checkbox" disabled>
-Alle Tests laufen + fehlende Tests hinzufügen - row_ids checken –&gt; primary_key muss auf die rowidentifier column gesetzt werden falls die existiert - Schauen dass das mit den parametern und den appendeten ids wirklich klappt –&gt; an einem konkreten Beispiel testen - Das mit den row_ids kann man auch manuell testen</p></li>
-<li><p><input type="checkbox" disabled>
-Den ganzen Code selbst in Ruhe Korrektur lesen + Doku korrigieren</p></li>
-<li><p><input type="checkbox" disabled>
-vignette erstellen sowas in Richtung: wir laden ne run study runter,</p></li>
+<li><p><input type="checkbox" disabled>Alle Tests laufen + fehlende Tests hinzufügen - row_ids checken –&gt; primary_key muss auf die rowidentifier column gesetzt werden falls die existiert - Schauen dass das mit den parametern und den appendeten ids wirklich klappt –&gt; an einem konkreten Beispiel testen - Das mit den row_ids kann man auch manuell testen</p></li>
+<li><p><input type="checkbox" disabled>Den ganzen Code selbst in Ruhe Korrektur lesen + Doku korrigieren</p></li>
+<li><p><input type="checkbox" disabled>vignette erstellen sowas in Richtung: wir laden ne run study runter,</p></li>
 <li><p>Checken dass alle Funktionen / Objekte die definiert sind auch hergenommen werden.</p></li>
-<li><p><input type="checkbox" disabled>
-Upload checken (inklusive evaluations) - oml_ids –&gt; upload (wo wird das eigentlich herngnomm) hash integrieren um checken ob das verändert wird, das wird von der S3 methode get_oml_id erledigt - Aufpassen mit den Versionen beim upload wenn man einen Flow vom rds rekonstruiert: ausprobieren was passiert wenn man 2 x den gleichen Flow mit unterschiedlicher binary hochlädt. –&gt; Evtl neue Instanz aus der Klasse erstellen und checken ob die gleich sind bevor man uploaded - Wird nur die Klasse oder die Instanz hochgeladen - Das mit dem hashing fertig machen Wenn der Test Server läuft: testen fügen unser eigenes resultat hinzu und vergleichen das ganze mal</p></li>
+<li><p><input type="checkbox" disabled>Upload checken (inklusive evaluations) - oml_ids –&gt; upload (wo wird das eigentlich herngnomm) hash integrieren um checken ob das verändert wird, das wird von der S3 methode get_oml_id erledigt - Aufpassen mit den Versionen beim upload wenn man einen Flow vom rds rekonstruiert: ausprobieren was passiert wenn man 2 x den gleichen Flow mit unterschiedlicher binary hochlädt. –&gt; Evtl neue Instanz aus der Klasse erstellen und checken ob die gleich sind bevor man uploaded - Wird nur die Klasse oder die Instanz hochgeladen - Das mit dem hashing fertig machen Wenn der Test Server läuft: testen fügen unser eigenes resultat hinzu und vergleichen das ganze mal</p></li>
 <li><p>Bei den Tests einen eigenen Cache Ordner erstellen und wieder löschen nach den Tests Loakle Tests: kein caching Github actoins tests: caching</p></li>
 <li><p>delete all the invalid mlr3 Objects from OpenML</p></li>
 <li><p>as_resample_result caching für .rds files funktioniert nicht (.rds vs .qs Endung?)</p></li>
@@ -104,9 +99,7 @@ Upload checken (inklusive evaluations) - oml_ids –&gt; upload (wo wird das eig
 <div class="section level1">
 <h1 id="todo-file-for-mlr3oml">TODO File for mlr3oml<a class="anchor" aria-label="anchor" href="#todo-file-for-mlr3oml"></a></h1>
 <p>Other tasks: - [ ] Verify existing functions - [ ] Better console output when downloading collections. - [ ] Add tags to flows (mlr3), must be done with seperate API Call - [ ] Extend it to survival tasks and maybe also cluster</p>
-<!-- Optional: -->
-<!-- - When doing multiuploads that fails, provide the possibility to delete those that were -->
-<!-- uploaded. Most important for uploading benchmark results. -->
+<!-- Optional: --><!-- - When doing multiuploads that fails, provide the possibility to delete those that were --><!-- uploaded. Most important for uploading benchmark results. -->
 </div>
 
 
@@ -118,7 +111,7 @@ Upload checken (inklusive evaluations) - oml_ids –&gt; upload (wo wird das eig
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
