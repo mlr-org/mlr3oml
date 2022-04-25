@@ -10,14 +10,19 @@ expect_oml_flow = function(flow) {
   )
   expect_character(flow$dependencies)
   expect_string(flow$name, min.chars = 1L)
-  if (startsWith(flow$name, "mlr3.")) {
-    expect_r6(as_learner(flow), "Learner")
-  } else {
-    expect_true(is.null(as_learner(flow)))
-    expect_r6(as_learner(flow, "classif"), "LearnerClassif")
-    expect_r6(as_learner(flow, "regr"), "LearnerRegr")
-    expect_r6(as_learner(flow, "surv"), "LearnerSurv")
-  }
+  expect_r6(as_learner(flow, "classif"), "LearnerClassif")
+  expect_r6(as_learner(flow, "regr"), "LearnerRegr")
+  expect_r6(as_learner(flow, "surv"), "LearnerSurv")
+  expect_true(is.null(suppressWarnings(as_learner(flow))))
+  # if (startsWith(flow$name, "mlr3.")) {
+  #   expect_r6(as_learner(flow), "Learner")
+  # } else {
+  #   expect_warning(null_learner <<- as_learner(flow))
+  #   expect_true(is.null(null_learner))
+  #   expect_r6(as_learner(flow, "classif"), "LearnerClassif")
+  #   expect_r6(as_learner(flow, "regr"), "LearnerRegr")
+  #   expect_r6(as_learner(flow, "surv"), "LearnerSurv")
+  # }
 }
 
 expect_oml_data = function(data) {
@@ -29,7 +34,7 @@ expect_oml_data = function(data) {
   expect_data_table(data$qualities, ncols = 2L)
   expect_equal(colnames(data$qualities), c("name", "value"))
   expect_data_table(data$features)
-  expect_data_table(data$data, nrow = data$nrow, ncol = data$ncol)
+  expect_data_table(data$data, nrows = data$nrow, ncols = data$ncol)
   expect_names(data$target_names, "strict")
   expect_subset(data$target_names, colnames(data$data))
   expect_names(data$feature_names, "strict")
@@ -52,20 +57,20 @@ expect_oml_task = function(task) {
   testthat::expect_true(test_logical(task$cache_dir) || test_character(task$cache_dir))
   expect_string(task$data_name, min.chars = 1L)
   expect_string(task$name, min.chars = 1L)
-  expect_choice(task$task_type, oml_reflections$task_types)
+  expect_choice(task$task_type, mlr3oml:::oml_reflections$task_types)
   expect_list(task$desc, names = "unique")
   expect_count(task$data_id)
   expect_r6(task$data, "OMLData")
   expect_count(task$nrow)
   expect_count(task$ncol)
-  expect_data_table(task$data$data, nrow = task$nrow, ncol = task$ncol)
+  expect_data_table(task$data$data, nrows = task$nrow, ncols = task$ncol)
   expect_names(task$target_names, "strict")
   expect_names(task$feature_names, "strict")
   expect_choice(task$target_names, colnames(task$data$data))
   expect_subset(task$feature_names, colnames(task$data$data))
   expect_disjunct(task$target_names, task$feature_names)
   expect_r6(task$data_split, "OMLDataSplit")
-  tt = task_type_translator(task$task_type)
+  tt = mlr3oml:::task_type_translator(task$task_type)
   if (!is.null(tt)) {
     if (tt == "regr") {
       expect_r6(as_task(task), "TaskRegr")
@@ -96,12 +101,12 @@ expect_oml_run = function(run) {
   expect_count(run$data_id)
   expect_r6(run$data, "OMLData")
   expect_r6(run$data_split, "OMLDataSplit")
-  expect_choice(run$task_type, oml_reflections$task_types)
+  expect_choice(run$task_type, mlr3oml:::oml_reflections$task_types)
   expect_data_table(run$parameter_setting)
   expect_data_table(run$prediction)
   rr = suppressWarnings(as_resample_result(run))
   expect_r6(rr, "ResampleResult")
-  task_type = task_type_translator(run$task_type, to = "mlr3")
+  task_type = mlr3oml:::task_type_translator(run$task_type, to = "mlr3")
   if (!is.null(task_type)) {
     if (task_type == "classif") {
       expect_error(rr$score(msr("classif.ce")), regexp = NA)
@@ -109,7 +114,7 @@ expect_oml_run = function(run) {
     if (task_type == "regr") {
       expect_error(rr$score(msr("regr.mse")), regexp = NA)
     }
-    expect_r6(as_learner(run, task_type), "Learner")
+    expect_r6(as_learner(run, task_type = task_type), "Learner")
   }
   expect_r6(as_resampling(run), "Resampling")
   expect_r6(as_task(run), "Task")
@@ -120,10 +125,13 @@ expect_oml_data_split = function(data_split) {
   expect_r6(data_split, "OMLDataSplit")
   expect_count(data_split$task_id)
   expect_r6(data_split$task, "OMLTask")
-  expect_choice(data_split$type, oml_reflections$estimation_procedures)
+  expect_choice(data_split$type, mlr3oml:::oml_reflections$estimation_procedures)
   expect_data_table(data_split$parameters, nrows = 4L, ncols = 2L)
   expect_equal(colnames(data_split$parameters), c("name", "value"))
   expect_r6(as_resampling(data_split), "Resampling")
+  expect_data_table(data_split$splits)
+  expect_named(data_split$splits, c("type", "rowid", "rep", "fold"))
+  expect_data_table(data_split$splits)
 }
 
 expect_oml_collection = function(collection) {
@@ -162,5 +170,5 @@ expect_oml_collection = function(collection) {
     testthat::expect_message(collection$flows, "Main entity type is task, returning NULL.")
     expect_true(is.null(collection$flows))
   }
-  expect_benchmark_result(suppressWarnings(as_benchmark_result(collection)))
+  test_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
 }

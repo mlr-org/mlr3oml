@@ -4,7 +4,7 @@ download_data_features = function(data_id, desc = download_task_desc(data_id)) {
 
   features$index = as.integer(features$index)
   features$name = make.names(features$name)
-  features$data_type = factor(features$data_type, levels = c("nominal", "numeric"))
+  features$data_type = factor(features$data_type, levels = c("nominal", "numeric", "string"))
   features$is_target = as.logical(features$is_target)
   features$is_row_identifier = as.logical(features$is_row_identifier)
   features$number_of_missing_values = as.integer(features$number_of_missing_values)

@@ -7,22 +7,22 @@ test_that("OMLData iris", {
   expect_identical(oml_data$nrow, 150L)
   expect_identical(oml_data$ncol, 5L)
   expect_identical(oml_data$target_names, "class")
-  expect_r6(as_task(oml_data), "TaskClassif")
+  expect_r6(mlr3::as_task(oml_data), "TaskClassif")
   expect_data_table(oml_data$data, nrows = 150L, ncols = 5L)
 })
 
 test_that("data backend", {
   oml_data = OMLData$new(61)
-  expect_backend(as_data_backend(oml_data))
+  expect_backend(mlr3::as_data_backend(oml_data))
 })
 
 test_that("no default target column fails gracefully (#1)", {
   data_id = 4535L
   oml_data = OMLData$new(data_id, FALSE)
   expect_oml_data(oml_data)
-  expect_error(as_task(oml_data), "default target attribute")
-  expect_task(as_task(oml_data, "V10"))
-  expect_task(tsk("oml", data_id = data_id, target_names = "V10"))
+  expect_error(mlr3::as_task(oml_data), "default target attribute")
+  expect_task(mlr3::as_task(oml_data, "V10"))
+  expect_task(mlr3::tsk("oml", data_id = data_id, target_names = "V10"))
 })
 
 test_that("arff with wrong quotes", {
@@ -54,5 +54,13 @@ test_that("TaskSurv creation", {
   skip_if_not_installed("mlr3proba")
   data_id = 1228
   odata = OMLData$new(data_id)
-  expect_class(as_task(odata, c("time", "event")), "TaskSurv")
+  expect_class(mlr3::as_task(odata, c("time", "event")), "TaskSurv")
+})
+
+test_that("row_id_attribute and ignore_attribute", {
+  odata = OMLData$new(61)
+  odata$desc
+  get_private(odata)$.desc$ignore_attribute
+  get_private(odata)$.desc$row_id_attribute
+
 })

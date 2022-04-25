@@ -4,7 +4,7 @@
 \alias{OMLTask}
 \title{Interface to OpenML Tasks}
 \description{
-This is the class for tasks served on \href{https://new.openml.org/search?type=task&sort=runs}{OpenML}.
+This is the class for tasks served on \href{https://openml.org/search?type=task&sort=runs}{OpenML}.
 It consists of a dataset and other meta-information such as the target variable for supervised
 problems.
 }
@@ -17,6 +17,7 @@ problems.
 }
 
 \examples{
+library("mlr3")
 \donttest{
 # Get a task from OpenML:
 otask = OMLTask$new(id = 31L)

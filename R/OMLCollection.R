@@ -2,7 +2,7 @@
 #'
 #' @description
 #' This is the class for collections (previously known as studies) served on
-#' \url{https://new.openml.org/search?type=study&study_type=task&sort=tasks_included}.
+#' \url{https://openml.org/search?type=study&study_type=task&sort=tasks_included}.
 #' It is used both for Run Collections and Task Collections.
 #' (Note that all Benchmark Suites on OpenML are also Collections).
 #' A Run Collection (`main_entity_type = "run"`) contains runs, flows, datasets and tasks.
@@ -19,6 +19,7 @@
 #' @export
 #' @examples
 #' \donttest{
+#' library("mlr3")
 #' # OpenML Run Collection:
 #' collection = OMLCollection$new(232L)
 #' collection$tasks
@@ -251,7 +252,7 @@ make_run_table = function(runs) {
       run = list(run),
       task_type = run$task_type,
       data = run$desc$input_data$dataset$name,
-      flow = truncate_name(run$desc$flow_name),
+      flow = as_short_string(run$desc$flow_name),
       data_split = run$task$data_split$type
     )
   }

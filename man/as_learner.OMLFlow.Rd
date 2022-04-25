@@ -4,18 +4,22 @@
 \alias{as_learner.OMLFlow}
 \title{Convert an OpenML Flow to a mlr3 Learner}
 \usage{
-\method{as_learner}{OMLFlow}(x, task_type = NULL, from_binary = FALSE, verbose = TRUE, ...)
+\method{as_learner}{OMLFlow}(x, task_type = NULL, verbose = TRUE, ...)
 }
 \arguments{
+\item{x}{(OMLFlow) The OMLFlow that is converted to a mlr3::Learner.}
+
 \item{task_type}{(\code{character(1)})
 The task type to constrct a pseudo-learner. For more information see \link{OMLFlow}.}
 
-\item{from_binary}{(\code{logical(1)}) Whether to construct the learner from the binary rds file
-that is provided on OpenML. Note that when learners are constructed like this and the
-versions of the installed packages don't match the flow's dependencies, the resulting
-flow (and therefore also the resulting \link[mlr3:ResampleResult]{mlr3::ResampleResult}s) cannot be published on OpenML.
-If it is FALSE, the function tries to construct the learner using \code{lrn()}.}
+\item{verbose}{(\code{logical(1)}) Whether to give informative print output}
+
+\item{...}{Additional arguments}
 }
 \description{
-Convert an OpenML Flow to a mlr3 Learner
+If it is not an mlr3 Flow it creates a pseudo learner (if \code{task_type} is given, otherwise
+it returns NULL).
+If it is a mlr3 Flow it downloads the binary rds file and compares the dependencies of the
+flow with the installed packages and the running R version (gives informative print output if
+the verbose flag is set).
 }

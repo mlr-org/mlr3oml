@@ -4,7 +4,7 @@
 \alias{OMLRun}
 \title{Interface to OpenML Runs}
 \description{
-This is the class for OpenML \href{https://new.openml.org/search?type=run}{Runs}, which are
+This is the class for OpenML \href{https://openml.org/search?type=run}{Runs}, which are
 conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 }
 \section{OpenML Integration}{
@@ -32,8 +32,8 @@ conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 
 \examples{
 \donttest{
+library("mlr3")
 orun = OMLRun$new(id = 10587724)
-
 print(orun)
 print(orun$task) # OMLTask
 print(orun$data) # OMLData
@@ -47,7 +47,7 @@ as_data_backend(orun)
 rr = as_resample_result(orun)
 rr$score(msr("classif.ce"))
 }
-
+#
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).

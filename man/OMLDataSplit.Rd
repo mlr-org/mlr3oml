@@ -16,6 +16,7 @@ Note that the percentage in holdout is inverse to the ratio in mlr3.
 
 \examples{
 \donttest{
+library("mlr3")
 otask = OMLTask$new(31L)
 data_split = otask$data_split
 data_split$type
@@ -46,6 +47,9 @@ The type of the estimation procedure.}
 
 \item{\code{parameters}}{(\code{list()})\cr
 List of Parameters for the Estimation Procedure.}
+
+\item{\code{splits}}{(\code{data.table()})\cr
+A data.table containing the splits as provided by OpenML.}
 }
 \if{html}{\out{</div>}}
 }

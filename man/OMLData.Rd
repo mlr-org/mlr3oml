@@ -4,7 +4,7 @@
 \alias{OMLData}
 \title{Interface to OpenML Data Sets}
 \description{
-This is the class for data sets served on \href{https://new.openml.org/search?type=data&sort=runs&status=active}{OpenML}.
+This is the class for data sets served on \href{https://openml.org/search?type=data&sort=runs&status=active}{OpenML}.
 }
 \section{mlr3 Integration}{
 
@@ -22,6 +22,7 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 }
 
 \examples{
+library("mlr3")
 \donttest{
 # OpenML Data object
 odata = OMLData$new(id = 9)
@@ -88,8 +89,7 @@ Row identifiers are removed automatically from the data set.
 }}
 
 \item{\code{data}}{(\code{data.table()})\cr
-Data as \code{\link[data.table:data.table]{data.table::data.table()}}.
-Columns marked as row identifiers or marked with the ignore flag are automatically removed.}
+Data as \code{\link[data.table:data.table]{data.table::data.table()}}.}
 
 \item{\code{target_names}}{(\code{character()})\cr
 Name of the default target, as extracted from the OpenML data set description.}
@@ -148,7 +148,7 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 \if{latex}{\out{\hypertarget{method-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
-For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task()}.
+For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code{as_task()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$print()}\if{html}{\out{</div>}}
 }
