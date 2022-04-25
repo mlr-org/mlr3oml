@@ -114,18 +114,19 @@ OMLData = R6Class("OMLData",
       private$.features
     },
     #' @field data (`data.table()`)\cr
-    #' Data as [data.table::data.table()].
+    #' Data as [data.table::data.table()]. Removes row_id_attribute and ignore_attribute.
     data = function() {
-      # when we do this with parquet: note that we should only retrieve the relevant columns
-      # (depending on the `remove` flag), this is different from arff because there we first have
-      # to load the full data.freame and then select the columns
+      remove_named(self$data_raw, c(self$desc$row_id_attribute, self$desc$ignore_attribute))
+    },
+
+    #' @field data (`data.table()`)\cr
+    #' Data as [data.table::data.table()].
+    data_raw = function() {
       if (is.null(private$.data)) {
         data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
-        data = remove_named(data, c(self$desc$row_id_attribute, self$desc$ignore_attribute))
         private$.data = data
       }
-
-      return(private$.data)
+      private$.data
     },
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.

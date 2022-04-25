@@ -89,6 +89,9 @@ Row identifiers are removed automatically from the data set.
 }}
 
 \item{\code{data}}{(\code{data.table()})\cr
+Data as \code{\link[data.table:data.table]{data.table::data.table()}}. Removes row_id_attribute and ignore_attribute.}
+
+\item{\code{data}}{(\code{data.table()})\cr
 Data as \code{\link[data.table:data.table]{data.table::data.table()}}.}
 
 \item{\code{target_names}}{(\code{character()})\cr
