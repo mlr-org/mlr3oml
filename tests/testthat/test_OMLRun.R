@@ -18,11 +18,8 @@ test_that("Run 538858", {
 })
 
 test_that("Cannot publish run with non-atomic parameter values", {
-  learner = mlr3learners::LearnerClassifNnet$new()
-  learner$param_set$values$na.action = na.omit
-  task = tsk("oml", task_id = 59)
-  resampling = rsmp("oml", task_id = 59)
-  rr = resample(task, learner, resampling)
+  rr = list(learner = list(param_set = list(values = list(fun = na.action))))
+  class(rr) = "ResampleResult"
   expect_error(publish(rr, confirm = FALSE),
     regex = "Can currently only publish flows with atomic parameter values."
   )
