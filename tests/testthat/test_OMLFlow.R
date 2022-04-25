@@ -67,35 +67,39 @@ test_that("Test publish, download convert, publish lifecycle", {
   # 5. delete flow
 })
 
-# TODO: Maybe enable this again when we allow proper flow conversion
-# test_that("Correct warning message regarding dependencies.", {
-#   flow = OMLFlow$new(19082)
-#   flow$desc # need to touch it so that the desc is loaded
-#
-#   # flow$.__enclos_env__$private$.desc$dependencies = c("aaa_1")
-#   pkg_correct = paste0(paste(installed.packages()["utils", c("Package", "Built")], collapse = "_"))
-#   pkg_wrong_version = paste0(paste(installed.packages()["utils", c("Package", "Built")], collapse = "_"), ".3")
-#   R_version_running = paste0("R_", paste0(R.Version()[c("major", "minor")], collapse = "."))
-#
-#
-#   # Correct package but version conflict
-#   flow$.__enclos_env__$private$.desc$dependencies = pkg_wrong_version
-#   expect_message(mlr3::as_learner(flow, verbose = TRUE), regexp = "Version conflicts")
-#
-#   # missing dependencies + a version conflict
-#   flow$.__enclos_env__$private$.desc$dependencies = c(pkg_wrong_version, "aa_1")
-#   expect_message(mlr3::as_learner(flow, verbose = TRUE), regexp = "has uninstalled dependencies")
-#   expect_message(mlr3::as_learner(flow, verbose = TRUE), regexp = "Version conflicts")
-#
-#
-#   # wrong R version and missing all required dependencies
-#   flow$.__enclos_env__$private$.desc$dependencies = c("R_1.1", ".abcdefg_1")
-#   expect_message(mlr3::as_learner(flow, verbose = TRUE), regexp = "Flow's R version")
-#   expect_message(mlr3::as_learner(flow, verbose = TRUE), regexp = "Missing all required dependencies")
-#
-#   # everything as expected
-#   flow$.__enclos_env__$private$.desc$dependencies = c(
-#     R_version_running, pkg_correct
-#   )
-#   expect_message(mlr3::as_learner(flow, verbose = TRUE), regexp = NA)
-# })
+test_that("Correct warning message regarding dependencies.", {
+  flow = OMLFlow$new(19103L)
+  flow$desc # need to touch it so that the desc is loaded
+
+  # flow$.__enclos_env__$private$.desc$dependencies = c("aaa_1")
+  pkg_correct = paste0(paste(installed.packages()["utils", c("Package", "Built")], collapse = "_"))
+  pkg_wrong_version = paste0(paste(installed.packages()["utils", c("Package", "Built")], collapse = "_"), ".3")
+  R_version_running = paste0("R_", paste0(R.Version()[c("major", "minor")], collapse = "."))
+
+
+  # Correct package but version conflict
+  flow$.__enclos_env__$private$.desc$dependencies = pkg_wrong_version
+  expect_message(mlr3::as_learner(flow, verbose = TRUE, from_binary = TRUE),
+    regexp = "Version conflicts"
+  )
+
+  # missing dependencies + a version conflict
+  flow$.__enclos_env__$private$.desc$dependencies = c(pkg_wrong_version, "aa_1")
+  expect_message(mlr3::as_learner(flow, verbose = TRUE, from_binary = TRUE),
+    regexp = "has uninstalled dependencies")
+  expect_message(mlr3::as_learner(flow, verbose = TRUE, from_binary = TRUE), regexp = "Version conflicts")
+
+
+  # wrong R version and missing all required dependencies
+  flow$.__enclos_env__$private$.desc$dependencies = c("R_1.1", ".abcdefg_1")
+  expect_message(mlr3::as_learner(flow, verbose = TRUE, from_binary = TRUE), regexp = "Flow's R version")
+  expect_message(mlr3::as_learner(flow, verbose = TRUE, from_binary = TRUE),
+    regexp = "Missing all required dependencies"
+  )
+
+  # everything as expected
+  flow$.__enclos_env__$private$.desc$dependencies = c(
+    R_version_running, pkg_correct
+  )
+  expect_message(mlr3::as_learner(flow, verbose = TRUE, from_binary = TRUE), regexp = NA)
+})

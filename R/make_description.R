@@ -90,7 +90,7 @@ is_simple_pvalue = function(value) {
 
 # Gets the dependencies in the form "mlr3_x.x.x, rpart_x.x.x" from the packages.
 get_dependencies = function(x) {
-  versions = mlr3misc::map(
+  versions = map(
     x,
     function(x) getNamespace(x)$.__NAMESPACE__.$spec["version"]
   )

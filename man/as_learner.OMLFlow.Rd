@@ -4,7 +4,7 @@
 \alias{as_learner.OMLFlow}
 \title{Convert an OpenML Flow to a mlr3 Learner}
 \usage{
-\method{as_learner}{OMLFlow}(x, task_type = NULL, verbose = TRUE, ...)
+\method{as_learner}{OMLFlow}(x, task_type = NULL, verbose = TRUE, from_binary = FALSE, ...)
 }
 \arguments{
 \item{x}{(OMLFlow) The OMLFlow that is converted to a mlr3::Learner.}
@@ -12,14 +12,17 @@
 \item{task_type}{(\code{character(1)})
 The task type to constrct a pseudo-learner. For more information see \link{OMLFlow}.}
 
-\item{verbose}{(\code{logical(1)}) Whether to give informative print output}
+\item{verbose}{(\code{logical(1)}) Whether to give informative print output,}
+
+\item{from_binary}{(\code{logical(1)}) Whether to try to construct an actual mlr3 Learner from the
+flow (works of course only for mlr3 Flows).}
 
 \item{...}{Additional arguments}
 }
 \description{
-If it is not an mlr3 Flow it creates a pseudo learner (if \code{task_type} is given, otherwise
-it returns NULL).
-If it is a mlr3 Flow it downloads the binary rds file and compares the dependencies of the
-flow with the installed packages and the running R version (gives informative print output if
-the verbose flag is set).
+By default this function creates a Pseudo-Learner (that cannot be used for training or
+prediction) for the given task type. This enables the conversion of OpenML Runs to
+\link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
+The parameters of the flow include the parameters of all subcomponents, where the name
+c.123.par means that this is the parameter 'par' of the component with id 123.
 }
