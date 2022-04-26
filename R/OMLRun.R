@@ -174,6 +174,7 @@ split_predictions = function(predictions, resampling, task_type) {
   }
   names = colnames(predictions)
   test_sets = map(seq(resampling$iters), function(i) resampling$test_set(i))
+  colnames(predictions)[colnames(predictions) == "row_ids"] = "row_id"
 
   predictions = lapply(
     test_sets,
@@ -181,9 +182,9 @@ split_predictions = function(predictions, resampling, task_type) {
     # here we capture some (probably not all formats) and also discard unknown columns
     function(x) {
       if (test_subset(c("row_ids", "truth", "reponse", "se"), names)) { # mlr3
-        test_data = predictions[get("row_ids") %in% x, c("row_ids", "truth", "response", "se")]
+        test_data = predictions[get("row_id") %in% x, c("row_ids", "truth", "response", "se")]
       } else if (test_subset(c("row_ids", "truth", "response"), names)) { # mlr3
-        test_data = predictions[get("row_ids") %in% x, c("row_ids", "truth", "response")]
+        test_data = predictions[get("row_id") %in% x, c("row_ids", "truth", "response")]
       } else if (test_subset(c("row_id", "truth", "prediction"), names)) {
         test_data = predictions[get("row_id") %in% x, c("row_id", "truth", "prediction")]
         colnames(test_data) = c("row_ids", "truth", "response")
@@ -196,9 +197,9 @@ split_predictions = function(predictions, resampling, task_type) {
       test_data = as.list(test_data)
       if (task_type == "Supervised Classification") {
         prob_names = colnames(predictions)[startsWith(colnames(predictions), "confidence.")]
-        probs = predictions[, prob_names, with = FALSE]
+        probs = predictions[get("row_id") %in% x, prob_names, with = FALSE]
         probs_are_ints = all(map_lgl(probs, is.integer)) # only zeros and ones
-        if (!probs_are_ints) {
+        if (!probs_are_ints) { # 1 0 are no proper probabilities.
           colnames(probs) = gsub("confidence.", "", prob_names)
           test_data$prob = probs
         }
@@ -254,7 +255,7 @@ as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
   param_vals = set_names(
     x = x$parameter_setting[["value"]],
     nm = make.names(
-      paste(x$parameter_setting[["name"]], x$parameter_setting[["component"]], sep = "_")
+      paste0("f", x$parameter_setting[["component"]], ".", x$parameter_setting[["name"]])
     )
   )
   if (!all(names(param_vals) %in% learner$param_set$ids())) {
