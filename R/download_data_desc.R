@@ -3,8 +3,7 @@ download_data_desc = function(data_id) {
   desc = get_json(paste0(server, "/json/data/%i"), data_id,
     simplify_data_frame = FALSE
   )[[1L]]
-  desc = parse_data_desc(desc)
-  return(desc)
+  parse_data_desc(desc)
 }
 
 parse_data_desc = function(desc) {
