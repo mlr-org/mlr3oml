@@ -253,7 +253,7 @@ upload = function(url, body, query = list(api_key = get_api_key())) {
       flow = as.integer(content_list$upload_flow$id[[1]]),
       run = as.integer(content_list$upload_run$run_id[[1]])
     )
-    mlr3misc::messagef("Your %s was successfully uploaded and assigned id: %i.", type, id)
+    messagef("Your %s was successfully uploaded and assigned id: %i.", type, id)
   }
 
   return(id)

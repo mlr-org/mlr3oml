@@ -30,7 +30,7 @@ parse_task_desc = function(desc) {
     }
   }
   desc$input$estimation_procedure$parameter = rbindlist(
-    mlr3misc::map(est_params, function(x) as.data.table(list(name = x[[1]], value = list(x[[2]]))))
+    map(est_params, function(x) as.data.table(list(name = x[[1]], value = list(x[[2]]))))
   )
   desc$input$estimation_procedure$id = as.integer(desc$input$estimation_procedure$id)
 

@@ -11,8 +11,26 @@ repos:
         exclude: 'tests/testthat/.*/.*\.R'
     -   id: roxygenize
         additional_dependencies:
-        - pkgbuild
-
+        -    backports
+        -    checkmate
+        -    curl
+        -    data.table
+        -    farff
+        -    httr
+        -    jsonlite
+        -    lgr
+        -    methods
+        -    mlr3
+        -    mlr3misc
+        -    paradox
+        -    progressr
+        -    R6
+        -    stringi
+        -    uuid
+        -    xml2
+        -    pkgbuild
+        -    RWeka
+        -    mlr3pipelines
     # codemeta must be above use-tidy-description when both are used
     # -   id: codemeta-description-updated
     -   id: use-tidy-description

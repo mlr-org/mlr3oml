@@ -22,6 +22,7 @@ Imports:
     httr,
     jsonlite,
     lgr,
+    methods,
     mlr3 (>= 0.10.0),
     mlr3misc (>= 0.7.0),
     paradox,
@@ -29,8 +30,7 @@ Imports:
     R6,
     stringi,
     uuid,
-    xml2,
-    methods
+    xml2
 Suggests:
     duckdb,
     mlr3learners,
