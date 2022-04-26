@@ -119,14 +119,14 @@ OMLData = R6Class("OMLData",
       remove_named(self$data_raw, c(self$desc$row_id_attribute, self$desc$ignore_attribute))
     },
 
-    #' @field data (`data.table()`)\cr
+    #' @field data_raw (`data.table()`)\cr
     #' Data as [data.table::data.table()].
     data_raw = function() {
       if (is.null(private$.data)) {
         data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
         private$.data = data
       }
-      private$.data
+      return(private$.data)
     },
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.
