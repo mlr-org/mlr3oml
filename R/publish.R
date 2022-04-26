@@ -63,11 +63,7 @@ publish.Learner = function(x, ...) { # nolint
 }
 
 learner_is_publishable = function(learner) {
-  oml_id = get_private(learner)$oml$id
-  if (is.null(oml_id) || test_count(oml_id)) {
-    return(TRUE)
-  }
-  return(FALSE)
+  is.null(get_private(learner)$oml$info)
 }
 
 #' @export
@@ -141,7 +137,8 @@ publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
 nullify_learner = function(learner) {
   learner = learner$clone(TRUE)
   learner$reset()
-  learner$param_set = NULL
+  # ideally this resets the param values to the defaults but this is currently not possible
+  learner$param_set$values = list()
   return(learner)
 }
 

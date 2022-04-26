@@ -138,7 +138,7 @@ OMLCollection = R6Class("OMLCollection",
     #'   A data.table summarizing the datasets included in the collection.
     data = function() {
       if (is.null(private$.data)) {
-        datasets = mlr3misc::map(
+        datasets = map(
           self$data_ids,
           function(x) OMLData$new(x, cache = is.character(self$cache_dir))
         )
