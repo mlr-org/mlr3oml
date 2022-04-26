@@ -22,7 +22,6 @@ parse_data_desc = function(desc) {
 
   # OpenML uploaded the ignore_attributes comma-seperated
   ignore_attribute = map(desc$ignore_attribute, function(x) strsplit(x, ",")[[1L]])
-  ignore_attribute = unlist(ignore_attribute)
-  desc$ignore_attribute = ignore_attribute
+  desc$ignore_attribute = unlist(ignore_attribute)
   return(desc)
 }
