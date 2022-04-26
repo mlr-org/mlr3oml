@@ -21,11 +21,8 @@ parse_data_desc = function(desc) {
   # remove_named(desc, c("file_id", "description", "md5_checksum"))
 
   # OpenML uploaded the ignore_attributes comma-seperated
-  contains_comma = grepl(",", desc$ignore_attribute, fixed = TRUE)
-  ignore_no_comma = desc$ignore_attribute[!contains_comma]
-  ignore_comma = desc$ignore_attribute[contains_comma]
-  ignore_comma = map(ignore_comma, function(x) strsplit(x, ",")[[1L]])
-  ignore_comma = unlist(ignore_comma)
-  desc$ignore_attribute = c(ignore_no_comma, ignore_comma)
+  ignore_attribute = map(desc$ignore_attribute, function(x) strsplit(x, ",")[[1L]])
+  ignore_attribute = unlist(ignore_attribute)
+  desc$ignore_attribute = ignore_attribute
   return(desc)
 }
