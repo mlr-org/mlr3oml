@@ -84,9 +84,7 @@
 <li><p><input type="checkbox" disabled>Upload checken (inklusive evaluations) - oml_ids –&gt; upload (wo wird das eigentlich herngnomm) hash integrieren um checken ob das verändert wird, das wird von der S3 methode get_oml_id erledigt - Aufpassen mit den Versionen beim upload wenn man einen Flow vom rds rekonstruiert: ausprobieren was passiert wenn man 2 x den gleichen Flow mit unterschiedlicher binary hochlädt. –&gt; Evtl neue Instanz aus der Klasse erstellen und checken ob die gleich sind bevor man uploaded - Wird nur die Klasse oder die Instanz hochgeladen - Das mit dem hashing fertig machen Wenn der Test Server läuft: testen fügen unser eigenes resultat hinzu und vergleichen das ganze mal</p></li>
 <li><p>Bei den Tests einen eigenen Cache Ordner erstellen und wieder löschen nach den Tests Loakle Tests: kein caching Github actoins tests: caching</p></li>
 <li><p>delete all the invalid mlr3 Objects from OpenML</p></li>
-<li><p>as_resample_result caching für .rds files funktioniert nicht (.rds vs .qs Endung?)</p></li>
 <li><p>Do caching of the description download in the default args desc = download_run_desc</p></li>
-<li><p>Don’t always upload the whole model when publishing a run (make it an argument that is FALSE by default)</p></li>
 <li><p>Ich finde nicht, dass die ignore_attribute und die row_identifier Spalte gelöscht werden sollen –&gt; make it an optional argument “discard”</p></li>
 <li><p>Check that the predictions for the correct predict set are being uploaded</p></li>
 <li><p>Parquet: sparse parquet</p></li>
