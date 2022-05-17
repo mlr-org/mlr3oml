@@ -5,18 +5,18 @@ test_that("Can extract params from recursive components", {
   psc = construct_paramset(flow)
 
   expected_ids = c(
-    "steps_5668",
-    "axis_5508",
-    "copy_5508",
-    "missing_values_5508",
-    "strategy_5508",
-    "verbose_5508",
-    "categorical_features_5509",
-    "dtype_5509",
-    "handle_unknown_5509",
-    "n_values_5509",
-    "sparse_5509",
-    "threshold_5669"
+    "f5668.steps",
+    "f5508.axis",
+    "f5508.copy",
+    "f5508.missing_values",
+    "f5508.strategy",
+    "f5508.verbose",
+    "f5509.categorical_features",
+    "f5509.dtype",
+    "f5509.handle_unknown",
+    "f5509.n_values",
+    "f5509.sparse",
+    "f5669.threshold"
   )
 
   expect_equal(psc$ids(), expected_ids)

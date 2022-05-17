@@ -25,17 +25,14 @@ https://github.com/openml/OpenML/issues/1145
       - Das mit dem hashing fertig machen
     Wenn der Test Server läuft: testen
   fügen unser eigenes resultat hinzu und vergleichen das ganze mal
+
 - Bei den Tests einen eigenen Cache Ordner erstellen und wieder löschen nach den Tests
   Loakle Tests: kein caching
   Github actoins tests: caching
 
 - delete all the invalid mlr3 Objects from OpenML
 
-- as_resample_result caching für .rds files funktioniert nicht (.rds vs .qs Endung?)
-
 - Do caching of the description download in the default args desc = download_run_desc
-
-- Don't always upload the whole model when publishing a run (make it an argument that is FALSE by default)
 
 - Ich finde nicht, dass die ignore_attribute und die row_identifier Spalte gelöscht werden sollen
     --> make it an optional argument "discard"

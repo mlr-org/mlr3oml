@@ -14,7 +14,9 @@ publish(x, confirm = TRUE, ...)
 \item{...}{Additional arguments.}
 }
 \description{
-Publishes a {Flow, Run, Dataset, Task} to OpenML.
+Publishes a  \link[mlr3:Learner]{mlr3::Learner} (as a Flow) or \link[mlr3:ResampleResult]{mlr3::ResampleResult} (as a Run) to OpenML.
+Currently only resample results with atomic parameters can be uploaded, as it has to be
+possible to represent the parameter values in json format.
 }
 \details{
 This is a generic function.

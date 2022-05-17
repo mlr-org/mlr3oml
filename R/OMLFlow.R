@@ -1,19 +1,13 @@
 #' @title Interface to OpenML Flows
 #'
 #' @description
-#' This is the class for flows served on [OpenML](https://www.openml.org/search?type=flow&sort=runs).
-#' Flows are conceptually similar to [mlr3pipelines::Graph]s.
+#' This is the class for flows served on [OpenML](https://www.openml.org/f).
+#' Flows are conceptually similar to [mlr3pipelines::GraphLearner]s.
 #' The support for publishing learners on OpenML (as flows) is currently limited but can be
 #' extended upon request.
 #'
 #' @section mlr3 Integration:
-#' * Obtain a [mlr3::Learner] using `as_learner()`. mlr3 Flows are converted into proper mlr3
-#' learners, while other flows are converted to non-executable pseudo-learners, where the
-#' task type has to be passed to `as_task()` as OpenML Flows are task-agnostic. While these learners
-#' are not directly useful, this allows sklearn runs to be converted to [mlr3::ResampleResult]s and
-#' run collections can be converted to [mlr3::BenchmarkResult]s.
-#' The parameters of the flow include the parameters of all subcomponents, where the name
-#' c.123.par  means that this is the parameter 'par' of the component with id 123.
+#' * Obtain a [mlr3::Learner] using `as_learner()`. Fore more details see [mlr3::as_learner].
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -23,7 +17,7 @@
 #' \donttest{
 #' library("mlr3")
 #' # mlr3 flow:
-#' flow = OMLFlow$new(id = 19082L)
+#' flow = OMLFlow$new(id = 19103L)
 #' learner = as_learner(flow)
 #' # python flow
 #' python_flow = OMLFlow$new(19090L)
@@ -93,39 +87,36 @@ OMLFlow = R6Class("OMLFlow",
 #' @title Convert an OpenML Flow to a mlr3 Learner
 #'
 #' @description
-#'   If it is not an mlr3 Flow it creates a pseudo learner (if `task_type` is given, otherwise
-#'   it returns NULL).
-#'   If it is a mlr3 Flow it downloads the binary rds file and compares the dependencies of the
-#'   flow with the installed packages and the running R version (gives informative print output if
-#'   the verbose flag is set).
+#'   By default this function creates a Pseudo-Learner (that cannot be used for training or
+#'   prediction) for the given task type. This enables the conversion of OpenML Runs to
+#'   [mlr3::ResampleResult]s.
+#'   This is well defined because each subcomponent (i.e. id) can only appear once in a Flow
+#'    according to the OpenML docs.
 #'
 #' @param x (OMLFlow) The OMLFlow that is converted to a mlr3::Learner.
 #' @param task_type (`character(1)`)
 #'    The task type to constrct a pseudo-learner. For more information see [mlr3oml::OMLFlow].
-#' @param verbose (`logical(1)`) Whether to give informative print output
+#' @param from_binary (`logical(1)`) Whether to construct an actual mlr3 learner.
+#' flow (works of course only for mlr3 Flows).
+#' @param verbose (`logical(1)`) Whether to be verbose.
 #' @param ... Additional arguments
+#'
 #' @importFrom mlr3 as_learner
 #' @export
-as_learner.OMLFlow = function(x, task_type = NULL, verbose = TRUE, ...) {
+as_learner.OMLFlow = function(x, task_type = NULL, from_binary = FALSE, verbose = TRUE, ...) {
   assert_choice(task_type, c("regr", "classif", "surv"), null.ok = TRUE)
   assert_flag(verbose)
 
-  learner = make_oml_learner(x, task_type)
-  # if (!startsWith(x$name, "mlr3.")) {
-  #   learner = make_oml_learner(x, task_type)
-  #   return(learner)
-  # }
-  #
-  # learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir, desc = x$desc)
-  # if (!check_dependencies(x, verbose)) {
-  #   try({
-  #     learner$.__enclos_env__$private$oml = list(id = x$id, info = "dependency_mismatch")
-  #   })
-  # } else {
-  #   try({
-  #     learner$.__enclos_env__$private$oml = list(id = x$id)
-  #   })
-  # }
+  if (!from_binary || !startsWith(x$name, "mlr3.")) {
+    learner = make_oml_learner(x, task_type)
+    return(learner)
+  }
+  learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir, desc = x$desc)
+  if (!check_dependencies(x, verbose)) {
+    learner$.__enclos_env__$private$oml = list(id = x$id, info = "dependency_mismatch")
+  } else {
+    learner$.__enclos_env__$private$oml = list(id = x$id)
+  }
 
   return(learner)
 }

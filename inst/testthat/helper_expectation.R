@@ -104,10 +104,14 @@ expect_oml_run = function(run) {
   expect_choice(run$task_type, mlr3oml:::oml_reflections$task_types)
   expect_data_table(run$parameter_setting)
   expect_data_table(run$prediction)
-  rr = suppressWarnings(as_resample_result(run))
-  expect_r6(rr, "ResampleResult")
   task_type = mlr3oml:::task_type_translator(run$task_type, to = "mlr3")
+
   if (!is.null(task_type)) {
+    rr = suppressWarnings(as_resample_result(run))
+
+    if (task_type %in% c("regr", "classif", "surv")) {
+      expect_r6(rr, "ResampleResult")
+    }
     if (task_type == "classif") {
       expect_error(rr$score(msr("classif.ce")), regexp = NA)
     }
