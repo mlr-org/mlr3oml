@@ -105,10 +105,10 @@ OMLTask = R6Class("OMLTask",
       targets = switch(self$desc$task_type,
         "Supervised Classification" = ,
         "Supervised Regression" = source_data$target_feature,
-        "Survival Analysis" = unlist(
-          source_data[c("target_feature_left", "target_feature_right", "target_feature_event")],
-          use.names = FALSE
-        ),
+        # "Survival Analysis" = unlist(
+        #   source_data[c("target_feature_left", "target_feature_right", "target_feature_event")],
+        #   use.names = FALSE
+        # ),
         stopf("Unsupported task type '%s'", self$desc$task_type)
       )
       make.names(targets)
@@ -165,7 +165,7 @@ as_task.OMLTask = function(x, ...) {
     # FIXME: positive class?
     "Supervised Classification" = new_task_classif,
     "Supervised Regression" = new_task_regr,
-    "Survival Analysis" = new_task_surv,
+    # "Survival Analysis" = new_task_surv,
     stopf("Unsupported task type '%s'.", x$desc$task_type)
   )
   task = constructor(name, data, target = target)

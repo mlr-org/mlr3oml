@@ -7,8 +7,9 @@ make_oml_learner = function(flow, task_type = NULL) {
     return(NULL)
   } else {
     if (task_type == "surv") {
-      require_namespaces("mlr3proba")
-      super_class = mlr3proba::LearnerSurv
+      stopf("mlr3proba currently not supported.")
+      # require_namespaces("mlr3proba")
+      # super_class = mlr3proba::LearnerSurv
     } else {
       super_class = switch(task_type,
         regr = LearnerRegr,

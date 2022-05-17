@@ -39,8 +39,7 @@ test_that("Randomized download test", {
   task_ids = sample(task_ids, n)
   task_types = c(
     "Supervised Regression",
-    "Supervised Classification",
-    "Survival Analysis"
+    "Supervised Classification"
   )
   for (task_id in task_ids) {
     task = OMLTask$new(task_id)

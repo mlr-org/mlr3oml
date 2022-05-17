@@ -35,7 +35,6 @@ Suggests:
     duckdb,
     mlr3learners,
     mlr3pipelines,
-    mlr3proba,
     qs,
     RWeka,
     testthat (>= 3.0.0),

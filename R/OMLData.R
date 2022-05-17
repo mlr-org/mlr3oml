@@ -195,7 +195,8 @@ as_task.OMLData = function(x, target_names = NULL, ...) {
       NULL
     )
   } else if (length(target) == 2L) {
-    constructor = new_task_surv
+    stopf("mlr3proba currently not supported.")
+    # constructor = new_task_surv
   }
   if (is.null(constructor)) {
     stopf("Unable to determine the task type")
