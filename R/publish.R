@@ -40,6 +40,7 @@ publish.Learner = function(x, ...) { # nolint
 
   # we get the hash from the class of the learner,
   if (inherits(x, "LearnerSurv")) {
+    stopf("mlr3proba currently not supported")
     require_namespaces("mlr3proba")
   }
 

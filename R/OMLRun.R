@@ -166,7 +166,7 @@ split_predictions = function(predictions, resampling, task_type) {
   } else if (task_type == "Supervised Regression") {
     classes = c("PredictionDataRegr", "PredictionData")
   } else if (task_type == "Survival Analysis") {
-    stop("Not implemented yet")
+    stopf("mlr3proba currently not supported")
     # require_namespaces("mlr3proba")
     # classes = c("PredictionDataSurv", "PredictionData")
   } else {

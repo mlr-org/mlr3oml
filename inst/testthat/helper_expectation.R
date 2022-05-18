@@ -12,7 +12,7 @@ expect_oml_flow = function(flow) {
   expect_string(flow$name, min.chars = 1L)
   expect_r6(as_learner(flow, "classif"), "LearnerClassif")
   expect_r6(as_learner(flow, "regr"), "LearnerRegr")
-  expect_r6(as_learner(flow, "surv"), "LearnerSurv")
+  # expect_r6(as_learner(flow, "surv"), "LearnerSurv")
   expect_true(is.null(suppressWarnings(as_learner(flow))))
   # if (startsWith(flow$name, "mlr3.")) {
   #   expect_r6(as_learner(flow), "Learner")
@@ -78,9 +78,9 @@ expect_oml_task = function(task) {
     if (tt == "classif") {
       expect_r6(as_task(task), "TaskClassif")
     }
-    if (tt == "surv") {
-      expect_r6(as_task(task), "TaskSurv")
-    }
+    # if (tt == "surv") {
+    #   expect_r6(as_task(task), "TaskSurv")
+    # }
   }
   if (!is.null(task$desc$input$estimation_procedure$data_splits_url)) {
     expect_r6(as_resampling(task), "Resampling")
@@ -109,7 +109,7 @@ expect_oml_run = function(run) {
   if (!is.null(task_type)) {
     rr = suppressWarnings(as_resample_result(run))
 
-    if (task_type %in% c("regr", "classif", "surv")) {
+    if (task_type %in% c("regr", "classif")) {
       expect_r6(rr, "ResampleResult")
     }
     if (task_type == "classif") {

@@ -104,7 +104,7 @@ OMLFlow = R6Class("OMLFlow",
 #' @importFrom mlr3 as_learner
 #' @export
 as_learner.OMLFlow = function(x, task_type = NULL, from_binary = FALSE, verbose = TRUE, ...) {
-  assert_choice(task_type, c("regr", "classif", "surv"), null.ok = TRUE)
+  assert_choice(task_type, c("regr", "classif"), null.ok = TRUE)
   assert_flag(verbose)
 
   if (!from_binary || !startsWith(x$name, "mlr3.")) {
