@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_arff.R
 \name{read_arff}
 \alias{read_arff}
-\title{Read ARFF file}
+\title{Read ARFF files}
 \usage{
 read_arff(path)
 }
@@ -15,4 +15,13 @@ Path or URI of the ARFF file, passed to \code{\link[=file]{file()}}.}
 }
 \description{
 Parses a file located at \code{path} and returns a \code{\link[=data.table]{data.table()}}.
+
+Limitations:
+\itemize{
+\item Only works for dense files, no support for sparse data.
+Use \CRANpkg{RWeka} instead.
+\item Dates (even if there is no time component) are read in as \link{POSIXct}.
+\item The \code{date-format} from the ARFF specification is currently ignored.
+Instead, we rely on the auto-detection of \CRANpkg{data.table}'s \code{\link[=fread]{fread()}}..
+}
 }
