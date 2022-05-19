@@ -107,44 +107,40 @@ test_that("OMLFlow conversion throws the correct warnings", {
   )
 })
 
-if (FALSE) { # Upload tests
-  # TODO: Check that this works for regression, classification and survival for the various
-  # predict types (especially probs for classification)
-  test_that("Upload + download for mlr3 classif (prob) works", {
-    with_test_server()
-    learner = lrn("classif.rpart", predict_type = "prob")
-    otask = OMLTask$new(31)
-    task = mlr3::as_task(otask)
-    resampling = mlr3::as_resampling(otask)
-    rr = resample(task, learner, resampling)
-    run_id = publish(rr, confirm = FALSE)$run_id
-    run = OMLRun$new(run_id)
-    rr_rec = mlr3::as_resample_result(run)
-  })
-
-  test_that("Can publish run of flow mlr3.rpart on task 1308 (Iris)", {
-    with_test_server()
-    withr::defer({
-      delete("run", ids[["run_id"]])
-      delete("flow", ids[["flow_id"]])
-    })
-    learner = lrn("classif.rpart", cp = 0.5)
-    oml_task = OMLTask$new(1308L)
-    task = mlr3::as_task(oml_task)
-    resampling = mlr3::as_resampling(oml_task)
-    rr = resample(task, learner, resampling)
-    ids = publish(rr, confirm = FALSE)
-    # OMLRun$debug("convert")
-    run = OMLRun$new(ids[["run_id"]])
-    rr_rec = mlr3::as_resample_result(run)
-    expect_equal(rr_rec$task, rr$task)
-    expect_equal(rr_rec$task_type, rr$task_type)
-    expect_equal(rr_rec$learners, rr$learners)
-    expect_equal(rr_rec$iters, rr$iters)
-    expect_equal(rr_rec$prediction(), rr$prediction())
-
-    ce = rr$score(msr("classif.ce"))$classif.ce
-    ce_rec = rr_rec$score(msr("classif.ce"))$classif.ce
-    expect_true(all(ce == ce_rec))
-  })
-}
+# test_that("Upload + download for mlr3 classif (prob) works", {
+#   with_test_server()
+#   learner = lrn("classif.rpart", predict_type = "prob")
+#   otask = OMLTask$new(31)
+#   task = mlr3::as_task(otask)
+#   resampling = mlr3::as_resampling(otask)
+#   rr = resample(task, learner, resampling)
+#   run_id = publish(rr, confirm = FALSE)$run_id
+#   run = OMLRun$new(run_id)
+#   rr_rec = mlr3::as_resample_result(run)
+# })
+#
+# test_that("Can publish run of flow mlr3.rpart on task 1308 (Iris)", {
+#   with_test_server()
+#   withr::defer({
+#     delete("run", ids[["run_id"]])
+#     delete("flow", ids[["flow_id"]])
+#   })
+#   learner = lrn("classif.rpart", cp = 0.5)
+#   oml_task = OMLTask$new(31L)
+#   task = mlr3::as_task(oml_task)
+#   resampling = mlr3::as_resampling(oml_task)
+#   rr = resample(task, learner, resampling)
+#   ids = publish(rr, confirm = FALSE)
+#   # OMLRun$debug("convert")
+#   run = OMLRun$new(ids[["run_id"]])
+#   rr_rec = mlr3::as_resample_result(run)
+#   expect_equal(rr_rec$task, rr$task)
+#   expect_equal(rr_rec$task_type, rr$task_type)
+#   expect_equal(rr_rec$learners, rr$learners)
+#   expect_equal(rr_rec$iters, rr$iters)
+#   expect_equal(rr_rec$prediction(), rr$prediction())
+#
+#   ce = rr$score(msr("classif.ce"))$classif.ce
+#   ce_rec = rr_rec$score(msr("classif.ce"))$classif.ce
+#   expect_true(all(ce == ce_rec))
+# })

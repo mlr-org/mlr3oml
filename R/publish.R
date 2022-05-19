@@ -116,7 +116,7 @@ publish.ResampleResult = function(x, upload_model = FALSE, ...) { # nolint
   oml_pred = make_oml_prediction(x)
   # Note that it has to be this ARFF writer because with e.g. foreign::write.arff the evaluation
   # engine does not work (arff is not fully specified)
-  farff::writeARFF(oml_pred, pred_path)
+  write_arff(oml_pred, pred_path)
 
   run_id = upload(
     url = url,

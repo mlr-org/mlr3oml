@@ -2,7 +2,6 @@
 
 https://github.com/openml/OpenML/issues/1145
 
-- Add support for Test then train data-split
 - [ ] Alle Tests laufen + fehlende Tests hinzufügen
       - row_ids checken --> primary_key muss auf die rowidentifier column gesetzt werden falls die
       existiert
