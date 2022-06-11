@@ -148,53 +148,84 @@ from <a href="https://openml.org/d" class="external-link">https://openml.org/d</
     <dl><dt>data_id</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Vector of data ids to restrict to.</p></dd>
+
+
 <dt>data_name</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Filter for name of data set.</p></dd>
+
+
 <dt>number_instances</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Filter for number of instances.</p></dd>
+
+
 <dt>number_features</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Filter for number of features.</p></dd>
+
+
 <dt>number_classes</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Filter for number of labels of the target (only classification tasks).</p></dd>
+
+
 <dt>number_missing_values</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Filter for number of missing values.</p></dd>
+
+
 <dt>tag</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Filter for tags. You can provide multiple tags as character vector.</p></dd>
+
+
 <dt>limit</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Limit the results to <code>limit</code> records.
 Default is the value of option <code>"mlr3oml.limit"</code>, defaulting to 5000.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>(any)<br>
 Additional (unsupported) filters, as named arguments.</p></dd>
+
+
 <dt>run_id</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Vector of run ids to restrict to.</p></dd>
+
+
 <dt>task_id</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Vector of task ids to restrict to.</p></dd>
+
+
 <dt>measures</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
 Vector of evaluation measures to restrict to.</p></dd>
+
+
 <dt>uploader</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Filter for uploader.</p></dd>
+
+
 <dt>flow_id</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Filter for flow id.</p></dd>
+
+
 <dt>setup_id</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Vector of setup ids to restrict to.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<code>data.table()</code>) of results, or a null data.table if no data set matches the filter criteria.</p>
+    
+
+<p>(<code>data.table()</code>) of results, or a null data.table if no data set matches the filter criteria.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -421,7 +452,7 @@ c.f. <a href="https://www.openml.org/api_docs" class="external-link">https://www
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
