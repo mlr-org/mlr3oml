@@ -51,7 +51,11 @@ OMLTask = R6Class("OMLTask",
     #' For a more detailed printer, convert to a [mlr3::Task] via `$task`.
     print = function() {
       catf("<OMLTask:%i>", self$id)
+      catf(" * Type: %s", self$desc$task_type)
       catf(" * Data: %s (%ix%i)", self$data_name, self$nrow, self$ncol)
+      if (self$task_type %in% c("Supervised Regression", "Supervised Classification")) {
+        catf(" * Target: %s", paste(self$target_names, collapse = ","))
+      }
       catf(" * Data split: %s", self$data_split$type)
     }
   ),

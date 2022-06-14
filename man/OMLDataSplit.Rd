@@ -56,14 +56,14 @@ A data.table containing the splits as provided by OpenML.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLDataSplit$new()}}
-\item \href{#method-print}{\code{OMLDataSplit$print()}}
-\item \href{#method-clone}{\code{OMLDataSplit$clone()}}
+\item \href{#method-OMLDataSplit-new}{\code{OMLDataSplit$new()}}
+\item \href{#method-OMLDataSplit-print}{\code{OMLDataSplit$print()}}
+\item \href{#method-OMLDataSplit-clone}{\code{OMLDataSplit$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLDataSplit-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLDataSplit-new}{}}}
 \subsection{Method \code{new()}}{
 Initializes an  instance of class OMLDataSplit Requires either
 \subsection{Usage}{
@@ -89,8 +89,8 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLDataSplit-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLDataSplit-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 \subsection{Usage}{
@@ -99,8 +99,8 @@ Prints the object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLDataSplit-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLDataSplit-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

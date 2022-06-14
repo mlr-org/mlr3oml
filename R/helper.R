@@ -139,65 +139,7 @@ get_rds = function(url, api_key = get_api_key(), retries = 3L) {
   }
 }
 
-get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
-  path = tempfile(fileext = ".arff")
-  on.exit(file.remove(path[file.exists(path)]))
-  url = sprintf(url, ...)
 
-  lg$info("Retrieving ARFF", url = url, authenticated = !is.na(api_key))
-
-  for (retry in seq_len(retries)) {
-    response = download_file(url, path, api_key = api_key)
-
-    if (response$ok) {
-      lg$debug("Start processing ARFF file", path = path)
-      parser = getOption("mlr3oml.arff_parser", "internal")
-
-      if (sparse || parser == "RWeka") {
-        if (!requireNamespace("RWeka", quietly = TRUE)) {
-          stopf("Failed to parse arff file, install 'RWeka'")
-        }
-        tab = setDT(RWeka::read.arff(path))
-      } else if (parser == "farff") {
-        tab = setDT(utils::getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
-      } else if (parser == "internal") {
-        tab = read_arff(path)
-      } else {
-        stopf("Unknown parser '%s'", parser)
-      }
-
-      lg$debug("Finished processing ARFF file",
-        nrow = nrow(tab), ncol = ncol(tab),
-        colnames = names(tab)
-      )
-
-      return(tab)
-    } else if (retry < retries && response$http_code >= 500L) {
-      delay = max(rnorm(1L, mean = 10), 0)
-      lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
-      Sys.sleep(delay)
-    }
-  }
-
-  download_error(response)
-}
-
-
-# get_parquet = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
-#   if (sparse) {
-#     stopf("Sparse files not supported for parquet yet.")
-#   }
-#   path = tempfile(fileext = ".parquet")
-#   on.exit(file.remove(path[file.exists(path)]))
-#   url = sprintf(url, ...)
-#   lg$info("Retrieving parquet", url = url, authenticated = !is.na(api_key))
-#   for (retry in seq_len(retries)) {
-#     lg$debug("Start processing parquet file", path = path)
-#     db = DBI::dbConnect(duckdb::duckdb())
-#     data = DBI::dbGetQuery(db, sprintf("SELECT * FROM read_parquet(['%s']);", path))
-#     data = as.data.table(data)
-#   }
-# }
 get_paginated_table = function(type, ..., limit) {
   limit = assert_count(limit, positive = TRUE, coerce = TRUE)
   dots = discard(list(...), is.null)
@@ -297,8 +239,7 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
 #'
 #' @export
 get_server = function() {
-  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
-  return(server)
+  getOption("mlr3oml.server", "https://www.openml.org/api/v1")
 }
 
 # extracts `flow_exists` from the response
@@ -316,3 +257,8 @@ ask_confirmation = function(action = "publish") {
   user_input = readline(sprintf("Are you sure you want to %s on OpenML? (y/n)  ", action))
   if (user_input != "y") stop("Exiting since you did not press y.")
 }
+
+get_data_from_backend = function(backend) {
+  ii = backend$data(backend$data(backend$primary_key))
+}
+

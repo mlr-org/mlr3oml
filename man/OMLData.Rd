@@ -56,6 +56,9 @@ Stores the location of the cache for objects retrieved from \url{https://openml.
 If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -88,11 +91,8 @@ Row identifiers are removed automatically from the data set.
 \item \code{"number_of_missing_values"} (\code{integer()}): Number of missing values in the column.
 }}
 
-\item{\code{data}}{(\code{data.table()})\cr
-Data as \code{\link[data.table:data.table]{data.table::data.table()}}. Removes row_id_attribute and ignore_attribute.}
-
-\item{\code{data_raw}}{(\code{data.table()})\cr
-Data as \code{\link[data.table:data.table]{data.table::data.table()}}.}
+\item{\code{backend}}{(\code{mlr3::DataBackend})\cr
+The data backend.}
 
 \item{\code{target_names}}{(\code{character()})\cr
 Name of the default target, as extracted from the OpenML data set description.}
@@ -118,19 +118,19 @@ Returns all license of the dataset.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLData$new()}}
-\item \href{#method-print}{\code{OMLData$print()}}
-\item \href{#method-quality}{\code{OMLData$quality()}}
-\item \href{#method-clone}{\code{OMLData$clone()}}
+\item \href{#method-OMLData-new}{\code{OMLData$new()}}
+\item \href{#method-OMLData-print}{\code{OMLData$print()}}
+\item \href{#method-OMLData-quality}{\code{OMLData$quality()}}
+\item \href{#method-OMLData-clone}{\code{OMLData$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLData-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLData}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLData$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$new(id, cache = getOption("mlr3oml.cache", FALSE), parquet = TRUE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -147,8 +147,8 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLData-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code{as_task()}.
@@ -158,8 +158,8 @@ For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-quality"></a>}}
-\if{latex}{\out{\hypertarget{method-quality}{}}}
+\if{html}{\out{<a id="method-OMLData-quality"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-quality}{}}}
 \subsection{Method \code{quality()}}{
 Returns the value of a single OpenML data set quality.
 \subsection{Usage}{
@@ -176,8 +176,8 @@ Name of the quality to extract.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLData-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -40,15 +40,19 @@ OMLData = R6Class("OMLData",
     id = NULL,
     #' @template field_cache_dir
     cache_dir = NULL,
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = TRUE,
     #' @description
     #' Creates a new object of class `OMLData`.
     #'
     #' @param id (`integer(1)`)\cr
     #'   OpenML data id.
     #' @template param_cache
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE), parquet = TRUE) {
       self$id = assert_count(id, coerce = TRUE)
       self$cache_dir = get_cache_dir(cache)
+      self$parquet = assert_flag(parquet)
       initialize_cache(self$cache_dir)
     },
     #' @description
@@ -92,6 +96,17 @@ OMLData = R6Class("OMLData",
       }
       private$.qualities
     },
+    #' @description
+    #' Returns the data without the row identifier and ignore id columns.
+    data = function() {
+      cols = !self$features$is_ignore & !self$features$is_row_identifier
+      self$backend$data(self$backend$rownames, self$features$name[cols])
+    },
+    #' @description
+    #' Returns the complete data.
+    data_raw = function() {
+      self$backend$data(self$backend$rownames, self$features$name)
+    },
     #' @field features (`data.table()`)\cr
     #' Information about data set features (including target), downloaded from the JSON API response and
     #'   converted to a [data.table::data.table()] with columns:
@@ -113,20 +128,22 @@ OMLData = R6Class("OMLData",
       }
       private$.features
     },
-    #' @field data (`data.table()`)\cr
-    #' Data as [data.table::data.table()]. Removes row_id_attribute and ignore_attribute.
-    data = function() {
-      remove_named(self$data_raw, c(self$desc$row_id_attribute, self$desc$ignore_attribute))
-    },
-
-    #' @field data_raw (`data.table()`)\cr
-    #' Data as [data.table::data.table()].
-    data_raw = function() {
-      if (is.null(private$.data)) {
-        data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
-        private$.data = data
+    #' @field backend (`mlr3::DataBackend`)\cr
+    #'   The data backend.
+    backend = function() {
+      browser()
+      if (is.null(private$.backend)) {
+        if (self$parquet) {
+          # this function is already cached, it works a little different than the cached(f, ...)
+          # because we cache it as parquet and not .qs
+          private$.backend = as_parquet_backend(self, cache_dir = self$cache_dir)
+        } else {
+          data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+          private$.backend = as_data_backend(data)
+        }
       }
-      return(private$.data)
+
+      private$.backend
     },
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.
@@ -161,10 +178,10 @@ OMLData = R6Class("OMLData",
     }
   ),
   private = list(
-    .data = NULL,
     .desc = NULL,
     .qualities = NULL,
-    .features = NULL
+    .features = NULL,
+    .backend = NULL
   )
 )
 

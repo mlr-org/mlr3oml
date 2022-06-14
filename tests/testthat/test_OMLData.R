@@ -64,3 +64,8 @@ test_that("row_id_attribute and ignore_attribute", {
   get_private(odata)$.desc$row_id_attribute
 
 })
+
+test_that("parquet works", {
+  odata = OMLData$new(61, FALSE, parquet = TRUE)
+  b = odata$backend
+})

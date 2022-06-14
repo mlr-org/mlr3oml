@@ -204,7 +204,7 @@ make_task_table = function(tasks) {
       task = list(task),
       data = task$data$name,
       task_type = task$task_type,
-      target = task$target_names, # can have length > 1
+      target = tryCatch(task$target_names, error = function(x) NA_character_), # can have length > 1
       nrow = as.integer(task$data$quality("NumberOfInstances")),
       ncol = task$data$quality("NumberOfFeatures"),
       missing = task$data$quality("NumberOfMissingValues"),

@@ -97,14 +97,14 @@ Name of the dataset (inferred from the task name).}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLTask$new()}}
-\item \href{#method-print}{\code{OMLTask$print()}}
-\item \href{#method-clone}{\code{OMLTask$clone()}}
+\item \href{#method-OMLTask-new}{\code{OMLTask$new()}}
+\item \href{#method-OMLTask-print}{\code{OMLTask$print()}}
+\item \href{#method-OMLTask-clone}{\code{OMLTask$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLTask-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLTask-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLTask}.
 \subsection{Usage}{
@@ -125,8 +125,8 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLTask-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLTask-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task}.
@@ -136,8 +136,8 @@ For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLTask-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLTask-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
