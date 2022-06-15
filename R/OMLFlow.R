@@ -96,27 +96,11 @@ OMLFlow = R6Class("OMLFlow",
 #' @param x (OMLFlow) The OMLFlow that is converted to a mlr3::Learner.
 #' @param task_type (`character(1)`)
 #'    The task type to constrct a pseudo-learner. For more information see [mlr3oml::OMLFlow].
-#' @param from_binary (`logical(1)`) Whether to construct an actual mlr3 learner.
-#' flow (works of course only for mlr3 Flows).
-#' @param verbose (`logical(1)`) Whether to be verbose.
 #' @param ... Additional arguments
 #'
 #' @importFrom mlr3 as_learner
 #' @export
-as_learner.OMLFlow = function(x, task_type = NULL, from_binary = FALSE, verbose = TRUE, ...) {
-  assert_choice(task_type, c("regr", "classif"), null.ok = TRUE)
-  assert_flag(verbose)
-
-  if (!from_binary || !startsWith(x$name, "mlr3.")) {
-    learner = make_oml_learner(x, task_type)
-    return(learner)
-  }
-  learner = cached(download_flow_binary, "learner", x$id, cache_dir = x$cache_dir, desc = x$desc)
-  if (!check_dependencies(x, verbose)) {
-    learner$.__enclos_env__$private$oml = list(id = x$id, info = "dependency_mismatch")
-  } else {
-    learner$.__enclos_env__$private$oml = list(id = x$id)
-  }
-
-  return(learner)
+as_learner.OMLFlow = function(x, task_type = NULL, ...) {
+  assert_choice(task_type, c("regr", "classif"))
+  make_oml_learner(x, task_type)
 }
