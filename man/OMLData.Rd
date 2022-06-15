@@ -73,7 +73,15 @@ Data set description (meta information), downloaded and converted from the JSON 
 
 \item{\code{qualities}}{(\code{data.table()})\cr
 Data set qualities (performance values), downloaded from the JSON API response and
-converted to a \code{\link[data.table:data.table]{data.table::data.table()}} with columns \code{"name"} and \code{"value"}.}
+converted to a \code{\link[data.table:data.table]{data.table::data.table()}} with columns \code{"name"} and \code{"value"}.
+Returns the data without the row identifier and ignore id columns.}
+
+\item{\code{data}}{(\code{data.table()})\cr
+Returns the data without the row id and ignore columns.
+For the complete data, use \verb{$data_raw}.}
+
+\item{\code{data_raw}}{(\code{data.table()})\cr
+Returns the complete data.}
 
 \item{\code{features}}{(\code{data.table()})\cr
 Information about data set features (including target), downloaded from the JSON API response and
@@ -112,6 +120,9 @@ Returns all tags of the data set.}
 
 \item{\code{license}}{(\code{character()})\cr
 Returns all license of the dataset.}
+
+\item{\code{parquet_path}}{(\code{character()})\cr
+Returns the path of the parquet file.}
 }
 \if{html}{\out{</div>}}
 }
@@ -130,7 +141,11 @@ Returns all license of the dataset.}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLData}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLData$new(id, cache = getOption("mlr3oml.cache", FALSE), parquet = TRUE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$new(
+  id,
+  cache = getOption("mlr3oml.cache", FALSE),
+  parquet = getOption("mlr3oml.parquet", FALSE)
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -142,6 +157,9 @@ OpenML data id.}
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet instead of arff.}
 }
 \if{html}{\out{</div>}}
 }

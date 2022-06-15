@@ -49,7 +49,10 @@ OMLData = R6Class("OMLData",
     #' @param id (`integer(1)`)\cr
     #'   OpenML data id.
     #' @template param_cache
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE), parquet = TRUE) {
+    #' @param parquet (`logical(1)`)\cr
+    #'   Whether to use parquet instead of arff.
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
       self$cache_dir = get_cache_dir(cache)
       self$parquet = assert_flag(parquet)
@@ -96,15 +99,20 @@ OMLData = R6Class("OMLData",
       }
       private$.qualities
     },
-    #' @description
     #' Returns the data without the row identifier and ignore id columns.
+    #' @field data (`data.table()`)\cr
+    #' Returns the data without the row id and ignore columns.
+    #' For the complete data, use `$data_raw`.
     data = function() {
       cols = !self$features$is_ignore & !self$features$is_row_identifier
       self$backend$data(self$backend$rownames, self$features$name[cols])
     },
-    #' @description
+    #' @field data_raw (`data.table()`)\cr
     #' Returns the complete data.
     data_raw = function() {
+      if (self$parquet) {
+        stopf("Currently, the parquet files are missing the id column and ignore columns.")
+      }
       self$backend$data(self$backend$rownames, self$features$name)
     },
     #' @field features (`data.table()`)\cr
@@ -131,16 +139,16 @@ OMLData = R6Class("OMLData",
     #' @field backend (`mlr3::DataBackend`)\cr
     #'   The data backend.
     backend = function() {
-      browser()
-      if (is.null(private$.backend)) {
-        if (self$parquet) {
-          # this function is already cached, it works a little different than the cached(f, ...)
-          # because we cache it as parquet and not .qs
-          private$.backend = as_parquet_backend(self, cache_dir = self$cache_dir)
-        } else {
-          data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
-          private$.backend = as_data_backend(data)
-        }
+      if (!is.null(private$.backend)) {
+        return(private$.backend)
+      }
+
+      if (self$parquet) {
+        path = self$parquet_path
+        private$.backend = mlr3db::as_duckdb_backend(path)
+      } else {
+        data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        private$.backend = as_data_backend(data)
       }
 
       private$.backend
@@ -175,25 +183,50 @@ OMLData = R6Class("OMLData",
     #' Returns all license of the dataset.
     license = function() {
       self$desc$licence
+    },
+    #' @field parquet_path (`character()`)\cr
+    #' Returns the path of the parquet file.
+    parquet_path = function() {
+      if (isFALSE(self$parquet)) {
+        messagef("Parquet is not the selected data format, returning NULL.")
+        return(NULL)
+      }
+      if (is.null(private$.data_path)) {
+        loadNamespace("mlr3db")
+        # this function is already cached, it works a little different than the cached(f, ...)
+        # because we cache it as parquet and not .qs
+        private$.parquet_path = download_parquet(
+          url = self$desc$minio_url,
+          id = self$id,
+          cache_dir = self$cache_dir,
+          api_key = get_api_key()
+        )
+      }
+      private$.parquet_path
     }
   ),
   private = list(
     .desc = NULL,
     .qualities = NULL,
     .features = NULL,
-    .backend = NULL
+    .backend = NULL,
+    .parquet_path = NULL
   )
 )
 
-#' @importFrom mlr3 as_data_backend
 #' @export
-as_data_backend.OMLData = function(data, primary_key = NULL, ...) { # nolint
-  as_data_backend(data$data)
+as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
+  if (data$parquet) {
+    loadNamespace("mlr3db")
+    backend = as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
+  } else {
+    backend = as_data_backend(data$data, primary_key = primary_key, ...)
+  }
 }
 
 #' @export
-as_data_backend.OMLTask = function(data, primary_key = NULL, ...) { # nolint
-  as_data_backend(data$data$data)
+as_data_backend.OMLTask = function(data, primary_key = NULL, ...) {
+  as_data_backend(data$data, primary_key = primary_key, ...)
 }
 
 #' @importFrom mlr3 as_task

@@ -252,6 +252,7 @@ as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
   learner = as_learner(flow, task$task_type, ...)
   learners = map(seq(n), function(x) learner$clone(deep = TRUE))
 
+
   param_vals = set_names(
     x = x$parameter_setting[["value"]],
     nm = make.names(

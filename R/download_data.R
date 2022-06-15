@@ -45,4 +45,3 @@ get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries =
 
   download_error(response)
 }
-

@@ -39,6 +39,8 @@ Suggests:
     RWeka,
     testthat (>= 3.0.0),
     withr
+Remotes:
+    mlr3db@parquet2
 Config/testthat/edition: 3
 Encoding: UTF-8
 NeedsCompilation: yes
