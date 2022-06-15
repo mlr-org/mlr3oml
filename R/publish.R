@@ -26,6 +26,7 @@ publish.default = function(x, ...) { # nolint
 
 #' @export
 publish.Learner = function(x, ...) { # nolint
+  learner = x
   if (!learner_is_publishable(x)) {
     warningf(
       paste0(
