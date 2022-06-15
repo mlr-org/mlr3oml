@@ -37,7 +37,7 @@ test_that("arff with wrong quotes", {
 
 test_that("fallback for sparse files", {
   data_id = 292L
-  odata = OMLData$new(data_id)
+  odata = OMLData$new(data_id, FALSE)
   if (requireNamespace("RWeka", quietly = TRUE)) {
     expect_data_table(odata$data)
   } else {
@@ -50,22 +50,23 @@ test_that("unquoting works", {
   expect_false(anyMissing(OMLTask$new(task_id)$data$data))
 })
 
-test_that("TaskSurv creation", {
-  skip_if_not_installed("mlr3proba")
-  data_id = 1228
-  odata = OMLData$new(data_id)
-  expect_class(mlr3::as_task(odata, c("time", "event")), "TaskSurv")
-})
-
-test_that("row_id_attribute and ignore_attribute", {
-  odata = OMLData$new(61)
-  odata$desc
-  get_private(odata)$.desc$ignore_attribute
-  get_private(odata)$.desc$row_id_attribute
-
-})
+# test_that("TaskSurv creation", {
+#   skip_if_not_installed("mlr3proba")
+#   data_id = 1228
+#   odata = OMLData$new(data_id)
+#   expect_class(mlr3::as_task(odata, c("time", "event")), "TaskSurv")
+# })
 
 test_that("parquet works", {
   odata = OMLData$new(61, FALSE, parquet = TRUE)
   b = odata$backend
+  expect_backend(b)
 })
+
+test_that("parquet works", {
+  odata = OMLData$new(210, FALSE, parquet = TRUE)
+  b = odata$backend
+  d = odata$data
+  expect_backend(b)
+})
+
