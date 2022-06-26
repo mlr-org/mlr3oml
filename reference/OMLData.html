@@ -209,7 +209,7 @@ Returns all license of the dataset.</p></dd>
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new object of class <code>OMLData</code>.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/OMLData.html">OMLData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">id</span>, cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/OMLData.html">OMLData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">id</span>, cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -233,7 +233,7 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <p>Prints the object.
 For a more detailed printer, convert to a <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a> via <code><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task()</a></code>.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OMLData</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OMLData</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -241,7 +241,7 @@ For a more detailed printer, convert to a <a href="https://mlr3.mlr-org.com/refe
 <h3 id="method-quality-">Method <code>quality()</code><a class="anchor" aria-label="anchor" href="#method-quality-"></a></h3>
 <p>Returns the value of a single OpenML data set quality.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OMLData</span><span class="op">$</span><span class="fu">quality</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OMLData</span><span class="op">$</span><span class="fu">quality</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -258,7 +258,7 @@ Name of the quality to extract.</p></dd>
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OMLData</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OMLData</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -276,16 +276,16 @@ Name of the quality to extract.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># OpenML Data object</span></span>
-<span class="r-in"><span class="va">odata</span> <span class="op">=</span> <span class="va">OMLData</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># OpenML Data object</span></span></span>
+<span class="r-in"><span><span class="va">odata</span> <span class="op">=</span> <span class="va">OMLData</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLData:9:autos&gt; (205x26)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Default target: symboling</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">target_names</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">target_names</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "symboling"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">feature_names</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">feature_names</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "normalized.losses" "make"              "fuel.type"        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "aspiration"        "num.of.doors"      "body.style"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "drive.wheels"      "engine.location"   "wheel.base"       </span>
@@ -295,15 +295,15 @@ Name of the quality to extract.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [19] "stroke"            "compression.ratio" "horsepower"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [22] "peak.rpm"          "city.mpg"          "highway.mpg"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [25] "price"            </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">tags</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">tags</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "study_1"  "study_41" "study_76" "uci"     </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># mlr3 conversion:</span></span>
-<span class="r-in"><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">backend</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get a task via tsk():</span></span>
-<span class="r-in"><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># mlr3 conversion:</span></span></span>
+<span class="r-in"><span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">backend</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get a task via tsk():</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;TaskClassif:autos&gt; (205 x 26)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Target: symboling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Properties: multiclass</span>
@@ -315,7 +315,7 @@ Name of the quality to extract.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     horsepower, normalized.losses, peak.rpm, price</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - dbl (7): bore, compression.ratio, height, length, stroke,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     wheel.base, width</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

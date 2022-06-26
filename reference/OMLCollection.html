@@ -206,7 +206,7 @@ A data.table summarizing the tasks included in the collection.</p></dd>
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Creates a new object of class <code>OMLCollection</code>.</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/OMLCollection.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">id</span>, cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/OMLCollection.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">id</span>, cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -229,7 +229,7 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints the object.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OMLCollection</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OMLCollection</span><span class="op">$</span><span class="fu">print</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
@@ -237,7 +237,7 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">OMLCollection</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">OMLCollection</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -255,29 +255,29 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># OpenML Run Collection:</span></span>
-<span class="r-in"><span class="va">collection</span> <span class="op">=</span> <span class="va">OMLCollection</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">232L</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">collection</span><span class="op">$</span><span class="va">tasks</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># OpenML Run Collection:</span></span></span>
+<span class="r-in"><span><span class="va">collection</span> <span class="op">=</span> <span class="va">OMLCollection</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">232L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">tasks</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id          task     data                 task_type target  nrow ncol</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:  3 &lt;OMLTask[18]&gt; kr-vs-kp Supervised Classification  class  3196   37</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:  6 &lt;OMLTask[18]&gt;   letter Supervised Classification  class 20000   17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    missing numeric symbolic binary      data_split</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:       0       0       37     35 crossvalidation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:       0      16        1      0 crossvalidation</span>
-<span class="r-in"><span class="va">collection</span><span class="op">$</span><span class="va">data</span></span>
+<span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">data</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id          data     name  nrow ncol missing numeric symbolic binary</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:  3 &lt;OMLData[19]&gt; kr-vs-kp  3196   37       0       0       37     35</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:  6 &lt;OMLData[19]&gt;   letter 20000   17       0      16        1      0</span>
-<span class="r-in"><span class="va">collection</span><span class="op">$</span><span class="va">flows</span></span>
+<span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">flows</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       id          flow</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 17369 &lt;OMLFlow[11]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 17374 &lt;OMLFlow[11]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                             name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: sklearn.model_selection._search_successive_halving.HalvingRandomSearchCV(estimator=sklearn.ensemble._hist_gradient_boosting.gradient_boosting.HistGradientBoostingClassifier)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:                       sklearn.model_selection._search.RandomizedSearchCV(estimator=sklearn.ensemble._hist_gradient_boosting.gradient_boosting.HistGradientBoostingClassifier)</span>
-<span class="r-in"><span class="va">collection</span><span class="op">$</span><span class="va">runs</span></span>
+<span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">runs</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          id          run                 task_type     data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 10417460 &lt;OMLRun[18]&gt; Supervised Classification kr-vs-kp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: 10417461 &lt;OMLRun[18]&gt; Supervised Classification kr-vs-kp</span>
@@ -288,57 +288,57 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2: sklearn.model_selection._[...] crossvalidation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: sklearn.model_selection._[...] crossvalidation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4: sklearn.model_selection._[...] crossvalidation</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># mlr3 conversion:</span></span>
-<span class="r-in"><span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_tasks</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">resamplings</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resamplings</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># construct pseudo-learners as these are sklearn flows</span></span>
-<span class="r-in"><span class="va">learners</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learners</a></span><span class="op">(</span><span class="va">collection</span>, <span class="st">"classif"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Although pseudo-learners are non-executable the runs can still be analyzed.</span></span>
-<span class="r-in"><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_benchmark_result.html" class="external-link">as_benchmark_result</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.ce"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># mlr3 conversion:</span></span></span>
+<span class="r-in"><span><span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_tasks</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">resamplings</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resamplings</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># construct pseudo-learners as these are sklearn flows</span></span></span>
+<span class="r-in"><span><span class="va">learners</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learners</a></span><span class="op">(</span><span class="va">collection</span>, <span class="st">"classif"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Although pseudo-learners are non-executable the runs can still be analyzed.</span></span></span>
+<span class="r-in"><span><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_benchmark_result.html" class="external-link">as_benchmark_result</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.ce"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 985cfea0-ca81-455e-8b07-6d3b2c64086e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 26004127-7f48-4962-8429-726f7626f439  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 2c0cb93e-243f-445b-af45-bd1a14380b54  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 614d590a-63a9-43df-8ac7-da54281755be  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 99a06e91-9ea3-4468-83c7-6e1e43e0b9c0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: e7910127-e320-4bf5-9d00-66c4dd015104  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 2bb7e81f-d616-4f3f-9ef8-04245591d303  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 4b49a0ce-32d4-4e3a-94d5-5a55b338924a  4 &lt;TaskClassif[50]&gt;   letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          learner learner_id         resampling resampling_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: &lt;LearnerClassifOML17374[36]&gt;  oml.17374 &lt;ResamplingCV[20]&gt;            cv</span>
@@ -424,7 +424,7 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <span class="r-out co"><span class="r-pr">#&gt;</span> 39:         9 &lt;PredictionClassif[20]&gt; 0.039000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 40:        10 &lt;PredictionClassif[20]&gt; 0.031000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     iteration              prediction  classif.ce</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

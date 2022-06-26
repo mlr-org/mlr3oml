@@ -83,64 +83,64 @@ from <a href="https://openml.org/d" class="external-link">https://openml.org/d</
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">list_oml_data</span><span class="op">(</span>
-  data_id <span class="op">=</span> <span class="cn">NULL</span>,
-  data_name <span class="op">=</span> <span class="cn">NULL</span>,
-  number_instances <span class="op">=</span> <span class="cn">NULL</span>,
-  number_features <span class="op">=</span> <span class="cn">NULL</span>,
-  number_classes <span class="op">=</span> <span class="cn">NULL</span>,
-  number_missing_values <span class="op">=</span> <span class="cn">NULL</span>,
-  tag <span class="op">=</span> <span class="cn">NULL</span>,
-  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_oml_evaluations</span><span class="op">(</span>
-  run_id <span class="op">=</span> <span class="cn">NULL</span>,
-  task_id <span class="op">=</span> <span class="cn">NULL</span>,
-  measures <span class="op">=</span> <span class="cn">NULL</span>,
-  tag <span class="op">=</span> <span class="cn">NULL</span>,
-  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_oml_flows</span><span class="op">(</span>
-  uploader <span class="op">=</span> <span class="cn">NULL</span>,
-  tag <span class="op">=</span> <span class="cn">NULL</span>,
-  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_oml_measures</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">list_oml_runs</span><span class="op">(</span>
-  run_id <span class="op">=</span> <span class="cn">NULL</span>,
-  task_id <span class="op">=</span> <span class="cn">NULL</span>,
-  tag <span class="op">=</span> <span class="cn">NULL</span>,
-  flow_id <span class="op">=</span> <span class="cn">NULL</span>,
-  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_oml_setups</span><span class="op">(</span>
-  flow_id <span class="op">=</span> <span class="cn">NULL</span>,
-  setup_id <span class="op">=</span> <span class="cn">NULL</span>,
-  tag <span class="op">=</span> <span class="cn">NULL</span>,
-  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_oml_tasks</span><span class="op">(</span>
-  task_id <span class="op">=</span> <span class="cn">NULL</span>,
-  data_id <span class="op">=</span> <span class="cn">NULL</span>,
-  number_instances <span class="op">=</span> <span class="cn">NULL</span>,
-  number_features <span class="op">=</span> <span class="cn">NULL</span>,
-  number_classes <span class="op">=</span> <span class="cn">NULL</span>,
-  number_missing_values <span class="op">=</span> <span class="cn">NULL</span>,
-  tag <span class="op">=</span> <span class="cn">NULL</span>,
-  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">list_oml_data</span><span class="op">(</span></span>
+<span>  data_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_instances <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_features <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_classes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_missing_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tag <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_oml_evaluations</span><span class="op">(</span></span>
+<span>  run_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  task_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  measures <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tag <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_oml_flows</span><span class="op">(</span></span>
+<span>  uploader <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tag <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_oml_measures</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_oml_runs</span><span class="op">(</span></span>
+<span>  run_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  task_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tag <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  flow_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_oml_setups</span><span class="op">(</span></span>
+<span>  flow_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  setup_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tag <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_oml_tasks</span><span class="op">(</span></span>
+<span>  task_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_instances <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_features <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_classes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  number_missing_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tag <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.limit"</span>, <span class="fl">5000L</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -252,11 +252,11 @@ c.f. <a href="https://www.openml.org/api_docs" class="external-link">https://www
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co">### query data sets</span></span>
-<span class="r-in"><span class="co"># search for titanic data set</span></span>
-<span class="r-in"><span class="va">data_sets</span> <span class="op">=</span> <span class="fu">list_oml_data</span><span class="op">(</span>data_name <span class="op">=</span> <span class="st">"titanic"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">data_sets</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">### query data sets</span></span></span>
+<span class="r-in"><span><span class="co"># search for titanic data set</span></span></span>
+<span class="r-in"><span><span class="va">data_sets</span> <span class="op">=</span> <span class="fu">list_oml_data</span><span class="op">(</span>data_name <span class="op">=</span> <span class="st">"titanic"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">data_sets</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    data_id    name version status MajorityClassSize MaxNominalAttDistinctValues</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   40704 Titanic       2 active              1490                           2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   40945 Titanic       1 active               809                           3</span>
@@ -293,14 +293,14 @@ c.f. <a href="https://www.openml.org/api_docs" class="external-link">https://www
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6:                       8                        0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7:                       3                        5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8:                       3                        5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># search for a reduced version</span></span>
-<span class="r-in"><span class="va">data_sets</span> <span class="op">=</span> <span class="fu">list_oml_data</span><span class="op">(</span></span>
-<span class="r-in">  data_name <span class="op">=</span> <span class="st">"titanic"</span>,</span>
-<span class="r-in">  number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2200</span>, <span class="fl">2300</span><span class="op">)</span>,</span>
-<span class="r-in">  number_features <span class="op">=</span> <span class="fl">4</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">data_sets</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># search for a reduced version</span></span></span>
+<span class="r-in"><span><span class="va">data_sets</span> <span class="op">=</span> <span class="fu">list_oml_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data_name <span class="op">=</span> <span class="st">"titanic"</span>,</span></span>
+<span class="r-in"><span>  number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2200</span>, <span class="fl">2300</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  number_features <span class="op">=</span> <span class="fl">4</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">data_sets</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    data_id    name version status MajorityClassSize MaxNominalAttDistinctValues</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:   40704 Titanic       2 active              1490                           2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    MinorityClassSize NumberOfClasses NumberOfFeatures NumberOfInstances</span>
@@ -309,10 +309,10 @@ c.f. <a href="https://www.openml.org/api_docs" class="external-link">https://www
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                                  0                     0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    NumberOfNumericFeatures NumberOfSymbolicFeatures</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                       3                        1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### search tasks for this data set</span></span>
-<span class="r-in"><span class="va">tasks</span> <span class="op">=</span> <span class="fu">list_oml_tasks</span><span class="op">(</span>data_id <span class="op">=</span> <span class="va">data_sets</span><span class="op">$</span><span class="va">data_id</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tasks</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### search tasks for this data set</span></span></span>
+<span class="r-in"><span><span class="va">tasks</span> <span class="op">=</span> <span class="fu">list_oml_tasks</span><span class="op">(</span>data_id <span class="op">=</span> <span class="va">data_sets</span><span class="op">$</span><span class="va">data_id</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tasks</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     task_id                             task_type data_id    name status</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:  145769                            Clustering   40704 Titanic active</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:  146230             Supervised Classification   40704 Titanic active</span>
@@ -433,14 +433,14 @@ c.f. <a href="https://www.openml.org/api_docs" class="external-link">https://www
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21:                       3                        1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 22:                       3                        1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     NumberOfNumericFeatures NumberOfSymbolicFeatures</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># query runs, group by number of runs per task_id</span></span>
-<span class="r-in"><span class="va">runs</span> <span class="op">=</span> <span class="fu">list_oml_runs</span><span class="op">(</span>task_id <span class="op">=</span> <span class="va">tasks</span><span class="op">$</span><span class="va">task_id</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">runs</span><span class="op">[</span>, <span class="va">.N</span>, by <span class="op">=</span> <span class="va">task_id</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># query runs, group by number of runs per task_id</span></span></span>
+<span class="r-in"><span><span class="va">runs</span> <span class="op">=</span> <span class="fu">list_oml_runs</span><span class="op">(</span>task_id <span class="op">=</span> <span class="va">tasks</span><span class="op">$</span><span class="va">task_id</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">runs</span><span class="op">[</span>, <span class="va">.N</span>, by <span class="op">=</span> <span class="va">task_id</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    task_id  N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:  146230 35</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
