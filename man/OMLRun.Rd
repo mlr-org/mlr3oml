@@ -109,6 +109,9 @@ Formatted predictions are accessible after converting to a \link[mlr3:ResampleRe
 
 \item{\code{tags}}{(\code{character()})\cr
 A character vector containing the tags of the run.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -126,7 +129,11 @@ A character vector containing the tags of the run.}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLRun}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLRun$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLRun$new(
+  id,
+  cache = getOption("mlr3oml.cache", FALSE),
+  parquet = getOption("mlr3oml.parquet", FALSE)
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -138,6 +145,9 @@ OpenML run id.}
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet instead of arff.}
 }
 \if{html}{\out{</div>}}
 }

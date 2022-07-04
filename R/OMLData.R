@@ -40,22 +40,18 @@ OMLData = R6Class("OMLData",
     id = NULL,
     #' @template field_cache_dir
     cache_dir = NULL,
-    #' @field parquet (`logical(1)`)\cr
-    #' Whether to use parquet.
-    parquet = TRUE,
     #' @description
     #' Creates a new object of class `OMLData`.
     #'
     #' @param id (`integer(1)`)\cr
     #'   OpenML data id.
     #' @template param_cache
-    #' @param parquet (`logical(1)`)\cr
-    #'   Whether to use parquet instead of arff.
+    #' @template param_parquet
     initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
       parquet = getOption("mlr3oml.parquet", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
       self$cache_dir = get_cache_dir(cache)
-      self$parquet = assert_flag(parquet)
+      private$.parquet = assert_flag(parquet)
       initialize_cache(self$cache_dir)
     },
     #' @description
@@ -83,9 +79,10 @@ OMLData = R6Class("OMLData",
     },
     #' @field desc (`list()`)\cr
     #' Data set description (meta information), downloaded and converted from the JSON API response.
+    #'   This cannot be cached, because it can be modified on the server.
     desc = function() {
       if (is.null(private$.desc)) {
-        private$.desc = cached(download_data_desc, "data_desc", self$id, cache_dir = self$cache_dir)
+        private$.desc = cached(download_data_desc, "data_desc", self$id)
       }
       private$.desc
     },
@@ -106,14 +103,6 @@ OMLData = R6Class("OMLData",
     data = function() {
       cols = !self$features$is_ignore & !self$features$is_row_identifier
       self$backend$data(self$backend$rownames, self$features$name[cols])
-    },
-    #' @field data_raw (`data.table()`)\cr
-    #' Returns the complete data.
-    data_raw = function() {
-      if (self$parquet) {
-        stopf("Currently, the parquet files are missing the id column and ignore columns.")
-      }
-      self$backend$data(self$backend$rownames, self$features$name)
     },
     #' @field features (`data.table()`)\cr
     #' Information about data set features (including target), downloaded from the JSON API response and
@@ -137,7 +126,7 @@ OMLData = R6Class("OMLData",
       private$.features
     },
     #' @field backend (`mlr3::DataBackend`)\cr
-    #'   The data backend.
+    #'   The data backend. This should be cloned before modifying it in place.
     backend = function() {
       if (!is.null(private$.backend)) {
         return(private$.backend)
@@ -194,7 +183,7 @@ OMLData = R6Class("OMLData",
       if (is.null(private$.data_path)) {
         loadNamespace("mlr3db")
         # this function is already cached, it works a little different than the cached(f, ...)
-        # because we cache it as parquet and not .qs
+        # because we cache it as .pq and not as .qs
         private$.parquet_path = download_parquet(
           url = self$desc$minio_url,
           id = self$id,
@@ -203,6 +192,12 @@ OMLData = R6Class("OMLData",
         )
       }
       private$.parquet_path
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     }
   ),
   private = list(
@@ -210,7 +205,8 @@ OMLData = R6Class("OMLData",
     .qualities = NULL,
     .features = NULL,
     .backend = NULL,
-    .parquet_path = NULL
+    .parquet_path = NULL,
+    .parquet = NULL
   )
 )
 

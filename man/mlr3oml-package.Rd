@@ -34,6 +34,10 @@ If not set, defaults to the value of the environment variable \code{OPENMLAPIKEY
 \item \code{mlr3oml.arff_parser}: ARFF parser to use, defaults to the internal one relies
 on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code{"RWeka"} for the parser in
 \CRANpkg{RWeka} or \code{"farff"} for the reader implemented in \CRANpkg{farff}.
+\item \code{mlr3oml.parquet}: Enables ord disables the parquet file format.
+If set to \code{TRUE}, the parquet version of datasets will be used.
+If set to \code{FALSE}, the arff version of datasets will be used.
+Default is \code{FALSE}.
 \item \code{mlr3oml.server}: Address for the server that should be used. Can be the test server or the
 usual OpenML server.
 }

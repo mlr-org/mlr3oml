@@ -22,7 +22,7 @@ build_filter_query = function(type, filters) {
     }
   })
 
-  server = getOption("mlr3oml.server") %??% "https://www.openml.org/api/v1"
+  server = getOption("mlr3oml.server", "https://www.openml.org/api/v1")
   paste0(
     server, "/json/", type, "/list/",
     paste0(filters, collapse = "/")

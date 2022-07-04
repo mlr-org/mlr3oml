@@ -29,6 +29,10 @@
 #' * `mlr3oml.arff_parser`: ARFF parser to use, defaults to the internal one relies
 #'   on [data.table::fread()]. Can also be set to `"RWeka"` for the parser in
 #'   \CRANpkg{RWeka} or `"farff"` for the reader implemented in \CRANpkg{farff}.
+#' * `mlr3oml.parquet`: Enables ord disables the parquet file format.
+#'   If set to `TRUE`, the parquet version of datasets will be used.
+#'   If set to `FALSE`, the arff version of datasets will be used.
+#'   Default is `FALSE`.
 #' * `mlr3oml.server`: Address for the server that should be used. Can be the test server or the
 #'   usual OpenML server.
 #'
@@ -45,7 +49,6 @@
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
   mlr3::mlr_learners$add("oml", OMLLearnerConnector)
 
-  mlr3::Learner$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::Task$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::Resampling$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::ResampleResult$set("private", "oml", NULL, overwrite = TRUE)

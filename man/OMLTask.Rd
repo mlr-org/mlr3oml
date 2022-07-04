@@ -91,6 +91,9 @@ Returns all tags of the task.}
 
 \item{\code{data_name}}{(\code{character()})\cr
 Name of the dataset (inferred from the task name).}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -108,7 +111,11 @@ Name of the dataset (inferred from the task name).}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLTask}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLTask$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLTask$new(
+  id,
+  cache = getOption("mlr3oml.cache", FALSE),
+  parquet = getOption("mlr3oml.parquet", FALSE)
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -120,6 +127,9 @@ OpenML task id.}
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet instead of arff.}
 }
 \if{html}{\out{</div>}}
 }

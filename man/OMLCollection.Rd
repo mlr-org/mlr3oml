@@ -66,7 +66,8 @@ The package \CRANpkg{qs} is required for caching.}
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{desc}}{(\code{list()})\cr
-Colllection description (meta information), downloaded and converted from the JSON API response.}
+Colllection description (meta information), downloaded and converted from the JSON API response.
+This cannot be cached, because it can be modified on the server.}
 
 \item{\code{name}}{(\code{character(1)}) \cr
 The name of the collection.}
@@ -102,6 +103,9 @@ A data.table summarizing the datasets included in the collection.}
 
 \item{\code{tasks}}{(\code{data.table()})
 A data.table summarizing the tasks included in the collection.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -119,7 +123,11 @@ A data.table summarizing the tasks included in the collection.}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLCollection}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(
+  id,
+  cache = getOption("mlr3oml.cache", FALSE),
+  parquet = getOption("mlr3oml.parquet", FALSE)
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -131,6 +139,9 @@ OpenML run id.}
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet instead of arff.}
 }
 \if{html}{\out{</div>}}
 }

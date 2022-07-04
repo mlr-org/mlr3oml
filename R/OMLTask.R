@@ -41,9 +41,12 @@ OMLTask = R6Class("OMLTask",
     #' @param id (`integer(1)`)\cr
     #'   OpenML task id.
     #' @template param_cache
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
+    #' @template param_parquet
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(assert_flag(cache))
+      self$cache_dir = FALSE
+      private$.parquet = parquet
       initialize_cache(self$cache_dir)
     },
     #' @description
@@ -74,7 +77,7 @@ OMLTask = R6Class("OMLTask",
     #'   Task description (meta information), downloaded and converted from the JSON API response.
     desc = function() {
       if (is.null(private$.desc)) {
-        private$.desc = cached(download_task_desc, "task_desc", self$id, cache_dir = self$cache_dir)
+        private$.desc = cached(download_task_desc, "task_desc", self$id, cache_dir = FALSE)
       }
       private$.desc
     },
@@ -87,7 +90,9 @@ OMLTask = R6Class("OMLTask",
     #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$data_id, cache = is.character(self$cache_dir))
+        private$.data = OMLData$new(self$data_id, cache = is.character(self$cache_dir),
+          parquet = self$parquet
+        )
       }
 
       private$.data
@@ -143,12 +148,19 @@ OMLTask = R6Class("OMLTask",
     #' Name of the dataset (inferred from the task name).
     data_name = function() {
       strsplit(self$desc$task_name, split = " ")[[1]][[3]]
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     }
   ),
   private = list(
     .data = NULL,
     .desc = NULL,
-    .data_split = NULL
+    .data_split = NULL,
+    .parquet = NULL
   )
 )
 

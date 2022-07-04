@@ -56,9 +56,6 @@ Stores the location of the cache for objects retrieved from \url{https://openml.
 If set to \code{FALSE}, caching is disabled.
 
 The package \CRANpkg{qs} is required for caching.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -69,7 +66,8 @@ Whether to use parquet.}
 Name of the data set, as extracted from the data set description.}
 
 \item{\code{desc}}{(\code{list()})\cr
-Data set description (meta information), downloaded and converted from the JSON API response.}
+Data set description (meta information), downloaded and converted from the JSON API response.
+This cannot be cached, because it can be modified on the server.}
 
 \item{\code{qualities}}{(\code{data.table()})\cr
 Data set qualities (performance values), downloaded from the JSON API response and
@@ -79,9 +77,6 @@ Returns the data without the row identifier and ignore id columns.}
 \item{\code{data}}{(\code{data.table()})\cr
 Returns the data without the row id and ignore columns.
 For the complete data, use \verb{$data_raw}.}
-
-\item{\code{data_raw}}{(\code{data.table()})\cr
-Returns the complete data.}
 
 \item{\code{features}}{(\code{data.table()})\cr
 Information about data set features (including target), downloaded from the JSON API response and
@@ -100,7 +95,7 @@ Row identifiers are removed automatically from the data set.
 }}
 
 \item{\code{backend}}{(\code{mlr3::DataBackend})\cr
-The data backend.}
+The data backend. This should be cloned before modifying it in place.}
 
 \item{\code{target_names}}{(\code{character()})\cr
 Name of the default target, as extracted from the OpenML data set description.}
@@ -123,6 +118,9 @@ Returns all license of the dataset.}
 
 \item{\code{parquet_path}}{(\code{character()})\cr
 Returns the path of the parquet file.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }

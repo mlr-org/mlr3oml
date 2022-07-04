@@ -53,9 +53,12 @@ OMLRun = R6Class("OMLRun",
     #' @param id (`integer(1)`)\cr
     #'  OpenML run id.
     #' @template param_cache
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
+    #' @template param_parquet
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
       self$cache_dir = get_cache_dir(assert_flag(cache))
+      private$.parquet = parquet
       initialize_cache(self$cache_dir)
     },
     #' @description
@@ -96,7 +99,9 @@ OMLRun = R6Class("OMLRun",
     #' The task solved by this run.
     task = function() {
       if (is.null(private$.task)) {
-        private$.task = OMLTask$new(self$task_id, is.character(self$cache_dir))
+        private$.task = OMLTask$new(self$task_id, is.character(self$cache_dir),
+          parquet = self$parquet
+        )
       }
       private$.task
     },
@@ -112,7 +117,8 @@ OMLRun = R6Class("OMLRun",
     #' The data split belonging to the task.
     data_split = function() {
       if (is.null(private$.data_split)) {
-        private$.data_split = OMLDataSplit$new(task_id = self$task_id,
+        private$.data_split = OMLDataSplit$new(
+          task_id = self$task_id,
           cache = is.character(self$cache_dir)
         )
       }
@@ -137,7 +143,13 @@ OMLRun = R6Class("OMLRun",
     },
     #' @field tags (`character()`)\cr
     #' A character vector containing the tags of the run.
-    tags = function() self$desc$tag
+    tags = function() self$desc$tag,
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
+    }
   ),
   private = list(
     .desc = NULL,
@@ -145,7 +157,8 @@ OMLRun = R6Class("OMLRun",
     .prediction = NULL,
     .data = NULL,
     .flow = NULL,
-    .data_split = NULL
+    .data_split = NULL,
+    .parquet = NULL
   )
 )
 

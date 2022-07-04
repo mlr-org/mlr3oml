@@ -49,9 +49,12 @@ OMLCollection = R6Class("OMLCollection",
     #' @param id (`integer(1)`)\cr
     #'  OpenML run id.
     #' @template param_cache
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
+    #' @template param_parquet
+    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE)) {
       self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(assert_flag(cache))
+      self$cache_dir = FALSE
+      private$.parquet = parquet
       initialize_cache(self$cache_dir)
     },
     #' @description
@@ -69,11 +72,12 @@ OMLCollection = R6Class("OMLCollection",
   active = list(
     #' @field desc (`list()`)\cr
     #'   Colllection description (meta information), downloaded and converted from the JSON API response.
+    #'   This cannot be cached, because it can be modified on the server.
     desc = function() {
       if (is.null(private$.desc)) {
         private$.desc = cached(download_collection_desc,
           type = "collection", id = self$id,
-          cache_dir = self$cache_dir
+          cache_dir = FALSE
         )
       }
       return(private$.desc)
@@ -110,7 +114,7 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.runs)) {
         runs = map(
           self$run_ids,
-          function(x) OMLRun$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLRun$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
         )
 
         private$.runs = make_run_table(runs)
@@ -140,7 +144,7 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.data)) {
         datasets = map(
           self$data_ids,
-          function(x) OMLData$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLData$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
         )
         private$.data = make_dataset_table(datasets)
       }
@@ -152,11 +156,17 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.tasks)) {
         tasks = map(
           self$task_ids,
-          function(x) OMLTask$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLTask$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
         )
         private$.tasks = make_task_table(tasks)
       }
       return(private$.tasks)
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     }
   ),
   private = list(
@@ -165,7 +175,8 @@ OMLCollection = R6Class("OMLCollection",
     .tasks = NULL,
     .resamplings = NULL,
     .data = NULL,
-    .flows = NULL
+    .flows = NULL,
+    .parquet = FALSE
   )
 )
 

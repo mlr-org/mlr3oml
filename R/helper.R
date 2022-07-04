@@ -15,7 +15,7 @@ with_public_server = function(env = parent.frame()) {
 }
 
 get_api_key = function() {
-  key = getOption("mlr3oml.api_key") %??% Sys.getenv("OPENMLAPIKEY")
+  key = getOption("mlr3oml.api_key", Sys.getenv("OPENMLAPIKEY"))
   if (nzchar(key)) { # neither option nor ENVIRONMENT variable is set
     return(key)
   }
@@ -239,7 +239,9 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
 #'
 #' @export
 get_server = function() {
-  getOption("mlr3oml.server", "https://www.openml.org/api/v1")
+  server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+  assert_choice(server, c("https://openml.org/api/v1", "https://test.openml.org/api/v1"))
+  server
 }
 
 # extracts `flow_exists` from the response

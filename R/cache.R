@@ -15,9 +15,7 @@ get_cache_dir = function(cache) {
   if (isFALSE(cache)) {
     return(FALSE)
   }
-  if (isTRUE(cache)) {
-    cache = R_user_dir("mlr3oml", "cache")
-  }
+  cache = R_user_dir("mlr3oml", "cache")
   assert(check_directory_exists(cache), check_path_for_output(cache))
   normalizePath(cache, mustWork = FALSE)
 }
@@ -65,7 +63,7 @@ initialize_cache = function(cache_dir) {
 # @description
 # This function performs a cached version of the function 'fun'. I.e. it first checks whether
 # the objects is already stored in cache and returns it, otherwise it downloads it and stores it
-# in the cache folder.
+# in the cache folder. It keeps different caches for the public server and the test server.
 #
 # @param fun
 #   Download function, e.g. download_data_desc.
@@ -79,6 +77,16 @@ initialize_cache = function(cache_dir) {
 # @param type
 # The type that is downloaded, not really necessary
 cached = function(fun, type, id, ..., cache_dir = FALSE) {
+  if (is.character(cache_dir)) {
+    server = get_server()
+    if (server == "https://openml.org/api/v1") {
+      cache_dir = sprintf("%s/public", cache_dir)
+    } else if (server == "https://test.openml.org/api/v1") {
+      cache_dir = sprintf("%s/test", cache_dir)
+    } else {
+      stopf("Invalid server")
+    }
+  }
   if (isFALSE(cache_dir)) {
     return(fun(id, ...))
   }
