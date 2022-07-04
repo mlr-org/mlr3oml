@@ -18,7 +18,7 @@
 #' library("mlr3")
 #' # mlr3 flow:
 #' flow = OMLFlow$new(id = 19103L)
-#' learner = as_learner(flow)
+#' learner = as_learner(flow, "classif")
 #' # python flow
 #' python_flow = OMLFlow$new(19090L)
 #' # conversion to pseudo Learner
