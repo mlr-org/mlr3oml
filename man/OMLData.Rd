@@ -118,15 +118,15 @@ Returns all license of the dataset.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLData$new()}}
-\item \href{#method-print}{\code{OMLData$print()}}
-\item \href{#method-quality}{\code{OMLData$quality()}}
-\item \href{#method-clone}{\code{OMLData$clone()}}
+\item \href{#method-OMLData-new}{\code{OMLData$new()}}
+\item \href{#method-OMLData-print}{\code{OMLData$print()}}
+\item \href{#method-OMLData-quality}{\code{OMLData$quality()}}
+\item \href{#method-OMLData-clone}{\code{OMLData$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLData-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLData}.
 \subsection{Usage}{
@@ -147,8 +147,8 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLData-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code{as_task()}.
@@ -158,8 +158,8 @@ For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-quality"></a>}}
-\if{latex}{\out{\hypertarget{method-quality}{}}}
+\if{html}{\out{<a id="method-OMLData-quality"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-quality}{}}}
 \subsection{Method \code{quality()}}{
 Returns the value of a single OpenML data set quality.
 \subsection{Usage}{
@@ -176,8 +176,8 @@ Name of the quality to extract.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLData-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

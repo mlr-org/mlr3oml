@@ -56,9 +56,7 @@ parse_run_desc = function(desc) {
   if (nrow(desc$parameter_setting)) {
     # need to convert to list to ensure that it is a list column (otherwise if only e.g. integer params
     # it turns into an integer column making it unpredictable later)
-    desc$parameter_setting[, value := map(value, .f = function(x) list(parse_json_safely(x)))]
-    desc$parameter_setting[["component"]] = as.integer(desc$parameter_setting[["component"]])
-
+    desc$parameter_setting$value = lapply(desc$parameter_setting$value, parse_json_safely)
   }
   desc$parameter_setting[["name"]] = make.names(desc$parameter_setting[["name"]])
   return(desc)

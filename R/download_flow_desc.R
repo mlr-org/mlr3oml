@@ -24,14 +24,12 @@ parse_flow_desc = function(desc) {
     if (!(length(desc$parameter$name) == length(unique(desc$parameter$name)))) {
       stopf("Non-unique parameter names after conversion via make.names().")
     }
+    desc$parameter$default_value = lapply(desc$parameter$default_value, parse_json_safely)
   }
   if (!is.null(desc$dependencies) && startsWith(desc$name, "mlr")) {
     desc$dependencies = stringi::stri_split(desc$dependencies, fixed = ", ")[[1]]
   } else {
     desc$dependencies = gsub("\n", ", ", desc$dependencies)
-  }
-  if (!is.null(desc$full_description)) { # stores the graph for GraphLearner
-    desc$full_description = as.data.table(jsonlite::fromJSON(desc$full_description))
   }
   return(desc)
 }

@@ -71,14 +71,14 @@ The name of the flow.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLFlow$new()}}
-\item \href{#method-print}{\code{OMLFlow$print()}}
-\item \href{#method-clone}{\code{OMLFlow$clone()}}
+\item \href{#method-OMLFlow-new}{\code{OMLFlow$new()}}
+\item \href{#method-OMLFlow-print}{\code{OMLFlow$print()}}
+\item \href{#method-OMLFlow-clone}{\code{OMLFlow$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLFlow-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-new}{}}}
 \subsection{Method \code{new()}}{
 Initializes a new object of class \link{OMLFlow}.
 \subsection{Usage}{
@@ -96,8 +96,8 @@ Initializes a new object of class \link{OMLFlow}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLFlow-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 \subsection{Usage}{
@@ -106,8 +106,8 @@ Prints the object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLFlow-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

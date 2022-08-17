@@ -115,14 +115,14 @@ A character vector containing the tags of the run.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLRun$new()}}
-\item \href{#method-print}{\code{OMLRun$print()}}
-\item \href{#method-clone}{\code{OMLRun$clone()}}
+\item \href{#method-OMLRun-new}{\code{OMLRun$new()}}
+\item \href{#method-OMLRun-print}{\code{OMLRun$print()}}
+\item \href{#method-OMLRun-clone}{\code{OMLRun$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLRun-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLRun-new}{}}}
 \subsection{Method \code{new()}}{
 Creates a new object of class \code{OMLRun}.
 \subsection{Usage}{
@@ -143,8 +143,8 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLRun-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLRun-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 \subsection{Usage}{
@@ -153,8 +153,8 @@ Prints the object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLRun-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLRun-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

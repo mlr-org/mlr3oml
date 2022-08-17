@@ -2,21 +2,89 @@
 % Please edit documentation in R/publish.R
 \name{publish}
 \alias{publish}
+\alias{publish.character}
 \title{Publish on OpenML}
 \usage{
-publish(x, confirm = TRUE, ...)
+publish(x, confirm = TRUE, api_key = get_api_key(), ...)
+
+\method{publish}{character}(
+  x,
+  main_entity_type = NULL,
+  name = NULL,
+  desc = NULL,
+  alias = NULL,
+  data_id = NULL,
+  type = NULL,
+  estimation_procedure = NULL,
+  target = NULL,
+  api_key,
+  ...
+)
 }
 \arguments{
-\item{x}{(\code{any}) Object to publish to OpenML.}
+\item{x}{(any)\cr Object to publish to OpenML.
+A \link{Learner} is published as a flow.}
 
 \item{confirm}{(\code{logical(1)}) Whether to confirm the upload.}
 
 \item{...}{Additional arguments.}
+
+\item{main_entity_type}{(\code{character(1)})\cr
+Only relevant if \code{x} is \code{"collection"}. Must be \code{"run"} or \code{"task"}.}
+
+\item{name}{(\code{character(1)})\cr
+Only relevant if \code{x} is \code{"collection"} or a \code{data.frame}. Name of the collection / dataset.}
+
+\item{desc}{(\code{character(1)})\cr
+Only relevant if \code{x} is \code{"collection"} or a \code{data.frame}. Description of the collection /
+dataset.}
+
+\item{alias}{(\code{character(1)})\cr
+Only relevant if \code{x} is \code{"collection"}. Alias for the study.}
+
+\item{data_id}{(\code{integer(1)})\cr
+Only relevant if \code{x} is \code{"task"}. Data id for the task.}
+
+\item{type}{(\code{character(1)})\cr
+Only relevant if \code{x} is \code{"task"}. Must be \code{"classif"} or \code{"regr"}.}
+
+\item{target}{(\code{character(1)})\cr
+Only relevant if \code{x} is \code{"task"}. The target variable.}
+
+\item{licence}{(\code{character(1)})\cr
+Only relevant if \code{x} is a \code{data.frame}. The license for the dataset.}
+
+\item{default_target}{(\code{character(1)})\cr
+Only relevant if \code{x} is a \code{data.frame}. The default target for the dataset.}
+
+\item{row_identifier}{(\code{character(1)})\cr
+Only relevant if \code{x} is a \code{data.frame}. The row identifier for the dataset.}
+
+\item{ignore}{(\code{character(1)})\cr
+Only relevant if \code{x} is a \code{data.frame}. The ignore columns for the dataset.}
+
+\item{citation}{(\code{character(1)})\cr
+Only relevant if \code{x} is a \code{data.frame}. The citation for the dataset.}
+
+\item{original_data_url}{(\code{character(1)})\cr
+Only relevant if \code{x} is a \code{data.frame}. The citation for the dataset.}
+
+\item{estimation_procredure}{(\code{integer(1)})\cr
+Only relevant if \code{x} is \code{"task"}. The estimation procedure.
+See here: https://www.openml.org/search?type=measure&measure_type=estimation_procedure.}
 }
 \description{
-Publishes a  \link[mlr3:Learner]{mlr3::Learner} (as a Flow) or \link[mlr3:ResampleResult]{mlr3::ResampleResult} (as a Run) to OpenML.
+Publishes an object to OpenML.
+Methods exist for:
+\itemize{
+\item \link[mlr3:Learner]{mlr3::Learner} - Is published as a Flow
+\item \link[mlr3:ResampleResult]{mlr3::ResampleResult} - Is published as a Run, including publishing the Learner.
+\item \code{"character"}  Depending on if it is \code{"collection"} or \code{"task"} a collection
+or task is being published
+\link[mlr3:Learner]{mlr3::Learner} (as a Flow) or \link[mlr3:ResampleResult]{mlr3::ResampleResult} (as a Run) to OpenML.
 Currently only resample results with atomic parameters can be uploaded, as it has to be
 possible to represent the parameter values in json format.
+}
 }
 \details{
 This is a generic function.

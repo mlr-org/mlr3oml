@@ -8,7 +8,7 @@ with_test_server = function(env = parent.frame()) {
 
 with_public_server = function(env = parent.frame()) {
   op = options(
-    mlr3oml.server = "https://openml.org/api/v1",
+    mlr3oml.server = "https://www.openml.org/api/v1",
     mlr3oml.api_key = Sys.getenv("OPENMLAPIKEY")
   )
   withr::defer(options(op), env)
@@ -235,25 +235,28 @@ get_paginated_table = function(type, ..., limit) {
 upload = function(url, body, query = list(api_key = get_api_key())) {
   response = httr::POST(url = url, query = query, body = body)
   content = httr::content(response)
-  type = capitalize(tail(strsplit(url, "/")[[1]], n = 1))
+  type = tail(strsplit(url, "/")[[1]], n = 1)
   content_list = xml2::as_list(content)
 
   if (httr::http_error(response)) {
     error_message = content_list$error$message
-    if (!is.null(error_message) && grepl("already exists", error_message)) {
+    if (isTRUE(grepl("already exists", error_message))) {
       additional_info = content_list$error$additional_information
       idx = grep("implementation_id", additional_info)[[1]]
       id = as.integer(strsplit(additional_info[[idx]], split = ":")[[1]][2])
-      messagef("%s already exists on OpenML with id %d.", type, id)
-    } else {
-      stop(xml2::as_list(httr::content(response))$error$message %??% "Unknown error")
+      messagef("%s already exists on OpenML with id %d.", capitalize(type), id)
+      return(id)
     }
+    stopf(error_message %??% "Unknown error")
   } else {
-    id = switch(tolower(type),
-      flow = as.integer(content_list$upload_flow$id[[1]]),
-      run = as.integer(content_list$upload_run$run_id[[1]])
+    id = switch(type,
+      flow = content_list$upload_flow$id[[1L]],
+      run = content_list$upload_run$run_id[[1L]],
+      study = content_list$study_upload$id[[1L]],
+      data = content_list$upload_data_set$id[[1L]]
     )
-    messagef("Your %s was successfully uploaded and assigned id: %i.", type, id)
+    id = as.integer(id)
+    messagef("Your %s was successfully uploaded and assigned id: %i.", capitalize(type), id)
   }
 
   return(id)
