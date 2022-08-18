@@ -28,7 +28,7 @@
 #'   If not set, defaults to the value of the environment variable `OPENMLAPIKEY`.
 #' * `mlr3oml.arff_parser`: ARFF parser to use, defaults to the internal one relies
 #'   on [data.table::fread()]. Can also be set to `"RWeka"` for the parser in
-#'   \CRANpkg{RWeka} or `"farff"` for the reader implemented in \CRANpkg{farff}.
+#'   \CRANpkg{RWeka}.
 #' * `mlr3oml.server`: Address for the server that should be used. Can be the test server or the
 #'   usual OpenML server.
 #'

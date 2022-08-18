@@ -18,7 +18,6 @@ Imports:
     checkmate,
     curl,
     data.table,
-    farff,
     httr,
     jsonlite,
     lgr,

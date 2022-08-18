@@ -114,7 +114,7 @@ OMLData = R6Class("OMLData",
       private$.features
     },
     #' @field data (`data.table()`)\cr
-    #' Data as [data.table::data.table()]. Removes row_id_attribute and ignore_attribute.
+    #' Data as [data.table::data.table()]. Removes row_id_attribute and ignore_attribute(s).
     data = function() {
       remove_named(self$data_raw, c(self$desc$row_id_attribute, self$desc$ignore_attribute))
     },
