@@ -72,4 +72,7 @@
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/split_predictions.html</loc>
   </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/write_arff.html</loc>
+  </url>
 </urlset>
