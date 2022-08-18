@@ -33,7 +33,7 @@ work without an API key, but you might get rate limited without an API key.
 If not set, defaults to the value of the environment variable \code{OPENMLAPIKEY}.
 \item \code{mlr3oml.arff_parser}: ARFF parser to use, defaults to the internal one relies
 on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code{"RWeka"} for the parser in
-\CRANpkg{RWeka} or \code{"farff"} for the reader implemented in \CRANpkg{farff}.
+\CRANpkg{RWeka}.
 \item \code{mlr3oml.parquet}: Enables or disables parquet as the default file format.
 If set to \code{TRUE}, the parquet version of datasets will be used by default.
 If set to \code{FALSE}, the arff version of datasets will be used by default.
@@ -66,5 +66,10 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
+
+Authors:
+\itemize{
+  \item Sebastian Fischer \email{sebf.fischer@gmail.com} (\href{https://orcid.org/0000-0002-9609-3197}{ORCID})
+}
 
 }

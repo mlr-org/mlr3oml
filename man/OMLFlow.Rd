@@ -40,7 +40,7 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{parameters}}{(\code{data.table})\cr
+\item{\code{parameter}}{(\code{data.table})\cr
 The parameters of the flow.}
 
 \item{\code{dependencies}}{(\code{character()})\cr

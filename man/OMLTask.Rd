@@ -45,7 +45,7 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{estimation_procedure}}{(\code{list()})\cr
-The estimation procedur, returns \code{NULL} if none is available.}
+The estimation procedure, returns \code{NULL} if none is available.}
 
 \item{\code{task_splits}}{(\code{data.table()})\cr
 A data.table containing the splits as provided by OpenML.}
