@@ -22,14 +22,13 @@ download_parquet_cached = function(url, id, cache_dir = FALSE, api_key = get_api
     response = download_file(url, file, api_key = api_key)
 
     if (response$ok) {
-      lg$debug("Downloaded parquet file", path = file, url = url, id = id)
+      if (isFALSE(cache_dir)) {
+        lg$debug("Downloaded parquet file and stored in temporary file.", file = file, url = url, id = id) # nolint
+      } else {
+        lg$debug("Downloaded parque file and stored in cache.", file = file, path = path, id = id, url = url) # nolint
+      }
       normalize_names_parquet_inplace(file)
       lg$debug("Normalized parquet names.", path = file, url = url, id = id)
-      if (isFALSE(cache_dir)) {
-        lg$debug("Storing parquet file in temporary file.", file = file, url = url, id = id)
-      } else {
-        lg$debug("Storing parquet file in cache.", file = file, path = path, id = id, url = url)
-      }
       return(file)
     } else if (retry < retries && response$http_code >= 500L) {
       delay = max(rnorm(1L, mean = 10), 0)

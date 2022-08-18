@@ -232,19 +232,6 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
 }
 
 
-#' @title Returns the currently active server
-#'
-#' @description Returns the server that can be configures via the option `mlr3oml.server`.
-#' Returns "https://www.openml.org/api/v1" by default.
-#'
-#' @export
-get_server = function() {
-  stopf("Don't use get_server anymore")
-  server = getOption("mlr3oml.server", "https://openml.org/api/v1")
-  assert_choice(server, c("https://openml.org/api/v1", "https://test.openml.org/api/v1"))
-  server
-}
-
 # extracts `flow_exists` from the response
 # is -1 if it does not exist and returns the id otherwise
 id_from_flow_response = function(response) {
@@ -259,9 +246,5 @@ id_from_flow_response = function(response) {
 ask_confirmation = function(action = "publish") {
   user_input = readline(sprintf("Are you sure you want to %s on OpenML? (y/n)  ", action))
   if (user_input != "y") stop("Exiting since you did not press y.")
-}
-
-get_data_from_backend = function(backend) {
-  ii = backend$data(backend$data(backend$primary_key))
 }
 
