@@ -2,10 +2,10 @@ Package: mlr3oml
 Title: Connector Between 'mlr3' and 'OpenML'
 Version: 0.5.0-9000
 Authors@R:
-    person("Michel", "Lang", , "michellang@gmail.com", role = c("cre", "aut"),
-           comment = c(ORCID = "0000-0001-9754-0393")),
-    person("Sebastian", "Fischer", , "sebf.fischer@gmail.com", role = "aut",
-           comment = c(ORCID = "0000-0002-9609-3197"))
+    c(person("Michel", "Lang", , "michellang@gmail.com", role = c("cre", "aut"),
+             comment = c(ORCID = "0000-0001-9754-0393")),
+      person("Sebastian", "Fischer", , "sebf.fischer@gmail.com", role = "aut",
+             comment = c(ORCID = "0000-0002-9609-3197")))
 Description: Provides an interface to 'OpenML.org' to list and download
     machine learning data and tasks. Data and tasks can be automatically
     converted to 'mlr3' tasks. For a more sophisticated interface which
