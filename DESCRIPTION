@@ -26,25 +26,26 @@ Imports:
     mlr3 (>= 0.10.0),
     mlr3misc (>= 0.7.0),
     paradox,
-    progressr,
     R6,
     stringi,
     uuid,
     xml2
 Suggests:
-    duckdb,
-    mlr3learners,
+    callr,
+    DBI,
+    duckdb (>= 0.5.0),
     mlr3db,
+    mlr3learners,
     mlr3pipelines,
     qs,
     RWeka,
     testthat (>= 3.0.0),
     withr
 Remotes:
-    mlr-org/mlr3db@parquet2,
-    mlr-org/mlr3
+    mlr-org/mlr3,
+    mlr-org/mlr3db@parquet2
 Config/testthat/edition: 3
 Encoding: UTF-8
 NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1

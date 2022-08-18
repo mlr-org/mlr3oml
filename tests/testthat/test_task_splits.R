@@ -2,7 +2,7 @@ skip_on_cran()
 
 # Test Info
 # * Test for all 4 resamplings: CV, RepeatedCV, Holdout, LOO:
-#   1. Check that expect_oml_data_split works
+#   1. Check that expect_oml_task_split works
 #   2. Manually verify that the converted splits are actually those expected
 # * Test that there is a meaningful error when there are no dataplits
 # * Multiple tests using OpenML-CC18
@@ -11,29 +11,24 @@ skip_on_cran()
 #   This is important when uploading runs, where we check for the oml_id but also have to check
 #   that the resampling has not been changed since it was downloaded.
 
-test_that("Basic test: iris", {
-  with_public_server()
-  oml_task = OMLTask$new(59)
-  oml_data_split = oml_task$data_split
-  expect_oml_data_split(oml_data_split)
-})
 
 test_that("Error when task does not provide task_splits", {
-  expect_warning(res <<- mlr3::as_resampling(OMLTask$new(147517)),
-    regexp = "Task 147517 does not"
-  )
-  expect_true(is.null(res))
+  otask = OMLTask$new(147517)
+  expect_warning(as_resampling(otask), "OpenML task with id")
+  resampling = suppressWarnings(as_resampling(otask))
+  expect_true(is.null(resampling))
 })
 
-test_that("Multiple tests", {
+test_that("Randomized conversion test", {
   set.seed(2)
   n = 5L
   task_ids = OMLCollection$new(99)$task_ids
   task_ids = sample(task_ids, size = n)
   for (task_id in task_ids) {
     oml_task = OMLTask$new(task_id)
-    oml_data_split = oml_task$data_split
-    expect_oml_data_split(oml_data_split)
+    task_splits = oml_task$task_splits
+    expect_data_table(task_splits)
+    expect_set_equal(names(task_splits), c("type", "rowid", "rep", "fold"))
   }
 })
 
@@ -44,14 +39,13 @@ test_that("hash is correct", {
   expect_true(task$hash == resampling$task_hash)
 })
 
-
 test_that("CV works", {
   id = 10107
   otask = OMLTask$new(id, cache = FALSE)
   task = mlr3::as_task(otask)
-  data_split = otask$data_split
-  test_ids = data_split$splits["TEST", on = "type"][["rowid"]] + 1L
-  resampling = mlr3::as_resampling(data_split)
+  task_splits = otask$task_splits
+  test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L
+  resampling = mlr3::as_resampling(otask)
   expect_equal(test_ids, resampling$instance$row_id)
   expect_r6(resampling, "ResamplingCV")
 })
@@ -60,9 +54,9 @@ test_that("CV repeated works", {
   id = 360928
   otask = OMLTask$new(id, cache = FALSE)
   task = mlr3::as_task(otask)
-  data_split = otask$data_split
-  test_ids = data_split$splits["TEST", on = "type"][["rowid"]] + 1L
-  resampling = mlr3::as_resampling(data_split)
+  task_splits = otask$task_splits
+  test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L
+  resampling = mlr3::as_resampling(otask)
   expect_equal(test_ids, resampling$instance$row_id)
   expect_r6(resampling, "ResamplingRepeatedCV")
 })
@@ -71,9 +65,9 @@ test_that("Leave One Out works", {
   id = 360927
   otask = OMLTask$new(id, cache = FALSE)
   task = mlr3::as_task(otask)
-  data_split = otask$data_split
-  test_ids = data_split$splits["TEST", on = "type"][["rowid"]] + 1L
-  resampling = mlr3::as_resampling(data_split)
+  task_splits = otask$task_splits
+  test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L
+  resampling = mlr3::as_resampling(otask)
   expect_equal(test_ids, resampling$instance)
   expect_r6(resampling, "ResamplingLOO")
 })
@@ -82,10 +76,10 @@ test_that("Holdout works", {
   id = 361001
   otask = OMLTask$new(id, cache = FALSE)
   task = mlr3::as_task(otask)
-  data_split = otask$data_split
-  test_ids = data_split$splits["TEST", on = "type"][["rowid"]] + 1L
-  train_ids = data_split$splits["TRAIN", on = "type"][["rowid"]] + 1L
-  resampling = mlr3::as_resampling(data_split)
+  task_splits = otask$task_splits
+  test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L
+  train_ids = task_splits["TRAIN", on = "type"][["rowid"]] + 1L
+  resampling = mlr3::as_resampling(otask)
   expect_equal(train_ids, resampling$instance$train)
   expect_equal(test_ids, resampling$instance$test)
   expect_r6(resampling, "ResamplingHoldout")

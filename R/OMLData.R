@@ -1,16 +1,33 @@
 #' @title Interface to OpenML Data Sets
 #'
+#' @name oml_data
+#'
 #' @description
 #' This is the class for data sets served on [OpenML](https://openml.org/search?type=data&sort=runs&status=active).
 #'
 #' @section mlr3 Integration:
 #' * A [mlr3::Task] can be obtained by calling `as_task()`.
-#' * A [mlr3::DataBackend] can be obtained by calling `as_data_backend()`.
+#' * A [mlr3::DataBackend] can be obtained by calling `as_data_backend()`. Depending on the
+#'   selected file-type, the returned backend is a `DataBackendDataTable` (arff) or
+#'   `DataBackendDuckDB` (parquet).
+#'
+#' @section Name conversion:
+#' Note that we rename the columns to comply with R's naming scheme (see [base::make.names()]).
+#' This means that the names can differ from those on OpenML.
+#'
+#' @section File Format:
+#' The datasets stored on OpenML are either stored as (sparse) ARFF or parquet.
+#' When creating a new `OMLData` object, the constructor argument `parquet` allows to switch
+#' between arff and parquet. Note that not necessarily all data files are available as parquet.
+#' The option `mlr3oml.parquet` can be used to set a default.
 #'
 #' @section ARFF Files:
 #' This package comes with an own reader for ARFF files, based on [data.table::fread()].
 #' For sparse ARFF files and if the \CRANpkg{RWeka} package is installed, the reader
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
+#'
+#' @section Parquet Files:
+#' For the handling of parquet files, we rely on \CRANpkg{duckdb}.
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -29,30 +46,44 @@
 #' # mlr3 conversion:
 #' task = as_task(odata)
 #' backend = as_data_backend(odata)
+#' class(backend)
 #'
 #' # get a task via tsk():
 #' tsk("oml", data_id = 9)
+#'
+#' # For parquet files
+#' if (requireNamespace("duckdb")) {
+#'   odata = OMLData$new(id = 9, parquet = TRUE)
+#'
+#'   print(odata)
+#'   print(odata$target_names)
+#'   print(odata$feature_names)
+#'   print(odata$tags)
+#'
+#'   backend = as_data_backend(odata)
+#'   class(backend)
+#'   task = as_task(odata)
+#'   task = tsk("oml", data_id = 9, parquet = TRUE)
+#'   class(task$backend)
+#' }
 #' }
 OMLData = R6Class("OMLData",
+  inherit = OMLObject,
   public = list(
-    #' @field id (`integer(1)`)\cr
-    #' OpenML data id.
-    id = NULL,
-    #' @template field_cache_dir
-    cache_dir = NULL,
     #' @description
-    #' Creates a new object of class `OMLData`.
+    #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
-    #' @param id (`integer(1)`)\cr
-    #'   OpenML data id.
+    #' @template param_id
     #' @template param_cache
     #' @template param_parquet
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE)) {
-      self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(cache)
-      private$.parquet = assert_flag(parquet)
-      initialize_cache(self$cache_dir)
+    #' @template param_server
+    initialize = function(
+      id,
+      cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE),
+      server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+      ) {
+      super$initialize(id, cache, parquet, server, "data")
     },
     #' @description
     #' Prints the object.
@@ -60,6 +91,7 @@ OMLData = R6Class("OMLData",
     print = function() {
       catf("<OMLData:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
       catf(" * Default target: %s", self$target_names)
+      catf(" * File format: %s", ifelse(self$parquet, "parquet", self$desc$format))
     },
     #' @description
     #' Returns the value of a single OpenML data set quality.
@@ -72,20 +104,6 @@ OMLData = R6Class("OMLData",
     }
   ),
   active = list(
-    #' @field name (`character(1)`)\cr
-    #' Name of the data set, as extracted from the data set description.
-    name = function() {
-      self$desc$name
-    },
-    #' @field desc (`list()`)\cr
-    #' Data set description (meta information), downloaded and converted from the JSON API response.
-    #'   This cannot be cached, because it can be modified on the server.
-    desc = function() {
-      if (is.null(private$.desc)) {
-        private$.desc = cached(download_data_desc, "data_desc", self$id)
-      }
-      private$.desc
-    },
     #' @field qualities (`data.table()`)\cr
     #' Data set qualities (performance values), downloaded from the JSON API response and
     #' converted to a [data.table::data.table()] with columns `"name"` and `"value"`.
@@ -96,13 +114,12 @@ OMLData = R6Class("OMLData",
       }
       private$.qualities
     },
-    #' Returns the data without the row identifier and ignore id columns.
     #' @field data (`data.table()`)\cr
-    #' Returns the data without the row id and ignore columns.
-    #' For the complete data, use `$data_raw`.
+    #' Returns the data (without the row identifier and ignore id columns).
     data = function() {
       cols = !self$features$is_ignore & !self$features$is_row_identifier
-      self$backend$data(self$backend$rownames, self$features$name[cols])
+      backend = private$.get_backend()
+      backend$data(backend$rownames, self$features$name[cols])
     },
     #' @field features (`data.table()`)\cr
     #' Information about data set features (including target), downloaded from the JSON API response and
@@ -125,23 +142,6 @@ OMLData = R6Class("OMLData",
       }
       private$.features
     },
-    #' @field backend (`mlr3::DataBackend`)\cr
-    #'   The data backend. This should be cloned before modifying it in place.
-    backend = function() {
-      if (!is.null(private$.backend)) {
-        return(private$.backend)
-      }
-
-      if (self$parquet) {
-        path = self$parquet_path
-        private$.backend = mlr3db::as_duckdb_backend(path)
-      } else {
-        data = cached(download_data, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
-        private$.backend = as_data_backend(data)
-      }
-
-      private$.backend
-    },
     #' @field target_names (`character()`)\cr
     #' Name of the default target, as extracted from the OpenML data set description.
     target_names = function() {
@@ -163,28 +163,24 @@ OMLData = R6Class("OMLData",
     ncol = function() {
       self$features[!is_row_identifier & !is_ignore, .N]
     },
-    #' @field tags (`character()`)\cr
-    #' Returns all tags of the data set.
-    tags = function() {
-      self$desc$tag
-    },
     #' @field license (`character()`)\cr
     #' Returns all license of the dataset.
     license = function() {
       self$desc$licence
     },
     #' @field parquet_path (`character()`)\cr
-    #' Returns the path of the parquet file.
+    #' Downloads the parquet file (or loads from cache) and returns the path of the parquet file.
+    #' Note that this also normalizes the names of the parquet file.
     parquet_path = function() {
       if (isFALSE(self$parquet)) {
         messagef("Parquet is not the selected data format, returning NULL.")
         return(NULL)
       }
-      if (is.null(private$.data_path)) {
+      if (is.null(private$.parquet_path)) {
         loadNamespace("mlr3db")
         # this function is already cached, it works a little different than the cached(f, ...)
-        # because we cache it as .pq and not as .qs
-        private$.parquet_path = download_parquet(
+        # because we cache it as .parquet and not as .qs
+        private$.parquet_path = download_parquet_cached(
           url = self$desc$minio_url,
           id = self$id,
           cache_dir = self$cache_dir,
@@ -192,21 +188,27 @@ OMLData = R6Class("OMLData",
         )
       }
       private$.parquet_path
-    },
-    #' @field parquet (`logical(1)`)\cr
-    #' Whether to use parquet.
-    parquet = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.parquet
     }
   ),
   private = list(
-    .desc = NULL,
     .qualities = NULL,
     .features = NULL,
     .backend = NULL,
     .parquet_path = NULL,
-    .parquet = NULL
+    .get_backend = function() {
+      if (!is.null(private$.backend)) {
+        return(private$.backend)
+      }
+      if (self$parquet) {
+        path = self$parquet_path
+        private$.backend = mlr3db::as_duckdb_backend(path)
+      } else {
+        data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        private$.backend = as_data_backend(data)
+      }
+
+      private$.backend
+    }
   )
 )
 
@@ -214,15 +216,10 @@ OMLData = R6Class("OMLData",
 as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
   if (data$parquet) {
     loadNamespace("mlr3db")
-    backend = as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
+    mlr3db::as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
   } else {
-    backend = as_data_backend(data$data, primary_key = primary_key, ...)
+    as_data_backend(data$data, primary_key = primary_key, ...)
   }
-}
-
-#' @export
-as_data_backend.OMLTask = function(data, primary_key = NULL, ...) {
-  as_data_backend(data$data, primary_key = primary_key, ...)
 }
 
 #' @importFrom mlr3 as_task
@@ -236,16 +233,17 @@ as_task.OMLData = function(x, target_names = NULL, ...) {
   constructor = NULL
   if (length(target) == 1L) {
     constructor = switch(as.character(x$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
-      "nominal" = new_task_classif,
-      "numeric" = new_task_regr,
+      "nominal" = TaskClassif,
+      "numeric" = TaskRegr,
       NULL
     )
   } else if (length(target) == 2L) {
     stopf("mlr3proba currently not supported.")
-    # constructor = new_task_surv
   }
   if (is.null(constructor)) {
     stopf("Unable to determine the task type")
   }
-  constructor(x$name, x$data, target = target)
+  constructor$new(x$name, get_private(x)$.get_backend(), target = target)
 }
+
+

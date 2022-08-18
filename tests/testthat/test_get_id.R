@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("get_id works for Task", {
   otask = OMLTask$new(31)
   task = as_task(otask)

@@ -1,21 +1,41 @@
 CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
-  data = 1L,
-  data_desc = 1L,
-  data_qualities = 1L,
-  data_features = 1L,
-  task_desc = 1L,
-  task_splits = 1L
+  data_arff = 2L,
+  data_parquet = 2L,
+  data_desc = 2L,
+  data_qualities = 2L,
+  data_features = 2L,
+  task_desc = 2L,
+  task_splits = 2L,
+  flow_desc = 2L,
+  collection_desc = 2L,
+  run_desc = 2L,
+  prediction = 2L
 )
 
 CACHE$initialized = character()
 
-get_cache_dir = function(cache) {
+get_cache_dir = function(cache, server) {
+  assert_true(is.logical(cache) || is.character(cache))
   if (isFALSE(cache)) {
     return(FALSE)
+  } else {
+    if (!is.character(cache)) {
+      path = R_user_dir("mlr3oml", "cache")
+    } else {
+      path = cache
+    }
+    # it is TRUE
+    if (server == "https://openml.org/api/v1") {
+      cache = path
+    } else if (server == "https://test.openml.org/api/v1") {
+      cache = file.path(path, "test_server")
+    } else {
+      cache = file.path(R_user_dir("mlr3oml", "cache"), gsub('[^a-zA-Z]', '', cache))
+    }
   }
-  cache = R_user_dir("mlr3oml", "cache")
+
   assert(check_directory_exists(cache), check_path_for_output(cache))
   normalizePath(cache, mustWork = FALSE)
 }
@@ -66,7 +86,7 @@ initialize_cache = function(cache_dir) {
 # in the cache folder. It keeps different caches for the public server and the test server.
 #
 # @param fun
-#   Download function, e.g. download_data_desc.
+#   Download function, e.g. download_desc_data
 # @param type
 #   The type of object that is downloaded by fun. This is the subfolder where the object will be
 #   stored (relative to the cache folder R_user_dir("mlr3oml", "cache")).
@@ -77,16 +97,6 @@ initialize_cache = function(cache_dir) {
 # @param type
 # The type that is downloaded, not really necessary
 cached = function(fun, type, id, ..., cache_dir = FALSE) {
-  if (is.character(cache_dir)) {
-    server = get_server()
-    if (server == "https://openml.org/api/v1") {
-      cache_dir = sprintf("%s/public", cache_dir)
-    } else if (server == "https://test.openml.org/api/v1") {
-      cache_dir = sprintf("%s/test", cache_dir)
-    } else {
-      stopf("Invalid server")
-    }
-  }
   if (isFALSE(cache_dir)) {
     return(fun(id, ...))
   }

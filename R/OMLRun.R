@@ -6,8 +6,6 @@
 #'
 #' @section OpenML Integration:
 #' * A [OMLTask] is returned by accessing the active field `$task`.
-#' * A [OMLDataSplit] is returned by accessing the active field `$data_split`
-#'   (short for `$task$data_split`)
 #' * A [OMLData] is returned by accessing the active field `$data` (short for `$task$data`)
 #' * A [OMLFlow] is returned by accessing the active field `$flow`.
 #' * The raw predictions are returned by accessing the active field `$predictions`.
@@ -31,7 +29,6 @@
 #' print(orun$task) # OMLTask
 #' print(orun$data) # OMLData
 #' print(orun$flow) # OMLFlow
-#' print(orun$data_split) # OMLDataSplit
 #' print(orun$prediction)
 #' as_task(orun)
 #' as_resampling(orun)
@@ -42,45 +39,33 @@
 #' }
 #' #
 OMLRun = R6Class("OMLRun",
+  inherit = OMLObject,
   public = list(
-    #' @field id (`integer(1)`)\cr
-    #'  OpenML run id.
-    id = NULL,
-    #' @template field_cache_dir
-    cache_dir = NULL,
     #' @description
-    #'  Creates a new object of class `OMLRun`.
-    #' @param id (`integer(1)`)\cr
-    #'  OpenML run id.
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @template param_id
     #' @template param_cache
     #' @template param_parquet
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE)) {
-      self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(assert_flag(cache))
-      private$.parquet = parquet
-      initialize_cache(self$cache_dir)
+    #' @template param_server
+    initialize = function(
+      id,
+      cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE),
+      server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+      ) {
+      super$initialize(id, cache, parquet, server, "run")
     },
     #' @description
     #' Prints the object.
     print = function() {
       catf("<OMLRun:%i>", self$id)
       catf(" * Task: %s (%s)", self$task_id, self$task$data_name)
-      catf(" * Eval. Procedure: %s", self$task$data_split$type)
+      catf(" * Eval. Procedure: %s", self$task$ev$type)
       catf(" * Flow: %s (%s)", self$flow_id, as_short_string(self$flow$name))
     }
   ),
   active = list(
-    #' @field desc (`list()`)\cr
-    #' Run description that was downloaded and converted from the JSON API response.
-    desc = function() {
-      if (is.null(private$.desc)) {
-        private$.desc = cached(download_run_desc, "run_desc", self$id,
-          cache_dir = self$cache_dir
-        )
-      }
-      return(private$.desc)
-    },
     #' @field flow_id (`integer(1)`)\cr
     #'  The id of the flow.
     flow_id = function() self$desc$flow_id,
@@ -108,22 +93,11 @@ OMLRun = R6Class("OMLRun",
     #' @field data_id (`integer(1)`)\cr
     #' The id of the dataset.
     data_id = function() self$desc$input_data$dataset$did,
-    #' @field task_type (`character(1)`)\cr
-    #' The type of task solved by this run (e.g., 'classification', 'regr', 'surv', ...).
     #' @field data ([OMLData]) \cr
     #' The data used in this run.
     data = function() self$task$data,
-    #' @field data_split ([OMLDataSplit])\cr
-    #' The data split belonging to the task.
-    data_split = function() {
-      if (is.null(private$.data_split)) {
-        private$.data_split = OMLDataSplit$new(
-          task_id = self$task_id,
-          cache = is.character(self$cache_dir)
-        )
-      }
-      private$.data_split
-    },
+    #' @field task_type (`character()`)\cr
+    #' The task type.
     task_type = function() self$desc$task_type,
     #' @field parameter_setting `data.table()`)\cr
     #' The parameter setting for this run.
@@ -140,25 +114,14 @@ OMLRun = R6Class("OMLRun",
         cache_dir = self$cache_dir, desc = self$desc
       )
       return(private$.prediction)
-    },
-    #' @field tags (`character()`)\cr
-    #' A character vector containing the tags of the run.
-    tags = function() self$desc$tag,
-    #' @field parquet (`logical(1)`)\cr
-    #' Whether to use parquet.
-    parquet = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.parquet
     }
   ),
   private = list(
-    .desc = NULL,
     .task = NULL,
     .prediction = NULL,
     .data = NULL,
     .flow = NULL,
-    .data_split = NULL,
-    .parquet = NULL
+    .task_split = NULL
   )
 )
 
@@ -248,7 +211,7 @@ as_data_backend.OMLRun = function(x, ...) {
 #' @importFrom mlr3 as_resampling
 #' @export
 as_resampling.OMLRun = function(x, ...) {
-  as_resampling(x$data_split, ...)
+  as_resampling(x$task, ...)
 }
 
 #' @importFrom mlr3 as_resample_result

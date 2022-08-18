@@ -2,7 +2,7 @@ skip_on_cran()
 
 test_that("Collection 232", {
   with_public_server()
-  collection = OMLCollection$new(232L, FALSE)
+  collection = OMLCollection$new(232L)
   expect_oml_collection(collection)
   expect_equal(collection$name, "Test-Study")
   expect_equal(collection$main_entity_type, "run")

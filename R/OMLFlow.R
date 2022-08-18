@@ -25,24 +25,23 @@
 #' plearner = as_learner(python_flow, "classif")
 #' }
 OMLFlow = R6Class("OMLFlow",
+  inherit = OMLObject,
   public = list(
-    #' @field id (`integer(1)`)\cr
-    #' OpenML flow id.
-    id = NULL,
-
-    #' @template field_cache_dir
-    cache_dir = NULL,
-
     #' @description
-    #' Initializes a new object of class [mlr3oml::OMLFlow].
-    #' @param id (`integeger(1)`) The id of the Flow
-    #' @param cache (`logical(1)`) whether to use caching.
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
-      self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(assert_flag(cache))
-      initialize_cache(self$cache_dir)
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @template param_id
+    #' @template param_cache
+    #' @template param_parquet
+    #' @template param_server
+    initialize = function(
+      id,
+      cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE),
+      server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+      ) {
+      super$initialize(id, cache, parquet, server, "flow")
     },
-
     #' @description
     #' Prints the object.
     print = function() {
@@ -52,35 +51,13 @@ OMLFlow = R6Class("OMLFlow",
     }
   ),
   active = list(
-    #' @field desc (`list()`)\cr
-    #' The description as downloaded from OpenML.
-    desc = function() {
-      if (is.null(private$.desc)) {
-        private$.desc = cached(download_flow_desc, type = "flow", id = self$id,
-          cache_dir = self$cache_dir
-        )
-      }
-      private$.desc
-    },
-
     #' @field parameters (`data.table`)\cr
     #' The parameters of the flow.
     parameters = function() self$desc$parameter,
 
-    #' @field tags (`character()`)\cr
-    #' The tags of the flow.
-    tags = function() self$desc$tag,
-
     #' @field dependencies (`character()`)\cr
     #' The dependencies of the flow.
-    dependencies = function() self$desc$dependencies,
-
-    #' @field name (`character(1)`)\cr
-    #' The name of the flow.
-    name = function() self$desc$name
-  ),
-  private = list(
-    .desc = NULL
+    dependencies = function() self$desc$dependencies
   )
 )
 

@@ -20,3 +20,4 @@
 ^\.github$
 ^\.lintr$
 ^\.pre-commit-config\.yaml$
+^TODO.md$

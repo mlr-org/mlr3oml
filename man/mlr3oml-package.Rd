@@ -34,13 +34,19 @@ If not set, defaults to the value of the environment variable \code{OPENMLAPIKEY
 \item \code{mlr3oml.arff_parser}: ARFF parser to use, defaults to the internal one relies
 on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code{"RWeka"} for the parser in
 \CRANpkg{RWeka} or \code{"farff"} for the reader implemented in \CRANpkg{farff}.
-\item \code{mlr3oml.parquet}: Enables ord disables the parquet file format.
-If set to \code{TRUE}, the parquet version of datasets will be used.
-If set to \code{FALSE}, the arff version of datasets will be used.
+\item \code{mlr3oml.parquet}: Enables or disables parquet as the default file format.
+If set to \code{TRUE}, the parquet version of datasets will be used by default.
+If set to \code{FALSE}, the arff version of datasets will be used by default.
 Default is \code{FALSE}.
 \item \code{mlr3oml.server}: Address for the server that should be used. Can be the test server or the
 usual OpenML server.
 }
+}
+
+\section{Servers}{
+
+OpenML allows to use different server. Most users will only interact with the standard public
+server. However it is possible to use different servers. FIXME:
 }
 
 \section{Logging}{

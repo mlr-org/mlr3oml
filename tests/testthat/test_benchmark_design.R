@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("benchmark_design works on non-oml inputs", {
   tasks = mlr3::tsks(c("pima", "iris"))
   learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))

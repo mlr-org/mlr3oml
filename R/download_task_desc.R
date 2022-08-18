@@ -1,14 +1,13 @@
-download_task_desc = function(task_id) {
-  server = get_server()
+download_desc_task = function(task_id, server) {
   desc = get_json(paste0(server, "/json/task/%i"), task_id,
     simplify_data_frame = FALSE
   )[[1L]]
 
-  desc = parse_task_desc(desc)
+  desc = parse_desc_task(desc)
   return(desc)
 }
 
-parse_task_desc = function(desc) {
+parse_desc_task = function(desc) {
   desc$task_id = as.integer(desc$task_id)
   desc$task_type_id = as.integer(desc$task_type_id)
   desc$input = set_names(map(desc$input, function(x) x[[2L]]), map_chr(desc$input, "name"))

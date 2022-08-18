@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("S3 converter work for run", {
   id = 10587724
   run = OMLRun$new(id)

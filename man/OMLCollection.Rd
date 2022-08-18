@@ -48,35 +48,17 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \emph{ACM SIGKDD Explorations Newsletter}, \bold{15}(2), 49--60.
 \doi{10.1145/2641190.2641198}.
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{id}}{(\code{integer(1)})\cr
-OpenML collection id.}
-
-\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
-Stores the location of the cache for objects retrieved from \url{https://openml.org}.
-If set to \code{FALSE}, caching is disabled.
-
-The package \CRANpkg{qs} is required for caching.}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[mlr3oml:OMLObject]{mlr3oml::OMLObject}} -> \code{OMLCollection}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{desc}}{(\code{list()})\cr
-Colllection description (meta information), downloaded and converted from the JSON API response.
-This cannot be cached, because it can be modified on the server.}
+Colllection description (meta information), downloaded and converted from the JSON API response.}
 
-\item{\code{name}}{(\code{character(1)}) \cr
-The name of the collection.}
-
-\item{\code{tags}}{(\code{character(n)})\cr
-The tags of the OpenML collection.}
-
-\item{\code{main_entity_type}}{(\code{character(1)})\cr
-The main entity type of the collection (either "run" or "task").}
+\item{\code{main_entity_type}}{(\code{character(n)})\cr
+The main entity type, either \code{"run"} or \code{"task"}.}
 
 \item{\code{flow_ids}}{(\code{integer(n)})\cr
 An vector containing the flow ids of the collection.}
@@ -103,9 +85,6 @@ A data.table summarizing the datasets included in the collection.}
 
 \item{\code{tasks}}{(\code{data.table()})
 A data.table summarizing the tasks included in the collection.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -117,16 +96,24 @@ Whether to use parquet.}
 \item \href{#method-OMLCollection-clone}{\code{OMLCollection$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLObject" data-id="help"><a href='../../mlr3oml/html/OMLObject.html#method-OMLObject-help'><code>mlr3oml::OMLObject$help()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OMLCollection-new"></a>}}
 \if{latex}{\out{\hypertarget{method-OMLCollection-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new object of class \code{OMLCollection}.
+Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE)
+  parquet = getOption("mlr3oml.parquet", FALSE),
+  server = getOption("mlr3oml.server", "https://openml.org/api/v1")
 )}\if{html}{\out{</div>}}
 }
 
@@ -134,7 +121,7 @@ Creates a new object of class \code{OMLCollection}.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
-OpenML run id.}
+OpenML id for the object.}
 
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
@@ -142,6 +129,9 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.}
+
+\item{\code{server}}{(\code{character(1)})\cr
+OpenML server to be used. Defaults to the public OpenML server seen on  https://openml.org}
 }
 \if{html}{\out{</div>}}
 }

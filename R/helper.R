@@ -239,6 +239,7 @@ delete = function(type, id, api_key = NULL, server = NULL, confirm = TRUE) {
 #'
 #' @export
 get_server = function() {
+  stopf("Don't use get_server anymore")
   server = getOption("mlr3oml.server", "https://openml.org/api/v1")
   assert_choice(server, c("https://openml.org/api/v1", "https://test.openml.org/api/v1"))
   server

@@ -11,8 +11,6 @@ conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 
 \itemize{
 \item A \link{OMLTask} is returned by accessing the active field \verb{$task}.
-\item A \link{OMLDataSplit} is returned by accessing the active field \verb{$data_split}
-(short for \verb{$task$data_split})
 \item A \link{OMLData} is returned by accessing the active field \verb{$data} (short for \verb{$task$data})
 \item A \link{OMLFlow} is returned by accessing the active field \verb{$flow}.
 \item The raw predictions are returned by accessing the active field \verb{$predictions}.
@@ -38,7 +36,6 @@ print(orun)
 print(orun$task) # OMLTask
 print(orun$data) # OMLData
 print(orun$flow) # OMLFlow
-print(orun$data_split) # OMLDataSplit
 print(orun$prediction)
 as_task(orun)
 as_resampling(orun)
@@ -55,26 +52,12 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \emph{ACM SIGKDD Explorations Newsletter}, \bold{15}(2), 49--60.
 \doi{10.1145/2641190.2641198}.
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{id}}{(\code{integer(1)})\cr
-OpenML run id.}
-
-\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
-Stores the location of the cache for objects retrieved from \url{https://openml.org}.
-If set to \code{FALSE}, caching is disabled.
-
-The package \CRANpkg{qs} is required for caching.}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[mlr3oml:OMLObject]{mlr3oml::OMLObject}} -> \code{OMLRun}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{desc}}{(\code{list()})\cr
-Run description that was downloaded and converted from the JSON API response.}
-
 \item{\code{flow_id}}{(\code{integer(1)})\cr
 The id of the flow.}
 
@@ -90,14 +73,11 @@ The task solved by this run.}
 \item{\code{data_id}}{(\code{integer(1)})\cr
 The id of the dataset.}
 
-\item{\code{task_type}}{(\code{character(1)})\cr
-The type of task solved by this run (e.g., 'classification', 'regr', 'surv', ...).}
-
 \item{\code{data}}{(\link{OMLData}) \cr
 The data used in this run.}
 
-\item{\code{data_split}}{(\link{OMLDataSplit})\cr
-The data split belonging to the task.}
+\item{\code{task_type}}{(\code{character()})\cr
+The task type.}
 
 \item{\code{parameter_setting}}{\code{data.table()})\cr
 The parameter setting for this run.}
@@ -106,12 +86,6 @@ The parameter setting for this run.}
 The raw predictions of the run as returned by OpenML, not in standard mlr3 format.
 Formatted predictions are accessible after converting to a \link[mlr3:ResampleResult]{mlr3::ResampleResult} via
 \code{as_resample_result()}.}
-
-\item{\code{tags}}{(\code{character()})\cr
-A character vector containing the tags of the run.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -123,16 +97,24 @@ Whether to use parquet.}
 \item \href{#method-OMLRun-clone}{\code{OMLRun$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLObject" data-id="help"><a href='../../mlr3oml/html/OMLObject.html#method-OMLObject-help'><code>mlr3oml::OMLObject$help()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OMLRun-new"></a>}}
 \if{latex}{\out{\hypertarget{method-OMLRun-new}{}}}
 \subsection{Method \code{new()}}{
-Creates a new object of class \code{OMLRun}.
+Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLRun$new(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE)
+  parquet = getOption("mlr3oml.parquet", FALSE),
+  server = getOption("mlr3oml.server", "https://openml.org/api/v1")
 )}\if{html}{\out{</div>}}
 }
 
@@ -140,7 +122,7 @@ Creates a new object of class \code{OMLRun}.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
-OpenML run id.}
+OpenML id for the object.}
 
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
@@ -148,6 +130,9 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.}
+
+\item{\code{server}}{(\code{character(1)})\cr
+OpenML server to be used. Defaults to the public OpenML server seen on  https://openml.org}
 }
 \if{html}{\out{</div>}}
 }
