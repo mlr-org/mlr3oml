@@ -41,7 +41,7 @@ test_that("hash is correct", {
 
 test_that("CV works", {
   id = 10107
-  otask = OMLTask$new(id, cache = FALSE)
+  otask = OMLTask$new(id)
   task = mlr3::as_task(otask)
   task_splits = otask$task_splits
   test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L
@@ -52,7 +52,7 @@ test_that("CV works", {
 
 test_that("CV repeated works", {
   id = 360928
-  otask = OMLTask$new(id, cache = FALSE)
+  otask = OMLTask$new(id)
   task = mlr3::as_task(otask)
   task_splits = otask$task_splits
   test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L
@@ -63,7 +63,7 @@ test_that("CV repeated works", {
 
 test_that("Leave One Out works", {
   id = 360927
-  otask = OMLTask$new(id, cache = FALSE)
+  otask = OMLTask$new(id)
   task = mlr3::as_task(otask)
   task_splits = otask$task_splits
   test_ids = task_splits["TEST", on = "type"][["rowid"]] + 1L

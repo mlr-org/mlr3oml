@@ -52,25 +52,27 @@ OMLTask = R6Class("OMLTask",
     print = function() {
       catf("<OMLTask:%i>", self$id)
       catf(" * Type: %s", self$desc$task_type)
-      catf(" * Data: %s (id: %s, %ix%i)", self$data_name, self$data_id, self$nrow, self$ncol)
+      catf(" * Data: %s (id: %s; dim: %ix%i)", self$data_name, self$data_id, self$nrow, self$ncol)
       if (self$task_type %in% c("Supervised Regression", "Supervised Classification")) {
         catf(" * Target: %s", paste(self$target_names, collapse = ","))
       }
       estimation_procedure = self$estimation_procedure
       if (!is.null(estimation_procedure)) {
         type = self$estimation_procedure$type
-        parameters = self$estimation_procedure$parameters
+        parameter = self$estimation_procedure$parameter
         if (type == "crossvalidation") {
-          catf(" * Estimation: crossvalidation (repeats = %s, folds = %s)",
-            parameters[get("name") == "number_repeats", "value"][[1L]],
-            parameters[get("name") == "number_folds", "value"][[1L]]
+          catf(" * Estimation: crossvalidation (id: %s; repeats: %s, folds: %s)",
+            estimation_procedure$id,
+            parameter[get("name") == "number_repeats", "value"][[1L]],
+            parameter[get("name") == "number_folds", "value"][[1L]]
           )
         } else if (self$type == "holdout") {
-          catf(" * Type: holdout (test_percentage = %s)",
-            parameters[get("name") == "percentage", "value"][[1L]]
+          catf(" * Type: holdout (id: %s; test size: %s)",
+            estimation_procedure$id,
+            parameter[get("name") == "percentage", "value"][[1L]]
           )
         } else if (type == "leaveoneout") {
-          catf(" * Type: leaveoneout")
+          catf(" * Type: leaveoneout (id: %s)", estimation_procedure$id)
         }
       } else {
         catf(" * Estimation Procedure: missing")
@@ -79,16 +81,13 @@ OMLTask = R6Class("OMLTask",
   ),
   active = list(
     #' @field estimation_procedure (`list()`)\cr
-    #'   The estimation procedur, returns `NULL` if none is available.
+    #'   The estimation procedure, returns `NULL` if none is available.
     estimation_procedure = function() {
-      type = self$desc$input$estimation_procedure$type
-      if (identical(type, list())) {
+      ep = self$desc$input$estimation_procedure
+      if (identical(ep$type, list())) {
         return(NULL)
       }
-      list(
-        type = type,
-        parameters = self$desc$input$estimation_procedure$parameter
-      )
+      ep
     },
     #' @field task_splits (`data.table()`)\cr
     #' A data.table containing the splits as provided by OpenML.

@@ -53,7 +53,7 @@ OMLFlow = R6Class("OMLFlow",
   active = list(
     #' @field parameters (`data.table`)\cr
     #' The parameters of the flow.
-    parameters = function() self$desc$parameter,
+    parameter = function() self$desc$parameter,
 
     #' @field dependencies (`character()`)\cr
     #' The dependencies of the flow.

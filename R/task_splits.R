@@ -28,8 +28,8 @@ convert_task_splits = function(x, task = NULL) {
 
 
 convert_cv = function(task_split, task_splits) {
-  nfolds = as.integer(task_split$parameters[get("name") == "number_folds", "value"][[1]])
-  repeats = as.integer(task_split$parameters[get("name") == "number_repeats", "value"][[1]])
+  nfolds = as.integer(task_split$parameter[get("name") == "number_folds", "value"][[1]])
+  repeats = as.integer(task_split$parameter[get("name") == "number_repeats", "value"][[1]])
 
   if (repeats == 1) {
     resampling = convert_cv_simple(task_split, task_splits, nfolds)

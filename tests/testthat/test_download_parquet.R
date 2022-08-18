@@ -7,10 +7,10 @@ skip_if_not_installed("duckdb")
 test_that("make_names_parquet works", {
   require_namespaces(c("duckdb", "DBI"))
   odata = OMLData$new(9, parquet = FALSE, cache = FALSE)
-  path = odata$desc$minio_url
+  path = odata$desc$parquet_url
 
   path = tempfile(fileext = ".parquet")
-  download.file(odata$desc$minio_url, path)
+  download.file(odata$desc$parquet_url, path)
 
   dat1 = read_parquet(path)
 

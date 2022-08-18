@@ -1,17 +1,17 @@
 CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
-  data_arff = 2L,
-  data_parquet = 2L,
-  data_desc = 2L,
-  data_qualities = 2L,
-  data_features = 2L,
-  task_desc = 2L,
-  task_splits = 2L,
-  flow_desc = 2L,
-  collection_desc = 2L,
-  run_desc = 2L,
-  prediction = 2L
+  data = 1L,
+  data_parquet = 1L,
+  data_desc = 1L,
+  data_qualities = 1L,
+  data_features = 1L,
+  task_desc = 1L,
+  task_splits = 1L,
+  flow_desc = 1L,
+  collection_desc = 1L,
+  run_desc = 1L,
+  prediction = 1L
 )
 
 CACHE$initialized = character()

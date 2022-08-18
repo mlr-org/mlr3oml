@@ -91,7 +91,7 @@ OMLData = R6Class("OMLData",
     print = function() {
       catf("<OMLData:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
       catf(" * Default target: %s", self$target_names)
-      catf(" * File format: %s", ifelse(self$parquet, "parquet", self$desc$format))
+      catf(" * Format: %s", ifelse(self$parquet, "parquet", self$desc$format))
     },
     #' @description
     #' Returns the value of a single OpenML data set quality.
@@ -181,7 +181,7 @@ OMLData = R6Class("OMLData",
         # this function is already cached, it works a little different than the cached(f, ...)
         # because we cache it as .parquet and not as .qs
         private$.parquet_path = download_parquet_cached(
-          url = self$desc$minio_url,
+          url = self$desc$parquet_url,
           id = self$id,
           cache_dir = self$cache_dir,
           api_key = get_api_key()

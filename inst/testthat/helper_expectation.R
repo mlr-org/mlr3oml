@@ -3,9 +3,9 @@ expect_oml_flow = function(flow) {
   expect_true(test_logical(flow$cache_dir) || test_character(flow$cache_dir))
   expect_count(flow$id)
   expect_list(flow$desc)
-  expect_data_table(flow$parameters)
+  expect_data_table(flow$parameter)
   testthat::expect_equal(
-    names(flow$parameters),
+    names(flow$parameter),
     c("name", "data_type", "default_value")
   )
   expect_character(flow$dependencies)
