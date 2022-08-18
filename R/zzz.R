@@ -28,7 +28,7 @@
 #'   If not set, defaults to the value of the environment variable `OPENMLAPIKEY`.
 #' * `mlr3oml.arff_parser`: ARFF parser to use, defaults to the internal one relies
 #'   on [data.table::fread()]. Can also be set to `"RWeka"` for the parser in
-#'   \CRANpkg{RWeka} or `"farff"` for the reader implemented in \CRANpkg{farff}.
+#'   \CRANpkg{RWeka}.
 #' * `mlr3oml.parquet`: Enables or disables parquet as the default file format.
 #'   If set to `TRUE`, the parquet version of datasets will be used by default.
 #'   If set to `FALSE`, the arff version of datasets will be used by default.
