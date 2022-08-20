@@ -16,19 +16,6 @@ CACHE$versions = list(
 
 CACHE$initialized = character()
 
-
-# @description
-# This function returns the cache directory for the given server.
-# When a path is provided for the value cache, this path is used as the cache directory for the
-# public server. In case the test server is used, the subdirector cache/test_server is used as
-# the cache directory.
-#
-# @param cache (`logical(1)` || `character(1)`)\cr
-#   Whether to cache. This can can also be a string giving the cache directory.
-#   If it is true, the value is the subdirectory ./test or ./public relative to
-#   R_user_dir("mlr3oml", "cache").
-# @param test_server (`logical(1)`)`)\cr
-#   Whether to create the cache directory for the test server.
 get_cache_dir = function(cache, test_server) {
   assert_true(is.logical(cache) || is.character(cache))
   if (isFALSE(cache)) {
