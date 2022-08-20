@@ -76,14 +76,14 @@ OMLData = R6Class("OMLData",
     #' @template param_id
     #' @template param_cache
     #' @template param_parquet
-    #' @template param_server
+    #' @template param_test_server
     initialize = function(
       id,
       cache = getOption("mlr3oml.cache", FALSE),
       parquet = getOption("mlr3oml.parquet", FALSE),
-      server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+      test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, server, "data")
+      super$initialize(id, cache, parquet, test_server, "data")
     },
     #' @description
     #' Prints the object.
@@ -110,7 +110,7 @@ OMLData = R6Class("OMLData",
     qualities = function() {
       if (is.null(private$.qualities)) {
         private$.qualities = cached(download_data_qualities, "data_qualities", self$id,
-          cache_dir = self$cache_dir)
+          cache_dir = self$cache_dir, server = self$server)
       }
       private$.qualities
     },
@@ -137,7 +137,7 @@ OMLData = R6Class("OMLData",
     features = function() {
       if (is.null(private$.features)) {
         private$.features = cached(download_data_features, "data_features", self$id,
-          desc = self$desc, cache_dir = self$cache_dir
+          desc = self$desc, cache_dir = self$cache_dir, server = self$server
         )
       }
       private$.features
@@ -181,7 +181,7 @@ OMLData = R6Class("OMLData",
         # this function is already cached, it works a little different than the cached(f, ...)
         # because we cache it as .parquet and not as .qs
         private$.parquet_path = download_parquet_cached(
-          url = self$desc$parquet_url,
+          url = self$desc$minio_url,
           id = self$id,
           cache_dir = self$cache_dir,
           api_key = get_api_key()
@@ -203,7 +203,9 @@ OMLData = R6Class("OMLData",
         path = self$parquet_path
         private$.backend = mlr3db::as_duckdb_backend(path)
       } else {
-        data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir)
+        data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
+          server = self$server
+        )
         private$.backend = as_data_backend(data)
       }
 

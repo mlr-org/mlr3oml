@@ -98,4 +98,3 @@ test_that("OMLFlow conversion throws the correct warnings", {
     regexp = "Problem assigning"
   )
 })
-

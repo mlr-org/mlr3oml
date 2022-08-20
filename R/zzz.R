@@ -33,12 +33,10 @@
 #'   If set to `TRUE`, the parquet version of datasets will be used by default.
 #'   If set to `FALSE`, the arff version of datasets will be used by default.
 #'   Default is `FALSE`.
-#' * `mlr3oml.server`: Address for the server that should be used. Can be the test server or the
-#'   usual OpenML server.
-#'
-#' @section Servers:
-#' OpenML allows to use different server. Most users will only interact with the standard public
-#' server. However it is possible to use different servers. FIXME:
+#' * `mlr3oml.test_server`:
+#'   Whether to use the OpenML [test server](https://test.openml.org/).
+#'   Mostly interesting for developers.
+#'   Default is `FALSE`
 #'
 #' @section Logging:
 #' The \CRANpkg{lgr} package is used for logging.

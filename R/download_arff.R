@@ -1,4 +1,4 @@
-download_arff = function(data_id, desc = download_desc_data(data_id)) {
+download_arff = function(data_id, server, desc = download_desc_data(data_id, server)) {
   data = get_arff(desc$url, sparse = (desc$format == "sparse_arff"))
   return(data)
 }

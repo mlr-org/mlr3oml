@@ -76,36 +76,39 @@ test_that("parquet works", {
 
 test_that("Caching works with parquet and custom cache path", {
   dir = tempfile()
-  odata = OMLData$new(9, parquet = TRUE, cache = dir)
+  odata = OMLData$new(9, parquet = TRUE, cache = dir, test_server = FALSE)
   odata$desc
   dat = odata$data
   files = list.files(odata$cache_dir)
-  expect_set_equal(c("data_desc", "data_features", "data_parquet", "version.json"), files)
-  expect_true("9.qs" %in% list.files(file.path(dir, "data_desc")))
-  expect_true("9.qs" %in% list.files(file.path(dir, "data_features")))
-  expect_true("9.parquet" %in% list.files(file.path(dir, "data_parquet")))
+  expect_set_equal(
+    c("data_desc", "data_features", "data_parquet", "version.json", "server.json"),
+    files
+  )
+  expect_true("9.qs" %in% list.files(file.path(dir, "public", "data_desc")))
+  expect_true("9.qs" %in% list.files(file.path(dir, "public", "data_features")))
+  expect_true("9.parquet" %in% list.files(file.path(dir, "public", "data_parquet")))
 
-  odata = OMLData$new(9, parquet = FALSE, cache = dir)
+  odata = OMLData$new(9, parquet = FALSE, cache = dir, test_server = FALSE)
   odata$data
-  files = list.files(dir)
+  files = list.files(file.path(dir, "public"))
   expect_true("data" %in% files)
-  expect_true("9.qs" %in% list.files(file.path(dir, "data")))
+  expect_true("9.qs" %in% list.files(file.path(dir, "public", "data")))
 })
 
 test_that("Caching works with parquet and test server", {
-  dir = file.path(R_user_dir("mlr3oml", "cache"), "test_server")
   with_test_server()
-  odata = OMLData$new(9, parquet = TRUE, cache = TRUE, server = "https://test.openml.org/api/v1")
+  dir = tempfile()
+  odata = OMLData$new(9, parquet = TRUE, cache = dir, test_server = TRUE)
   odata$desc
   dat = odata$data
   files = list.files(odata$cache_dir)
-  expect_true("9.qs" %in% list.files(file.path(dir, "data_desc")))
-  expect_true("9.qs" %in% list.files(file.path(dir, "data_features")))
-  expect_true("9.parquet" %in% list.files(file.path(dir, "data_parquet")))
+  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_desc")))
+  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_features")))
+  expect_true("9.parquet" %in% list.files(file.path(dir, "test", "data_parquet")))
 
-  odata = OMLData$new(9, parquet = FALSE, cache = dir)
+  odata = OMLData$new(9, parquet = FALSE, cache = dir, test_server = TRUE)
   odata$data
-  files = list.files(dir)
+  files = list.files(file.path(dir, "test"))
   expect_true("data" %in% files)
-  expect_true("9.qs" %in% list.files(file.path(dir, "data")))
+  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data")))
 })

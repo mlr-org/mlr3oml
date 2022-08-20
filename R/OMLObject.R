@@ -13,22 +13,24 @@ OMLObject = R6Class("OMLObject",
     #' @template param_id
     #' @template param_cache
     #' @template param_parquet
-    #' @template param_server
+    #' @template param_test_server
     #' @param type (`charcater()`)\cr
     #'   The type of OpenML object (e.g. run, task, ...).
     initialize = function(
       id,
       cache = getOption("mlr3oml.cache", FALSE),
       parquet = getOption("mlr3oml.parquet", FALSE),
-      server = getOption("mlr3oml.server", "https://openml.org/api/v1"),
+      test_server = getOption("mlr3oml.test_server", FALSE),
       type
       ) {
-      private$.server = assert_character(server, len = 1L, min.chars = 1L)
+      private$.test_server = assert_flag(test_server)
+      private$.server = get_server(test_server)
+
       private$.id = assert_count(id, coerce = TRUE)
-      private$.cache_dir = get_cache_dir(cache, server)
+      private$.cache_dir = get_cache_dir(cache, test_server)
       private$.parquet = assert_flag(parquet)
       private$.type = assert_choice(type, c("data", "flow", "study", "collection", "run", "task"))
-      initialize_cache(self$cache_dir)
+      initialize_cache(self$cache_dir, self$test_server)
     },
     #' @description
     #' Opens the corresponding help page referenced by field `$man`.
@@ -46,7 +48,6 @@ OMLObject = R6Class("OMLObject",
           server = self$server,
           type = sprintf("%s_desc", private$.type),
           self$id,
-
           cache_dir = self$cache_dir
         )
       }
@@ -71,7 +72,7 @@ OMLObject = R6Class("OMLObject",
       private$.id
     },
     #' @field server (`character(1)`)\cr
-    #' The OpenML server connected with this object.
+    #' The server for this object.
     server = function(rhs) {
       assert_ro_binding(rhs)
       private$.server
@@ -95,6 +96,12 @@ OMLObject = R6Class("OMLObject",
     type = function(rhs) {
       assert_ro_binding(rhs)
       private$.type
+    },
+    #' @field test_server (`logical(1)`)\cr
+    #' Whether the object is using the test server.
+    test_server = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.test_server
     }
   ),
   private = list(
@@ -103,6 +110,7 @@ OMLObject = R6Class("OMLObject",
     .cache_dir = NULL,
     .id = NULL,
     .server = NULL,
-    .type = NULL
+    .type = NULL,
+    .test_server = NULL
   )
 )

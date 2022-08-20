@@ -38,15 +38,11 @@ on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code
 If set to \code{TRUE}, the parquet version of datasets will be used by default.
 If set to \code{FALSE}, the arff version of datasets will be used by default.
 Default is \code{FALSE}.
-\item \code{mlr3oml.server}: Address for the server that should be used. Can be the test server or the
-usual OpenML server.
+\item \code{mlr3oml.test_server}:
+Whether to use the OpenML \href{https://test.openml.org/}{test server}.
+Mostly interesting for developers.
+Default is \code{FALSE}
 }
-}
-
-\section{Servers}{
-
-OpenML allows to use different server. Most users will only interact with the standard public
-server. However it is possible to use different servers. FIXME:
 }
 
 \section{Logging}{
