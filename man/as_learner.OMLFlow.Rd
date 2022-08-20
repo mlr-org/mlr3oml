@@ -4,18 +4,13 @@
 \alias{as_learner.OMLFlow}
 \title{Convert an OpenML Flow to a mlr3 Learner}
 \usage{
-\method{as_learner}{OMLFlow}(x, task_type = NULL, from_binary = FALSE, verbose = TRUE, ...)
+\method{as_learner}{OMLFlow}(x, task_type = NULL, ...)
 }
 \arguments{
 \item{x}{(OMLFlow) The OMLFlow that is converted to a mlr3::Learner.}
 
 \item{task_type}{(\code{character(1)})
 The task type to constrct a pseudo-learner. For more information see \link{OMLFlow}.}
-
-\item{from_binary}{(\code{logical(1)}) Whether to construct an actual mlr3 learner.
-flow (works of course only for mlr3 Flows).}
-
-\item{verbose}{(\code{logical(1)}) Whether to be verbose.}
 
 \item{...}{Additional arguments}
 }

@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("Can extract params from recursive components", {
   with_public_server()
   id = 5668

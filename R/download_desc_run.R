@@ -1,13 +1,10 @@
-download_run_desc = function(run_id) {
-  server = get_server()
+download_desc_run = function(run_id, server) {
   desc = get_json(paste0(server, "/json/run/%i"), run_id)[[1L]]
-  desc = parse_run_desc(desc)
+  desc = parse_desc_run(desc)
   return(desc)
 }
 
-
-
-parse_run_desc = function(desc) {
+parse_desc_run = function(desc) {
   # assert(desc$task_type %in% c("Supervised Regression", "Supervised Classification"))
 
   # Types get lost with the provided API --> convert character to ints
@@ -26,11 +23,11 @@ parse_run_desc = function(desc) {
   # evaluation: | name | value | array_data | repeat | fold |
   if (is.null(desc$output_data$evaluation)) {
     desc$output_data$evaluation = data.table(
-      "name" = character(0),
-      "value" = numeric(0),
-      "array_data" = list(),
-      "rep" = integer(0),
-      "fold" = integer(0)
+      name = character(0),
+      value = numeric(0),
+      array_data = list(),
+      rep = integer(0),
+      fold = integer(0)
     )
   } else {
     # In R it is ugly to work with `repeat` because it is a key word
@@ -40,14 +37,14 @@ parse_run_desc = function(desc) {
     # The contents of the file are stored as strings again that correspond (mostly) to json
     # format and therefore have to be parsed again
     if ("array_data" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, array_data := map(get("array_data"), .f = parse_json_safely)]
+      desc$output_data$evaluation[, `:=`("array_data", map(get("array_data"), .f = parse_json_safely))]
     }
-    desc$output_data$evaluation[, value := as.numeric(get("value"))]
+    desc$output_data$evaluation[, `:=`("value", as.numeric(get("value")))]
     if ("rep" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, rep := as.integer(get("rep"))] # nolint
+      desc$output_data$evaluation[, `:=`("rep", as.integer(get("rep")))] # nolint
     }
     if ("fold" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, fold := as.integer(get("fold"))] # nolint
+      desc$output_data$evaluation[, `:=`("fold", as.integer(get("fold")))] # nolint
     }
   }
   # Now the parameters: name | value | component
@@ -56,7 +53,7 @@ parse_run_desc = function(desc) {
   if (nrow(desc$parameter_setting)) {
     # need to convert to list to ensure that it is a list column (otherwise if only e.g. integer params
     # it turns into an integer column making it unpredictable later)
-    desc$parameter_setting[, value := map(value, .f = function(x) list(parse_json_safely(x)))]
+    desc$parameter_setting[, `:=`("value", map(get("value"), .f = function(x) list(parse_json_safely(x))))]
     desc$parameter_setting[["component"]] = as.integer(desc$parameter_setting[["component"]])
 
   }

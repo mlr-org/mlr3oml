@@ -1,11 +1,10 @@
-download_flow_desc = function(flow_id) {
-  server = get_server()
+download_desc_flow = function(flow_id, server) {
   desc = get_json(paste0(server, "/json/flow/%i"), flow_id)[[1L]]
-  desc = parse_flow_desc(desc)
+  desc = parse_desc_flow(desc)
   return(desc)
 }
 
-parse_flow_desc = function(desc) {
+parse_desc_flow = function(desc) {
   desc$id = as.integer(desc$id)
   desc$upload_date = as.POSIXct(desc$upload_date, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
   desc$version = as.integer(desc$version)

@@ -1,12 +1,9 @@
-download_data_desc = function(data_id) {
-  server = get_server()
-  desc = get_json(paste0(server, "/json/data/%i"), data_id,
-    simplify_data_frame = FALSE
-  )[[1L]]
-  parse_data_desc(desc)
+download_desc_data = function(data_id, server) {
+  desc = get_json(paste0(server, "/json/data/%i"), data_id, simplify_data_frame = FALSE)[[1L]]
+  parse_desc_data(desc)
 }
 
-parse_data_desc = function(desc) {
+parse_desc_data = function(desc) {
   desc$format = tolower(desc$format)
   if (desc$format %nin% c("arff", "sparse_arff")) {
     stopf("Unsupported data format: %s", desc$format)

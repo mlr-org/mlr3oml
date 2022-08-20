@@ -21,7 +21,7 @@ extended upon request.
 library("mlr3")
 # mlr3 flow:
 flow = OMLFlow$new(id = 19103L)
-learner = as_learner(flow)
+learner = as_learner(flow, "classif")
 # python flow
 python_flow = OMLFlow$new(19090L)
 # conversion to pseudo Learner
@@ -34,70 +34,71 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \emph{ACM SIGKDD Explorations Newsletter}, \bold{15}(2), 49--60.
 \doi{10.1145/2641190.2641198}.
 }
-\section{Public fields}{
-\if{html}{\out{<div class="r6-fields">}}
-\describe{
-\item{\code{id}}{(\code{integer(1)})\cr
-OpenML flow id.}
-
-\item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
-Stores the location of the cache for objects retrieved from \url{https://openml.org}.
-If set to \code{FALSE}, caching is disabled.
-
-The package \CRANpkg{qs} is required for caching.}
-}
-\if{html}{\out{</div>}}
+\section{Super class}{
+\code{\link[mlr3oml:OMLObject]{mlr3oml::OMLObject}} -> \code{OMLFlow}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
-\item{\code{desc}}{(\code{list()})\cr
-The description as downloaded from OpenML.}
-
-\item{\code{parameters}}{(\code{data.table})\cr
+\item{\code{parameter}}{(\code{data.table})\cr
 The parameters of the flow.}
-
-\item{\code{tags}}{(\code{character()})\cr
-The tags of the flow.}
 
 \item{\code{dependencies}}{(\code{character()})\cr
 The dependencies of the flow.}
-
-\item{\code{name}}{(\code{character(1)})\cr
-The name of the flow.}
 }
 \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{OMLFlow$new()}}
-\item \href{#method-print}{\code{OMLFlow$print()}}
-\item \href{#method-clone}{\code{OMLFlow$clone()}}
+\item \href{#method-OMLFlow-new}{\code{OMLFlow$new()}}
+\item \href{#method-OMLFlow-print}{\code{OMLFlow$print()}}
+\item \href{#method-OMLFlow-clone}{\code{OMLFlow$clone()}}
 }
 }
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="mlr3oml" data-topic="OMLObject" data-id="help"><a href='../../mlr3oml/html/OMLObject.html#method-OMLObject-help'><code>mlr3oml::OMLObject$help()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-OMLFlow-new"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-new}{}}}
 \subsection{Method \code{new()}}{
-Initializes a new object of class \link{OMLFlow}.
+Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$new(id, cache = getOption("mlr3oml.cache", FALSE))}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$new(
+  id,
+  cache = getOption("mlr3oml.cache", FALSE),
+  parquet = getOption("mlr3oml.parquet", FALSE),
+  server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{(\code{integeger(1)}) The id of the Flow}
+\item{\code{id}}{(\code{integer(1)})\cr
+OpenML id for the object.}
 
-\item{\code{cache}}{(\code{logical(1)}) whether to use caching.}
+\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
+See field \code{cache} for an explanation of possible values.
+Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet instead of arff.}
+
+\item{\code{server}}{(\code{character(1)})\cr
+OpenML server to be used. Defaults to the public OpenML server seen on  https://openml.org}
 }
 \if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-OMLFlow-print"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-print}{}}}
 \subsection{Method \code{print()}}{
 Prints the object.
 \subsection{Usage}{
@@ -106,8 +107,8 @@ Prints the object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-OMLFlow-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

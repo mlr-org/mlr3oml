@@ -1,10 +1,12 @@
+skip_on_cran()
+
 test_that("S3 converter work for run", {
   id = 10587724
   run = OMLRun$new(id)
   expect_r6(mlr3::as_task(run), "Task")
   expect_r6(mlr3::as_resampling(run), "Resampling")
   expect_r6(mlr3::as_learner(run), "Learner")
-  expect_r6(mlr3::as_data_backend(run), "DataBackend")
+  # expect_r6(mlr3::as_data_backend(run), "DataBackend")
   expect_r6(mlr3::as_resample_result(run), "ResampleResult")
 })
 
@@ -19,14 +21,14 @@ test_that("S3 converter work for task", {
   task = OMLTask$new(id)
   expect_r6(mlr3::as_task(task), "Task")
   expect_r6(mlr3::as_resampling(task), "Resampling")
-  expect_r6(mlr3::as_data_backend(task), "DataBackend")
+  # expect_r6(mlr3::as_data_backend(task), "DataBackend")
 })
 
 test_that("S3 converter work for data", {
   id = 31
   data = OMLData$new(id)
   expect_r6(mlr3::as_task(data), "Task")
-  expect_r6(mlr3::as_data_backend(data), "DataBackend")
+  # expect_r6(mlr3::as_data_backend(data), "DataBackend")
 })
 
 test_that("S3 converter work for collection", {

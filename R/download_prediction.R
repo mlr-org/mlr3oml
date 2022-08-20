@@ -1,4 +1,4 @@
-download_prediction = function(run_id, desc = download_run_desc(run_id)) {
+download_prediction = function(run_id, desc = download_desc_run(run_id)) {
   is_prediction = which(grepl("prediction", desc$output_data$file$name))
   if (length(is_prediction) > 1L) {
     warningf("More than one prediction file, using the first.")

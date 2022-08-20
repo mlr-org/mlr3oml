@@ -1,8 +1,5 @@
 skip_on_cran()
 
-# What we want to test:
-# `expect_oml_task` forks for: classif, regr, surv
-
 test_that("OMLTask iris", {
   oml_task = OMLTask$new(59, FALSE)
   expect_oml_task(oml_task)
@@ -15,12 +12,6 @@ test_that("OMLTask iris", {
 test_that("data backend", {
   oml_task = OMLTask$new(59)
   expect_backend(mlr3::as_data_backend(oml_task))
-})
-
-test_that("TaskSurv", {
-  skip_if_not_installed("mlr3proba")
-  oml_task = OMLTask$new(7304)
-  expect_class(mlr3::as_task(oml_task), "TaskSurv")
 })
 
 test_that("Task 1 works", {
@@ -43,12 +34,17 @@ test_that("Randomized download test", {
   )
   for (task_id in task_ids) {
     task = OMLTask$new(task_id)
+    print(task_id)
     if (task$task_type %in% task_types) {
-      expect_oml_task(OMLTask$new(task_id))
+      expect_oml_task(OMLTask$new(task_id, cache = FALSE))
     }
   }
 })
 
-test_that("row_id_attribute and ignore_attribute are being respected by task", {
-
+test_that("parquet works", {
+  otask = OMLTask$new(31, parquet = TRUE)
+  as_task(otask)
+  expect_true(inherits(as_data_backend(otask), "DataBackendDuckDB"))
 })
+
+

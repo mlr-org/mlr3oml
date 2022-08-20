@@ -29,13 +29,24 @@
 #' * `mlr3oml.arff_parser`: ARFF parser to use, defaults to the internal one relies
 #'   on [data.table::fread()]. Can also be set to `"RWeka"` for the parser in
 #'   \CRANpkg{RWeka}.
+#' * `mlr3oml.parquet`: Enables or disables parquet as the default file format.
+#'   If set to `TRUE`, the parquet version of datasets will be used by default.
+#'   If set to `FALSE`, the arff version of datasets will be used by default.
+#'   Default is `FALSE`.
 #' * `mlr3oml.server`: Address for the server that should be used. Can be the test server or the
 #'   usual OpenML server.
+#'
+#' @section Servers:
+#' OpenML allows to use different server. Most users will only interact with the standard public
+#' server. However it is possible to use different servers. FIXME:
 #'
 #' @section Logging:
 #' The \CRANpkg{lgr} package is used for logging.
 #' To change the threshold, use `lgr::get_logger("mlr3oml")$set_threshold()`.
 "_PACKAGE"
+
+# To silence RCMD CHECK
+utils::globalVariables(c("super"))
 
 .onLoad = function(libname, pkgname) { # nolint
   # nocov start
@@ -45,7 +56,6 @@
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
   mlr3::mlr_learners$add("oml", OMLLearnerConnector)
 
-  mlr3::Learner$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::Task$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::Resampling$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::ResampleResult$set("private", "oml", NULL, overwrite = TRUE)

@@ -47,14 +47,14 @@ make_oml_learner = function(flow, task_type = NULL) {
 
 # this constructs a paramset for the parameter field of a OMLFlow
 # the ids of the flows are appended to the names of the parameters to make their names unique
-# Note that this only works because the way the parameter-setting is stored in OpenML, a flow
-# cannot contain itself (otherwise the assignment from parameter -> flow is non-unique using only
-# the id of the component)
+# Note that this only works because in each flow, a flow can appear only once.
+# Otherwise the mapping from component -> parameter (run$parameter_setting) would be
+# ambiguous
 construct_paramset = function(flow) {
   # first we construct the parameters for the flow itself
-  if (nrow(flow$parameters)) {
-    params = map(seq_len(nrow(flow$parameters)), function(x) paradox::p_uty())
-    params_flow = set_names(params, paste0("f", flow$id, ".", flow$parameters$name))
+  if (nrow(flow$parameter)) {
+    params = map(seq_len(nrow(flow$parameter)), function(x) paradox::p_uty())
+    params_flow = set_names(params, paste0("f", flow$id, ".", flow$parameter$name))
     param_set = invoke(paradox::ps, .args = params_flow)
   } else {
     param_set = paradox::ps()

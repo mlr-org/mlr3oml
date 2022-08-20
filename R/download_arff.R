@@ -1,0 +1,47 @@
+download_arff = function(data_id, desc = download_desc_data(data_id)) {
+  data = get_arff(desc$url, sparse = (desc$format == "sparse_arff"))
+  return(data)
+}
+
+get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
+  path = tempfile(fileext = ".arff")
+  on.exit(file.remove(path[file.exists(path)]))
+  url = sprintf(url, ...)
+
+  lg$info("Retrieving ARFF", url = url, authenticated = !is.na(api_key))
+
+  for (retry in seq_len(retries)) {
+    response = download_file(url, path, api_key = api_key)
+
+    if (response$ok) {
+      lg$debug("Start processing ARFF file", path = path)
+      parser = getOption("mlr3oml.arff_parser", "internal")
+
+      if (sparse || parser == "RWeka") {
+        if (!requireNamespace("RWeka", quietly = TRUE)) {
+          stopf("Failed to parse arff file, install 'RWeka'")
+        }
+        tab = setDT(RWeka::read.arff(path))
+      } else if (parser == "farff") {
+        tab = setDT(utils::getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
+      } else if (parser == "internal") {
+        tab = read_arff(path)
+      } else {
+        stopf("Unknown parser '%s'", parser)
+      }
+
+      lg$debug("Finished processing ARFF file",
+        nrow = nrow(tab), ncol = ncol(tab),
+        colnames = names(tab)
+      )
+
+      return(tab)
+    } else if (retry < retries && response$http_code >= 500L) {
+      delay = max(rnorm(1L, mean = 10), 0)
+      lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
+      Sys.sleep(delay)
+    }
+  }
+
+  download_error(response)
+}

@@ -38,21 +38,22 @@
 #' bmr$score(msr("classif.ce"))
 #' }
 OMLCollection = R6Class("OMLCollection",
+  inherit = OMLObject,
   public = list(
-    #' @field id (`integer(1)`)\cr
-    #'   OpenML collection id.
-    id = NULL,
-    #' @template field_cache_dir
-    cache_dir = NULL,
     #' @description
-    #' Creates a new object of class `OMLCollection`.
-    #' @param id (`integer(1)`)\cr
-    #'  OpenML run id.
+    #' Creates a new instance of this [R6][R6::R6Class] class.
+    #'
+    #' @template param_id
     #' @template param_cache
-    initialize = function(id, cache = getOption("mlr3oml.cache", FALSE)) {
-      self$id = assert_count(id, coerce = TRUE)
-      self$cache_dir = get_cache_dir(assert_flag(cache))
-      initialize_cache(self$cache_dir)
+    #' @template param_parquet
+    #' @template param_server
+    initialize = function(
+      id,
+      cache = getOption("mlr3oml.cache", FALSE),
+      parquet = getOption("mlr3oml.parquet", FALSE),
+      server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+      ) {
+      super$initialize(id, cache, parquet, server, "collection")
     },
     #' @description
     #' Prints the object.
@@ -67,25 +68,19 @@ OMLCollection = R6Class("OMLCollection",
     }
   ),
   active = list(
-    #' @field desc (`list()`)\cr
+     #' @field desc (`list()`)\cr
     #'   Colllection description (meta information), downloaded and converted from the JSON API response.
     desc = function() {
       if (is.null(private$.desc)) {
-        private$.desc = cached(download_collection_desc,
+        private$.desc = cached(download_desc_collection,
           type = "collection", id = self$id,
-          cache_dir = self$cache_dir
+          cache_dir = FALSE
         )
       }
       return(private$.desc)
     },
-    #' @field name (`character(1)`) \cr
-    #'   The name of the collection.
-    name = function() self$desc$name,
-    #' @field tags (`character(n)`)\cr
-    #'   The tags of the OpenML collection.
-    tags = function() self$desc$tag,
-    #' @field main_entity_type (`character(1)`)\cr
-    #'   The main entity type of the collection (either "run" or "task").
+    #' @field main_entity_type (`character(n)`)\cr
+    #'   The main entity type, either `"run"` or `"task"`.
     main_entity_type = function() self$desc$main_entity_type,
     #' @field flow_ids (`integer(n)`)\cr
     #'   An vector containing the flow ids of the collection.
@@ -110,7 +105,7 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.runs)) {
         runs = map(
           self$run_ids,
-          function(x) OMLRun$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLRun$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
         )
 
         private$.runs = make_run_table(runs)
@@ -140,7 +135,7 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.data)) {
         datasets = map(
           self$data_ids,
-          function(x) OMLData$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLData$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
         )
         private$.data = make_dataset_table(datasets)
       }
@@ -152,7 +147,7 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.tasks)) {
         tasks = map(
           self$task_ids,
-          function(x) OMLTask$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLTask$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
         )
         private$.tasks = make_task_table(tasks)
       }
@@ -160,7 +155,6 @@ OMLCollection = R6Class("OMLCollection",
     }
   ),
   private = list(
-    .desc = NULL,
     .runs = NULL,
     .tasks = NULL,
     .resamplings = NULL,
@@ -202,16 +196,16 @@ make_task_table = function(tasks) {
     list(
       id = task$id,
       task = list(task),
-      data = task$data$name,
+      data = as_short_string(task$data$name),
       task_type = task$task_type,
-      target = task$target_names, # can have length > 1
+      target = tryCatch(task$target_names, error = function(x) NA_character_), # can have length > 1
       nrow = as.integer(task$data$quality("NumberOfInstances")),
       ncol = task$data$quality("NumberOfFeatures"),
       missing = task$data$quality("NumberOfMissingValues"),
       numeric = task$data$quality("NumberOfNumericFeatures"),
       symbolic = task$data$quality("NumberOfSymbolicFeatures"),
       binary = task$data$quality("NumberOfBinaryFeatures"),
-      data_split = task$data_split$type
+      task_splits = task$estimation_procedure$type %??% "none"
     )
   }
   setkeyv(map_dtr(tasks, g, .fill = TRUE), "id")[]
@@ -222,7 +216,7 @@ make_flow_table = function(flows) {
     list(
       id = flow$id,
       flow = list(flow),
-      name = flow$name
+      name = as_short_string(flow$name)
     )
   }
   setkeyv(map_dtr(flows, g), "id")[]
@@ -251,9 +245,9 @@ make_run_table = function(runs) {
       id = run$id,
       run = list(run),
       task_type = run$task_type,
-      data = run$desc$input_data$dataset$name,
+      data = as_short_string(run$desc$input_data$dataset$name),
       flow = as_short_string(run$desc$flow_name),
-      data_split = run$task$data_split$type
+      task_splits = run$task$estimation_procedure$type
     )
   }
   setkeyv(map_dtr(runs, g, .fill = TRUE), "id")[]
