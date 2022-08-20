@@ -55,14 +55,3 @@ test_that("Conversion of mlr flow works as intended", {
   expect_r6(learner, "LearnerClassifOML19052")
 })
 
-# test_that("Test publish, download convert, publish lifecycle", {
-#   with_test_server()
-#   l = lrn("classif.rpart")
-#   publish(l)
-#   # TODO:
-#   # 1. publish flow
-#   # 2. Download flow
-#   # 3. convert flow using as_learner and compare
-#   # 4. Upload again and check that same id is returned
-#   # 5. delete flow
-# })

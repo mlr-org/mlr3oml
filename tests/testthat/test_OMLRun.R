@@ -17,14 +17,6 @@ test_that("Run 538858", {
   expect_oml_run(run)
 })
 
-test_that("Cannot publish run with non-atomic parameter values", {
-  rr = list(learner = list(param_set = list(values = list(fun = na.action))))
-  class(rr) = "ResampleResult"
-  expect_error(publish(rr, confirm = FALSE),
-    regex = "Can currently only publish flows with atomic parameter values."
-  )
-})
-
 test_that("Runs 10417460 10417461 10417462 10417463", {
   with_public_server()
   ids = OMLCollection$new(232L)$run_ids
@@ -107,40 +99,3 @@ test_that("OMLFlow conversion throws the correct warnings", {
   )
 })
 
-# test_that("Upload + download for mlr3 classif (prob) works", {
-#   with_test_server()
-#   learner = lrn("classif.rpart", predict_type = "prob")
-#   otask = OMLTask$new(31)
-#   task = mlr3::as_task(otask)
-#   resampling = mlr3::as_resampling(otask)
-#   rr = resample(task, learner, resampling)
-#   run_id = publish(rr, confirm = FALSE)$run_id
-#   run = OMLRun$new(run_id)
-#   rr_rec = mlr3::as_resample_result(run)
-# })
-#
-# test_that("Can publish run of flow mlr3.rpart on task 1308 (Iris)", {
-#   with_test_server()
-#   withr::defer({
-#     delete("run", ids[["run_id"]])
-#     delete("flow", ids[["flow_id"]])
-#   })
-#   learner = lrn("classif.rpart", cp = 0.5)
-#   oml_task = OMLTask$new(31L)
-#   task = mlr3::as_task(oml_task)
-#   resampling = mlr3::as_resampling(oml_task)
-#   rr = resample(task, learner, resampling)
-#   ids = publish(rr, confirm = FALSE)
-#   # OMLRun$debug("convert")
-#   run = OMLRun$new(ids[["run_id"]])
-#   rr_rec = mlr3::as_resample_result(run)
-#   expect_equal(rr_rec$task, rr$task)
-#   expect_equal(rr_rec$task_type, rr$task_type)
-#   expect_equal(rr_rec$learners, rr$learners)
-#   expect_equal(rr_rec$iters, rr$iters)
-#   expect_equal(rr_rec$prediction(), rr$prediction())
-#
-#   ce = rr$score(msr("classif.ce"))$classif.ce
-#   ce_rec = rr_rec$score(msr("classif.ce"))$classif.ce
-#   expect_true(all(ce == ce_rec))
-# })
