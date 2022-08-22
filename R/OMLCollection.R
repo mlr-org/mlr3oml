@@ -65,6 +65,9 @@ OMLCollection = R6Class("OMLCollection",
         catf(" * flows: %i", length(self$flow_ids))
         catf(" * runs:  %i", length(self$run_ids))
       }
+      if (self$test_server) {
+        catf(" * Using test server")
+      }
     }
   ),
   active = list(

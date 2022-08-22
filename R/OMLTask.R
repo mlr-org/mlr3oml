@@ -54,28 +54,11 @@ OMLTask = R6Class("OMLTask",
       catf(" * Type: %s", self$desc$task_type)
       catf(" * Data: %s (id: %s; dim: %ix%i)", self$data_name, self$data_id, self$nrow, self$ncol)
       if (self$task_type %in% c("Supervised Regression", "Supervised Classification")) {
-        catf(" * Target: %s", paste(self$target_names, collapse = ","))
+        catf(" * Target: %s", as_short_string(self$target_names))
       }
-      estimation_procedure = self$estimation_procedure
-      if (!is.null(estimation_procedure)) {
-        type = self$estimation_procedure$type
-        parameter = self$estimation_procedure$parameter
-        if (type == "crossvalidation") {
-          catf(" * Estimation: crossvalidation (id: %s; repeats: %s, folds: %s)",
-            estimation_procedure$id,
-            parameter[get("name") == "number_repeats", "value"][[1L]],
-            parameter[get("name") == "number_folds", "value"][[1L]]
-          )
-        } else if (self$type == "holdout") {
-          catf(" * Type: holdout (id: %s; test size: %s)",
-            estimation_procedure$id,
-            parameter[get("name") == "percentage", "value"][[1L]]
-          )
-        } else if (type == "leaveoneout") {
-          catf(" * Type: leaveoneout (id: %s)", estimation_procedure$id)
-        }
-      } else {
-        catf(" * Estimation Procedure: missing")
+      catf_estimation_procedure(self$estimation_procedure)
+      if (self$test_server) {
+        catf(" * Using test server")
       }
     }
   ),

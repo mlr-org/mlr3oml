@@ -60,10 +60,13 @@ OMLRun = R6Class("OMLRun",
     #' Prints the object.
     print = function() {
       catf("<OMLRun:%i>", self$id)
-      catf(" * Task: %s (id: %s)", self$task$data_name, self$task_id)
+      catf(" * Task: %s (id: %s)", as_short_string(self$task$data_name), self$task_id)
       ep = self$task$estimation_procedure
-      catf(" * Estimation Procedure: %s (id: %s)", ep$type, ep$id)
       catf(" * Flow: %s (id: %s)", as_short_string(self$flow$name), self$flow_id)
+      catf_estimation_procedure(self$task$estimation_procedure)
+      if (self$test_server) {
+        catf(" * Using test server")
+      }
     }
   ),
   active = list(

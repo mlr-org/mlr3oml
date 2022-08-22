@@ -140,4 +140,3 @@ catf_estimation_procedure = function(estimation_procedure) {
     catf(" * Estimation: missing")
   }
 }
-
