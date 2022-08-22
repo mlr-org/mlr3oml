@@ -95,7 +95,7 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
   }
 
   path = file.path(cache_dir, ifelse(test_server, "test", "public"), type)
-  file = file.path(path, sprintf("%i.%s", id, ifelse(parquet, "parquet", "qs")))
+  file = file.path(path, sprintf("%i.%s", id, if (parquet) "parquet" else "qs"))
 
   if (file.exists(file)) {
     if (parquet) {
@@ -118,8 +118,7 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
   obj = fun(id, ...)
   if (parquet) {
     lg$debug("Moving parquet data from tempfile to cache.", type = type, id = id, file = file)
-    file.copy(obj, file, overwrite = TRUE)
-    unlink(obj)
+    file.rename(obj, file)
     return(file)
   }
 
