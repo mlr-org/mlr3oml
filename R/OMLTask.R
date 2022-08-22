@@ -97,12 +97,9 @@ OMLTask = R6Class("OMLTask",
         return(NULL)
       }
       if (is.null(private$.task_splits)) {
-        private$.task_splits = cached(
-          download_task_splits,
-          "task_splits",
-          id = self$id,
-          desc = self$desc,
-          cache_dir = self$cache_dir
+        private$.task_splits = cached(download_task_splits,
+          "task_splits", id = self$id, desc = self$desc, cache_dir = self$cache_dir,
+          test_server = self$test_server
         )
       }
       return(private$.task_splits)
@@ -223,6 +220,7 @@ as_resampling.OMLTask = function(x, ...) {
 as_data_backend.OMLTask = function(data, primary_key = NULL, ...) {
   as_data_backend(data$data, primary_key = primary_key, ...)
 }
+
 
 
 

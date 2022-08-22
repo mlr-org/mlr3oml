@@ -98,3 +98,11 @@ test_that("OMLFlow conversion throws the correct warnings", {
     regexp = "Problem assigning"
   )
 })
+
+test_that("OMLRun components inherit correct cache directory", {
+  dir = tempfile()
+  orun = OMLRun$new(50, cache = dir)
+  expect_true(orun$data$cache_dir == dir)
+  expect_true(orun$task$cache_dir == dir)
+  expect_true(orun$flow$cache_dir == dir)
+})

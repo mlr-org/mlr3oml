@@ -30,7 +30,7 @@ OMLObject = R6Class("OMLObject",
       private$.cache_dir = get_cache_dir(cache, test_server)
       private$.parquet = assert_flag(parquet)
       private$.type = assert_choice(type, c("data", "flow", "study", "collection", "run", "task"))
-      initialize_cache(self$cache_dir, self$test_server)
+      initialize_cache(self$cache_dir)
     },
     #' @description
     #' Opens the corresponding help page referenced by field `$man`.
@@ -45,10 +45,8 @@ OMLObject = R6Class("OMLObject",
       if (is.null(private$.desc)) {
         private$.desc = cached(
           get_desc_downloader(self$type),
-          server = self$server,
-          type = sprintf("%s_desc", private$.type),
-          self$id,
-          cache_dir = self$cache_dir
+          server = self$server, type = sprintf("%s_desc", private$.type), self$id,
+          cache_dir = self$cache_dir, test_server = self$test_server
         )
       }
 

@@ -73,8 +73,8 @@ OMLCollection = R6Class("OMLCollection",
     desc = function() {
       if (is.null(private$.desc)) {
         private$.desc = cached(download_desc_collection,
-          type = "collection", id = self$id,
-          cache_dir = FALSE, server = self$server
+          type = "collection", id = self$id, cache_dir = FALSE, server = self$server,
+          test_server = self$test_server
         )
       }
       return(private$.desc)
@@ -125,7 +125,7 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.flows)) {
         flows = map(
           self$flow_ids,
-          function(x) OMLFlow$new(x, cache = is.character(self$cache_dir))
+          function(x) OMLFlow$new(x, cache = self$cache_dir, test_server = self$test_server)
         )
         private$.flows = make_flow_table(flows)
       }
@@ -137,7 +137,9 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.data)) {
         datasets = map(
           self$data_ids,
-          function(x) OMLData$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
+          function(x) OMLData$new(x, cache = self$cache_dir, parquet = self$parquet,
+            test_server = self$test_server
+          )
         )
         private$.data = make_dataset_table(datasets)
       }
@@ -149,7 +151,9 @@ OMLCollection = R6Class("OMLCollection",
       if (is.null(private$.tasks)) {
         tasks = map(
           self$task_ids,
-          function(x) OMLTask$new(x, cache = is.character(self$cache_dir), parquet = self$parquet)
+          function(x) OMLTask$new(x, cache = self$cache_dir, parquet = self$parquet,
+            test_server = self$test_server
+          )
         )
         private$.tasks = make_task_table(tasks)
       }

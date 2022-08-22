@@ -110,7 +110,7 @@ OMLData = R6Class("OMLData",
     qualities = function() {
       if (is.null(private$.qualities)) {
         private$.qualities = cached(download_data_qualities, "data_qualities", self$id,
-          cache_dir = self$cache_dir, server = self$server)
+          cache_dir = self$cache_dir, server = self$server, test_server = self$test_server)
       }
       private$.qualities
     },
@@ -137,7 +137,8 @@ OMLData = R6Class("OMLData",
     features = function() {
       if (is.null(private$.features)) {
         private$.features = cached(download_data_features, "data_features", self$id,
-          desc = self$desc, cache_dir = self$cache_dir, server = self$server
+          desc = self$desc, cache_dir = self$cache_dir, server = self$server,
+          test_server = self$test_server
         )
       }
       private$.features
@@ -180,11 +181,9 @@ OMLData = R6Class("OMLData",
         loadNamespace("mlr3db")
         # this function is already cached, it works a little different than the cached(f, ...)
         # because we cache it as .parquet and not as .qs
-        private$.parquet_path = download_parquet_cached(
-          url = self$desc$minio_url,
-          id = self$id,
-          cache_dir = self$cache_dir,
-          api_key = get_api_key()
+        private$.parquet_path = cached(
+          download_parquet, "data_parquet", self$id, desc = self$desc, cache_dir = self$cache_dir,
+          server = self$server, test_server = self$test_server, parquet = TRUE
         )
       }
       private$.parquet_path
@@ -201,10 +200,24 @@ OMLData = R6Class("OMLData",
       }
       if (self$parquet) {
         path = self$parquet_path
-        private$.backend = mlr3db::as_duckdb_backend(path)
+        backend = mlr3db::as_duckdb_backend(path)
+        if (!test_names(backend$colnames, type = "strict")) {
+          new = make.names(backend$colnames)
+          if (length(unique(new)) != length(new)) {
+            stopf("No unique names after conversion.")
+          }
+          # This code is a little hacky. The reason is that DataBackendRename is not exported
+          # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
+          # This can be changed when it is exported in mlr3.
+          private$.backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
+            Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
+          )
+        } else {
+          private$.backend = backend
+        }
       } else {
         data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
-          server = self$server
+          server = self$server, test_server = self$test_server
         )
         private$.backend = as_data_backend(data)
       }

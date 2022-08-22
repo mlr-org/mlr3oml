@@ -5,9 +5,10 @@ test_that("Construct task from dict", {
 })
 
 test_that("Correct backend", {
-  task = tsk("oml", task_id = 9, parquet = TRUE)
+  # id 31 is important, because otherwise we might get a DataBackendRename
+  task = tsk("oml", task_id = 31, parquet = TRUE)
   expect_true(inherits(task$backend, "DataBackendDuckDB"))
 
-  task = tsk("oml", task_id = 9, parquet = FALSE)
+  task = tsk("oml", task_id = 31, parquet = FALSE)
   expect_true(inherits(task$backend, "DataBackendDataTable"))
 })

@@ -48,3 +48,8 @@ test_that("parquet works", {
 })
 
 
+test_that("OMLTask components inherit correct cache directory", {
+  dir = tempfile()
+  orun = OMLTask$new(50, cache = dir)
+  expect_true(orun$data$cache_dir == dir)
+})

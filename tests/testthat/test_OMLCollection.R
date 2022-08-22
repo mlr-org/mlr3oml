@@ -24,3 +24,11 @@ test_that("Can convert run collection to benchmark result", {
   expect_error(bmr$score(msr("classif.ce")), regexp = NA)
 })
 
+test_that("OMLTask components inherit correct cache directory", {
+  dir = tempfile()
+  orun = OMLCollection$new(232, cache = dir)
+  expect_true(orun$tasks$task[[1L]]$cache_dir == dir)
+  expect_true(orun$runs$run[[1L]]$cache_dir == dir)
+  expect_true(orun$flows$flow[[1L]]$cache_dir == dir)
+  expect_true(orun$data$data[[1L]]$cache_dir == dir)
+})
