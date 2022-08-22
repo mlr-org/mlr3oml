@@ -31,7 +31,6 @@ parse_desc_run = function(desc) {
     )
   } else {
     # In R it is ugly to work with `repeat` because it is a key word
-    names(desc$output_data$evaluation)[names(desc$output_data$evaluation) == "repeat"] = "rep"
     desc$output_data$evaluation = as.data.table(desc$output_data$evaluation)
 
     # The contents of the file are stored as strings again that correspond (mostly) to json
@@ -40,8 +39,8 @@ parse_desc_run = function(desc) {
       desc$output_data$evaluation[, `:=`("array_data", map(get("array_data"), .f = parse_json_safely))]
     }
     desc$output_data$evaluation[, `:=`("value", as.numeric(get("value")))]
-    if ("rep" %in% colnames(desc$output_data$evaluation)) {
-      desc$output_data$evaluation[, `:=`("rep", as.integer(get("rep")))] # nolint
+    if ("repeat." %in% colnames(desc$output_data$evaluation)) {
+      desc$output_data$evaluation[, `:=`("repeat.", as.integer(get("repeat.")))] # nolint
     }
     if ("fold" %in% colnames(desc$output_data$evaluation)) {
       desc$output_data$evaluation[, `:=`("fold", as.integer(get("fold")))] # nolint
