@@ -93,7 +93,6 @@ OMLTask = R6Class("OMLTask",
     #' A data.table containing the splits as provided by OpenML.
     task_splits = function() {
       if (is.null(self$estimation_procedure)) {
-        warningf("OMLTask with id %s does not have task splits.", self$id)
         return(NULL)
       }
       if (is.null(private$.task_splits)) {
@@ -210,11 +209,11 @@ as_task.OMLTask = function(x, ...) {
 as_resampling.OMLTask = function(x, task = NULL, ...) {
   task_splits = x$task_splits
   if (is.null(task_splits)) {
-    stopf("OpenML task with id %s does not have data splits.", x$id)
+    stopf("OpenML task with id %s does not have task splits.", x$id)
   }
-  train_sets = task_splits[type == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)),
+  train_sets = task_splits[get("type") == "TRAIN", list(row_id = list(as.integer(rowid) + 1L)),
     keyby = c("repeat.", "fold")]$row_id
-  test_sets = task_splits[type == "TEST", list(row_id = list(as.integer(rowid) + 1L)),
+  test_sets = task_splits[get("type") == "TEST", list(row_id = list(as.integer(rowid) + 1L)),
     keyby = c("repeat.", "fold")]$row_id
 
 
