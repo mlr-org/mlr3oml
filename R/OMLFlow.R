@@ -1,5 +1,7 @@
 #' @title Interface to OpenML Flows
 #'
+#' @name oml_flow
+#'
 #' @description
 #' This is the class for flows served on [OpenML](https://www.openml.org/f).
 #' Flows are conceptually similar to [mlr3pipelines::GraphLearner]s.

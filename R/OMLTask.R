@@ -1,5 +1,7 @@
 #' @title Interface to OpenML Tasks
 #'
+#' @name oml_task
+#'
 #' @description
 #' This is the class for tasks served on [OpenML](https://openml.org/search?type=task&sort=runs).
 #' It consists of a dataset and other meta-information such as the target variable for supervised
@@ -231,6 +233,7 @@ as_resampling.OMLTask = function(x, task = NULL, ...) {
 as_data_backend.OMLTask = function(data, primary_key = NULL, ...) {
   as_data_backend(data$data, primary_key = primary_key, ...)
 }
+
 
 
 

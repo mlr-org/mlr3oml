@@ -55,3 +55,6 @@ test_that("Conversion of mlr flow works as intended", {
   expect_r6(learner, "LearnerClassifOML19052")
 })
 
+test_that("Can open help page for OpenML Flow", {
+  expect_error(OMLFlow$new(1)$help(), regexp = NA)
+})

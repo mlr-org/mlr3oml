@@ -57,4 +57,7 @@ test_that("OMLTask components inherit correct cache directory", {
 test_that("Error when task does not provide task_splits", {
   otask = OMLTask$new(147517)
   expect_error(as_resampling(otask), "OpenML task with id")
+
+test_that("Can open help page for OpenML Task", {
+  expect_error(OMLTask$new(31)$help(), regexp = NA)
 })

@@ -1,5 +1,7 @@
 #' @title Abstract Base Class for OpenML objects.
 #'
+#' @name oml_object
+#'
 #' @description
 #' All OML Objects inherit from this class.
 #' Don't use his class directly.
