@@ -1,39 +1,28 @@
 CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
-  data = 1L,
-  data_parquet = 1L,
-  data_desc = 1L,
-  data_qualities = 1L,
-  data_features = 1L,
-  task_desc = 1L,
-  task_splits = 1L,
-  flow_desc = 1L,
-  collection_desc = 1L,
-  run_desc = 1L,
-  prediction = 1L
+  data = 2L,
+  data_parquet = 2L,
+  data_desc = 2L,
+  data_qualities = 2L,
+  data_features = 2L,
+  task_desc = 2L,
+  task_splits = 2L,
+  flow_desc = 2L,
+  collection_desc = 2L,
+  run_desc = 2L,
+  prediction = 2L
 )
 
 CACHE$initialized = character()
 
-get_cache_dir = function(cache, server) {
+get_cache_dir = function(cache, test_server) {
   assert_true(is.logical(cache) || is.character(cache))
   if (isFALSE(cache)) {
     return(FALSE)
-  } else {
-    if (!is.character(cache)) {
-      path = R_user_dir("mlr3oml", "cache")
-    } else {
-      path = cache
-    }
-    # it is TRUE
-    if (server == "https://openml.org/api/v1") {
-      cache = path
-    } else if (server == "https://test.openml.org/api/v1") {
-      cache = file.path(path, "test_server")
-    } else {
-      cache = file.path(R_user_dir("mlr3oml", "cache"), gsub('[^a-zA-Z]', '', cache))
-    }
+  }
+  if (!is.character(cache)) {
+    cache = R_user_dir("mlr3oml", "cache")
   }
 
   assert(check_directory_exists(cache), check_path_for_output(cache))
@@ -56,7 +45,11 @@ initialize_cache = function(cache_dir) {
       for (type in intersect(names(cache_versions), names(CACHE$versions))) {
         if (cache_versions[[type]] != CACHE$versions[[type]]) {
           lg$debug("Invalidating cache dir due to a version mismatch", path = file.path(cache_dir, type))
+
+          # the first unlink we need to get rid of the old cached files from version <= 0.5.0
           unlink(file.path(cache_dir, type), recursive = TRUE)
+          unlink(file.path(cache_dir, "test", type), recursive = TRUE)
+          unlink(file.path(cache_dir, "public", type), recursive = TRUE)
           write_cache_file = TRUE
         }
       }
@@ -96,21 +89,26 @@ initialize_cache = function(cache_dir) {
 #
 # @param type
 # The type that is downloaded, not really necessary
-cached = function(fun, type, id, ..., cache_dir = FALSE) {
+cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = FALSE) {
   if (isFALSE(cache_dir)) {
     return(fun(id, ...))
   }
 
-  path = file.path(cache_dir, type)
-  file = file.path(path, sprintf("%i.qs", id))
+  path = file.path(cache_dir, ifelse(test_server, "test", "public"), type)
+  file = file.path(path, sprintf("%i.%s", id, if (parquet) "parquet" else "qs"))
 
   if (file.exists(file)) {
-    lg$debug("Loading object from cache", type = type, id = id, file = file)
-    obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
-    if (!inherits(obj, "try-error")) {
-      return(obj)
+    if (parquet) {
+      lg$debug("Returning parquet path.", type = type, id = id, file = file)
+      return(file)
+    } else {
+      lg$debug("Loading object from cache", type = type, id = id, file = file)
+      obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
+      if (!inherits(obj, "try-error")) {
+        return(obj)
+      }
+      lg$debug("Failed to retrieve object from cache", type = type, id = id, file = file)
     }
-    lg$debug("Failed to retrieve object from cache", type = type, id = id, file = file)
   }
 
   if (!dir.exists(path)) {
@@ -118,8 +116,13 @@ cached = function(fun, type, id, ..., cache_dir = FALSE) {
   }
 
   obj = fun(id, ...)
-  lg$debug("Storing object in cache", type = type, id = id, file = file)
-  qs::qsave(obj, file = file, nthreads = getOption("Ncpus", 1L))
+  if (parquet) {
+    lg$debug("Moving parquet data from tempfile to cache.", type = type, id = id, file = file)
+    file.rename(obj, file)
+    return(file)
+  }
 
+  lg$debug("Storing compressed object in cache", type = type, id = id, file = file)
+  qs::qsave(obj, file = file, nthreads = getOption("Ncpus", 1L))
   return(obj)
 }

@@ -113,3 +113,7 @@ get_desc_downloader = function(type) {
     stopf("Invalid type '%s'.", type)
   )
 }
+
+get_server = function(test_server) {
+  if (test_server) "https://test.openml.org/api/v1" else "https://www.openml.org/api/v1"
+}

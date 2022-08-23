@@ -17,8 +17,10 @@ Description of OpenML object.}
 Whether to use parquet.}
 
 \item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
-Stores the location of the cache for objects retrieved from \url{https://openml.org}.
+Stores the location of the cache for objects retrieved from OpenML.
 If set to \code{FALSE}, caching is disabled.
+Objects from the test server are stored in the subdirectory 'test', those from the public
+server are stored in the subdirectory 'public'.
 
 The package \CRANpkg{qs} is required for caching.}
 
@@ -26,7 +28,7 @@ The package \CRANpkg{qs} is required for caching.}
 OpenML data id.}
 
 \item{\code{server}}{(\code{character(1)})\cr
-The OpenML server connected with this object.}
+The server for this object.}
 
 \item{\code{man}}{(\code{character(1)})\cr
 The manual entry.}
@@ -39,6 +41,9 @@ Returns all tags of the object.}
 
 \item{\code{type}}{(\code{character()})\cr
 The type of OpenML object (e.g. task, run, ...).}
+
+\item{\code{test_server}}{(\code{logical(1)})\cr
+Whether the object is using the test server.}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,7 +65,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id,
   cache = getOption("mlr3oml.cache", FALSE),
   parquet = getOption("mlr3oml.parquet", FALSE),
-  server = getOption("mlr3oml.server", "https://openml.org/api/v1"),
+  test_server = getOption("mlr3oml.test_server", FALSE),
   type
 )}\if{html}{\out{</div>}}
 }
@@ -78,8 +83,10 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.}
 
-\item{\code{server}}{(\code{character(1)})\cr
-OpenML server to be used. Defaults to the public OpenML server seen on  https://openml.org}
+\item{\code{test_server}}{(\code{character(1)})\cr
+Whether to use the OpenML test server (https://test.openml.org/) or public server
+(https://www.openml.org/).
+Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 
 \item{\code{type}}{(\code{charcater()})\cr
 The type of OpenML object (e.g. run, task, ...).}

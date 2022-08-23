@@ -113,7 +113,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
   id,
   cache = getOption("mlr3oml.cache", FALSE),
   parquet = getOption("mlr3oml.parquet", FALSE),
-  server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+  test_server = getOption("mlr3oml.test_server", FALSE)
 )}\if{html}{\out{</div>}}
 }
 
@@ -130,8 +130,10 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.}
 
-\item{\code{server}}{(\code{character(1)})\cr
-OpenML server to be used. Defaults to the public OpenML server seen on  https://openml.org}
+\item{\code{test_server}}{(\code{character(1)})\cr
+Whether to use the OpenML test server (https://test.openml.org/) or public server
+(https://www.openml.org/).
+Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 }
 \if{html}{\out{</div>}}
 }

@@ -1,5 +1,4 @@
-download_desc_collection = function(collection_id) {
-  server = getOption("mlr3oml.server", "https://www.openml.org/api/v1")
+download_desc_collection = function(collection_id, server) {
   desc = get_json(paste0(server, "/json/study/%i"), collection_id,
     simplify_data_frame = FALSE
   )[[1L]]

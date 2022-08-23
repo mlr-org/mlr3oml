@@ -37,14 +37,14 @@ OMLTask = R6Class("OMLTask",
     #' @template param_id
     #' @template param_cache
     #' @template param_parquet
-    #' @template param_server
+    #' @template param_test_server
     initialize = function(
       id,
       cache = getOption("mlr3oml.cache", FALSE),
       parquet = getOption("mlr3oml.parquet", FALSE),
-      server = getOption("mlr3oml.server", "https://openml.org/api/v1")
+      test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, server, "task")
+      super$initialize(id, cache, parquet, test_server, "task")
     },
     #' @description
     #' Prints the object.
@@ -97,12 +97,9 @@ OMLTask = R6Class("OMLTask",
         return(NULL)
       }
       if (is.null(private$.task_splits)) {
-        private$.task_splits = cached(
-          download_task_splits,
-          "task_splits",
-          self$id,
-          self$desc,
-          cache_dir = self$cache_dir
+        private$.task_splits = cached(download_task_splits,
+          "task_splits", id = self$id, desc = self$desc, cache_dir = self$cache_dir,
+          test_server = self$test_server
         )
       }
       return(private$.task_splits)
@@ -126,8 +123,8 @@ OMLTask = R6Class("OMLTask",
     #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$data_id, cache = is.character(self$cache_dir),
-          parquet = self$parquet
+        private$.data = OMLData$new(self$data_id, cache = self$cache_dir,
+          parquet = self$parquet, test_server = self$test_server
         )
       }
 
@@ -223,6 +220,7 @@ as_resampling.OMLTask = function(x, ...) {
 as_data_backend.OMLTask = function(data, primary_key = NULL, ...) {
   as_data_backend(data$data, primary_key = primary_key, ...)
 }
+
 
 
 
