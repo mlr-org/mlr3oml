@@ -1,5 +1,7 @@
 #' @title OpenML Collection
 #'
+#' @name oml_collection
+#'
 #' @description
 #' This is the class for collections (previously known as studies) served on
 #' \url{https://openml.org/search?type=study&study_type=task&sort=tasks_included}.

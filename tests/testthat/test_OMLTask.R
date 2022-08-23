@@ -53,3 +53,7 @@ test_that("OMLTask components inherit correct cache directory", {
   orun = OMLTask$new(50, cache = dir)
   expect_true(orun$data$cache_dir == dir)
 })
+
+test_that("Can open help page for OpenML Task", {
+  expect_error(OMLTask$new(31)$help(), regexp = NA)
+})

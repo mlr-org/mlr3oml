@@ -74,3 +74,7 @@ test_that("parquet works", {
   expect_true(nrow(data_parquet) == nrow(data_arff))
 })
 
+
+test_that("Can open help page for OpenML Data", {
+  expect_error(OMLData$new(31)$help(), regexp = NA)
+})
