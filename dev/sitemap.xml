@@ -19,21 +19,6 @@
     <loc>https://mlr3oml.mlr-org.com/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/OMLCollection.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/OMLFlow.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/OMLObject.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/OMLRun.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/OMLTask.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3oml.mlr-org.com/dev/reference/as_learner.OMLFlow.html</loc>
   </url>
   <url>
@@ -52,7 +37,22 @@
     <loc>https://mlr3oml.mlr-org.com/dev/reference/mlr3oml-package.html</loc>
   </url>
   <url>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_collection.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_data.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_flow.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_object.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_run.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_task.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/dev/reference/read_arff.html</loc>
