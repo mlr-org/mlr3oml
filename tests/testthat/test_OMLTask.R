@@ -60,4 +60,3 @@ test_that("Error when task does not provide task_splits", {
   resampling = suppressWarnings(as_resampling(otask))
   expect_true(is.null(resampling))
 })
-
