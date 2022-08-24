@@ -1,5 +1,6 @@
 download_desc_data = function(data_id, server) {
-  desc = get_json(paste0(server, "/json/data/%i"), data_id, simplify_data_frame = FALSE)[[1L]]
+  desc = get_json(paste0(server, "/json/data/%i"), data_id, simplify_data_frame = FALSE,
+    server = server)[[1L]]
   parse_desc_data(desc)
 }
 

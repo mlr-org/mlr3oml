@@ -1,9 +1,9 @@
 download_arff = function(data_id, server, desc = download_desc_data(data_id, server)) {
-  data = get_arff(desc$url, sparse = (desc$format == "sparse_arff"))
+  data = get_arff(desc$url, sparse = (desc$format == "sparse_arff"), server = server)
   return(data)
 }
 
-get_arff = function(url, ..., sparse = FALSE, api_key = get_api_key(), retries = 3L) {
+get_arff = function(url, ..., sparse = FALSE, server, api_key = get_api_key(server), retries = 3L) {
   path = tempfile(fileext = ".arff")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
