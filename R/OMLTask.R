@@ -100,7 +100,7 @@ OMLTask = R6Class("OMLTask",
       if (is.null(private$.task_splits)) {
         private$.task_splits = cached(download_task_splits,
           "task_splits", id = self$id, desc = self$desc, cache_dir = self$cache_dir,
-          test_server = self$test_server
+          test_server = self$test_server, server = self$server
         )
       }
       return(private$.task_splits)
