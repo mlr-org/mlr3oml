@@ -121,7 +121,7 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
 }
 
 
-get_paginated_table = function(type, ..., limit, server) {
+get_paginated_table = function(query_type, ..., limit, server) {
   limit = assert_count(limit, positive = TRUE, coerce = TRUE)
   dots = discard(list(...), is.null)
   chunk_size = magic_numbers$chunk_size
@@ -129,7 +129,7 @@ get_paginated_table = function(type, ..., limit, server) {
 
   while (nrow(tab) < limit) {
     dots$limit = min(limit - nrow(tab), chunk_size)
-    query = build_filter_query(type, dots, server)
+    query = build_filter_query(query_type, dots, server)
 
     response = get_json(query, error_on_fail = FALSE, server = server)
     if (inherits(response, "server_response")) {
