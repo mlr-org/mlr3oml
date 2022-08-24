@@ -34,6 +34,7 @@
 #' @param limit (`integer()`)\cr
 #'   Limit the results to `limit` records.
 #'   Default is the value of option `"mlr3oml.limit"`, defaulting to 5000.
+#' @template param_test_server
 #' @param ... (any)\cr
 #'   Additional (unsupported) filters, as named arguments.
 #'
@@ -68,7 +69,8 @@
 #' runs[, .N, by = task_id]
 #' }
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
-  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L), ...) {
+  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L),
+  test_server = getOption("mlr3oml.test_server", FALSE), ...) {
   tab = get_paginated_table("data",
     data_id = data_id,
     data_name = data_name,
@@ -78,6 +80,7 @@ list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NU
     number_missing_values = number_missing_values,
     tag = tag,
     limit = limit,
+    server = get_server(test_server),
     ...
   )
 
