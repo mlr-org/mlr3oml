@@ -52,7 +52,7 @@ list_oml_runs(
   tag = NULL,
   flow_id = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server"),
+  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 
