@@ -33,10 +33,15 @@
 #'   If set to `TRUE`, the parquet version of datasets will be used by default.
 #'   If set to `FALSE`, the arff version of datasets will be used by default.
 #'   Default is `FALSE`.
+#'
+#' **Relevant for developers**
+#'
 #' * `mlr3oml.test_server`:
 #'   Whether to use the OpenML [test server](https://test.openml.org/).
-#'   Mostly interesting for developers.
 #'   Default is `FALSE`
+#' * `mlr3oml.test_api_key`:
+#'   API key to use for the test server. If not set, defaults to the value of the environment
+#'   variable `TESTOPENMLAPIKEY`.
 #'
 #' @section Logging:
 #' The \CRANpkg{lgr} package is used for logging.
