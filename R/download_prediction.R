@@ -7,6 +7,5 @@ download_prediction = function(run_id, server, desc = download_desc_run(run_id, 
 
   url = desc$output_data$file$url[is_prediction]
   prediction = get_arff(url)
-  colnames(prediction)[colnames(prediction) == "repeat."] = "rep"
   return(prediction)
 }
