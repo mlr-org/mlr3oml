@@ -250,8 +250,8 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLRun:10587724&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Task: credit-g (id: 31)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * Estimation Procedure: crossvalidation (id: 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Flow: mlr3.classif.rpart (id: 19068)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">task</span><span class="op">)</span> <span class="co"># OMLTask</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLTask:31&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Type: Supervised Classification</span>
@@ -261,6 +261,7 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">data</span><span class="op">)</span> <span class="co"># OMLData</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLData:31:credit-g&gt; (1000x21)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Default target: class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * Format: arff</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">flow</span><span class="op">)</span> <span class="co"># OMLFlow</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLFlow:19068&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Name: mlr3.classif.rpart</span>
