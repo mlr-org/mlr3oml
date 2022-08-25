@@ -50,6 +50,10 @@ OMLFlow = R6Class("OMLFlow",
       catf("<OMLFlow:%i>", self$id)
       catf(" * Name: %s", as_short_string(self$name))
       catf(" * Dependencies: %s", paste(self$desc$dependencies, collapse = ", "))
+      if (self$test_server) {
+        catf(" * Using test server")
+      }
+
     }
   ),
   active = list(

@@ -46,3 +46,26 @@ get_desc_downloader = function(type) {
 get_server = function(test_server) {
   if (test_server) "https://test.openml.org/api/v1" else "https://www.openml.org/api/v1"
 }
+
+catf_estimation_procedure = function(estimation_procedure) {
+  if (!is.null(estimation_procedure)) {
+    type = estimation_procedure$type
+    parameter = estimation_procedure$parameter
+    if (type == "crossvalidation") {
+      catf(" * Estimation: crossvalidation (id: %s; repeats: %s, folds: %s)",
+        estimation_procedure$id,
+        parameter[get("name") == "number_repeats", "value"][[1L]],
+        parameter[get("name") == "number_folds", "value"][[1L]]
+      )
+    } else if (type == "holdout") {
+      catf(" * Type: holdout (id: %s; test size: %s)",
+        estimation_procedure$id,
+        parameter[get("name") == "percentage", "value"][[1L]]
+      )
+    } else if (type == "leaveoneout") {
+      catf(" * Type: leaveoneout (id: %s)", estimation_procedure$id)
+    }
+  } else {
+    catf(" * Estimation: missing")
+  }
+}
