@@ -250,8 +250,8 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLRun:10587724&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Task: credit-g (id: 31)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  * Estimation Procedure: crossvalidation (id: 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Flow: mlr3.classif.rpart (id: 19068)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">task</span><span class="op">)</span> <span class="co"># OMLTask</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLTask:31&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Type: Supervised Classification</span>
@@ -261,24 +261,23 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">data</span><span class="op">)</span> <span class="co"># OMLData</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLData:31:credit-g&gt; (1000x21)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Default target: class</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  * Format: arff</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">flow</span><span class="op">)</span> <span class="co"># OMLFlow</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;OMLFlow:19068&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Name: mlr3.classif.rpart</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  * Dependencies: mlr3_0.13.1-9000, rpart_4.1-15</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">prediction</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       rep fold row_id prediction truth confidence.good confidence.bad</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1:   0    0    490       good  good       0.8644068      0.1355932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2:   0    0    406       good  good       0.8644068      0.1355932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3:   0    0    139       good  good       0.8644068      0.1355932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    4:   0    0    482        bad  good       0.3846154      0.6153846</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    5:   0    0    178       good  good       0.8644068      0.1355932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  996:   0    9    320        bad   bad       0.3333333      0.6666667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  997:   0    9    503       good   bad       0.6954733      0.3045267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  998:   0    9    822        bad   bad       0.2435897      0.7564103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  999:   0    9    558       good   bad       0.6954733      0.3045267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1000:   0    9    714        bad   bad       0.2435897      0.7564103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       repeat. fold row_id prediction truth confidence.good confidence.bad</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1:       0    0    490       good  good       0.8644068      0.1355932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2:       0    0    406       good  good       0.8644068      0.1355932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3:       0    0    139       good  good       0.8644068      0.1355932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    4:       0    0    482        bad  good       0.3846154      0.6153846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    5:       0    0    178       good  good       0.8644068      0.1355932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ---                                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  996:       0    9    320        bad   bad       0.3333333      0.6666667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  997:       0    9    503       good   bad       0.6954733      0.3045267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  998:       0    9    822        bad   bad       0.2435897      0.7564103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  999:       0    9    558       good   bad       0.6954733      0.3045267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1000:       0    9    714        bad   bad       0.2435897      0.7564103</span>
 <span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;TaskClassif:credit-g&gt; (1000 x 21)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Target: class</span>
@@ -291,10 +290,10 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - int (7): age, credit_amount, duration, existing_credits,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     installment_commitment, num_dependents, residence_since</span>
 <span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resampling</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ResamplingCV&gt;: Cross-Validation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;ResamplingCustom&gt;: Custom Splits</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Iterations: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Instantiated: TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: folds=10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: list()</span>
 <span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;LearnerClassifOML19068:oml.19068&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Model: -</span>
@@ -354,17 +353,17 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-out co"><span class="r-pr">#&gt;</span>  8: &lt;TaskClassif[50]&gt; credit-g &lt;LearnerClassifOML19068[36]&gt;  oml.19068</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  9: &lt;TaskClassif[50]&gt; credit-g &lt;LearnerClassifOML19068[36]&gt;  oml.19068</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10: &lt;TaskClassif[50]&gt; credit-g &lt;LearnerClassifOML19068[36]&gt;  oml.19068</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             resampling resampling_id iteration              prediction</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: &lt;ResamplingCV[20]&gt;            cv         1 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: &lt;ResamplingCV[20]&gt;            cv         2 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: &lt;ResamplingCV[20]&gt;            cv         3 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: &lt;ResamplingCV[20]&gt;            cv         4 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: &lt;ResamplingCV[20]&gt;            cv         5 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: &lt;ResamplingCV[20]&gt;            cv         6 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: &lt;ResamplingCV[20]&gt;            cv         7 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: &lt;ResamplingCV[20]&gt;            cv         8 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: &lt;ResamplingCV[20]&gt;            cv         9 &lt;PredictionClassif[20]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: &lt;ResamplingCV[20]&gt;            cv        10 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 resampling resampling_id iteration              prediction</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: &lt;ResamplingCustom[20]&gt;        custom         1 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: &lt;ResamplingCustom[20]&gt;        custom         2 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: &lt;ResamplingCustom[20]&gt;        custom         3 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: &lt;ResamplingCustom[20]&gt;        custom         4 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: &lt;ResamplingCustom[20]&gt;        custom         5 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: &lt;ResamplingCustom[20]&gt;        custom         6 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: &lt;ResamplingCustom[20]&gt;        custom         7 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: &lt;ResamplingCustom[20]&gt;        custom         8 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: &lt;ResamplingCustom[20]&gt;        custom         9 &lt;PredictionClassif[20]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: &lt;ResamplingCustom[20]&gt;        custom        10 &lt;PredictionClassif[20]&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     classif.ce</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1:  0.2000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2:  0.3200000</span>
