@@ -89,9 +89,11 @@ OMLData = R6Class("OMLData",
     #' Prints the object.
     #' For a more detailed printer, convert to a [mlr3::Task] via `as_task()`.
     print = function() {
-      catf("<OMLData:%i:%s> (%ix%i)", self$id, self$name, self$nrow, self$ncol)
-      catf(" * Default target: %s", self$target_names)
-      catf(" * Format: %s", ifelse(self$parquet, "parquet", self$desc$format))
+      catf("<OMLData:%i:%s> (%ix%i)", self$id, as_short_string(self$name), self$nrow, self$ncol)
+      catf(" * Default target: %s", as_short_string(self$target_names))
+      if (self$test_server) {
+        catf(" * Using test server")
+      }
     },
     #' @description
     #' Returns the value of a single OpenML data set quality.
