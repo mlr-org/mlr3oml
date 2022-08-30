@@ -214,42 +214,55 @@ OMLData = R6Class("OMLData",
         return(private$.backend)
       }
       if (self$parquet) {
-        path = self$parquet_path
-        backend = mlr3db::as_duckdb_backend(path)
-        if (!test_names(backend$colnames, type = "strict")) {
-          new = make.names(backend$colnames)
-          if (length(unique(new)) != length(new)) {
-            stopf("No unique names after conversion.")
+        backend = try({
+          path = self$parquet_path
+          backend = mlr3db::as_duckdb_backend(path)
+          if (!test_names(backend$colnames, type = "strict")) {
+            new = make.names(backend$colnames)
+            if (length(unique(new)) != length(new)) {
+              stopf("No unique names after conversion.")
+            }
+            # This code is a little hacky. The reason is that DataBackendRename is not exported
+            # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
+            # This can be changed when it is exported in mlr3.
+            backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
+              Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
+            )
           }
-          # This code is a little hacky. The reason is that DataBackendRename is not exported
-          # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
-          # This can be changed when it is exported in mlr3.
-          private$.backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
-            Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
+          backend
+        }, silent = TRUE)
+
+        if (inherits(backend, "try-error")) {
+          lg$info("Failed to download parquet, trying arff.", id = self$id)
+          data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
+            server = self$server, test_server = self$test_server
           )
-        } else {
-          private$.backend = backend
+          backend = as_data_backend(data)
         }
       } else {
         data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
           server = self$server, test_server = self$test_server
         )
-        private$.backend = as_data_backend(data)
+        backend = as_data_backend(data)
       }
-
-      private$.backend
+      private$.backend = backend
     }
   )
 )
 
 #' @export
 as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
+  backend = NULL
   if (data$parquet) {
     loadNamespace("mlr3db")
-    mlr3db::as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
-  } else {
-    as_data_backend(data$data, primary_key = primary_key, ...)
+    backend = try({
+      mlr3db::as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
+    }, silent = TRUE)
   }
+  if (is.null(backend) || inherits(backend, "try-error")) {
+    backend = as_data_backend(data$data, primary_key = primary_key, ...)
+  }
+  return(backend)
 }
 
 #' @importFrom mlr3 as_task
