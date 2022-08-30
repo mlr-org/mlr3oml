@@ -205,8 +205,8 @@ OMLData = R6Class("OMLData",
         backend = mlr3db::as_duckdb_backend(path)
         if (!test_names(backend$colnames, type = "strict")) {
           new = make.names(backend$colnames)
-          if (length(unique(new)) != length(new)) {
-            stopf("No unique names after conversion.")
+          if (anyDuplicated(new)) {
+            stop("Duplicated column names detected after conversion.")
           }
           # This code is a little hacky. The reason is that DataBackendRename is not exported
           # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
