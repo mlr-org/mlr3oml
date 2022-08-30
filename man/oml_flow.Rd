@@ -46,6 +46,12 @@ The parameters of the flow.}
 
 \item{\code{dependencies}}{(\code{character()})\cr
 The dependencies of the flow.}
+
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the object.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }

@@ -14,9 +14,6 @@ Don't use his class directly.
 \item{\code{desc}}{(\code{list()})\cr
 Description of OpenML object.}
 
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet.}
-
 \item{\code{cache_dir}}{(\code{logical(1)} | \code{character(1)})\cr
 Stores the location of the cache for objects retrieved from OpenML.
 If set to \code{FALSE}, caching is disabled.
@@ -36,9 +33,6 @@ The manual entry.}
 
 \item{\code{name}}{(\code{character(1)})\cr
 The name of the object.}
-
-\item{\code{tags}}{(\code{character()})\cr
-Returns all tags of the object.}
 
 \item{\code{type}}{(\code{character()})\cr
 The type of OpenML object (e.g. task, run, ...).}
@@ -65,7 +59,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{OMLObject$new(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
   test_server = getOption("mlr3oml.test_server", FALSE),
   type
 )}\if{html}{\out{</div>}}
@@ -80,9 +73,6 @@ OpenML id for the object.}
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server

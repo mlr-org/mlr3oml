@@ -83,7 +83,8 @@ OMLData = R6Class("OMLData",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "data")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "data")
     },
     #' @description
     #' Prints the object.
@@ -115,6 +116,17 @@ OMLData = R6Class("OMLData",
           cache_dir = self$cache_dir, server = self$server, test_server = self$test_server)
       }
       private$.qualities
+    },
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     },
     #' @field data (`data.table()`)\cr
     #' Returns the data (without the row identifier and ignore id columns).
@@ -196,6 +208,7 @@ OMLData = R6Class("OMLData",
     .features = NULL,
     .backend = NULL,
     .parquet_path = NULL,
+    .parquet = NULL,
     .get_backend = function() {
       if (!is.null(private$.backend)) {
         return(private$.backend)

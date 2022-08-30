@@ -21,7 +21,6 @@ OMLObject = R6Class("OMLObject",
     initialize = function(
       id,
       cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE),
       type
       ) {
@@ -30,7 +29,6 @@ OMLObject = R6Class("OMLObject",
 
       private$.id = assert_count(id, coerce = TRUE)
       private$.cache_dir = get_cache_dir(cache, test_server)
-      private$.parquet = assert_flag(parquet)
       private$.type = assert_choice(type, c("data", "flow", "study", "collection", "run", "task"))
       initialize_cache(self$cache_dir)
     },
@@ -53,12 +51,6 @@ OMLObject = R6Class("OMLObject",
       }
 
       private$.desc
-    },
-    #' @field parquet (`logical(1)`)\cr
-    #' Whether to use parquet.
-    parquet = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.parquet
     },
     #' @template field_cache_dir
     cache_dir = function(rhs) {
@@ -86,11 +78,6 @@ OMLObject = R6Class("OMLObject",
     #' @field name (`character(1)`)\cr
     #' The name of the object.
     name = function() self$desc$name,
-    #' @field tags (`character()`)\cr
-    #' Returns all tags of the object.
-    tags = function() {
-      self$desc$tag
-    },
     #' @field type (`character()`)\cr
     #' The type of OpenML object (e.g. task, run, ...).
     type = function(rhs) {
@@ -106,7 +93,6 @@ OMLObject = R6Class("OMLObject",
   ),
   private = list(
     .desc = NULL,
-    .parquet = NULL,
     .cache_dir = NULL,
     .id = NULL,
     .server = NULL,

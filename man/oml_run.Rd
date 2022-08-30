@@ -65,6 +65,12 @@ The id of the flow.}
 \item{\code{flow}}{(\link{OMLFlow})\cr
 The OpenML Flow.}
 
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the object.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
+
 \item{\code{task_id}}{(\code{character(1)})\cr
 The id of the task solved by this run.}
 

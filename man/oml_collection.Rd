@@ -58,6 +58,9 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \item{\code{desc}}{(\code{list()})\cr
 Colllection description (meta information), downloaded and converted from the JSON API response.}
 
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
+
 \item{\code{main_entity_type}}{(\code{character(n)})\cr
 The main entity type, either \code{"run"} or \code{"task"}.}
 
