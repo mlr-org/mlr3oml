@@ -122,6 +122,11 @@ A Task Collection (<code>main_entity_type = "task"</code>) contains tasks and da
 Colllection description (meta information), downloaded and converted from the JSON API response.</p></dd>
 
 
+<dt><code>parquet</code></dt>
+<dd><p>(<code>logical(1)</code>)<br>
+Whether to use parquet.</p></dd>
+
+
 <dt><code>main_entity_type</code></dt>
 <dd><p>(<code>character(n)</code>)<br>
 The main entity type, either <code>"run"</code> or <code>"task"</code>.</p></dd>
@@ -292,46 +297,46 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_benchmark_result.html" class="external-link">as_benchmark_result</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.ce"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 18f84995-3c89-42d8-9782-6563cfa4ac99  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 6ea97321-fe4d-4579-90b2-46d09ff07cc7  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30: f68691b8-4813-4f61-ad4c-1ad658729c0b  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 050741b1-5f55-47d2-a6d8-6937fc4168c4  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 83185caa-27fc-4644-8273-baa7937dc0db  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 3531b5d0-3d91-49c3-9dad-bbce67779615  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 66913698-435d-496c-8923-2924e6bdeb9b  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: b4d3fbd4-702d-41c8-a5cb-8e1df1483ff9  4 &lt;TaskClassif[50]&gt;   letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          learner learner_id             resampling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: &lt;LearnerClassifOML17374[36]&gt;  oml.17374 &lt;ResamplingCustom[20]&gt;</span>
