@@ -56,7 +56,8 @@ OMLRun = R6Class("OMLRun",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "run")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "run")
     },
     #' @description
     #' Prints the object.
@@ -84,6 +85,17 @@ OMLRun = R6Class("OMLRun",
         )
       }
       private$.flow
+    },
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     },
     #' @field task_id (`character(1)`)\cr
     #' The id of the task solved by this run.
@@ -129,7 +141,8 @@ OMLRun = R6Class("OMLRun",
     .prediction = NULL,
     .data = NULL,
     .flow = NULL,
-    .task_split = NULL
+    .task_split = NULL,
+    .parquet = NULL
   )
 )
 

@@ -42,7 +42,8 @@ OMLFlow = R6Class("OMLFlow",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "flow")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "flow")
     },
     #' @description
     #' Prints the object.
@@ -63,7 +64,21 @@ OMLFlow = R6Class("OMLFlow",
 
     #' @field dependencies (`character()`)\cr
     #' The dependencies of the flow.
-    dependencies = function() self$desc$dependencies
+    dependencies = function() self$desc$dependencies,
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
+    }
+  ),
+  private = list(
+    .parquet = NULL
   )
 )
 

@@ -116,7 +116,6 @@ expect_oml_collection = function(collection) {
   testthat::expect_true(test_logical(collection$cache_dir) || test_character(collection$cache_dir))
   expect_list(collection$desc, names = "unique")
   expect_string(collection$name, min.chars = 1L)
-  expect_character(collection$tags, null.ok = TRUE)
   expect_choice(collection$main_entity_type, c("task", "run"))
   expect_integer(collection$task_ids)
   expect_integer(collection$data_ids)
