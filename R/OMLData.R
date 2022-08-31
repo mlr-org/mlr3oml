@@ -83,7 +83,8 @@ OMLData = R6Class("OMLData",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "data")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "data")
     },
     #' @description
     #' Prints the object.
@@ -115,6 +116,17 @@ OMLData = R6Class("OMLData",
           cache_dir = self$cache_dir, server = self$server, test_server = self$test_server)
       }
       private$.qualities
+    },
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     },
     #' @field data (`data.table()`)\cr
     #' Returns the data (without the row identifier and ignore id columns).
@@ -196,47 +208,61 @@ OMLData = R6Class("OMLData",
     .features = NULL,
     .backend = NULL,
     .parquet_path = NULL,
+    .parquet = NULL,
     .get_backend = function() {
       if (!is.null(private$.backend)) {
         return(private$.backend)
       }
       if (self$parquet) {
-        path = self$parquet_path
-        backend = mlr3db::as_duckdb_backend(path)
-        if (!test_names(backend$colnames, type = "strict")) {
-          new = make.names(backend$colnames)
-          if (anyDuplicated(new)) {
-            stop("Duplicated column names detected after conversion.")
+        backend = try({
+          path = self$parquet_path
+          backend = mlr3db::as_duckdb_backend(path)
+          if (!test_names(backend$colnames, type = "strict")) {
+            new = make.names(backend$colnames)
+            if (anyDuplicated(new)) {
+              stopf("No unique names after conversion.")
+            }
+            # This code is a little hacky. The reason is that DataBackendRename is not exported
+            # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
+            # This can be changed when it is exported in mlr3.
+            backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
+              Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
+            )
           }
-          # This code is a little hacky. The reason is that DataBackendRename is not exported
-          # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
-          # This can be changed when it is exported in mlr3.
-          private$.backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
-            Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
+          backend
+        }, silent = TRUE)
+
+        if (inherits(backend, "try-error")) {
+          lg$info("Failed to download parquet, trying arff.", id = self$id)
+          data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
+            server = self$server, test_server = self$test_server
           )
-        } else {
-          private$.backend = backend
+          backend = as_data_backend(data)
         }
       } else {
         data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
           server = self$server, test_server = self$test_server
         )
-        private$.backend = as_data_backend(data)
+        backend = as_data_backend(data)
       }
-
-      private$.backend
+      private$.backend = backend
     }
   )
 )
 
 #' @export
 as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
+  backend = NULL
   if (data$parquet) {
     loadNamespace("mlr3db")
-    mlr3db::as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
-  } else {
-    as_data_backend(data$data, primary_key = primary_key, ...)
+    backend = try({
+      mlr3db::as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
+    }, silent = TRUE)
   }
+  if (is.null(backend) || inherits(backend, "try-error")) {
+    backend = as_data_backend(data$data, primary_key = primary_key, ...)
+  }
+  return(backend)
 }
 
 #' @importFrom mlr3 as_task

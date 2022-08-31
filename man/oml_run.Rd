@@ -63,6 +63,12 @@ The id of the flow.}
 \item{\code{flow}}{(\link{OMLFlow})\cr
 The OpenML Flow.}
 
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the object.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
+
 \item{\code{task_id}}{(\code{character(1)})\cr
 The id of the task solved by this run.}
 
@@ -131,7 +137,8 @@ See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.}
+Whether to use parquet instead of arff.
+If parquet is not available, it will fall back to arff.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server

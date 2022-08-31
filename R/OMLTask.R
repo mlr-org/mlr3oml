@@ -46,7 +46,8 @@ OMLTask = R6Class("OMLTask",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "task")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "task")
     },
     #' @description
     #' Prints the object.
@@ -87,6 +88,17 @@ OMLTask = R6Class("OMLTask",
         )
       }
       return(private$.task_splits)
+    },
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     },
     #' @field name (`character(1)`)\cr
     #'   Name of the task, extracted from the task description.
@@ -148,17 +160,12 @@ OMLTask = R6Class("OMLTask",
     #' Name of the dataset (inferred from the task name).
     data_name = function() {
       strsplit(self$desc$task_name, split = " ")[[1]][[3]]
-    },
-    #' @field parquet (`logical(1)`)\cr
-    #' Whether to use parquet.
-    parquet = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.parquet
     }
   ),
   private = list(
     .data = NULL,
-    .task_splits = NULL
+    .task_splits = NULL,
+    .parquet = NULL
   )
 )
 
