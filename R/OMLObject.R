@@ -41,7 +41,8 @@ OMLObject = R6Class("OMLObject",
   active = list(
     #' @field desc (`list()`)\cr
     #' Description of OpenML object.
-    desc = function() {
+    desc = function(rhs) {
+      assert_ro_binding(rhs)
       if (is.null(private$.desc)) {
         private$.desc = cached(
           get_desc_downloader(self$type),

@@ -225,8 +225,8 @@ as_learner.OMLRun = function(x, task_type = NULL, ...) {
 
 #' @importFrom mlr3 as_data_backend
 #' @export
-as_data_backend.OMLRun = function(x, ...) {
-  as_data_backend(x$data, ...)
+as_data_backend.OMLRun = function(x, primary_key = NULL, ...) {
+  as_data_backend(x$data, primary_key = primary_key, ...)
 }
 
 #' @importFrom mlr3 as_resampling
