@@ -11,3 +11,8 @@ test_that("list_oml_evaluations", {
 
   expect_data_table(list_oml_evaluations(run_id = 999999999), nrows = 0L)
 })
+
+test_that("list_oml_evaluations test server", {
+  tab = list_oml_evaluations(limit = 10, test_server = TRUE)
+  expect_data_table(tab)
+})

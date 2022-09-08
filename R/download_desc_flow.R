@@ -1,5 +1,5 @@
 download_desc_flow = function(flow_id, server) {
-  desc = get_json(paste0(server, "/json/flow/%i"), flow_id)[[1L]]
+  desc = get_json(paste0(server, "/json/flow/%i"), flow_id, server = server)[[1L]]
   desc = parse_desc_flow(desc)
   return(desc)
 }
