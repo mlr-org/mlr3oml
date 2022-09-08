@@ -1,5 +1,5 @@
 download_desc_run = function(run_id, server) {
-  desc = get_json(paste0(server, "/json/run/%i"), run_id, server = server)[[1L]]
+  desc = get_json(paste0(server, "/json/run/%i"), run_id)[[1L]]
   desc = parse_desc_run(desc)
   return(desc)
 }

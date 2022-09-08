@@ -22,7 +22,6 @@ list_oml_data(
   number_missing_values = NULL,
   tag = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 
@@ -32,7 +31,6 @@ list_oml_evaluations(
   measures = NULL,
   tag = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 
@@ -40,11 +38,10 @@ list_oml_flows(
   uploader = NULL,
   tag = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 
-list_oml_measures(test_server = getOption("mlr3oml.test_server", FALSE))
+list_oml_measures()
 
 list_oml_runs(
   run_id = NULL,
@@ -52,7 +49,6 @@ list_oml_runs(
   tag = NULL,
   flow_id = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 
@@ -61,7 +57,6 @@ list_oml_setups(
   setup_id = NULL,
   tag = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 
@@ -74,7 +69,6 @@ list_oml_tasks(
   number_missing_values = NULL,
   tag = NULL,
   limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
   ...
 )
 }
@@ -103,11 +97,6 @@ Filter for tags. You can provide multiple tags as character vector.}
 \item{limit}{(\code{integer()})\cr
 Limit the results to \code{limit} records.
 Default is the value of option \code{"mlr3oml.limit"}, defaulting to 5000.}
-
-\item{test_server}{(\code{character(1)})\cr
-Whether to use the OpenML test server (https://test.openml.org/) or public server
-(https://www.openml.org/).
-Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 
 \item{...}{(any)\cr
 Additional (unsupported) filters, as named arguments.}

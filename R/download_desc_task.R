@@ -1,6 +1,6 @@
 download_desc_task = function(task_id, server) {
   desc = get_json(paste0(server, "/json/task/%i"), task_id,
-    simplify_data_frame = FALSE, server = server
+    simplify_data_frame = FALSE
   )[[1L]]
 
   desc = parse_desc_task(desc)

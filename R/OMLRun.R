@@ -129,8 +129,7 @@ OMLRun = R6Class("OMLRun",
         return(private$.prediction)
       }
       private$.prediction = cached(download_prediction, "prediction", self$id,
-        cache_dir = self$cache_dir, desc = self$desc, test_server = self$test_server,
-        server = self$server
+        cache_dir = self$cache_dir, desc = self$desc, test_server = self$test_server
       )
       return(private$.prediction)
     },
