@@ -90,6 +90,7 @@ expect_oml_run = function(run) {
   expect_choice(run$task_type, mlr3oml:::oml_reflections$task_types)
   expect_data_table(run$parameter_setting)
   expect_data_table(run$prediction)
+  expect_data_table(run$evaluation)
   task_type = mlr3oml:::task_type_translator(run$task_type, to = "mlr3")
 
   if (!is.null(task_type)) {
@@ -104,7 +105,6 @@ expect_oml_run = function(run) {
     if (task_type == "regr") {
       expect_error(rr$score(msr("regr.mse")), regexp = NA)
     }
-    expect_r6(as_learner(run, task_type = task_type), "Learner")
   }
   expect_r6(as_resampling(run), "Resampling")
   expect_r6(as_task(run), "Task")
