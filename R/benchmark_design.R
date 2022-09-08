@@ -4,9 +4,9 @@
 #' a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 #' function can be used.
 #'
-#' @param tasks A list of [mlr3::Task]s
-#' @param learners A list of [mlr3::Learner]s
-#' @param resamplings A list of [mlr3::Resampling]s that are instantiated on the tasks.
+#' @param tasks (`list()` or `Task`) A list of [mlr3::Task]s.
+#' @param learners (`list()` or `Learner`) A list of [mlr3::Learner]s.
+#' @param resamplings (`list()` or `Resampling`) A list of [mlr3::Resampling]s that are instantiated on the given tasks.
 #'
 #' @examples
 #' \dontrun{
