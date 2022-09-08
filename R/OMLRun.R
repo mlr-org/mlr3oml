@@ -16,7 +16,6 @@
 #' * A [mlr3::ResampleResult] is returned when calling `as_resample_result()`.
 #' * A [mlr3::Task] is returned when calling `as_task()`.
 #' * A [mlr3::DataBackend] is returned when calling `as_data_backend()`.
-#' * A [mlr3::Learner] is returned when calling `as_learner()`.
 #' * A instantiated [mlr3::Resampling] is returned when calling `as_resampling()`.
 #'
 #' @references
@@ -34,7 +33,6 @@
 #' print(orun$prediction)
 #' as_task(orun)
 #' as_resampling(orun)
-#' as_learner(orun)
 #' as_data_backend(orun)
 #' rr = as_resample_result(orun)
 #' rr$score(msr("classif.ce"))
@@ -56,7 +54,8 @@ OMLRun = R6Class("OMLRun",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "run")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "run")
     },
     #' @description
     #' Prints the object.
@@ -84,6 +83,17 @@ OMLRun = R6Class("OMLRun",
         )
       }
       private$.flow
+    },
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
     },
     #' @field task_id (`character(1)`)\cr
     #' The id of the task solved by this run.
@@ -123,6 +133,11 @@ OMLRun = R6Class("OMLRun",
         server = self$server
       )
       return(private$.prediction)
+    },
+    #' @field evaluation (`data.table()`)\cr
+    #'   The evaluations calculated by the OpenML server.
+    evaluation = function() {
+      self$desc$output_data$evaluation
     }
   ),
   private = list(
@@ -130,7 +145,8 @@ OMLRun = R6Class("OMLRun",
     .prediction = NULL,
     .data = NULL,
     .flow = NULL,
-    .task_split = NULL
+    .task_split = NULL,
+    .parquet = NULL
   )
 )
 
@@ -202,19 +218,10 @@ as_task.OMLRun = function(x, ...) {
   as_task(x$task, ...)
 }
 
-#' @importFrom mlr3 as_learner
-#' @export
-as_learner.OMLRun = function(x, task_type = NULL, ...) {
-  if (is.null(task_type)) {
-    task_type = task_type_translator(x$task_type, to = "mlr3")
-  }
-  as_learner(x$flow, task_type = task_type, ...)
-}
-
 #' @importFrom mlr3 as_data_backend
 #' @export
-as_data_backend.OMLRun = function(x, ...) {
-  as_data_backend(x$data, ...)
+as_data_backend.OMLRun = function(x, primary_key = NULL, ...) {
+  as_data_backend(x$data, primary_key = primary_key, ...)
 }
 
 #' @importFrom mlr3 as_resampling
@@ -226,60 +233,24 @@ as_resampling.OMLRun = function(x, ...) {
 #' @importFrom mlr3 as_resample_result
 #' @export
 as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
-  task = as_task(x, ...)
-  resampling = as_resampling(x, task = task, ...)
+  task = as_task(x$task, ...)
+  resampling = as_resampling(x, task = task)
   flow = x$flow
-  iterations = resampling$iters
 
   # convert raw predictoins into mlr3 PredictionData
   predictions = split_predictions(x$prediction, resampling, x$task_type)
   n = length(predictions)
-  learner = as_learner(flow, task$task_type, ...)
-  learners = map(seq(n), function(x) learner$clone(deep = TRUE))
-
-
-  param_vals = set_names(
-    x = x$parameter_setting[["value"]],
-    nm = make.names(
-      paste0("f", x$parameter_setting[["component"]], ".", x$parameter_setting[["name"]])
-    )
-  )
-  if (!all(names(param_vals) %in% learner$param_set$ids())) {
-    warningf("Problem assigning parameter_setting to learner, setting all parameter values to NA.")
-    param_vals = set_names(
-      x = as.list(rep(NA, learner$param_set$length)),
-      learners[[1]]$param_set$ids()
-    )
-  }
-  states = map(seq_len(n), function(x) {
-    state = list(
-      param_vals = param_vals,
-      task_hash = task$hash,
-      mlr3_version = NA_character_,
-      task_prototype = task$data(rows = integer())
-    )
-    if (store_backends) {
-      state$train_task = task
-    }
-    return(state)
-  })
-
-  pmap(list(learners, states),
-    function(learner, state) {
-      learner$param_set$values = state$param_vals
-    }
-  )
+  learner = as_learner(flow, task$task_type)
 
   data = data.table(
     task = list(task),
-    learner = learners,
-    learner_state = states,
+    learner = replicate(n, learner, simplify = FALSE),
+    learner_state = replicate(n, x$parameter_setting, simplify = FALSE),
     resampling = list(resampling),
     iteration = seq_len(resampling$iters),
     prediction = predictions,
     uhash = uuid::UUIDgenerate()
   )
 
-  rr = ResampleResult$new(ResultData$new(data, store_backends = store_backends))
-  return(rr)
+  ResampleResult$new(ResultData$new(data))
 }

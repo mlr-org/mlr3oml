@@ -42,7 +42,8 @@ OMLFlow = R6Class("OMLFlow",
       parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      super$initialize(id, cache, parquet, test_server, "flow")
+      private$.parquet = assert_flag(parquet)
+      super$initialize(id, cache, test_server, "flow")
     },
     #' @description
     #' Prints the object.
@@ -63,7 +64,21 @@ OMLFlow = R6Class("OMLFlow",
 
     #' @field dependencies (`character()`)\cr
     #' The dependencies of the flow.
-    dependencies = function() self$desc$dependencies
+    dependencies = function() self$desc$dependencies,
+    #' @field tags (`character()`)\cr
+    #' Returns all tags of the object.
+    tags = function() {
+      self$desc$tag
+    },
+    #' @field parquet (`logical(1)`)\cr
+    #' Whether to use parquet.
+    parquet = function(rhs) {
+      assert_ro_binding(rhs)
+      private$.parquet
+    }
+  ),
+  private = list(
+    .parquet = NULL
   )
 )
 
@@ -79,11 +94,32 @@ OMLFlow = R6Class("OMLFlow",
 #' @param x (OMLFlow) The OMLFlow that is converted to a mlr3::Learner.
 #' @param task_type (`character(1)`)
 #'    The task type to constrct a pseudo-learner. For more information see [mlr3oml::OMLFlow].
-#' @param ... Additional arguments
+#' @param ... Additional arguments.
 #'
 #' @importFrom mlr3 as_learner
 #' @export
 as_learner.OMLFlow = function(x, task_type = NULL, ...) {
   assert_choice(task_type, c("regr", "classif"))
-  make_oml_learner(x, task_type)
+  class_name = sprintf("Learner%sOML%i", capitalize(task_type), x$id)
+  super_class = if(task_type == "regr") LearnerRegr else LearnerClassif
+
+  learner = R6Class(class_name,
+    inherit = super_class,
+    public = list(
+      initialize = function() {
+        super$initialize(
+          id = sprintf("oml.%s", x$id),
+          param_set = paradox::ps()
+        )
+      }
+    ),
+    private = list(
+      .train = function(task) {
+        stop("This is only a pseudo learner and cannot be trained.")
+      },
+      .predict = function(task) {
+        stop("This is only a pseudo learner and cannot be used for prediction.")
+      }
+    )
+  )$new()
 }

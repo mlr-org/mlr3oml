@@ -46,6 +46,12 @@ The parameters of the flow.}
 
 \item{\code{dependencies}}{(\code{character()})\cr
 The dependencies of the flow.}
+
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the object.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -89,7 +95,8 @@ See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.}
+Whether to use parquet instead of arff.
+If parquet is not available, it will fall back to arff.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server

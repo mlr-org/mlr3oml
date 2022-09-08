@@ -94,6 +94,12 @@ Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 Data set qualities (performance values), downloaded from the JSON API response and
 converted to a \code{\link[data.table:data.table]{data.table::data.table()}} with columns \code{"name"} and \code{"value"}.}
 
+\item{\code{tags}}{(\code{character()})\cr
+Returns all tags of the object.}
+
+\item{\code{parquet}}{(\code{logical(1)})\cr
+Whether to use parquet.}
+
 \item{\code{data}}{(\code{data.table()})\cr
 Returns the data (without the row identifier and ignore id columns).}
 
@@ -176,7 +182,8 @@ See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.}
+Whether to use parquet instead of arff.
+If parquet is not available, it will fall back to arff.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server
