@@ -98,7 +98,6 @@ conceptually analogous to <a href="https://mlr3.mlr-org.com/reference/ResampleRe
 <ul><li><p>A <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a> is returned when calling <code><a href="https://mlr3.mlr-org.com/reference/as_resample_result.html" class="external-link">as_resample_result()</a></code>.</p></li>
 <li><p>A <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a> is returned when calling <code><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task()</a></code>.</p></li>
 <li><p>A <a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">mlr3::DataBackend</a> is returned when calling <code><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend()</a></code>.</p></li>
-<li><p>A <a href="https://mlr3.mlr-org.com/reference/Learner.html" class="external-link">mlr3::Learner</a> is returned when calling <code><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner()</a></code>.</p></li>
 <li><p>A instantiated <a href="https://mlr3.mlr-org.com/reference/Resampling.html" class="external-link">mlr3::Resampling</a> is returned when calling <code><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resampling()</a></code>.</p></li>
 </ul></div>
     <div class="section level2">
@@ -170,6 +169,11 @@ The parameter setting for this run.</p></dd>
 The raw predictions of the run as returned by OpenML, not in standard mlr3 format.
 Formatted predictions are accessible after converting to a <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a> via
 <code><a href="https://mlr3.mlr-org.com/reference/as_resample_result.html" class="external-link">as_resample_result()</a></code>.</p></dd>
+
+
+<dt><code>evaluation</code></dt>
+<dd><p>(<code>data.table()</code>)<br>
+The evaluations calculated by the OpenML server.</p></dd>
 
 
 </dl><p></p></div>
@@ -305,14 +309,6 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Iterations: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Instantiated: TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: list()</span>
-<span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;LearnerClassifOML19068:oml.19068&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Model: -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Parameters: list()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Packages: mlr3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Predict Types:  [response]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Feature Types: -</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Properties: -</span>
 <span class="r-in"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;DataBackendDataTable&gt; (1000x22)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  checking_status duration                 credit_history             purpose</span>
