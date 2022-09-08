@@ -111,10 +111,12 @@ on <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" 
 If set to <code>TRUE</code>, the parquet version of datasets will be used by default.
 If set to <code>FALSE</code>, the arff version of datasets will be used by default.
 Default is <code>FALSE</code>.</p></li>
-<li><p><code>mlr3oml.test_server</code>:
+</ul><p><strong>Relevant for developers</strong></p><ul><li><p><code>mlr3oml.test_server</code>:
 Whether to use the OpenML <a href="https://test.openml.org/" class="external-link">test server</a>.
-Mostly interesting for developers.
 Default is <code>FALSE</code></p></li>
+<li><p><code>mlr3oml.test_api_key</code>:
+API key to use for the test server. If not set, defaults to the value of the environment
+variable <code>TESTOPENMLAPIKEY</code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="logging">Logging<a class="anchor" aria-label="anchor" href="#logging"></a></h2>
