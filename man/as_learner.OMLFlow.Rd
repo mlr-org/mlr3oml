@@ -12,7 +12,7 @@
 \item{task_type}{(\code{character(1)})
 The task type to constrct a pseudo-learner. For more information see \link{OMLFlow}.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments}
 }
 \description{
 By default this function creates a Pseudo-Learner (that cannot be used for training or

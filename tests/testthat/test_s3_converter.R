@@ -5,6 +5,7 @@ test_that("S3 converter work for run", {
   run = OMLRun$new(id)
   expect_r6(mlr3::as_task(run), "Task")
   expect_r6(mlr3::as_resampling(run), "Resampling")
+  expect_r6(mlr3::as_learner(run), "Learner")
   # expect_r6(mlr3::as_data_backend(run), "DataBackend")
   expect_r6(mlr3::as_resample_result(run), "ResampleResult")
 })

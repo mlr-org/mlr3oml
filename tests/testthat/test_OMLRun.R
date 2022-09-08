@@ -83,6 +83,22 @@ test_that("Can extract prediction for mlr", {
   expect_error(mlr3::as_resample_result(run), regexp = NA)
 })
 
+test_that("OMLFlow conversion throws the correct warnings", {
+  run = OMLRun$new(10587742L)
+  learner = mlr3::as_learner(run$flow, task_type = "classif")
+  valid_params = run$parameter_setting
+  invalid_params = data.table(
+    name = "xyz",
+    value = list(1),
+    component = 1
+  )
+  run$.__enclos_env__$private$.desc$parameter_setting = invalid_params
+  expect_warning(
+    mlr3::as_resample_result(run),
+    regexp = "Problem assigning"
+  )
+})
+
 test_that("OMLRun components inherit correct cache directory", {
   dir = tempfile()
   orun = OMLRun$new(50, cache = dir)

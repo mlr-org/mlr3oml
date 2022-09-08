@@ -24,6 +24,7 @@ conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 \item A \link[mlr3:ResampleResult]{mlr3::ResampleResult} is returned when calling \code{as_resample_result()}.
 \item A \link[mlr3:Task]{mlr3::Task} is returned when calling \code{as_task()}.
 \item A \link[mlr3:DataBackend]{mlr3::DataBackend} is returned when calling \code{as_data_backend()}.
+\item A \link[mlr3:Learner]{mlr3::Learner} is returned when calling \code{as_learner()}.
 \item A instantiated \link[mlr3:Resampling]{mlr3::Resampling} is returned when calling \code{as_resampling()}.
 }
 }
@@ -39,6 +40,7 @@ print(orun$flow) # OMLFlow
 print(orun$prediction)
 as_task(orun)
 as_resampling(orun)
+as_learner(orun)
 as_data_backend(orun)
 rr = as_resample_result(orun)
 rr$score(msr("classif.ce"))
@@ -91,9 +93,6 @@ The parameter setting for this run.}
 The raw predictions of the run as returned by OpenML, not in standard mlr3 format.
 Formatted predictions are accessible after converting to a \link[mlr3:ResampleResult]{mlr3::ResampleResult} via
 \code{as_resample_result()}.}
-
-\item{\code{evaluation}}{(\code{data.table()})\cr
-The evaluations calculated by the OpenML server.}
 }
 \if{html}{\out{</div>}}
 }
