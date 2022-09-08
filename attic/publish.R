@@ -83,3 +83,8 @@ publish.character = function(x, main_entity_type = NULL, name = NULL, desc = NUL
   }
 }
 
+ask_confirmation = function(action = "publish") {
+  user_input = readline(sprintf("Are you sure you want to %s on OpenML? (y/n)  ", action))
+  if (user_input != "y") stop("Exiting since you did not press y.")
+}
+

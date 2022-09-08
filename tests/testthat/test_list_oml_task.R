@@ -14,3 +14,17 @@ test_that("list_oml_tasks", {
 
   expect_data_table(list_oml_tasks(task_id = 999999999), nrows = 0L)
 })
+
+test_that("Can query tasks of certain type", {
+  tab = list_oml_tasks(type = "2", limit = 10, test_server = TRUE)
+  expect_true(unique(tab$task_type) == "Supervised Regression")
+
+  tab = list_oml_tasks(type = "1", limit = 10, test_server = TRUE)
+  expect_true(unique(tab$task_type) == "Supervised Classification")
+})
+
+test_that("list_oml_tasks test server", {
+  tab = list_oml_tasks(limit = 10, test_server = TRUE)
+  expect_data_table(tab, nrows = 10, min.cols = 10)
+})
+

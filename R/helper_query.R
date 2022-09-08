@@ -1,4 +1,4 @@
-build_filter_query = function(type, filters) {
+build_filter_query = function(type, filters, server) {
   assert_list(filters, names = "unique")
 
   filters = imap_chr(filters, function(x, name) {
@@ -22,7 +22,6 @@ build_filter_query = function(type, filters) {
     }
   })
 
-  server = getOption("mlr3oml.server", "https://www.openml.org/api/v1")
   paste0(
     server, "/json/", type, "/list/",
     paste0(filters, collapse = "/")

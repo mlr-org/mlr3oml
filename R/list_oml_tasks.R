@@ -3,7 +3,8 @@
 #'   Vector of task ids to restrict to.
 #' @export
 list_oml_tasks = function(task_id = NULL, data_id = NULL, number_instances = NULL, number_features = NULL,
-  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L), ...) {
+  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L),
+  test_server = getOption("mlr3oml.test_server", FALSE), ...) {
   tab = get_paginated_table("task",
     task_id = task_id,
     data_id = data_id,
@@ -13,6 +14,7 @@ list_oml_tasks = function(task_id = NULL, data_id = NULL, number_instances = NUL
     number_missing_values = number_missing_values,
     tag = tag,
     limit = limit,
+    server = get_server(test_server),
     ...
   )
 
