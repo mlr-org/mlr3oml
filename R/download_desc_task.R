@@ -13,27 +13,25 @@ parse_desc_task = function(desc) {
   desc$input = set_names(map(desc$input, function(x) x[[2L]]), map_chr(desc$input, "name"))
   desc$input$source_data$data_set_id = as.integer(desc$input$source_data$data_set_id)
   est_params = desc$input$estimation_procedure$parameter
-  for (i in seq_len(length(est_params))) {
-    if (is.null(est_params[[i]]$value)) {
-      est_params[[i]]$value = NA
-    } else {
-      name = est_params[[i]]$name
-      if (name == "stratified_sampling") {
-        est_params[[i]]$value = switch(est_params[[i]]$value,
-          true = TRUE,
-          false = FALSE
-        )
+  ep_names = map(est_params, "name")
+  ep_values = map(est_params, "value")
+
+  ep_values = map(
+    ep_values,
+    function(p) {
+      if (is.null(p)) {
+        NA
+      } else if (isTRUE(p == "true")) {
+        TRUE
+      } else if (isTRUE(p == "false")) {
+        FALSE
       } else {
-        est_params[[i]]$value = as.integer(est_params[[i]]$value)
+        as.integer(p)
       }
     }
-  }
-  desc$input$estimation_procedure$parameter = rbindlist(
-    map(est_params, function(x) as.data.table(list(name = x[[1]], value = list(x[[2]]))))
   )
+  desc$input$estimation_procedure$parameter = data.table(name = ep_names, value = ep_values)
   desc$input$estimation_procedure$id = as.integer(desc$input$estimation_procedure$id)
-
-  desc$output = NULL
 
   return(desc)
 }
