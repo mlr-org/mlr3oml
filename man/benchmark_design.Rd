@@ -7,11 +7,11 @@
 benchmark_design(tasks, learners, resamplings)
 }
 \arguments{
-\item{tasks}{A list of \link[mlr3:Task]{mlr3::Task}s}
+\item{tasks}{(\code{list()} or \code{Task}) A list of \link[mlr3:Task]{mlr3::Task}s.}
 
-\item{learners}{A list of \link[mlr3:Learner]{mlr3::Learner}s}
+\item{learners}{(\code{list()} or \code{Learner}) A list of \link[mlr3:Learner]{mlr3::Learner}s.}
 
-\item{resamplings}{A list of \link[mlr3:Resampling]{mlr3::Resampling}s that are instantiated on the tasks.}
+\item{resamplings}{(\code{list()} or \code{Resampling}) A list of \link[mlr3:Resampling]{mlr3::Resampling}s that are instantiated on the given tasks.}
 }
 \description{
 \link{OMLTask}s contain tasks as well as resamplings. In order to create
