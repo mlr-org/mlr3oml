@@ -20,7 +20,6 @@ Imports:
     checkmate,
     curl,
     data.table,
-    httr,
     jsonlite,
     lgr,
     methods,
@@ -29,8 +28,7 @@ Imports:
     paradox,
     R6,
     stringi,
-    uuid,
-    xml2
+    uuid
 Suggests:
     DBI,
     duckdb,
