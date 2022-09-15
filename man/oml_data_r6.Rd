@@ -6,14 +6,15 @@
 \title{Interface to OpenML Data Sets}
 \description{
 This is the class for data sets served on \href{https://www.openml.org/d/}{OpenML}.
+This object can also be constructed using the sugar function \code{\link[=oml_data]{oml_data()}}.
 }
 \section{mlr3 Integration}{
 
 \itemize{
-\item A \link[mlr3:Task]{mlr3::Task} can be obtained by calling \code{as_task()}.
-\item A \link[mlr3:DataBackend]{mlr3::DataBackend} can be obtained by calling \code{as_data_backend()}. Depending on the
-selected file-type, the returned backend is a \code{DataBackendDataTable} (arff) or
-\code{DataBackendDuckDB} (parquet).
+\item A \link[mlr3:Task]{mlr3::Task} can be obtained by calling \code{\link[mlr3:as_task]{mlr3::as_task()}}.
+\item A \link[mlr3:DataBackend]{mlr3::DataBackend} can be obtained by calling \code{\link[mlr3:as_data_backend]{mlr3::as_data_backend()}}. Depending on the
+selected file-type, the returned backend is a \link[mlr3:DataBackendDataTable]{mlr3::DataBackendDataTable} (arff) or
+\link[mlr3db:DataBackendDuckDB]{mlr3db::DataBackendDuckDB} (parquet).
 }
 }
 
@@ -29,7 +30,7 @@ The datasets stored on OpenML are either stored as (sparse) ARFF or parquet.
 When creating a new \code{OMLData} object, the constructor argument \code{parquet} allows to switch
 between arff and parquet. Note that not necessarily all data files are available as parquet.
 The option \code{mlr3oml.parquet} can be used to set a default.
-If \code{parquet} is \code{TRUE} but not available, the arff file will be used.
+If \code{parquet} is \code{TRUE} but not available, \code{"arff"} will be used as a fallback.
 }
 
 \section{ARFF Files}{
@@ -49,6 +50,8 @@ library("mlr3")
 \donttest{
 # OpenML Data object
 odata = OMLData$new(id = 9)
+# using sugar
+odata = oml_data(id = 9)
 print(odata)
 print(odata$target_names)
 print(odata$feature_names)
@@ -65,6 +68,8 @@ tsk("oml", data_id = 9)
 # For parquet files
 if (requireNamespace("duckdb")) {
   odata = OMLData$new(id = 9, parquet = TRUE)
+  # using sugar
+  odata = oml_data(id = 9)
 
   print(odata)
   print(odata$target_names)

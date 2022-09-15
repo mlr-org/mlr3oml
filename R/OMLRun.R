@@ -5,6 +5,7 @@
 #' @description
 #' This is the class for OpenML [Runs](https://openml.org/r), which are
 #' conceptually similar to [mlr3::ResampleResult]s.
+#' This object can also be constructed using the sugar function [oml_run()].
 #'
 #' @section OpenML Integration:
 #' * A [OMLTask] is returned by accessing the active field `$task`.
@@ -13,10 +14,10 @@
 #' * The raw predictions are returned by accessing the active field `$prediction`.
 #'
 #' @section mlr3 Integration:
-#' * A [mlr3::ResampleResult] is returned when calling [mlr3::as_resample_result].
-#' * A [mlr3::Task] is returned when calling [mlr3::as_task].
-#' * A [mlr3::DataBackend] is returned when calling [mlr3::as_data_backend].
-#' * A instantiated [mlr3::Resampling] is returned when calling [mlr3::as_resampling].
+#' * A [mlr3::ResampleResult] is returned when calling [mlr3::as_resample_result()].
+#' * A [mlr3::Task] is returned when calling [mlr3::as_task()].
+#' * A [mlr3::DataBackend] is returned when calling [mlr3::as_data_backend()].
+#' * A instantiated [mlr3::Resampling] is returned when calling [mlr3::as_resampling()].
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -26,6 +27,9 @@
 #' \donttest{
 #' library("mlr3")
 #' orun = OMLRun$new(id = 10587724)
+#' # sugar
+#' orun = oml_run(id = 10587724)
+#' orun = oml
 #' print(orun)
 #' print(orun$task) # OMLTask
 #' print(orun$data) # OMLData

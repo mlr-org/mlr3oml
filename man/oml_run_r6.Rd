@@ -7,6 +7,7 @@
 \description{
 This is the class for OpenML \href{https://openml.org/r}{Runs}, which are
 conceptually similar to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
+This object can also be constructed using the sugar function \code{\link[=oml_run]{oml_run()}}.
 }
 \section{OpenML Integration}{
 
@@ -21,10 +22,10 @@ conceptually similar to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 \section{mlr3 Integration}{
 
 \itemize{
-\item A \link[mlr3:ResampleResult]{mlr3::ResampleResult} is returned when calling \link[mlr3:as_resample_result]{mlr3::as_resample_result}.
-\item A \link[mlr3:Task]{mlr3::Task} is returned when calling \link[mlr3:as_task]{mlr3::as_task}.
-\item A \link[mlr3:DataBackend]{mlr3::DataBackend} is returned when calling \link[mlr3:as_data_backend]{mlr3::as_data_backend}.
-\item A instantiated \link[mlr3:Resampling]{mlr3::Resampling} is returned when calling \link[mlr3:as_resampling]{mlr3::as_resampling}.
+\item A \link[mlr3:ResampleResult]{mlr3::ResampleResult} is returned when calling \code{\link[mlr3:as_resample_result]{mlr3::as_resample_result()}}.
+\item A \link[mlr3:Task]{mlr3::Task} is returned when calling \code{\link[mlr3:as_task]{mlr3::as_task()}}.
+\item A \link[mlr3:DataBackend]{mlr3::DataBackend} is returned when calling \code{\link[mlr3:as_data_backend]{mlr3::as_data_backend()}}.
+\item A instantiated \link[mlr3:Resampling]{mlr3::Resampling} is returned when calling \code{\link[mlr3:as_resampling]{mlr3::as_resampling()}}.
 }
 }
 
@@ -32,6 +33,9 @@ conceptually similar to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 \donttest{
 library("mlr3")
 orun = OMLRun$new(id = 10587724)
+# sugar
+orun = oml_run(id = 10587724)
+orun = oml
 print(orun)
 print(orun$task) # OMLTask
 print(orun$data) # OMLData

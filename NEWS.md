@@ -1,6 +1,8 @@
 # mlr3oml 0.6.0
 
 * Add R6 classes for `OMLCollection`, `OMLRun`, `OMLFlow`.
+* Add sugar functions `oml_flow`, `oml_data`, `oml_task`, `oml_run`,
+  `oml_collection` for all OpenML objects.
 * Conversion from OpenML to mlr3 objects is now only possible with the usual s3
   converters `as_xxx`. This improves the consistency by ensuring that the
   subcomponents of OpenML objects are always OpenML objects and not suddenly

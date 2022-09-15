@@ -7,6 +7,7 @@
 #' \url{https://openml.org}.
 #' A collection can either be a [task collection](https://www.openml.org/search?type=study&study_type=task)
 #' or [run collection](https://www.openml.org/search?type=study&study_type=run).
+#' This object can also be constructed using the sugar function [oml_collection()].
 #'
 #' **Run Collection**
 #'
@@ -34,7 +35,9 @@
 #' \donttest{
 #' library("mlr3")
 #' # OpenML Run collection:
-#' run_collection = OMLCollection$new(232L)
+#' run_collection = OMLCollection$new(id = 232)
+#' # using sugar
+#' run_collection = oml_collection(id = 232)
 #' run_collection$main_entity_type
 #' run_collection$tasks
 #' run_collection$data
@@ -50,7 +53,10 @@
 #' bmr$score(msr("classif.ce"))
 #'
 #' # OpenML task collection
-#' task_collection = OMLCollection$new(99)
+#' task_collection = OMLCollection$new(id = 99)
+#' # using sugar
+#' task_collection = oml_collection(id = 99)
+#'
 #' task_collection$main_entity_type
 #' task_collection$tasks
 #' task_collection$data
