@@ -29,10 +29,7 @@ get_api_key = function(server) {
   NA_character_
 }
 
-add_auth_string = function(url, api_key = NULL, server) {
-  if (is.null(api_key)) {
-    api_key = get_api_key(server)
-  }
+add_auth_string = function(url, api_key = NULL) {
   if (is.na(api_key)) {
     return(url)
   }
