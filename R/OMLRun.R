@@ -252,5 +252,5 @@ as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
     uhash = uuid::UUIDgenerate()
   )
 
-  ResampleResult$new(ResultData$new(data))
+  ResampleResult$new(ResultData$new(data, store_backends = store_backends))
 }
