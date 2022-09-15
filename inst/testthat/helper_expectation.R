@@ -1,3 +1,27 @@
+task_type_translator = function(tt, to = "mlr3") {
+  if (to == "mlr3") {
+    converted = switch(tt,
+      "Supervised Regression" = "regr",
+      "Supervised Classification" = "classif",
+      "Survival Analysis" = "surv",
+      "Clustering" = "clust",
+      NULL
+    )
+  }
+  if (to == "oml") {
+    converted = switch(tt,
+      "regr" = "Supervised Regression",
+      "classif" = "Supervised Classification",
+      "surv" = "Survival Analysis",
+      "clust" = "Clustering",
+      NULL
+    )
+  }
+  return(converted)
+}
+
+
+
 expect_oml_flow = function(flow) {
   expect_r6(flow, "OMLFlow")
   expect_true(test_logical(flow$cache_dir) || test_character(flow$cache_dir))
@@ -48,7 +72,7 @@ expect_oml_task = function(task) {
   testthat::expect_true(test_logical(task$cache_dir) || test_character(task$cache_dir))
   expect_string(task$data_name, min.chars = 1L)
   expect_string(task$name, min.chars = 1L)
-  expect_choice(task$task_type, mlr3oml:::oml_reflections$task_types)
+  expect_character(task$task_type, len = 1L)
   expect_list(task$desc, names = "unique")
   expect_count(task$data_id)
   expect_r6(task$data, "OMLData")
@@ -60,7 +84,7 @@ expect_oml_task = function(task) {
   expect_choice(task$target_names, colnames(task$data$data))
   expect_subset(task$feature_names, colnames(task$data$data))
   expect_disjunct(task$target_names, task$feature_names)
-  tt = mlr3oml:::task_type_translator(task$task_type)
+  tt = task_type_translator(task$task_type)
   if (!is.null(tt)) {
     if (tt == "regr") {
       expect_r6(as_task(task), "TaskRegr")
@@ -87,11 +111,11 @@ expect_oml_run = function(run) {
   expect_r6(run$task, "OMLTask")
   expect_count(run$data_id)
   expect_r6(run$data, "OMLData")
-  expect_choice(run$task_type, mlr3oml:::oml_reflections$task_types)
+  expect_character(run$task_type, len = 1L)
   expect_data_table(run$parameter_setting)
   expect_data_table(run$prediction)
   expect_data_table(run$evaluation)
-  task_type = mlr3oml:::task_type_translator(run$task_type, to = "mlr3")
+  task_type = task_type_translator(run$task_type, to = "mlr3")
 
   if (!is.null(task_type)) {
     rr = suppressWarnings(as_resample_result(run))

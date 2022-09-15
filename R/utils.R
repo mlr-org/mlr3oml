@@ -1,27 +1,3 @@
-task_type_translator = function(tt, to = "mlr3") {
-  if (to == "mlr3") {
-    converted = switch(tt,
-      "Supervised Regression" = "regr",
-      "Supervised Classification" = "classif",
-      "Survival Analysis" = "surv",
-      "Clustering" = "clust",
-      NULL
-    )
-  }
-  if (to == "oml") {
-    converted = switch(tt,
-      "regr" = "Supervised Regression",
-      "classif" = "Supervised Classification",
-      "surv" = "Survival Analysis",
-      "clust" = "Clustering",
-      NULL
-    )
-  }
-  return(converted)
-}
-
-
-
 read_parquet = function(path) {
   require_namespaces(c("duckdb", "DBI"))
   con = DBI::dbConnect(duckdb::duckdb())
