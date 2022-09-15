@@ -29,7 +29,6 @@
 #' orun = OMLRun$new(id = 10587724)
 #' # sugar
 #' orun = oml_run(id = 10587724)
-#' orun = oml
 #' print(orun)
 #' print(orun$task) # OMLTask
 #' print(orun$data) # OMLData
