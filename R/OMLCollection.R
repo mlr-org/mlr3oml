@@ -4,17 +4,28 @@
 #'
 #' @description
 #' This is the class for collections (previously known as studies) served on
-#' \url{https://openml.org/search?type=study&study_type=task&sort=tasks_included}.
-#' It is used both for Run Collections and Task Collections.
-#' (Note that all Benchmark Suites on OpenML are also Collections).
-#' A Run Collection (`main_entity_type = "run"`) contains runs, flows, datasets and tasks.
-#' A Task Collection (`main_entity_type = "task"`) contains tasks and datasets.
+#' \url{https://openml.org}.
+#' A collection can either be a [task collection](https://www.openml.org/search?type=study&study_type=task)
+#' or [run collection](https://www.openml.org/search?type=study&study_type=run).
+#'
+#' **Run Collection**
+#'
+#' A run collection contains runs, flows, datasets and tasks.
+#' The primary object are the runs (`main_entity_type` is `"run"`).
+#' The the flows, datasets and tasks are those used in the runs.
+#'
+#' **Task Collection**
+#' A task collection (`main_entity_type = "task"`) contains tasks and datasets.
+#' The primary object are the tasks (`main_entity_type` is `"task"`).
+#' The datasets are those used in the tasks.
+#'
+#' *Note*: All Benchmark Suites on OpenML are also collections.
 #'
 #' @section mlr3 Intergration:
-#'  * Obtain a list of [mlr3::Task]s using `as_tasks()`.
-#'  * Obtain a list of [mlr3::Resampling]s using `as_resamplings()`.
-#'  * Obtain a list of [mlr3::Learner]s using `as_learners()` (if main_entity_type is "run").
-#'  * Obtain a [mlr3::BenchmarkResult] using `as_benchmark_result()` (if main_entity_type is "run").
+#'  * Obtain a list of [mlr3::Task]s using [mlr3::as_tasks].
+#'  * Obtain a list of [mlr3::Resampling]s using [mlr3::as_resamplings].
+#'  * Obtain a list of [mlr3::Learner]s using [mlr3::as_learners] (if main_entity_type is "run").
+#'  * Obtain a [mlr3::BenchmarkResult] using [mlr3::as_benchmark_result] (if main_entity_type is "run").
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -22,22 +33,31 @@
 #' @examples
 #' \donttest{
 #' library("mlr3")
-#' # OpenML Run Collection:
-#' collection = OMLCollection$new(232L)
-#' collection$tasks
-#' collection$data
-#' collection$flows
-#' collection$runs
+#' # OpenML Run collection:
+#' run_collection = OMLCollection$new(232L)
+#' run_collection$main_entity_type
+#' run_collection$tasks
+#' run_collection$data
+#' run_collection$flows
+#' run_collection$runs
 #'
 #' # mlr3 conversion:
-#' tasks = as_tasks(collection)
-#' resamplings = as_resamplings(collection)
-#' # construct pseudo-learners as these are sklearn flows
-#' learners = as_learners(collection, "classif")
+#' tasks = as_tasks(run_collection)
+#' resamplings = as_resamplings(run_collection)
+#' learners = as_learners(run_collection, "classif")
 #'
-#' # Although pseudo-learners are non-executable the runs can still be analyzed.
-#' bmr = as_benchmark_result(collection)
+#' bmr = as_benchmark_result(run_collection)
 #' bmr$score(msr("classif.ce"))
+#'
+#' # OpenML task collection
+#' task_collection = OMLCollection$new(99)
+#' task_collection$main_entity_type
+#' task_collection$tasks
+#' task_collection$data
+#'
+#' # mlr3 conversion
+#' tasks = as_tasks(task_collection)
+#' resamplings = as_resamplings(task_collection)
 #' }
 OMLCollection = R6Class("OMLCollection",
   inherit = OMLObject,
@@ -127,7 +147,7 @@ OMLCollection = R6Class("OMLCollection",
       return(private$.runs)
     },
     #' @field flows (`data.table()`)
-    #'   A data.table summarizing the flows included in the collection. Returns NULL for
+    #'   A data.table summarizing the flows included in the collection. Returns `NULL` for
     #'   Task Collections.
     flows = function() {
       if (self$main_entity_type == "task") {
@@ -209,7 +229,6 @@ as_resamplings.OMLCollection = function(x, ...) {
   map(x$tasks[["task"]], as_resampling, ...)
 }
 
-#'
 make_task_table = function(tasks) {
   g = function(task) {
     list(

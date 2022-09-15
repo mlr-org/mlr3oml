@@ -5,8 +5,8 @@
 \alias{OMLRun}
 \title{Interface to OpenML Runs}
 \description{
-This is the class for OpenML \href{https://openml.org/search?type=run}{Runs}, which are
-conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
+This is the class for OpenML \href{https://openml.org/r}{Runs}, which are
+conceptually similar to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 }
 \section{OpenML Integration}{
 
@@ -14,17 +14,17 @@ conceptually analogous to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 \item A \link{OMLTask} is returned by accessing the active field \verb{$task}.
 \item A \link{OMLData} is returned by accessing the active field \verb{$data} (short for \verb{$task$data})
 \item A \link{OMLFlow} is returned by accessing the active field \verb{$flow}.
-\item The raw predictions are returned by accessing the active field \verb{$predictions}.
+\item The raw predictions are returned by accessing the active field \verb{$prediction}.
 }
 }
 
 \section{mlr3 Integration}{
 
 \itemize{
-\item A \link[mlr3:ResampleResult]{mlr3::ResampleResult} is returned when calling \code{as_resample_result()}.
-\item A \link[mlr3:Task]{mlr3::Task} is returned when calling \code{as_task()}.
-\item A \link[mlr3:DataBackend]{mlr3::DataBackend} is returned when calling \code{as_data_backend()}.
-\item A instantiated \link[mlr3:Resampling]{mlr3::Resampling} is returned when calling \code{as_resampling()}.
+\item A \link[mlr3:ResampleResult]{mlr3::ResampleResult} is returned when calling \link[mlr3:as_resample_result]{mlr3::as_resample_result}.
+\item A \link[mlr3:Task]{mlr3::Task} is returned when calling \link[mlr3:as_task]{mlr3::as_task}.
+\item A \link[mlr3:DataBackend]{mlr3::DataBackend} is returned when calling \link[mlr3:as_data_backend]{mlr3::as_data_backend}.
+\item A instantiated \link[mlr3:Resampling]{mlr3::Resampling} is returned when calling \link[mlr3:as_resampling]{mlr3::as_resampling}.
 }
 }
 
@@ -43,7 +43,6 @@ as_data_backend(orun)
 rr = as_resample_result(orun)
 rr$score(msr("classif.ce"))
 }
-#
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).

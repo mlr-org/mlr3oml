@@ -3,7 +3,7 @@
 #' @name oml_data_r6
 #'
 #' @description
-#' This is the class for data sets served on [OpenML](https://openml.org/search?type=data&sort=runs&status=active).
+#' This is the class for data sets served on [OpenML](https://www.openml.org/d/).
 #'
 #' @section mlr3 Integration:
 #' * A [mlr3::Task] can be obtained by calling `as_task()`.
@@ -12,7 +12,7 @@
 #'   `DataBackendDuckDB` (parquet).
 #'
 #' @section Name conversion:
-#' Note that we rename the columns to comply with R's naming scheme (see [base::make.names()]).
+#' Column names that don't comply with R's naming scheme are renamed (see [base::make.names()]).
 #' This means that the names can differ from those on OpenML.
 #'
 #' @section File Format:
@@ -20,6 +20,7 @@
 #' When creating a new `OMLData` object, the constructor argument `parquet` allows to switch
 #' between arff and parquet. Note that not necessarily all data files are available as parquet.
 #' The option `mlr3oml.parquet` can be used to set a default.
+#' If `parquet` is `TRUE` but not available, `"arff"` will be used as a fallback.
 #'
 #' @section ARFF Files:
 #' This package comes with an own reader for ARFF files, based on [data.table::fread()].
@@ -27,7 +28,7 @@
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
 #'
 #' @section Parquet Files:
-#' For the handling of parquet files, we rely on \CRANpkg{duckdb}.
+#' For the handling of parquet files, we rely on \CRANpkg{duckdb} and `CRANpkg{DBI}`.
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`

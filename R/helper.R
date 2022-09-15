@@ -1,3 +1,4 @@
+#' @noRd
 with_test_server = function(env = parent.frame()) {
   op = options(
     mlr3oml.server = "https://test.openml.org/api/v1",
@@ -14,6 +15,10 @@ with_public_server = function(env = parent.frame()) {
   withr::defer(options(op), env)
 }
 
+#' Returns the api key (if available) for the selected server.
+#' @param server (`character(1)`)\cr
+#'   The server to use.
+#' @noRd
 get_api_key = function(server) {
   test_server = server == get_server(TRUE)
   key = if (test_server) {

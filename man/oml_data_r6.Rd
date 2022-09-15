@@ -5,7 +5,7 @@
 \alias{OMLData}
 \title{Interface to OpenML Data Sets}
 \description{
-This is the class for data sets served on \href{https://openml.org/search?type=data&sort=runs&status=active}{OpenML}.
+This is the class for data sets served on \href{https://www.openml.org/d/}{OpenML}.
 }
 \section{mlr3 Integration}{
 
@@ -19,7 +19,7 @@ selected file-type, the returned backend is a \code{DataBackendDataTable} (arff)
 
 \section{Name conversion}{
 
-Note that we rename the columns to comply with R's naming scheme (see \code{\link[base:make.names]{base::make.names()}}).
+Column names that don't comply with R's naming scheme are renamed (see \code{\link[base:make.names]{base::make.names()}}).
 This means that the names can differ from those on OpenML.
 }
 
@@ -29,6 +29,7 @@ The datasets stored on OpenML are either stored as (sparse) ARFF or parquet.
 When creating a new \code{OMLData} object, the constructor argument \code{parquet} allows to switch
 between arff and parquet. Note that not necessarily all data files are available as parquet.
 The option \code{mlr3oml.parquet} can be used to set a default.
+If \code{parquet} is \code{TRUE} but not available, the arff file will be used.
 }
 
 \section{ARFF Files}{
@@ -40,7 +41,7 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 
 \section{Parquet Files}{
 
-For the handling of parquet files, we rely on \CRANpkg{duckdb}.
+For the handling of parquet files, we rely on \CRANpkg{duckdb} and \verb{CRANpkg\{DBI\}}.
 }
 
 \examples{

@@ -4,12 +4,10 @@
 #'
 #' @description
 #' This is the class for flows served on [OpenML](https://www.openml.org/f).
-#' Flows are conceptually similar to [mlr3pipelines::GraphLearner]s.
-#' The support for publishing learners on OpenML (as flows) is currently limited but can be
-#' extended upon request.
+#' Flows represent machine learning algorithms.
 #'
 #' @section mlr3 Integration:
-#' * Obtain a [mlr3::Learner] using `as_learner()`. Fore more details see [mlr3::as_learner].
+#' * Obtain a [mlr3::Learner] using [mlr3::as_learner()].
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
