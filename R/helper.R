@@ -5,7 +5,7 @@ with_test_server = function(env = parent.frame()) {
 
 with_public_server = function(env = parent.frame()) {
   op = options(mlr3oml.test_server = FALSE)
-  withr::defer(options(op), env))
+  withr::defer(options(op), env)
 }
 
 get_api_key = function(server) {
