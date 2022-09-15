@@ -286,7 +286,6 @@ as_task.OMLData = function(x, target_names = NULL, ...) {
   if (is.null(constructor)) {
     stopf("Unable to determine the task type")
   }
-  constructor$new(x$name, get_private(x)$.get_backend(), target = target)
+  constructor$new(x$name, as_data_backend(x), target = target)
 }
-
 
