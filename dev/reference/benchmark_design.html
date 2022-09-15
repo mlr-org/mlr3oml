@@ -79,7 +79,7 @@ function can be used."><meta name="robots" content="noindex"><!-- mathjax --><sc
     </div>
 
     <div class="ref-description section level2">
-    <p><a href="oml_task.html">OMLTask</a>s contain tasks as well as resamplings. In order to create
+    <p><a href="oml_task_r6.html">OMLTask</a>s contain tasks as well as resamplings. In order to create
 a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 function can be used.</p>
     </div>
@@ -92,15 +92,15 @@ function can be used.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>tasks</dt>
-<dd><p>A list of <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a>s</p></dd>
+<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> or <code>Task</code>) A list of <a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a>s.</p></dd>
 
 
 <dt>learners</dt>
-<dd><p>A list of <a href="https://mlr3.mlr-org.com/reference/Learner.html" class="external-link">mlr3::Learner</a>s</p></dd>
+<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> or <code>Learner</code>) A list of <a href="https://mlr3.mlr-org.com/reference/Learner.html" class="external-link">mlr3::Learner</a>s.</p></dd>
 
 
 <dt>resamplings</dt>
-<dd><p>A list of <a href="https://mlr3.mlr-org.com/reference/Resampling.html" class="external-link">mlr3::Resampling</a>s that are instantiated on the tasks.</p></dd>
+<dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> or <code>Resampling</code>) A list of <a href="https://mlr3.mlr-org.com/reference/Resampling.html" class="external-link">mlr3::Resampling</a>s that are instantiated on the given tasks.</p></dd>
 
 </dl></div>
 
@@ -108,7 +108,7 @@ function can be used.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">collection</span> <span class="op">=</span> <span class="va"><a href="oml_collection.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">collection</span> <span class="op">=</span> <span class="va"><a href="oml_collection_r6.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">99</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">otasks</span> <span class="op">=</span> <span class="va">collection</span><span class="op">$</span><span class="va">tasks</span><span class="op">[</span><span class="va">nrow</span> <span class="op">&lt;=</span> <span class="fl">550</span>, <span class="op">]</span><span class="op">[[</span><span class="st">"task"</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_tasks</a></span><span class="op">(</span><span class="va">otasks</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">resamplings</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resamplings</a></span><span class="op">(</span><span class="va">otasks</span><span class="op">)</span></span></span>

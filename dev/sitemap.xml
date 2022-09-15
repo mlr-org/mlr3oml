@@ -34,22 +34,25 @@
     <loc>https://mlr3oml.mlr-org.com/dev/reference/mlr3oml-package.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_collection.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_collection_r6.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_data.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_data_r6.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_flow.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_flow_r6.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_object.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_object_r6.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_run.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_run_r6.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_task.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_sugar.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/dev/reference/oml_task_r6.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/dev/reference/read_arff.html</loc>
