@@ -16,12 +16,12 @@
 #' tasks = as_tasks(otasks)
 #' resamplings = as_resamplings(otasks)
 #' learners = lrns(c("classif.rpart", "classif.featureless"))
-#' design = benchmark_design(tasks, learners, resamplings)
+#' design = benchmark_grid_oml(tasks, learners, resamplings)
 #' print(design)
 #' bmr = benchmark(design)
 #' }
 #' @export
-benchmark_design = function(tasks, learners, resamplings) {
+benchmark_grid_oml = function(tasks, learners, resamplings) {
   tasks = assert_tasks(as_tasks(tasks))
   learners = assert_learners(as_learners(learners))
   resamplings = assert_resamplings(as_resamplings(resamplings))
