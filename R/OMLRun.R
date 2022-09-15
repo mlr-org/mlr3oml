@@ -79,7 +79,7 @@ OMLRun = R6Class("OMLRun",
     flow = function() {
       if (is.null(private$.flow)) {
         private$.flow = OMLFlow$new(self$flow_id, cache = self$cache_dir,
-          test_server = self$test_server, parquet = self$parquet
+          test_server = self$test_server
         )
       }
       private$.flow
