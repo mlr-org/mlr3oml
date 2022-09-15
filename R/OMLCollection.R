@@ -1,6 +1,6 @@
 #' @title OpenML Collection
 #'
-#' @name oml_collection
+#' @name oml_collection_r6
 #'
 #' @description
 #' This is the class for collections (previously known as studies) served on

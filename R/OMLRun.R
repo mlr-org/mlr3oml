@@ -1,6 +1,6 @@
 #' @title Interface to OpenML Runs
 #'
-#' @name oml_run
+#' @name oml_run_r6
 #'
 #' @description
 #' This is the class for OpenML [Runs](https://openml.org/search?type=run), which are

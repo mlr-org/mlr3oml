@@ -1,6 +1,6 @@
 #' @title Abstract Base Class for OpenML objects.
 #'
-#' @name oml_object
+#' @name oml_object_r6
 #'
 #' @description
 #' All OML Objects inherit from this class.
@@ -74,7 +74,7 @@ OMLObject = R6Class("OMLObject",
     #' The manual entry.
     man = function(rhs) {
       assert_ro_binding(rhs)
-      sprintf("mlr3oml::oml_%s", private$.type)
+      sprintf("mlr3oml::oml_%s_r6", private$.type)
     },
     #' @field name (`character(1)`)\cr
     #' The name of the object.

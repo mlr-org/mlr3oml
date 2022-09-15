@@ -1,6 +1,6 @@
 #' @title Interface to OpenML Data Sets
 #'
-#' @name oml_data
+#' @name oml_data_r6
 #'
 #' @description
 #' This is the class for data sets served on [OpenML](https://openml.org/search?type=data&sort=runs&status=active).
