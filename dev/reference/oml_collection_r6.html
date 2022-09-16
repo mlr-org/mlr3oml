@@ -262,9 +262,16 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="co"># OpenML Run Collection:</span></span></span>
 <span class="r-in"><span><span class="va">collection</span> <span class="op">=</span> <span class="va">OMLCollection</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">232L</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">tasks</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_disk(add_auth_string(url, api_key = api_key),     path):</span> Timeout was reached: [www.openml.org] Operation timed out after 10001 milliseconds with 0 out of 0 bytes received</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id          task     data                 task_type target  nrow ncol</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  3 &lt;OMLTask[25]&gt; kr-vs-kp Supervised Classification  class  3196   37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  6 &lt;OMLTask[25]&gt;   letter Supervised Classification  class 20000   17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    missing numeric symbolic binary     task_splits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:       0       0       37     35 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:       0      16        1      0 crossvalidation</span>
 <span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">data</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_disk(add_auth_string(url, api_key = api_key),     path):</span> Timeout was reached: [api.openml.org] Operation timed out after 10001 milliseconds with 0 out of 0 bytes received</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id          data     name  nrow ncol missing numeric symbolic binary</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  3 &lt;OMLData[25]&gt; kr-vs-kp  3196   37       0       0       37     35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  6 &lt;OMLData[25]&gt;   letter 20000   17       0      16        1      0</span>
 <span class="r-in"><span><span class="va">collection</span><span class="op">$</span><span class="va">flows</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       id          flow                           name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: 17369 &lt;OMLFlow[17]&gt; sklearn.model_selection._[...]</span>
@@ -291,46 +298,46 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_benchmark_result.html" class="external-link">as_benchmark_result</a></span><span class="op">(</span><span class="va">collection</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.ce"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 83349693-8501-471d-9d82-7c50e3906bc0  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 01dc1313-7aaa-482d-9b57-57e271b36429  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 871f85cb-321b-4f0c-b382-a25cdbedc42a  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 7c950b97-3c67-46d1-9844-e366310b4ab6  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 1c2c76d9-6797-4916-8279-fb2778594131  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 0cdf322c-8d51-4f9f-ada8-4beac6c24024  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 524292b9-b24c-4a09-a87e-f0f15ac1d2a7  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 60ec1a2e-0498-4782-a0d0-8d2f64386837  4 &lt;TaskClassif[50]&gt;   letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          learner learner_id             resampling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: &lt;LearnerClassifOML17374[36]&gt;  oml.17374 &lt;ResamplingCustom[20]&gt;</span>
