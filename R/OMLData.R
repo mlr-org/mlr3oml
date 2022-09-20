@@ -252,7 +252,7 @@ OMLData = R6Class("OMLData",
 
 #' @export
 as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
-  get_private(data)$.get_backend()
+  get_private(data)$.get_backend(primary_key)
 }
 
 #' @importFrom mlr3 as_task
