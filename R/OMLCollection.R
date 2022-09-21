@@ -22,6 +22,12 @@
 #'
 #' *Note*: All Benchmark Suites on OpenML are also collections.
 #'
+#' @section Caching:
+#' The OpenML collection itself cannot be not cached, this is because it can be modified in-place
+#' on the server, e.g. by adding or removing tasks or runs.
+#' The construction argument `cache` therefore only controls wether caching is applied to the
+#' OpenML objects that are contained in the collection.
+#'
 #' @section mlr3 Intergration:
 #'  * Obtain a list of [mlr3::Task]s using [mlr3::as_tasks].
 #'  * Obtain a list of [mlr3::Resampling]s using [mlr3::as_resamplings].
@@ -72,7 +78,12 @@ OMLCollection = R6Class("OMLCollection",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
+    #' @param cache (`logical(1)` | `character(1)`)\cr
+    #' See field `cache` for an explanation of possible values.
+    #' Defaults to value of option `"mlr3oml.cache"`, or `FALSE` if not set.
+    #' The collection itself is not cached, this is because it can be modified in-place on OpenML,
+    #' e.g. by adding or removing tasks or runs. This parameter therefore only controls whether
+    #' the contained elements are cached when loaded, e.g. when accessing the included tasks.
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
@@ -104,6 +115,7 @@ OMLCollection = R6Class("OMLCollection",
     #'   Colllection description (meta information), downloaded and converted from the JSON API response.
     desc = function() {
       if (is.null(private$.desc)) {
+        # note that we DONT CACHE HERE
         private$.desc = cached(download_desc_collection,
           type = "collection", id = self$id, cache_dir = FALSE, server = self$server,
           test_server = self$test_server

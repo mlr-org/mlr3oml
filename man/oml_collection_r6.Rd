@@ -24,6 +24,14 @@ The datasets are those used in the tasks.
 
 \emph{Note}: All Benchmark Suites on OpenML are also collections.
 }
+\section{Caching}{
+
+The OpenML collection itself cannot be not cached, this is because it can be modified in-place
+on the server, e.g. by adding or removing tasks or runs.
+The construction argument \code{cache} therefore only controls wether caching is applied to the
+OpenML objects that are contained in the collection.
+}
+
 \section{mlr3 Intergration}{
 
 \itemize{
@@ -155,7 +163,10 @@ OpenML id for the object.}
 
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.
+The collection itself is not cached, this is because it can be modified in-place on OpenML,
+e.g. by adding or removing tasks or runs. This parameter therefore only controls whether
+the contained elements are cached when loaded, e.g. when accessing the included tasks.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
