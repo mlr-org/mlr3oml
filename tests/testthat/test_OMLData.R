@@ -104,3 +104,8 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDuckDB")
 })
+
+test_that("Logicals are converted to factor", {
+  odata = oml_data(1050)
+  expect_oml_data(odata)
+})
