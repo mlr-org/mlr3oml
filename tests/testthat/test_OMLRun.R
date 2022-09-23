@@ -60,9 +60,9 @@ test_that("classification, mlr, 8000000", {
   expect_data_table(run$parameter_setting)
 })
 
-test_that("id = 2081174L", {
+test_that("id = 10587951", {
   with_public_server()
-  id = 2081174L
+  id = 10587951
   run = OMLRun$new(id)
   flow = run$flow
   expect_error(mlr3::as_resample_result(run), regexp = NA)

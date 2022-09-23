@@ -97,7 +97,8 @@ OMLData = R6Class("OMLData",
     #' For a more detailed printer, convert to a [mlr3::Task] via `as_task()`.
     print = function() {
       catf("<OMLData:%i:%s> (%ix%i)", self$id, as_short_string(self$name), self$nrow, self$ncol)
-      catf(" * Default target: %s", as_short_string(self$target_names))
+      dt = if (length(self$target_names)) as_short_string(self$target_names) else "<none>"
+      catf(" * Default target: %s", dt)
       if (self$test_server) {
         catf(" * Using test server")
       }
@@ -221,15 +222,14 @@ OMLData = R6Class("OMLData",
       }
       if (self$parquet) {
         backend = try({
-          backend = mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
+          withr::with_options(
+            list(mlr3oml.allow_utf8_names = TRUE),
+            backend = mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
+          )
         }, silent = TRUE)
 
         if (inherits(backend, "try-error")) {
           lg$info("Failed to download parquet, trying arff.", id = self$id)
-          data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
-            server = self$server, test_server = self$test_server
-          )
-          backend = as_data_backend(data, primary_key = primary_key)
         }
       } else {
         backend = NULL

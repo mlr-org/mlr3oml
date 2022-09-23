@@ -27,8 +27,8 @@ test_that("no default target column fails gracefully (#1)", {
   oml_data = OMLData$new(data_id, FALSE)
   expect_oml_data(oml_data)
   expect_error(mlr3::as_task(oml_data), "default target attribute")
-  expect_task(mlr3::as_task(oml_data, "V10"))
-  expect_task(mlr3::tsk("oml", data_id = data_id, target_names = "V10"))
+  expect_r6(mlr3::as_task(oml_data, "V10"), "Task")
+  expect_r6(mlr3::tsk("oml", data_id = data_id, target_names = "V10"), "Task")
 })
 
 test_that("arff with wrong quotes", {

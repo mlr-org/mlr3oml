@@ -3,6 +3,10 @@ download_data_features = function(data_id, server, desc = download_desc_task(dat
 
   features$index = as.integer(features$index)
   features$name = make.names(features$name)
+  if (anyDuplicated(features$name)) {
+    # otherwise the renaming depends on the order which is not necessarily preserved everywhere
+    stopf("No unique names after conversion.")
+  }
   features$data_type = factor(features$data_type, levels = c("nominal", "numeric", "string"))
   features$is_target = as.logical(features$is_target)
   features$is_row_identifier = as.logical(features$is_row_identifier)

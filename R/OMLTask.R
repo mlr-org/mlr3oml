@@ -179,10 +179,13 @@ as_task.OMLTask = function(x, ...) {
 
   target = x$target_names
   feature_names = x$feature_names
-  backend = get_private(x$data)$.get_backend()
+  backend = as_data_backend(x)
   miss = setdiff(target, backend$colnames)
   if (length(miss)) {
     stopf("Task %i could not be created: target '%s' not found in data", x$id, miss[1L])
+  }
+  if (!test_subset(feature_names), backend$colnames) {
+    stopf("Not all features found in dataset.")
   }
 
   constructor = switch(x$desc$task_type,
