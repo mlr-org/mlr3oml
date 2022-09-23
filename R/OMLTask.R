@@ -184,7 +184,7 @@ as_task.OMLTask = function(x, ...) {
   if (length(miss)) {
     stopf("Task %i could not be created: target '%s' not found in data", x$id, miss[1L])
   }
-  if (!test_subset(feature_names), backend$colnames) {
+  if (!test_subset(feature_names, backend$colnames)) {
     stopf("Not all features found in dataset.")
   }
 
