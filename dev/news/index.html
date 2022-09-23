@@ -74,6 +74,20 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.0" id="mlr3oml-060">mlr3oml 0.6.0<a class="anchor" aria-label="anchor" href="#mlr3oml-060"></a></h2>
+<ul><li>Add R6 classes for <code>OMLCollection</code>, <code>OMLRun</code>, <code>OMLFlow</code>.</li>
+<li>Add sugar functions <code>oml_flow</code>, <code>oml_data</code>, <code>oml_task</code>, <code>oml_run</code>, <code>oml_collection</code> for all OpenML objects.</li>
+<li>Conversion from OpenML to mlr3 objects is now only possible with the usual s3 converters <code>as_xxx</code>. This improves the consistency by ensuring that the subcomponents of OpenML objects are always OpenML objects and not suddenly mlr3 objects.</li>
+<li>Added more converter functions: <code>as_learner</code>, <code>as_resample_result</code>, <code>as_data_backend</code>, <code>as_benchmark_result</code>.</li>
+<li>Added support for parquet files that were recently introduced on OpenML. The global option <code>mlr3oml.parquet</code> can be used to enable or disable this.</li>
+<li>Implement an arff writer and remove the arff dependency, therefore also removing the option <code>"farff"</code> as the <code>mlr3oml.arff_parser</code>
+</li>
+<li>Increment the cache version number due to changes in the cache structure: This will flush the previous cache folder.</li>
+<li>Support to use the OpenML test server. This can be globally enabled using the option <code>mlr3oml.test_server</code>. Options to globally define a api key for the test server are via the environment variable <code>TESTOPENMLAPIKEY</code> or the option <code>mlr3oml.test_api_key</code>
+</li>
+<li>Bugfix: OpenML tasks can now also be filtered according to the task type</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.0" id="mlr3oml-050">mlr3oml 0.5.0<a class="anchor" aria-label="anchor" href="#mlr3oml-050"></a></h2><p class="text-muted">CRAN release: 2021-09-24</p>
 <ul><li>Support for downloading survival tasks (via <code>mlr3proba</code>).</li>
 <li>More functions to list objects from OpenML:<ul><li><code><a href="../reference/list_oml.html">list_oml_evaluations()</a></code></li>
