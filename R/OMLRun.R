@@ -3,20 +3,21 @@
 #' @name oml_run_r6
 #'
 #' @description
-#' This is the class for OpenML [Runs](https://openml.org/search?type=run), which are
-#' conceptually analogous to [mlr3::ResampleResult]s.
+#' This is the class for OpenML [Runs](https://openml.org/r), which are
+#' conceptually similar to [mlr3::ResampleResult]s.
+#' This object can also be constructed using the sugar function [oml_run()].
 #'
 #' @section OpenML Integration:
 #' * A [OMLTask] is returned by accessing the active field `$task`.
 #' * A [OMLData] is returned by accessing the active field `$data` (short for `$task$data`)
 #' * A [OMLFlow] is returned by accessing the active field `$flow`.
-#' * The raw predictions are returned by accessing the active field `$predictions`.
+#' * The raw predictions are returned by accessing the active field `$prediction`.
 #'
 #' @section mlr3 Integration:
-#' * A [mlr3::ResampleResult] is returned when calling `as_resample_result()`.
-#' * A [mlr3::Task] is returned when calling `as_task()`.
-#' * A [mlr3::DataBackend] is returned when calling `as_data_backend()`.
-#' * A instantiated [mlr3::Resampling] is returned when calling `as_resampling()`.
+#' * A [mlr3::ResampleResult] is returned when calling [mlr3::as_resample_result()].
+#' * A [mlr3::Task] is returned when calling [mlr3::as_task()].
+#' * A [mlr3::DataBackend] is returned when calling [mlr3::as_data_backend()].
+#' * A instantiated [mlr3::Resampling] is returned when calling [mlr3::as_resampling()].
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -26,6 +27,8 @@
 #' \donttest{
 #' library("mlr3")
 #' orun = OMLRun$new(id = 10587724)
+#' # sugar
+#' orun = oml_run(id = 10587724)
 #' print(orun)
 #' print(orun$task) # OMLTask
 #' print(orun$data) # OMLData
@@ -37,7 +40,6 @@
 #' rr = as_resample_result(orun)
 #' rr$score(msr("classif.ce"))
 #' }
-#' #
 OMLRun = R6Class("OMLRun",
   inherit = OMLObject,
   public = list(
@@ -151,8 +153,8 @@ OMLRun = R6Class("OMLRun",
 )
 
 
-#' @title Splits the predictions from OpenML into mlr3 readable format.
-#' @description Returns a list, where each item is a list with the elements row_id, truth,
+#' Splits the predictions from OpenML into mlr3 readable format.
+#' Returns a list, where each item is a list with the elements row_id, truth,
 #' prediction and in case the predict_type is 'prob' an element prob containing the probability
 #' matrix.
 #'
@@ -160,7 +162,7 @@ OMLRun = R6Class("OMLRun",
 #' @param predictions (`data.table()` The `$prediction` field of a run.)
 #' @param resampling (mlr3::Resampling). Result of calling as_resampling(otask).
 #' @param task_type (`character(1)`). Result of calling `otask$task_type`.
-#'
+#' @noRd
 split_predictions = function(predictions, resampling, task_type) {
   if (task_type == "Supervised Classification") {
     classes = c("PredictionDataClassif", "PredictionData")
@@ -182,9 +184,9 @@ split_predictions = function(predictions, resampling, task_type) {
     # Weka, sklearn and mlr(3) have different formats for uploading predictions,
     # here we capture some (probably not all formats) and also discard unknown columns
     function(x) {
-      if (test_subset(c("row_ids", "truth", "reponse", "se"), names)) { # mlr3
+      if (test_subset(c("row_ids", "truth", "reponse", "se"), names)) {
         test_data = predictions[get("row_id") %in% x, c("row_ids", "truth", "response", "se")]
-      } else if (test_subset(c("row_ids", "truth", "response"), names)) { # mlr3
+      } else if (test_subset(c("row_ids", "truth", "response"), names)) {
         test_data = predictions[get("row_id") %in% x, c("row_ids", "truth", "response")]
       } else if (test_subset(c("row_id", "truth", "prediction"), names)) {
         test_data = predictions[get("row_id") %in% x, c("row_id", "truth", "prediction")]
@@ -193,7 +195,7 @@ split_predictions = function(predictions, resampling, task_type) {
         test_data = predictions[get("row_id") %in% x, c("row_id", "correct", "prediction")]
         colnames(test_data) = c("row_ids", "truth", "response")
       } else {
-        stop("Could not parse prediction.")
+        stopf("Could not parse prediction.")
       }
       test_data = as.list(test_data)
       if (task_type == "Supervised Classification") {

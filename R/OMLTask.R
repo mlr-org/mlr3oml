@@ -6,6 +6,7 @@
 #' This is the class for tasks served on [OpenML](https://openml.org/search?type=task&sort=runs).
 #' It consists of a dataset and other meta-information such as the target variable for supervised
 #' problems.
+#' This object can also be constructed using the sugar function [oml_task()].
 #'
 #' @section mlr3 Integration:
 #' * Obtain a [mlr3::Task] by calling `as_task()`.
@@ -19,7 +20,9 @@
 #' library("mlr3")
 #' \donttest{
 #' # Get a task from OpenML:
-#' otask = OMLTask$new(id = 31L)
+#' otask = OMLTask$new(id = 31)
+#' # using sugar
+#' otask = oml_task(id = 31)
 #' otask$data
 #' otask$target_names
 #' otask$feature_names

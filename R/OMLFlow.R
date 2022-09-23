@@ -4,12 +4,11 @@
 #'
 #' @description
 #' This is the class for flows served on [OpenML](https://www.openml.org/f).
-#' Flows are conceptually similar to [mlr3pipelines::GraphLearner]s.
-#' The support for publishing learners on OpenML (as flows) is currently limited but can be
-#' extended upon request.
+#' Flows represent machine learning algorithms.
+#' This object can also be constructed using the sugar function [oml_flow()].
 #'
 #' @section mlr3 Integration:
-#' * Obtain a [mlr3::Learner] using `as_learner()`. Fore more details see [mlr3::as_learner].
+#' * Obtain a [mlr3::Learner] using [mlr3::as_learner()].
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -19,10 +18,12 @@
 #' \donttest{
 #' library("mlr3")
 #' # mlr3 flow:
-#' flow = OMLFlow$new(id = 19103L)
+#' flow = OMLFlow$new(id = 19103)
+#' # using sugar
+#' flow = oml_flow(id = 19103)
 #' learner = as_learner(flow, "classif")
 #' # python flow
-#' python_flow = OMLFlow$new(19090L)
+#' python_flow = OMLFlow$new(19090)
 #' # conversion to pseudo Learner
 #' plearner = as_learner(python_flow, "classif")
 #' }

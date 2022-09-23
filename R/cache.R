@@ -1,3 +1,8 @@
+#' CACHE
+#' This keeps track of the cache versions.
+#' When incremented in a release, it ensures that the previous cache gets flushed, thereby
+#' allowing to easily change the caching mechanism / structure of files in the future.
+#' @noRd
 CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
@@ -16,6 +21,10 @@ CACHE$versions = list(
 
 CACHE$initialized = character()
 
+#' Returns the cache directory
+#' @param cache Whether to cache.
+#' @param test_server Whether to use the test server.
+#' @noRd
 get_cache_dir = function(cache, test_server) {
   assert_true(is.logical(cache) || is.character(cache))
   if (isFALSE(cache)) {
@@ -29,6 +38,14 @@ get_cache_dir = function(cache, test_server) {
   normalizePath(cache, mustWork = FALSE)
 }
 
+#' Initializes the cache directory.
+#' When a cached is initialized in a session, it is added to the `CACHE` environment, and we trust
+#' it without checking the cache versions.
+#' Otherwise we compare the written cache versions for the subfolders like `data_desc` with the
+#' current CACHE versions of the mlr3oml package. If they differ, we flush the cache and initialized
+#' a new folder with the updated cache version.
+#'
+#' @noRd
 initialize_cache = function(cache_dir) {
   if (isFALSE(cache_dir) || cache_dir %in% CACHE$initialized) {
     lg$debug("Skipping initialization of cache", cache_dir = cache_dir)
@@ -71,24 +88,31 @@ initialize_cache = function(cache_dir) {
   return(TRUE)
 }
 
-# @title Cached
-#
-# @description
-# This function performs a cached version of the function 'fun'. I.e. it first checks whether
-# the objects is already stored in cache and returns it, otherwise it downloads it and stores it
-# in the cache folder. It keeps different caches for the public server and the test server.
-#
-# @param fun
-#   Download function, e.g. download_desc_data
-# @param type
-#   The type of object that is downloaded by fun. This is the subfolder where the object will be
-#   stored (relative to the cache folder R_user_dir("mlr3oml", "cache")).
-# @param id
-#   The id of the object that is being downloaded, this can also be an url, as this is needed
-#
-#
-# @param type
-# The type that is downloaded, not really necessary
+#' @title Cached
+#'
+#' @description
+#' This function performs a cached version of the function 'fun'. I.e. it first checks whether
+#' the objects is already stored in cache and returns it, otherwise it downloads it and stores it
+#' in the cache folder. It keeps different caches for the public server and the test server.
+#' The arguments test_server and server are usually both passed,
+#'
+#' @param fun (`function`)\cr
+#'   Download function, e.g. download_desc_data
+#' @param type (`character(1)`)\cr
+#'   The type of object that is downloaded by fun. This is used to determine the caching folder.
+#' @param id (`integer(1)`)\cr
+#'   The id of the object that is being downloaded.
+#' @param test_server (`logical(1)`)\cr
+#'   Whether to use the test server. This is needed to determine the cache directory.
+#' @param parquet (`logical(1)`)\cr
+#'   Whether the caching is done for parquet, in this case we don't use qs to compress the data
+#'   and the caching therefore works a little different.
+#' @param cache_dir (`character(1)`)\cr
+#'   The cache directory.
+#' @param ... (any)\cr
+#'   Additional arguments passed to `fun(id, ...)`.
+#'
+#' @noRd
 cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = FALSE) {
   if (isFALSE(cache_dir)) {
     return(fun(id, ...))

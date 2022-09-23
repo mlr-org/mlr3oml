@@ -6,14 +6,13 @@
 \title{Interface to OpenML Flows}
 \description{
 This is the class for flows served on \href{https://www.openml.org/f}{OpenML}.
-Flows are conceptually similar to \link[mlr3pipelines:mlr_learners_graph]{mlr3pipelines::GraphLearner}s.
-The support for publishing learners on OpenML (as flows) is currently limited but can be
-extended upon request.
+Flows represent machine learning algorithms.
+This object can also be constructed using the sugar function \code{\link[=oml_flow]{oml_flow()}}.
 }
 \section{mlr3 Integration}{
 
 \itemize{
-\item Obtain a \link[mlr3:Learner]{mlr3::Learner} using \code{as_learner()}. Fore more details see \link[mlr3:as_learner]{mlr3::as_learner}.
+\item Obtain a \link[mlr3:Learner]{mlr3::Learner} using \code{\link[mlr3:as_learner]{mlr3::as_learner()}}.
 }
 }
 
@@ -21,10 +20,12 @@ extended upon request.
 \donttest{
 library("mlr3")
 # mlr3 flow:
-flow = OMLFlow$new(id = 19103L)
+flow = OMLFlow$new(id = 19103)
+# using sugar
+flow = oml_flow(id = 19103)
 learner = as_learner(flow, "classif")
 # python flow
-python_flow = OMLFlow$new(19090L)
+python_flow = OMLFlow$new(19090)
 # conversion to pseudo Learner
 plearner = as_learner(python_flow, "classif")
 }

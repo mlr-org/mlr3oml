@@ -6,7 +6,7 @@
 \alias{mlr3oml-package}
 \title{mlr3oml: Connector Between 'mlr3' and 'OpenML'}
 \description{
-Provides an interface to 'OpenML.org' to list and download machine learning data and tasks. Data and tasks can be automatically converted to 'mlr3' tasks. For a more sophisticated interface which also allows uploading experiments, see the 'OpenML' package.
+Provides an interface to 'OpenML.org' to list and download machine learning data, tasks and experiments. The OpenML objects can be automatically converted to 'mlr3' objects. For a more sophisticated interface which also allows uploading to OpenML, see the 'OpenML' package.
 }
 \section{mlr3 Integration}{
 
@@ -43,8 +43,8 @@ Default is \code{FALSE}.
 \strong{Relevant for developers}
 \itemize{
 \item \code{mlr3oml.test_server}:
-Whether to use the OpenML \href{https://test.openml.org/}{test server}.
-Default is \code{FALSE}
+The default value for whether to use the OpenML \href{https://test.openml.org/}{test server}.
+Default is \code{FALSE}.
 \item \code{mlr3oml.test_api_key}:
 API key to use for the test server. If not set, defaults to the value of the environment
 variable \code{TESTOPENMLAPIKEY}.

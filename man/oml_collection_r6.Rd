@@ -6,41 +6,75 @@
 \title{OpenML Collection}
 \description{
 This is the class for collections (previously known as studies) served on
-\url{https://openml.org/search?type=study&study_type=task&sort=tasks_included}.
-It is used both for Run Collections and Task Collections.
-(Note that all Benchmark Suites on OpenML are also Collections).
-A Run Collection (\code{main_entity_type = "run"}) contains runs, flows, datasets and tasks.
-A Task Collection (\code{main_entity_type = "task"}) contains tasks and datasets.
+\url{https://openml.org}.
+A collection can either be a \href{https://www.openml.org/search?type=study&study_type=task}{task collection}
+or \href{https://www.openml.org/search?type=study&study_type=run}{run collection}.
+This object can also be constructed using the sugar function \code{\link[=oml_collection]{oml_collection()}}.
+
+\strong{Run Collection}
+
+A run collection contains runs, flows, datasets and tasks.
+The primary object are the runs (\code{main_entity_type} is \code{"run"}).
+The the flows, datasets and tasks are those used in the runs.
+
+\strong{Task Collection}
+A task collection (\code{main_entity_type = "task"}) contains tasks and datasets.
+The primary object are the tasks (\code{main_entity_type} is \code{"task"}).
+The datasets are those used in the tasks.
+
+\emph{Note}: All Benchmark Suites on OpenML are also collections.
 }
+\section{Caching}{
+
+The OpenML collection itself cannot be not cached, this is because it can be modified in-place
+on the server, e.g. by adding or removing tasks or runs.
+The construction argument \code{cache} therefore only controls wether caching is applied to the
+OpenML objects that are contained in the collection.
+}
+
 \section{mlr3 Intergration}{
 
 \itemize{
-\item Obtain a list of \link[mlr3:Task]{mlr3::Task}s using \code{as_tasks()}.
-\item Obtain a list of \link[mlr3:Resampling]{mlr3::Resampling}s using \code{as_resamplings()}.
-\item Obtain a list of \link[mlr3:Learner]{mlr3::Learner}s using \code{as_learners()} (if main_entity_type is "run").
-\item Obtain a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} using \code{as_benchmark_result()} (if main_entity_type is "run").
+\item Obtain a list of \link[mlr3:Task]{mlr3::Task}s using \link[mlr3:as_task]{mlr3::as_tasks}.
+\item Obtain a list of \link[mlr3:Resampling]{mlr3::Resampling}s using \link[mlr3:as_resampling]{mlr3::as_resamplings}.
+\item Obtain a list of \link[mlr3:Learner]{mlr3::Learner}s using \link[mlr3:as_learner]{mlr3::as_learners} (if main_entity_type is "run").
+\item Obtain a \link[mlr3:BenchmarkResult]{mlr3::BenchmarkResult} using \link[mlr3:as_benchmark_result]{mlr3::as_benchmark_result} (if main_entity_type is "run").
 }
 }
 
 \examples{
 \donttest{
 library("mlr3")
-# OpenML Run Collection:
-collection = OMLCollection$new(232L)
-collection$tasks
-collection$data
-collection$flows
-collection$runs
+# OpenML Run collection:
+run_collection = OMLCollection$new(id = 232)
+# using sugar
+run_collection = oml_collection(id = 232)
+run_collection$main_entity_type
+run_collection$tasks
+run_collection$data
+run_collection$flows
+run_collection$runs
 
 # mlr3 conversion:
-tasks = as_tasks(collection)
-resamplings = as_resamplings(collection)
-# construct pseudo-learners as these are sklearn flows
-learners = as_learners(collection, "classif")
+tasks = as_tasks(run_collection)
+resamplings = as_resamplings(run_collection)
+learners = as_learners(run_collection, "classif")
 
-# Although pseudo-learners are non-executable the runs can still be analyzed.
-bmr = as_benchmark_result(collection)
+bmr = as_benchmark_result(run_collection)
 bmr$score(msr("classif.ce"))
+
+# OpenML task collection
+task_collection = OMLCollection$new(id = 99)
+# using sugar
+task_collection = oml_collection(id = 99)
+
+task_collection$main_entity_type
+task_collection$tasks
+task_collection$data
+
+# mlr3 conversion
+tasks = as_tasks(task_collection)
+resamplings = as_resamplings(task_collection)
 }
 }
 \references{
@@ -81,7 +115,7 @@ A data.table summarizing the runs included in the collection. Returns NULL for
 Task Collections.}
 
 \item{\code{flows}}{(\code{data.table()})
-A data.table summarizing the flows included in the collection. Returns NULL for
+A data.table summarizing the flows included in the collection. Returns \code{NULL} for
 Task Collections.}
 
 \item{\code{data}}{(\code{data.table()})
@@ -129,7 +163,10 @@ OpenML id for the object.}
 
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
+Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.
+The collection itself is not cached, this is because it can be modified in-place on OpenML,
+e.g. by adding or removing tasks or runs. This parameter therefore only controls whether
+the contained elements are cached when loaded, e.g. when accessing the included tasks.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.

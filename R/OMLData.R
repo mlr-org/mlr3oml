@@ -3,16 +3,17 @@
 #' @name oml_data_r6
 #'
 #' @description
-#' This is the class for data sets served on [OpenML](https://openml.org/search?type=data&sort=runs&status=active).
+#' This is the class for data sets served on [OpenML](https://www.openml.org/d/).
+#' This object can also be constructed using the sugar function [oml_data()].
 #'
 #' @section mlr3 Integration:
-#' * A [mlr3::Task] can be obtained by calling `as_task()`.
-#' * A [mlr3::DataBackend] can be obtained by calling `as_data_backend()`. Depending on the
-#'   selected file-type, the returned backend is a `DataBackendDataTable` (arff) or
-#'   `DataBackendDuckDB` (parquet).
+#' * A [mlr3::Task] can be obtained by calling [mlr3::as_task()].
+#' * A [mlr3::DataBackend] can be obtained by calling [mlr3::as_data_backend()]. Depending on the
+#'   selected file-type, the returned backend is a [mlr3::DataBackendDataTable] (arff) or
+#'   [mlr3db::DataBackendDuckDB] (parquet).
 #'
 #' @section Name conversion:
-#' Note that we rename the columns to comply with R's naming scheme (see [base::make.names()]).
+#' Column names that don't comply with R's naming scheme are renamed (see [base::make.names()]).
 #' This means that the names can differ from those on OpenML.
 #'
 #' @section File Format:
@@ -20,6 +21,7 @@
 #' When creating a new `OMLData` object, the constructor argument `parquet` allows to switch
 #' between arff and parquet. Note that not necessarily all data files are available as parquet.
 #' The option `mlr3oml.parquet` can be used to set a default.
+#' If `parquet` is `TRUE` but not available, `"arff"` will be used as a fallback.
 #'
 #' @section ARFF Files:
 #' This package comes with an own reader for ARFF files, based on [data.table::fread()].
@@ -27,7 +29,7 @@
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
 #'
 #' @section Parquet Files:
-#' For the handling of parquet files, we rely on \CRANpkg{duckdb}.
+#' For the handling of parquet files, we rely on \CRANpkg{duckdb} and `CRANpkg{DBI}`.
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -38,6 +40,8 @@
 #' \donttest{
 #' # OpenML Data object
 #' odata = OMLData$new(id = 9)
+#' # using sugar
+#' odata = oml_data(id = 9)
 #' print(odata)
 #' print(odata$target_names)
 #' print(odata$feature_names)
@@ -54,6 +58,8 @@
 #' # For parquet files
 #' if (requireNamespace("duckdb")) {
 #'   odata = OMLData$new(id = 9, parquet = TRUE)
+#'   # using sugar
+#'   odata = oml_data(id = 9)
 #'
 #'   print(odata)
 #'   print(odata$target_names)

@@ -8,6 +8,7 @@
 This is the class for tasks served on \href{https://openml.org/search?type=task&sort=runs}{OpenML}.
 It consists of a dataset and other meta-information such as the target variable for supervised
 problems.
+This object can also be constructed using the sugar function \code{\link[=oml_task]{oml_task()}}.
 }
 \section{mlr3 Integration}{
 
@@ -21,7 +22,9 @@ problems.
 library("mlr3")
 \donttest{
 # Get a task from OpenML:
-otask = OMLTask$new(id = 31L)
+otask = OMLTask$new(id = 31)
+# using sugar
+otask = oml_task(id = 31)
 otask$data
 otask$target_names
 otask$feature_names
