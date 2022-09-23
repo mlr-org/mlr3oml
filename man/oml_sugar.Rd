@@ -12,14 +12,14 @@
 oml_data(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
+  parquet = getOption("mlr3oml.parquet", TRUE),
   test_server = getOption("mlr3oml.test_server", FALSE)
 )
 
 oml_task(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
+  parquet = getOption("mlr3oml.parquet", TRUE),
   test_server = getOption("mlr3oml.test_server", FALSE)
 )
 
@@ -32,14 +32,14 @@ oml_flow(
 oml_run(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
+  parquet = getOption("mlr3oml.parquet", TRUE),
   test_server = getOption("mlr3oml.test_server", FALSE)
 )
 
 oml_collection(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
+  parquet = getOption("mlr3oml.parquet", TRUE),
   test_server = getOption("mlr3oml.test_server", FALSE)
 )
 }

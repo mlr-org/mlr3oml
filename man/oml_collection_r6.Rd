@@ -150,7 +150,7 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
+  parquet = getOption("mlr3oml.parquet", TRUE),
   test_server = getOption("mlr3oml.test_server", FALSE)
 )}\if{html}{\out{</div>}}
 }

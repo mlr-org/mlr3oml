@@ -221,21 +221,7 @@ OMLData = R6Class("OMLData",
       }
       if (self$parquet) {
         backend = try({
-          path = self$parquet_path
-          backend = mlr3db::as_duckdb_backend(path, primary_key = primary_key)
-          if (!test_names(backend$colnames, type = "strict")) {
-            new = make.names(backend$colnames)
-            if (anyDuplicated(new)) {
-              stopf("No unique names after conversion.")
-            }
-            # This code is a little hacky. The reason is that DataBackendRename is not exported
-            # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
-            # This can be changed when it is exported in mlr3.
-            backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
-              Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
-            )
-          }
-          backend
+          backend = mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
         }, silent = TRUE)
 
         if (inherits(backend, "try-error")) {
@@ -246,11 +232,32 @@ OMLData = R6Class("OMLData",
           backend = as_data_backend(data, primary_key = primary_key)
         }
       } else {
+        backend = NULL
+      }
+
+      if (is.null(backend) || inherits(backend, "try-error")) {
         data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
           server = self$server, test_server = self$test_server
         )
         backend = as_data_backend(data, primary_key = primary_key)
       }
+
+      # we only need to do this for duckdb because the arff parser already does this
+      if (test_r6(backend, "DataBackendDuckDB") && !test_names(backend$colnames, type = "strict")) {
+        if (!test_names(backend$colnames, type = "strict")) {
+          new = make.names(backend$colnames)
+          if (anyDuplicated(new)) {
+            stopf("No unique names after conversion.")
+          }
+          # This code is a little hacky. The reason is that DataBackendRename is not exported
+          # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
+          # This can be changed when it is exported in mlr3.
+          backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
+            Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
+          )
+        }
+      }
+
       private$.backend = backend
     }
   )
