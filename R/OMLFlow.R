@@ -34,15 +34,12 @@ OMLFlow = R6Class("OMLFlow",
     #'
     #' @template param_id
     #' @template param_cache
-    #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
       cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
-      private$.parquet = assert_flag(parquet)
       super$initialize(id, cache, test_server, "flow")
     },
     #' @description
@@ -69,16 +66,7 @@ OMLFlow = R6Class("OMLFlow",
     #' Returns all tags of the object.
     tags = function() {
       self$desc$tag
-    },
-    #' @field parquet (`logical(1)`)\cr
-    #' Whether to use parquet.
-    parquet = function(rhs) {
-      assert_ro_binding(rhs)
-      private$.parquet
     }
-  ),
-  private = list(
-    .parquet = NULL
   )
 )
 

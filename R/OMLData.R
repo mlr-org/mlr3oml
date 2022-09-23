@@ -209,14 +209,14 @@ OMLData = R6Class("OMLData",
     .backend = NULL,
     .parquet_path = NULL,
     .parquet = NULL,
-    .get_backend = function() {
+    .get_backend = function(primary_key = NULL) {
       if (!is.null(private$.backend)) {
         return(private$.backend)
       }
       if (self$parquet) {
         backend = try({
           path = self$parquet_path
-          backend = mlr3db::as_duckdb_backend(path)
+          backend = mlr3db::as_duckdb_backend(path, primary_key = primary_key)
           if (!test_names(backend$colnames, type = "strict")) {
             new = make.names(backend$colnames)
             if (anyDuplicated(new)) {
@@ -237,13 +237,13 @@ OMLData = R6Class("OMLData",
           data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
             server = self$server, test_server = self$test_server
           )
-          backend = as_data_backend(data)
+          backend = as_data_backend(data, primary_key = primary_key)
         }
       } else {
         data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
           server = self$server, test_server = self$test_server
         )
-        backend = as_data_backend(data)
+        backend = as_data_backend(data, primary_key = primary_key)
       }
       private$.backend = backend
     }
@@ -252,17 +252,7 @@ OMLData = R6Class("OMLData",
 
 #' @export
 as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
-  backend = NULL
-  if (data$parquet) {
-    loadNamespace("mlr3db")
-    backend = try({
-      mlr3db::as_duckdb_backend(data$parquet_path, primary_key = primary_key, ...)
-    }, silent = TRUE)
-  }
-  if (is.null(backend) || inherits(backend, "try-error")) {
-    backend = as_data_backend(data$data, primary_key = primary_key, ...)
-  }
-  return(backend)
+  get_private(data)$.get_backend(primary_key)
 }
 
 #' @importFrom mlr3 as_task
@@ -286,7 +276,6 @@ as_task.OMLData = function(x, target_names = NULL, ...) {
   if (is.null(constructor)) {
     stopf("Unable to determine the task type")
   }
-  constructor$new(x$name, get_private(x)$.get_backend(), target = target)
+  constructor$new(x$name, as_data_backend(x), target = target)
 }
-
 

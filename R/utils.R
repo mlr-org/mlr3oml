@@ -1,27 +1,3 @@
-task_type_translator = function(tt, to = "mlr3") {
-  if (to == "mlr3") {
-    converted = switch(tt,
-      "Supervised Regression" = "regr",
-      "Supervised Classification" = "classif",
-      "Survival Analysis" = "surv",
-      "Clustering" = "clust",
-      NULL
-    )
-  }
-  if (to == "oml") {
-    converted = switch(tt,
-      "regr" = "Supervised Regression",
-      "classif" = "Supervised Classification",
-      "surv" = "Survival Analysis",
-      "clust" = "Clustering",
-      NULL
-    )
-  }
-  return(converted)
-}
-
-
-
 read_parquet = function(path) {
   require_namespaces(c("duckdb", "DBI"))
   con = DBI::dbConnect(duckdb::duckdb())
@@ -68,4 +44,17 @@ catf_estimation_procedure = function(estimation_procedure) {
   } else {
     catf(" * Estimation: missing")
   }
+}
+
+transpose_name_value = function(li, as_integer = FALSE) {
+  converter = if (as_integer) as.integer else as.numeric
+  tab = rbindlist(map(li, function(x) {
+    if (!is.null(x) && all(dim(x))) {
+      set_names(as.list(converter(x$value)), x$name)
+    } else {
+      data.table(..dummy = 1)
+    }
+  }), fill = TRUE)
+
+  remove_named(tab, "..dummy")
 }

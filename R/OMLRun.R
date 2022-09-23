@@ -79,7 +79,7 @@ OMLRun = R6Class("OMLRun",
     flow = function() {
       if (is.null(private$.flow)) {
         private$.flow = OMLFlow$new(self$flow_id, cache = self$cache_dir,
-          test_server = self$test_server, parquet = self$parquet
+          test_server = self$test_server
         )
       }
       private$.flow
@@ -252,5 +252,5 @@ as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
     uhash = uuid::UUIDgenerate()
   )
 
-  ResampleResult$new(ResultData$new(data))
+  ResampleResult$new(ResultData$new(data, store_backends = store_backends))
 }
