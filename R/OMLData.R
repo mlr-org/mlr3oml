@@ -86,7 +86,7 @@ OMLData = R6Class("OMLData",
     initialize = function(
       id,
       cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
+      parquet = getOption("mlr3oml.parquet", TRUE),
       test_server = getOption("mlr3oml.test_server", FALSE)
       ) {
       private$.parquet = assert_flag(parquet)
