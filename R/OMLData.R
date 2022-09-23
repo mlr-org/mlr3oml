@@ -220,11 +220,19 @@ OMLData = R6Class("OMLData",
       if (!is.null(private$.backend)) {
         return(private$.backend)
       }
+      # static checker
+      name = data_type = NULL
+      # we do this, because when OpenML switched from arff to parquet, the types changed,
+      # this means that some previous classification tasks (including ones from CC-18)
+      # were not useable anymore, because the target was suddenly logical
+      categoricals = self$features[data_type == "nominal", name]
       if (self$parquet) {
         backend = try({
           withr::with_options(
             list(mlr3.allow_utf8_names = TRUE),
-            mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
+            mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key,
+              string_as_factors = categoricals
+            )
           )
         }, silent = TRUE)
 

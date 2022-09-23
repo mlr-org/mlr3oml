@@ -24,10 +24,10 @@ test_that("Task 100 works", {
   expect_oml_task(oml_task)
 })
 
-test_that("Randomized download test", {
-  n = 10L
+test_that("OpenML CC-18 should work", {
   task_ids = OMLCollection$new(99)$task_ids
-  task_ids = sample(task_ids, n)
+  # n = length(task_ids)
+  # task_ids = sample(task_ids, n)
   task_types = c(
     "Supervised Regression",
     "Supervised Classification"
@@ -36,7 +36,7 @@ test_that("Randomized download test", {
     task = OMLTask$new(task_id)
     print(task_id)
     if (task$task_type %in% task_types) {
-      expect_oml_task(OMLTask$new(task_id, cache = FALSE))
+      expect_oml_task(OMLTask$new(task_id))
     }
   }
 })
