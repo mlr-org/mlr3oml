@@ -224,7 +224,7 @@ OMLData = R6Class("OMLData",
         backend = try({
           withr::with_options(
             list(mlr3oml.allow_utf8_names = TRUE),
-            backend = mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
+            mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
           )
         }, silent = TRUE)
 

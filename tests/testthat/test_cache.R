@@ -32,7 +32,7 @@ test_that("Seperate caches are used for test and public server", {
 
 test_that("Caching works for parquet", {
   cachedir = tempfile()
-  OMLData$new(31, cache = cachedir, parquet = TRUE)$data
+  x = OMLData$new(31, cache = cachedir, parquet = TRUE)$data
   expect_true("31.parquet" %in% list.files(file.path(cachedir, "public", "data_parquet")))
 
 })
