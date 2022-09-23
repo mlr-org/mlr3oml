@@ -32,7 +32,7 @@
 #' * `mlr3oml.parquet`: Enables or disables parquet as the default file format.
 #'   If set to `TRUE`, the parquet version of datasets will be used by default.
 #'   If set to `FALSE`, the arff version of datasets will be used by default.
-#'   Default is `FALSE`.
+#'   Default is `TRUE`.
 #'
 #' **Relevant for developers**
 #'
