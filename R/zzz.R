@@ -57,7 +57,6 @@ utils::globalVariables(c("super"))
   backports::import(pkgname, "R_user_dir", force = TRUE)
   mlr3::mlr_tasks$add("oml", OMLTaskConnector)
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
-  mlr3::mlr_learners$add("oml", OMLLearnerConnector)
 
   mlr3::Task$set("private", "oml", NULL, overwrite = TRUE)
   mlr3::Resampling$set("private", "oml", NULL, overwrite = TRUE)

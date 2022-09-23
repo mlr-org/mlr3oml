@@ -1,17 +1,11 @@
 #' @noRd
 with_test_server = function(env = parent.frame()) {
-  op = options(
-    mlr3oml.server = "https://test.openml.org/api/v1",
-    mlr3oml.api_key = Sys.getenv("TESTOPENMLAPIKEY")
-  )
+  op = options(mlr3oml.test_server = TRUE)
   withr::defer(options(op), env)
 }
 
 with_public_server = function(env = parent.frame()) {
-  op = options(
-    mlr3oml.server = "https://openml.org/api/v1",
-    mlr3oml.api_key = Sys.getenv("OPENMLAPIKEY")
-  )
+  op = options(mlr3oml.test_server = FALSE)
   withr::defer(options(op), env)
 }
 
@@ -34,10 +28,7 @@ get_api_key = function(server) {
   NA_character_
 }
 
-add_auth_string = function(url, api_key = NULL, server) {
-  if (is.null(api_key)) {
-    api_key = get_api_key(server)
-  }
+add_auth_string = function(url, api_key = NULL) {
   if (is.na(api_key)) {
     return(url)
   }

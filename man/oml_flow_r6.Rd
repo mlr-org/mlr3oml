@@ -50,9 +50,6 @@ The dependencies of the flow.}
 
 \item{\code{tags}}{(\code{character()})\cr
 Returns all tags of the object.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet.}
 }
 \if{html}{\out{</div>}}
 }
@@ -80,7 +77,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \if{html}{\out{<div class="r">}}\preformatted{OMLFlow$new(
   id,
   cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", FALSE),
   test_server = getOption("mlr3oml.test_server", FALSE)
 )}\if{html}{\out{</div>}}
 }
@@ -94,10 +90,6 @@ OpenML id for the object.}
 \item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
 See field \code{cache} for an explanation of possible values.
 Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server

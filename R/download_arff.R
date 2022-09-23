@@ -30,8 +30,6 @@ get_arff = function(url, ..., sparse = FALSE, server, api_key = get_api_key(serv
           stopf("Failed to parse arff file, install 'RWeka'")
         }
         tab = setDT(RWeka::read.arff(path))
-      } else if (parser == "farff") {
-        tab = setDT(utils::getFromNamespace("readARFF", ns = "farff")(path, show.info = FALSE))
       } else if (parser == "internal") {
         tab = read_arff(path)
       } else {
