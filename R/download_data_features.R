@@ -1,4 +1,4 @@
-download_data_features = function(data_id, server, desc = download_desc_task(data_id, server)) {
+download_data_features = function(data_id, server, desc = download_desc_data(data_id, server)) {
   features = get_json(paste0(server, "/json/data/features/%i"), data_id, server = server)[[1L]][[1L]]
 
   features$index = as.integer(features$index)

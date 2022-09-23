@@ -11,7 +11,7 @@
 #' @examples
 #' \dontrun{
 #' library("mlr3")
-#' collection = OMLCollection$new(99)
+#' collection = OMLCollection$new(258)
 #' otasks = collection$tasks[nrow <= 550, ][["task"]]
 #' tasks = as_tasks(otasks)
 #' resamplings = as_resamplings(otasks)

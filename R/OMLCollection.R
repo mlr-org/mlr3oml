@@ -59,9 +59,9 @@
 #' bmr$score(msr("classif.ce"))
 #'
 #' # OpenML task collection
-#' task_collection = OMLCollection$new(id = 99)
+#' task_collection = OMLCollection$new(id = 258)
 #' # using sugar
-#' task_collection = oml_collection(id = 99)
+#' task_collection = oml_collection(id = 258)
 #'
 #' task_collection$main_entity_type
 #' task_collection$tasks

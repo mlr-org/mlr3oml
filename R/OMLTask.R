@@ -184,9 +184,6 @@ as_task.OMLTask = function(x, ...) {
   if (length(miss)) {
     stopf("Task %i could not be created: target '%s' not found in data", x$id, miss[1L])
   }
-  if (!test_subset(feature_names, backend$colnames)) {
-    stopf("Not all features found in dataset.")
-  }
 
   constructor = switch(x$desc$task_type,
     # FIXME: positive class?
@@ -196,7 +193,6 @@ as_task.OMLTask = function(x, ...) {
     stopf("Unsupported task type '%s'.", x$desc$task_type)
   )
   task = constructor$new(name, backend, target = target)
-  task$col_roles$feature = x$feature_names
   backend$hash = sprintf("mlr3oml::task_%i", x$id)
   task$.__enclos_env__$private$oml$id = x$id
   task$.__enclos_env__$private$oml$hash = task$hash
