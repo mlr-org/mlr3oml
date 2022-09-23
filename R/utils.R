@@ -58,3 +58,24 @@ transpose_name_value = function(li, as_integer = FALSE) {
 
   remove_named(tab, "..dummy")
 }
+
+# remove this when it is merged in mlr3db
+rename_duckdb_backend = function(backend) {
+  old = backend$colnames
+  new = make.names(old, unique = TRUE)
+
+  existing_tables = DBI::dbGetQuery(get_private(backend)$.data, "PRAGMA show_tables")$name
+  table_new = make.unique(c(existing_tables, backend$table), sep = "_")[length(existing_tables) + 1L]
+  primary_key_new = new[old == backend$primary_key]
+  tmp_old = paste0("\"", old, "\"")
+  tmp_new = paste0("\"", new, "\"")
+  renamings = paste(tmp_old, "AS", tmp_new, collapse = ", ")
+  query = sprintf('CREATE VIEW "%s" AS SELECT %s from "%s"', table_new, renamings, backend$table)
+
+  DBI::dbExecute(get_private(backend)$.data, query)
+
+  backend$table = table_new
+  backend$primary_key = primary_key_new
+
+  invisible(backend)
+}

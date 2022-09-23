@@ -223,7 +223,7 @@ OMLData = R6Class("OMLData",
       if (self$parquet) {
         backend = try({
           withr::with_options(
-            list(mlr3oml.allow_utf8_names = TRUE),
+            list(mlr3.allow_utf8_names = TRUE),
             mlr3db::as_duckdb_backend(self$parquet_path, primary_key = primary_key)
           )
         }, silent = TRUE)
@@ -249,12 +249,7 @@ OMLData = R6Class("OMLData",
           if (anyDuplicated(new)) {
             stopf("No unique names after conversion.")
           }
-          # This code is a little hacky. The reason is that DataBackendRename is not exported
-          # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
-          # This can be changed when it is exported in mlr3.
-          backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
-            Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
-          )
+          backend = rename_duckdb_backend(backend)
         }
       }
 
