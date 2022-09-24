@@ -69,7 +69,10 @@ rename_duckdb_backend = function(backend) {
   primary_key_new = new[old == backend$primary_key]
   tmp_old = paste0("\"", old, "\"")
   tmp_new = paste0("\"", new, "\"")
+
   renamings = paste(tmp_old, "AS", tmp_new, collapse = ", ")
+
+
   query = sprintf('CREATE VIEW "%s" AS SELECT %s from "%s"', table_new, renamings, backend$table)
 
   DBI::dbExecute(get_private(backend)$.data, query)
@@ -81,10 +84,13 @@ rename_duckdb_backend = function(backend) {
 }
 
 # remove this when it is merged in mlr3db (... in mlr3db is not passed to duckdb constructor...)
-as_duckdb_backend_character = function(data, path = getOption("mlr3db.duckdb_dir", ":temp:"), primary_key = NULL, ...) {
+as_duckdb_backend_character = function(data, path = getOption("mlr3db.duckdb_dir", ":temp:"),
+  primary_key = NULL) {
+
   assert_file_exists(data, access = "r", extension = "parquet")
   con = DBI::dbConnect(duckdb::duckdb())
 
+  # 1. view: we create the data as is
   query = "CREATE OR REPLACE VIEW 'mlr3db_view' AS SELECT *"
   if (is.null(primary_key)) {
     primary_key = "mlr3_row_id"
@@ -96,7 +102,38 @@ as_duckdb_backend_character = function(data, path = getOption("mlr3db.duckdb_dir
   query = sprintf("%s FROM parquet_scan(['%s'])", query, paste0(data, collapse = "','"))
   DBI::dbExecute(con, query)
 
-  DataBackendDuckDB$new(con, table = "mlr3db_view", primary_key = primary_key, ...)
+  # 2. view: we encode the booleans as VARCHAR
+  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('mlr3db_view')"))
+  vars_orig = table_info$name
+  type = table_info$type
+  vars = vars_orig
+  vars[type == "BOOLEAN"] = paste0(vars[type == "BOOLEAN"], "::VARCHAR")
+  vars = paste(vars, collapse = ", ")
 
+  query = sprintf("CREATE OR REPLACE VIEW 'mlr3db_view_recoded' AS SELECT %s from 'mlr3db_view'", vars)
+  DBI::dbExecute(con, query)
+
+  # 3. view: we normalize the names
+
+  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('mlr3db_view_recoded')"))
+  old = table_info$name
+  new = make.names(vars_orig)
+
+  if (anyDuplicated(new)) {
+    stopf("No unique names after conversion.")
+  }
+
+  tmp_old = paste0("\"", old, "\"")
+  tmp_new = paste0("\"", new, "\"")
+  renamings = paste(tmp_old, "AS", tmp_new, collapse = ", ")
+
+  query = sprintf("CREATE OR REPLACE VIEW 'mlr3db_view_recoded_renamed' AS SELECT %s from 'mlr3db_view_recoded'", renamings)
+  DBI::dbExecute(con, query)
+
+  backend = mlr3db::DataBackendDuckDB$new(con, table = "mlr3db_view_recoded_renamed", primary_key = primary_key,
+    strings_as_factors = TRUE
+  )
+
+  backend
 }
 

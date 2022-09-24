@@ -64,7 +64,7 @@ expect_oml_data = function(data) {
   }
   expect_flag(data$parquet)
   backend = as_data_backend(data)
-  expect_r6(backend, paste0("DataBackend", ifelse(data$parquet, "DuckDB", "DataTable")))
+  expect_r6(backend, paste0("DataBackend"))
 }
 
 expect_oml_task = function(task) {

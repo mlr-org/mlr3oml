@@ -107,5 +107,8 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
 
 test_that("Logicals are converted to factor", {
   odata = oml_data(1050)
+  backend = as_data_backend(odata)
+  # renaming worked
+  assert_true("c" %in% backend$colnames)
   expect_oml_data(odata)
 })

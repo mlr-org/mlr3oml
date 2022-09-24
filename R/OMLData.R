@@ -220,24 +220,15 @@ OMLData = R6Class("OMLData",
       if (!is.null(private$.backend)) {
         return(private$.backend)
       }
-      # static checker
-      name = data_type = NULL
-      # we do this, because when OpenML switched from arff to parquet, the types changed,
-      # this means that some previous classification tasks (including ones from CC-18)
-      # were not useable anymore, because the target was suddenly logical
-      categoricals = self$features[data_type == "nominal", name]
       if (self$parquet) {
         require_namespaces(c("mlr3db", "duckdb", "DBI"))
-        backend = try({
-          withr::with_options(
-            list(mlr3.allow_utf8_names = TRUE),
-            as_duckdb_backend_character(self$parquet_path, primary_key = primary_key,
-              string_as_factors = categoricals
-            )
-          )
-        }, silent = TRUE)
+        path = try({self$parquet_path}, silent = TRUE)
+        backend = as_duckdb_backend_character(path, primary_key = primary_key)
 
         if (inherits(backend, "try-error")) {
+          # this try-error can have different reasons.
+          # * parquet file is not available yet
+          # * some nominals are encoded as bools in duckdb
           lg$info("Failed to download parquet, trying arff.", id = self$id)
         }
       } else {
@@ -251,16 +242,6 @@ OMLData = R6Class("OMLData",
         backend = as_data_backend(data, primary_key = primary_key)
       }
 
-      # we only need to do this for duckdb because the arff parser already does this
-      if (test_r6(backend, "DataBackendDuckDB") && !test_names(backend$colnames, type = "strict")) {
-        if (!test_names(backend$colnames, type = "strict")) {
-          new = make.names(backend$colnames)
-          if (anyDuplicated(new)) {
-            stopf("No unique names after conversion.")
-          }
-          backend = rename_duckdb_backend(backend)
-        }
-      }
 
       private$.backend = backend
     }
