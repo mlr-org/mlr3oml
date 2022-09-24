@@ -80,6 +80,7 @@ rename_duckdb_backend = function(backend) {
   invisible(backend)
 }
 
+# remove this when it is merged in mlr3db (... in mlr3db is not passed to duckdb constructor...)
 as_duckdb_backend_character = function(data, path = getOption("mlr3db.duckdb_dir", ":temp:"), primary_key = NULL, ...) {
   assert_file_exists(data, access = "r", extension = "parquet")
   con = DBI::dbConnect(duckdb::duckdb())
