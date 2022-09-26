@@ -106,7 +106,7 @@ as_duckdb_backend_character = function(data, path = getOption("mlr3db.duckdb_dir
   table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('mlr3db_view')"))
   vars_orig = table_info$name
   type = table_info$type
-  vars = vars_orig
+  vars = paste0("\"", vars_orig, "\"")
   vars[type == "BOOLEAN"] = paste0(vars[type == "BOOLEAN"], "::VARCHAR")
   vars = paste(vars, collapse = ", ")
 
