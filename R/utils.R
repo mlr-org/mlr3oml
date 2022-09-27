@@ -96,6 +96,8 @@ as_duckdb_backend_character = function(data, primary_key = NULL) {
   new = make.names(vars_orig)
 
   if (anyDuplicated(new)) {
+    # this might be triggered by a duckdb bug
+    # https://github.com/duckdb/duckdb/issues/4806
     stopf("No unique names after conversion.")
   }
 

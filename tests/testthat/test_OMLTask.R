@@ -41,7 +41,6 @@ test_that("OpenML CC-18 should work", {
     task = OMLTask$new(task_id)
     print(task_id)
     if (task$task_type %in% task_types) {
-      # https://github.com/duckdb/duckdb/issues/4806
       expect_oml_task(OMLTask$new(task_id))
     }
   }
