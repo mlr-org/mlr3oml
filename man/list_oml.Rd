@@ -21,8 +21,8 @@ list_oml_data(
   number_classes = NULL,
   number_missing_values = NULL,
   tag = NULL,
-  limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  limit = limit_default(),
+  test_server = test_server_default(),
   ...
 )
 
@@ -31,28 +31,28 @@ list_oml_evaluations(
   task_id = NULL,
   measures = NULL,
   tag = NULL,
-  limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  limit = limit_default(),
+  test_server = test_server_default(),
   ...
 )
 
 list_oml_flows(
   uploader = NULL,
   tag = NULL,
-  limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  limit = limit_default(),
+  test_server = test_server_default(),
   ...
 )
 
-list_oml_measures(test_server = getOption("mlr3oml.test_server", FALSE))
+list_oml_measures(test_server = test_server_default())
 
 list_oml_runs(
   run_id = NULL,
   task_id = NULL,
   tag = NULL,
   flow_id = NULL,
-  limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  limit = limit_default(),
+  test_server = test_server_default(),
   ...
 )
 
@@ -60,8 +60,8 @@ list_oml_setups(
   flow_id = NULL,
   setup_id = NULL,
   tag = NULL,
-  limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  limit = limit_default(),
+  test_server = test_server_default(),
   ...
 )
 
@@ -73,8 +73,8 @@ list_oml_tasks(
   number_classes = NULL,
   number_missing_values = NULL,
   tag = NULL,
-  limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  limit = limit_default(),
+  test_server = test_server_default(),
   ...
 )
 }

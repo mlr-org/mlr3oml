@@ -149,9 +149,9 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
 )}\if{html}{\out{</div>}}
 }
 

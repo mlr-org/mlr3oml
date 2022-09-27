@@ -11,36 +11,32 @@
 \usage{
 oml_data(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
 )
 
 oml_task(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
 )
 
-oml_flow(
-  id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
-)
+oml_flow(id, cache = cache_default(), test_server = test_server_default())
 
 oml_run(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
 )
 
 oml_collection(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
 )
 }
 \arguments{
