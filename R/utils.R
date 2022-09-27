@@ -69,11 +69,10 @@ as_duckdb_backend_character = function(data, primary_key = NULL) {
   query = "CREATE OR REPLACE VIEW 'mlr3db_view' AS SELECT *"
   if (is.null(primary_key)) {
     primary_key = "mlr3_row_id"
+    query = paste0(query, ", row_number() OVER () AS mlr3_row_id")
   } else {
     assert_string(primary_key)
   }
-
-  query = paste0(query, sprintf(", row_number() OVER () AS '%s'", primary_key))
 
   query = sprintf("%s FROM parquet_scan(['%s'])", query, paste0(data, collapse = "','"))
   DBI::dbExecute(con, query)
