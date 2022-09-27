@@ -12,7 +12,7 @@ get_parquet = function(url, ..., server, api_key = get_api_key(server), retries 
     response = download_file(url, path, api_key = api_key)
 
     if (response$ok) {
-      lg$debug("Downloaded arquet file.", path = path)
+      lg$debug("Downloaded parquet file.", path = path)
       return(path)
     } else if (retry < retries && response$http_code >= 500L) {
       delay = max(rnorm(1L, mean = 10), 0)

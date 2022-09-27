@@ -11,5 +11,6 @@ test_that("Construct task from dict", {
 
 test_that("task with single quotes", {
   skip_on_cran()
-  expect_data_table(OMLData$new(42727)$data)
+  odata = oml_data(42727, parquet = FALSE)
+  expect_data_table(odata$data)
 })

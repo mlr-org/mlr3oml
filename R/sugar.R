@@ -15,9 +15,9 @@
 #' @export
 oml_data = function(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
   ) {
   OMLData$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }
@@ -26,9 +26,9 @@ oml_data = function(
 #' @export
 oml_task = function(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
   ) {
   OMLTask$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }
@@ -37,8 +37,8 @@ oml_task = function(
 #' @export
 oml_flow = function(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  test_server = test_server_default()
   ) {
   OMLFlow$new(id = id, cache = cache, test_server = test_server)
 }
@@ -47,9 +47,9 @@ oml_flow = function(
 #' @export
 oml_run = function(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
   ) {
   OMLRun$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }
@@ -58,9 +58,9 @@ oml_run = function(
 #' @export
 oml_collection = function(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  parquet = getOption("mlr3oml.parquet", TRUE),
-  test_server = getOption("mlr3oml.test_server", FALSE)
+  cache = cache_default(),
+  parquet = parquet_default(),
+  test_server = test_server_default()
   ) {
   OMLCollection$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }

@@ -3,7 +3,7 @@
 #'   Vector of run ids to restrict to.
 #' @export
 list_oml_runs = function(run_id = NULL, task_id = NULL, tag = NULL, flow_id = NULL,
-  limit = getOption("mlr3oml.limit", 5000L), test_server = getOption("mlr3oml.test_server", FALSE), ...) {
+  limit = limit_default(), test_server = test_server_default(), ...) {
   tab = get_paginated_table("run",
     run = run_id,
     task = task_id,

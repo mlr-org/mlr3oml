@@ -19,6 +19,11 @@ test_that("Task 1 works", {
   expect_oml_task(oml_task)
 })
 
+test_that("Task 1 works with arff", {
+  oml_task = OMLTask$new(1, parquet = FALSE)
+  expect_oml_task(oml_task)
+})
+
 test_that("Task 100 works", {
   oml_task = OMLTask$new(1)
   expect_oml_task(oml_task)
@@ -36,6 +41,7 @@ test_that("OpenML CC-18 should work", {
     task = OMLTask$new(task_id)
     print(task_id)
     if (task$task_type %in% task_types) {
+      # https://github.com/duckdb/duckdb/issues/4806
       expect_oml_task(OMLTask$new(task_id))
     }
   }

@@ -38,8 +38,8 @@ OMLFlow = R6Class("OMLFlow",
     #' @template param_test_server
     initialize = function(
       id,
-      cache = getOption("mlr3oml.cache", FALSE),
-      test_server = getOption("mlr3oml.test_server", FALSE)
+      cache = cache_default(),
+      test_server = test_server_default()
       ) {
       super$initialize(id, cache, test_server, "flow")
     },

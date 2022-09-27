@@ -4,8 +4,8 @@
 #' @param setup_id (`integer()`)\cr
 #'   Vector of setup ids to restrict to.
 #' @export
-list_oml_setups = function(flow_id = NULL, setup_id = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE), ...) {
+list_oml_setups = function(flow_id = NULL, setup_id = NULL, tag = NULL, limit = limit_default(),
+  test_server = test_server_default(), ...) {
   tab = get_paginated_table("setup",
     flow = flow_id,
     setup = setup_id,
