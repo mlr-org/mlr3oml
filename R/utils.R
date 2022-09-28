@@ -61,6 +61,7 @@ transpose_name_value = function(li, as_integer = FALSE) {
 
 # remove this when it is merged in mlr3db (... in mlr3db is not passed to duckdb constructor...)
 as_duckdb_backend_character = function(data, primary_key = NULL) {
+  require_namespaces(c("DBI", "duckdb", "mlr3db"))
 
   assert_file_exists(data, access = "r", extension = "parquet")
   con = DBI::dbConnect(duckdb::duckdb())
