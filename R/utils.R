@@ -65,6 +65,7 @@ as_duckdb_backend_character = function(data, primary_key = NULL) {
 
   assert_file_exists(data, access = "r", extension = "parquet")
   con = DBI::dbConnect(duckdb::duckdb())
+  on.exit({DBI::dbDisconnect(con, shutdown = TRUE)}, add = TRUE)
 
   # 1. view: we create the data as is
   query = "CREATE OR REPLACE VIEW 'mlr3db_view' AS SELECT *"
@@ -111,6 +112,8 @@ as_duckdb_backend_character = function(data, primary_key = NULL) {
   backend = mlr3db::DataBackendDuckDB$new(con, table = "mlr3db_view_recoded_renamed", primary_key = primary_key,
     strings_as_factors = TRUE
   )
+
+  on.exit()
 
   backend
 }
