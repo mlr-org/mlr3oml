@@ -37,7 +37,9 @@ on \code{\link[data.table:fread]{data.table::fread()}}. Can also be set to \code
 \item \code{mlr3oml.parquet}: Enables or disables parquet as the default file format.
 If set to \code{TRUE}, the parquet version of datasets will be used by default.
 If set to \code{FALSE}, the arff version of datasets will be used by default.
-Default is \code{TRUE}.
+Note that the OpenML sever is still transitioning from arff to parquet and some features
+will work better with arff.
+Default is \code{FALSE}.
 }
 
 \strong{Relevant for developers}

@@ -11,6 +11,7 @@
   `as_data_backend`, `as_benchmark_result`.
 * Added support for parquet files that were recently introduced on OpenML.
   The global option `mlr3oml.parquet` can be used to enable or disable this.
+  By default it is `FALSE`
 * Implement an arff writer and remove the arff dependency, therefore also
   removing the option `"farff"` as the `mlr3oml.arff_parser`
 * Increment the cache version number due to changes in the cache structure: This
