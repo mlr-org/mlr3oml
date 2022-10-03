@@ -144,7 +144,7 @@ OMLData = R6Class("OMLData",
       existing = setdiff(backend$colnames, backend$primary_key)
       if (!test_subset(cols, existing)) {
         missing = setdiff(cols, existing)
-        warningf("Data is missing features {%s}.", paste0(missing, collapse = ", "))
+        warningf("Data is missing features from feature description {%s}.\n", paste0(missing, collapse = ", "))
       }
       backend$data(backend$rownames, cols)
     },

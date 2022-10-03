@@ -68,7 +68,8 @@ as_duckdb_backend_character = function(data, primary_key = NULL) {
   on.exit({DBI::dbDisconnect(con, shutdown = TRUE)}, add = TRUE)
 
   # 1. view: we create the data as is
-  query = "CREATE OR REPLACE VIEW 'mlr3db_view' AS SELECT *"
+  tbl = "mlr3db_view"
+  query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT *", tbl)
   if (is.null(primary_key)) {
     primary_key = "mlr3_row_id"
     query = paste0(query, ", row_number() OVER () AS mlr3_row_id")
@@ -80,36 +81,48 @@ as_duckdb_backend_character = function(data, primary_key = NULL) {
   DBI::dbExecute(con, query)
 
   # 2. view: we encode the booleans as VARCHAR
-  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('mlr3db_view')"))
+  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('%s')", tbl))
   vars_orig = table_info$name
-  type = table_info$type
-  vars = paste0("\"", vars_orig, "\"")
-  vars[type == "BOOLEAN"] = paste0(vars[type == "BOOLEAN"], "::VARCHAR")
-  vars = paste(vars, collapse = ", ")
+  if (any(table_info$type == "BOOLEAN")) {
+    tbl_prev = tbl
+    tbl = "mlr3db_view_recoded"
+    type = table_info$type
+    vars = paste0("\"", vars_orig, "\"")
+    vars[type == "BOOLEAN"] = paste0(vars[type == "BOOLEAN"], "::VARCHAR")
+    vars = paste(vars, collapse = ", ")
 
-  query = sprintf("CREATE OR REPLACE VIEW 'mlr3db_view_recoded' AS SELECT %s from 'mlr3db_view'", vars)
-  DBI::dbExecute(con, query)
-
-  # 3. view: we normalize the names
-
-  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('mlr3db_view_recoded')"))
-  old = table_info$name
-  new = make.names(vars_orig)
-
-  if (anyDuplicated(new)) {
-    # this might be triggered by a duckdb bug
-    # https://github.com/duckdb/duckdb/issues/4806
-    stopf("No unique names after conversion.")
+    query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'", tbl, vars, tbl_prev)
+    DBI::dbExecute(con, query)
   }
 
-  tmp_old = paste0("\"", old, "\"")
-  tmp_new = paste0("\"", new, "\"")
-  renamings = paste(tmp_old, "AS", tmp_new, collapse = ", ")
+  # 3. view: we normalize the names
+  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('%s')", tbl))
+  old = table_info$name
+  new = make.names(vars_orig)
+  # recoding bools always creates names that have to be fixed
+  if (any(old != new)) {
+    tbl_prev = tbl
+    tbl = "mlr3db_view_renamed"
+    old = table_info$name
+    new = make.names(vars_orig)
 
-  query = sprintf("CREATE OR REPLACE VIEW 'mlr3db_view_recoded_renamed' AS SELECT %s from 'mlr3db_view_recoded'", renamings)
-  DBI::dbExecute(con, query)
+    if (anyDuplicated(new)) {
+      # this might be triggered by a duckdb bug
+      # https://github.com/duckdb/duckdb/issues/4806
+      stopf("No unique names after conversion.")
+    }
 
-  backend = mlr3db::DataBackendDuckDB$new(con, table = "mlr3db_view_recoded_renamed", primary_key = primary_key,
+    tmp_old = paste0("\"", old, "\"")
+    tmp_new = paste0("\"", new, "\"")
+    renamings = paste(tmp_old, "AS", tmp_new, collapse = ", ")
+
+    query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'",
+      tbl, renamings, tbl_prev
+    )
+    DBI::dbExecute(con, query)
+  }
+
+  backend = mlr3db::DataBackendDuckDB$new(con, table = tbl, primary_key = primary_key,
     strings_as_factors = TRUE
   )
 
