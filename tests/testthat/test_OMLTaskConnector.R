@@ -1,7 +1,7 @@
 skip_on_cran()
 
 test_that("Construct task from dict", {
-  expect_task(tsk("oml", task_id = 9))
+  expect_r6(tsk("oml", task_id = 9), "Task")
 })
 
 test_that("Correct backend", {

@@ -5,7 +5,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom methods hasArg
 #' @importFrom stats rnorm
-#' @importFrom utils installed.packages tail download.file
+#' @importFrom utils installed.packages tail
 #'
 #' @section mlr3 Integration:
 #' This package adds the [mlr3::Task] `"oml"` and the [mlr3::Resampling] `"oml"` to
@@ -32,6 +32,8 @@
 #' * `mlr3oml.parquet`: Enables or disables parquet as the default file format.
 #'   If set to `TRUE`, the parquet version of datasets will be used by default.
 #'   If set to `FALSE`, the arff version of datasets will be used by default.
+#'   Note that the OpenML sever is still transitioning from arff to parquet and some features
+#'   will work better with arff.
 #'   Default is `FALSE`.
 #'
 #' **Relevant for developers**

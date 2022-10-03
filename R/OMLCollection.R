@@ -59,9 +59,9 @@
 #' bmr$score(msr("classif.ce"))
 #'
 #' # OpenML task collection
-#' task_collection = OMLCollection$new(id = 99)
+#' task_collection = OMLCollection$new(id = 258)
 #' # using sugar
-#' task_collection = oml_collection(id = 99)
+#' task_collection = oml_collection(id = 258)
 #'
 #' task_collection$main_entity_type
 #' task_collection$tasks
@@ -88,9 +88,9 @@ OMLCollection = R6Class("OMLCollection",
     #' @template param_test_server
     initialize = function(
       id,
-      cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
-      test_server = getOption("mlr3oml.test_server", FALSE)
+      cache = cache_default(),
+      parquet = parquet_default(),
+      test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
       super$initialize(id, cache, test_server, "collection")

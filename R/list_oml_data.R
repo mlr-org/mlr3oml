@@ -69,8 +69,8 @@
 #' runs[, .N, by = task_id]
 #' }
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
-  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = getOption("mlr3oml.limit", 5000L),
-  test_server = getOption("mlr3oml.test_server", FALSE), ...) {
+  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),
+  test_server = test_server_default(), ...) {
   tab = get_paginated_table("data",
     data_id = data_id,
     data_name = data_name,

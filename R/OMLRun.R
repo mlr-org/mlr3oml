@@ -52,9 +52,9 @@ OMLRun = R6Class("OMLRun",
     #' @template param_test_server
     initialize = function(
       id,
-      cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
-      test_server = getOption("mlr3oml.test_server", FALSE)
+      cache = cache_default(),
+      parquet = parquet_default(),
+      test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
       super$initialize(id, cache, test_server, "run")

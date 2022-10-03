@@ -14,14 +14,13 @@ OMLObject = R6Class("OMLObject",
     #'
     #' @template param_id
     #' @template param_cache
-    #' @template param_parquet
     #' @template param_test_server
     #' @param type (`charcater()`)\cr
     #'   The type of OpenML object (e.g. run, task, ...).
     initialize = function(
       id,
-      cache = getOption("mlr3oml.cache", FALSE),
-      test_server = getOption("mlr3oml.test_server", FALSE),
+      cache = cache_default(),
+      test_server = test_server_default(),
       type
       ) {
       private$.test_server = assert_flag(test_server)

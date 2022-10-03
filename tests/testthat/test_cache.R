@@ -32,7 +32,7 @@ test_that("Seperate caches are used for test and public server", {
 
 test_that("Caching works for parquet", {
   cachedir = tempfile()
-  OMLData$new(31, cache = cachedir, parquet = TRUE)$data
+  x = OMLData$new(31, cache = cachedir, parquet = TRUE)$data
   expect_true("31.parquet" %in% list.files(file.path(cachedir, "public", "data_parquet")))
 
 })
@@ -58,20 +58,21 @@ test_that("Caching works with parquet and custom cache path", {
   expect_true("9.qs" %in% list.files(file.path(dir, "public", "data")))
 })
 
-test_that("Caching works with parquet and test server", {
-  with_test_server()
-  dir = tempfile()
-  odata = OMLData$new(9, parquet = TRUE, cache = dir, test_server = TRUE)
-  odata$desc
-  dat = odata$data
-  files = list.files(odata$cache_dir)
-  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_desc")))
-  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_features")))
-  expect_true("9.parquet" %in% list.files(file.path(dir, "test", "data_parquet")))
-
-  odata = OMLData$new(9, parquet = FALSE, cache = dir, test_server = TRUE)
-  odata$data
-  files = list.files(file.path(dir, "test"))
-  expect_true("data" %in% files)
-  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data")))
-})
+# https://github.com/openml/openml-data/issues/50
+# test_that("Caching works with parquet and test server", {
+#   with_test_server()
+#   dir = tempfile()
+#   odata = OMLData$new(9, parquet = TRUE, cache = dir, test_server = TRUE)
+#   odata$desc
+#   dat = odata$data
+#   files = list.files(odata$cache_dir)
+#   expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_desc")))
+#   expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_features")))
+#   expect_true("9.parquet" %in% list.files(file.path(dir, "test", "data_parquet")))
+#
+#   odata = OMLData$new(9, parquet = FALSE, cache = dir, test_server = TRUE)
+#   odata$data
+#   files = list.files(file.path(dir, "test"))
+#   expect_true("data" %in% files)
+#   expect_true("9.qs" %in% list.files(file.path(dir, "test", "data")))
+# })

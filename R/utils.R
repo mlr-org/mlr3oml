@@ -58,3 +58,76 @@ transpose_name_value = function(li, as_integer = FALSE) {
 
   remove_named(tab, "..dummy")
 }
+
+# remove this when it is merged in mlr3db (... in mlr3db is not passed to duckdb constructor...)
+as_duckdb_backend_character = function(data, primary_key = NULL) {
+  require_namespaces(c("DBI", "duckdb", "mlr3db"))
+
+  assert_file_exists(data, access = "r", extension = "parquet")
+  con = DBI::dbConnect(duckdb::duckdb())
+  on.exit({DBI::dbDisconnect(con, shutdown = TRUE)}, add = TRUE)
+
+  # 1. view: we create the data as is
+  tbl = "mlr3db_view"
+  query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT *", tbl)
+  if (is.null(primary_key)) {
+    primary_key = "mlr3_row_id"
+    query = paste0(query, ", row_number() OVER () AS mlr3_row_id")
+  } else {
+    assert_string(primary_key)
+  }
+
+  query = sprintf("%s FROM parquet_scan(['%s'])", query, paste0(data, collapse = "','"))
+  DBI::dbExecute(con, query)
+
+  # 2. view: we encode the booleans as VARCHAR
+  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('%s')", tbl))
+  vars_orig = table_info$name
+  if (any(table_info$type == "BOOLEAN")) {
+    tbl_prev = tbl
+    tbl = "mlr3db_view_recoded"
+    type = table_info$type
+    vars = paste0("\"", vars_orig, "\"")
+    vars[type == "BOOLEAN"] = paste0(vars[type == "BOOLEAN"], "::VARCHAR")
+    vars = paste(vars, collapse = ", ")
+
+    query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'", tbl, vars, tbl_prev)
+    DBI::dbExecute(con, query)
+  }
+
+  # 3. view: we normalize the names
+  table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('%s')", tbl))
+  old = table_info$name
+  new = make.names(vars_orig)
+  # recoding bools always creates names that have to be fixed
+  if (any(old != new)) {
+    tbl_prev = tbl
+    tbl = "mlr3db_view_renamed"
+    old = table_info$name
+    new = make.names(vars_orig)
+
+    if (anyDuplicated(new)) {
+      # this might be triggered by a duckdb bug
+      # https://github.com/duckdb/duckdb/issues/4806
+      stopf("No unique names after conversion.")
+    }
+
+    tmp_old = paste0("\"", old, "\"")
+    tmp_new = paste0("\"", new, "\"")
+    renamings = paste(tmp_old, "AS", tmp_new, collapse = ", ")
+
+    query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'",
+      tbl, renamings, tbl_prev
+    )
+    DBI::dbExecute(con, query)
+  }
+
+  backend = mlr3db::DataBackendDuckDB$new(con, table = tbl, primary_key = primary_key,
+    strings_as_factors = TRUE
+  )
+
+  on.exit()
+
+  backend
+}
+

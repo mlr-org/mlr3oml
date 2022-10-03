@@ -11,6 +11,12 @@ test_that("OMLData iris arff", {
   expect_data_table(oml_data$data, nrows = 150L, ncols = 5L)
 })
 
+test_that("Correct warning when dataset is missing columns", {
+  id = 313
+  odata = oml_data(313, parquet = TRUE)
+  expect_warning(odata$data)
+})
+
 test_that("OMLData iris parquet", {
   oml_data = OMLData$new(61, parquet = TRUE)
   expect_oml_data(oml_data)
@@ -27,8 +33,8 @@ test_that("no default target column fails gracefully (#1)", {
   oml_data = OMLData$new(data_id, FALSE)
   expect_oml_data(oml_data)
   expect_error(mlr3::as_task(oml_data), "default target attribute")
-  expect_task(mlr3::as_task(oml_data, "V10"))
-  expect_task(mlr3::tsk("oml", data_id = data_id, target_names = "V10"))
+  expect_r6(mlr3::as_task(oml_data, "V10"), "Task")
+  expect_r6(mlr3::tsk("oml", data_id = data_id, target_names = "V10"), "Task")
 })
 
 test_that("arff with wrong quotes", {
@@ -103,4 +109,12 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
   odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDuckDB")
+})
+
+test_that("Logicals are converted to factor", {
+  odata = oml_data(1050)
+  backend = as_data_backend(odata)
+  # renaming worked
+  assert_true("c" %in% backend$colnames)
+  expect_oml_data(odata)
 })

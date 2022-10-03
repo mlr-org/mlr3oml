@@ -45,9 +45,9 @@ OMLTask = R6Class("OMLTask",
     #' @template param_test_server
     initialize = function(
       id,
-      cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
-      test_server = getOption("mlr3oml.test_server", FALSE)
+      cache = cache_default(),
+      parquet = parquet_default(),
+      test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
       super$initialize(id, cache, test_server, "task")
@@ -179,7 +179,7 @@ as_task.OMLTask = function(x, ...) {
 
   target = x$target_names
   feature_names = x$feature_names
-  backend = get_private(x$data)$.get_backend()
+  backend = as_data_backend(x)
   miss = setdiff(target, backend$colnames)
   if (length(miss)) {
     stopf("Task %i could not be created: target '%s' not found in data", x$id, miss[1L])
@@ -193,7 +193,6 @@ as_task.OMLTask = function(x, ...) {
     stopf("Unsupported task type '%s'.", x$desc$task_type)
   )
   task = constructor$new(name, backend, target = target)
-  task$col_roles$feature = x$feature_names
   backend$hash = sprintf("mlr3oml::task_%i", x$id)
   task$.__enclos_env__$private$oml$id = x$id
   task$.__enclos_env__$private$oml$hash = task$hash

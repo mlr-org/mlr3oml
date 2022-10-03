@@ -85,9 +85,9 @@ OMLData = R6Class("OMLData",
     #' @template param_test_server
     initialize = function(
       id,
-      cache = getOption("mlr3oml.cache", FALSE),
-      parquet = getOption("mlr3oml.parquet", FALSE),
-      test_server = getOption("mlr3oml.test_server", FALSE)
+      cache = cache_default(),
+      parquet = parquet_default(),
+      test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
       super$initialize(id, cache, test_server, "data")
@@ -97,7 +97,8 @@ OMLData = R6Class("OMLData",
     #' For a more detailed printer, convert to a [mlr3::Task] via `as_task()`.
     print = function() {
       catf("<OMLData:%i:%s> (%ix%i)", self$id, as_short_string(self$name), self$nrow, self$ncol)
-      catf(" * Default target: %s", as_short_string(self$target_names))
+      dt = if (length(self$target_names)) as_short_string(self$target_names) else "<none>"
+      catf(" * Default target: %s", dt)
       if (self$test_server) {
         catf(" * Using test server")
       }
@@ -137,9 +138,15 @@ OMLData = R6Class("OMLData",
     #' @field data (`data.table()`)\cr
     #' Returns the data (without the row identifier and ignore id columns).
     data = function() {
-      cols = !self$features$is_ignore & !self$features$is_row_identifier
       backend = private$.get_backend()
-      backend$data(backend$rownames, self$features$name[cols])
+      ii = !self$features$is_ignore & !self$features$is_row_identifier
+      cols = self$features$name[ii]
+      existing = setdiff(backend$colnames, backend$primary_key)
+      if (!test_subset(cols, existing)) {
+        missing = setdiff(cols, existing)
+        warningf("Data is missing features from feature description {%s}.\n", paste0(missing, collapse = ", "))
+      }
+      backend$data(backend$rownames, cols)
     },
     #' @field features (`data.table()`)\cr
     #' Information about data set features (including target), downloaded from the JSON API response and
@@ -219,33 +226,26 @@ OMLData = R6Class("OMLData",
       if (!is.null(private$.backend)) {
         return(private$.backend)
       }
+      backend = NULL
       if (self$parquet) {
-        backend = try({
-          path = self$parquet_path
-          backend = mlr3db::as_duckdb_backend(path, primary_key = primary_key)
-          if (!test_names(backend$colnames, type = "strict")) {
-            new = make.names(backend$colnames)
-            if (anyDuplicated(new)) {
-              stopf("No unique names after conversion.")
-            }
-            # This code is a little hacky. The reason is that DataBackendRename is not exported
-            # in mlr3 and only accessible via DataBackendRename (mlr3 version 0.14).
-            # This can be changed when it is exported in mlr3.
-            backend = withr::with_options(list(mlr3.allow_utf8_names = TRUE),
-              Task$new("temp", "regr", backend)$rename(backend$colnames, new)$backend
-            )
-          }
-          backend
-        }, silent = TRUE)
-
-        if (inherits(backend, "try-error")) {
+        require_namespaces(c("mlr3db", "duckdb", "DBI"))
+        path = try({self$parquet_path}, silent = TRUE)
+        if (inherits(path, "try-error")) {
           lg$info("Failed to download parquet, trying arff.", id = self$id)
-          data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
-            server = self$server, test_server = self$test_server
-          )
-          backend = as_data_backend(data, primary_key = primary_key)
+        } else {
+          backend = try(as_duckdb_backend_character(path, primary_key = primary_key), silent = TRUE)
+          if (inherits(backend, "try-error")) {
+            msg = paste(
+              "Parquet available but failed to create backend, reverting to arff.",
+              "This might be due to a bug in duckdb, that happens with many columns.",
+              "It might also be that the parquet version of the dataset is faulty.",
+              sep = "\n"
+            )
+            lg$info(msg, id = self$id)
+          }
         }
-      } else {
+      }
+      if (is.null(backend) || inherits(path, "try-error") || inherits(backend, "try-error")) {
         data = cached(download_arff, "data", self$id, desc = self$desc, cache_dir = self$cache_dir,
           server = self$server, test_server = self$test_server
         )

@@ -58,8 +58,8 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLObject$new(
   id,
-  cache = getOption("mlr3oml.cache", FALSE),
-  test_server = getOption("mlr3oml.test_server", FALSE),
+  cache = cache_default(),
+  test_server = test_server_default(),
   type
 )}\if{html}{\out{</div>}}
 }
