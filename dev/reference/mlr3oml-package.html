@@ -101,7 +101,7 @@ If set to <code>FALSE</code>, caching is disabled.
 If set to <code>TRUE</code>, cache directory as reported by <code>R_user_dir()</code> is used.
 Alternatively, you can specify a path on the local file system here.
 Default is <code>FALSE</code>.</p></li>
-<li><p><code>mlr3oml.api_key</code>: API key to use. All operations supported by this package
+<li><p><code>mlr3oml.api_key</code>: API key to use. All operations  supported by this package
 work without an API key, but you might get rate limited without an API key.
 If not set, defaults to the value of the environment variable <code>OPENMLAPIKEY</code>.</p></li>
 <li><p><code>mlr3oml.arff_parser</code>: ARFF parser to use, defaults to the internal one relies
@@ -110,6 +110,8 @@ on <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html" 
 <li><p><code>mlr3oml.parquet</code>: Enables or disables parquet as the default file format.
 If set to <code>TRUE</code>, the parquet version of datasets will be used by default.
 If set to <code>FALSE</code>, the arff version of datasets will be used by default.
+Note that the OpenML sever is still transitioning from arff to parquet and some features
+will work better with arff.
 Default is <code>FALSE</code>.</p></li>
 </ul><p><strong>Relevant for developers</strong></p><ul><li><p><code>mlr3oml.test_server</code>:
 The default value for whether to use the OpenML <a href="https://test.openml.org/" class="external-link">test server</a>.

@@ -100,36 +100,32 @@ oml_collection() - creates an instance of the R6 class OMLCollection.
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">oml_data</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
-<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  parquet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.parquet"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  test_server <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.test_server"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  cache <span class="op">=</span> <span class="fu">cache_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  parquet <span class="op">=</span> <span class="fu">parquet_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  test_server <span class="op">=</span> <span class="fu">test_server_default</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">oml_task</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
-<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  parquet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.parquet"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  test_server <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.test_server"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  cache <span class="op">=</span> <span class="fu">cache_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  parquet <span class="op">=</span> <span class="fu">parquet_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  test_server <span class="op">=</span> <span class="fu">test_server_default</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">oml_flow</span><span class="op">(</span></span>
-<span>  <span class="va">id</span>,</span>
-<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  test_server <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.test_server"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu">oml_flow</span><span class="op">(</span><span class="va">id</span>, cache <span class="op">=</span> <span class="fu">cache_default</span><span class="op">(</span><span class="op">)</span>, test_server <span class="op">=</span> <span class="fu">test_server_default</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">oml_run</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
-<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  parquet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.parquet"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  test_server <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.test_server"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  cache <span class="op">=</span> <span class="fu">cache_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  parquet <span class="op">=</span> <span class="fu">parquet_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  test_server <span class="op">=</span> <span class="fu">test_server_default</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">oml_collection</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
-<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  parquet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.parquet"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  test_server <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.test_server"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  cache <span class="op">=</span> <span class="fu">cache_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  parquet <span class="op">=</span> <span class="fu">parquet_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  test_server <span class="op">=</span> <span class="fu">test_server_default</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 

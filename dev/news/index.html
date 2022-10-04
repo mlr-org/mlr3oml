@@ -79,7 +79,8 @@
 <li>Add sugar functions <code>oml_flow</code>, <code>oml_data</code>, <code>oml_task</code>, <code>oml_run</code>, <code>oml_collection</code> for all OpenML objects.</li>
 <li>Conversion from OpenML to mlr3 objects is now only possible with the usual s3 converters <code>as_xxx</code>. This improves the consistency by ensuring that the subcomponents of OpenML objects are always OpenML objects and not suddenly mlr3 objects.</li>
 <li>Added more converter functions: <code>as_learner</code>, <code>as_resample_result</code>, <code>as_data_backend</code>, <code>as_benchmark_result</code>.</li>
-<li>Added support for parquet files that were recently introduced on OpenML. The global option <code>mlr3oml.parquet</code> can be used to enable or disable this.</li>
+<li>Added support for parquet files that were recently introduced on OpenML. The global option <code>mlr3oml.parquet</code> can be used to enable or disable this. By default it is <code>FALSE</code>
+</li>
 <li>Implement an arff writer and remove the arff dependency, therefore also removing the option <code>"farff"</code> as the <code>mlr3oml.arff_parser</code>
 </li>
 <li>Increment the cache version number due to changes in the cache structure: This will flush the previous cache folder.</li>

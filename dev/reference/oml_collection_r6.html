@@ -225,9 +225,9 @@ A data.table summarizing the tasks included in the collection.</p></dd>
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/oml_collection_r6.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
 <span>  <span class="va">id</span>,</span>
-<span>  cache <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.cache"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  parquet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.parquet"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  test_server <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"mlr3oml.test_server"</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  cache <span class="op">=</span> <span class="fu">cache_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  parquet <span class="op">=</span> <span class="fu">parquet_default</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  test_server <span class="op">=</span> <span class="fu">test_server_default</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -336,46 +336,46 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-in"><span><span class="va">bmr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_benchmark_result.html" class="external-link">as_benchmark_result</a></span><span class="op">(</span><span class="va">run_collection</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">bmr</span><span class="op">$</span><span class="fu">score</span><span class="op">(</span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">msr</a></span><span class="op">(</span><span class="st">"classif.ce"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 496c8571-bf26-41cf-ac87-c64207eb699d  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 8643157a-0a95-4b83-afea-ad9f79c24ef3  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30: bf82c819-365a-4124-b4c8-7f68a961cfe4  3 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40: 6282a3a5-b7ca-4086-9636-b7ebf5b3dbbd  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10: 7555b0d0-8c7b-4bba-b9c4-9eb51ede686e  1 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20: 13409f1c-9e91-4a1a-8035-b22ddd4e34bc  2 &lt;TaskClassif[50]&gt; kr-vs-kp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30: 4c6beb53-a7df-4d75-b04b-4e5a578cc068  3 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40: f59b3659-3c38-44d1-9342-5f6a1e8be14c  4 &lt;TaskClassif[50]&gt;   letter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    uhash nr              task  task_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          learner learner_id             resampling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1: &lt;LearnerClassifOML17374[36]&gt;  oml.17374 &lt;ResamplingCustom[20]&gt;</span>
@@ -463,384 +463,66 @@ Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</
 <span class="r-out co"><span class="r-pr">#&gt;</span>     resampling_id iteration              prediction  classif.ce</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># OpenML task collection</span></span></span>
-<span class="r-in"><span><span class="va">task_collection</span> <span class="op">=</span> <span class="va">OMLCollection</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fl">99</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">task_collection</span> <span class="op">=</span> <span class="va">OMLCollection</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fl">258</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># using sugar</span></span></span>
-<span class="r-in"><span><span class="va">task_collection</span> <span class="op">=</span> <span class="fu"><a href="oml_sugar.html">oml_collection</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">99</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">task_collection</span> <span class="op">=</span> <span class="fu"><a href="oml_sugar.html">oml_collection</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">258</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">task_collection</span><span class="op">$</span><span class="va">main_entity_type</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "task"</span>
 <span class="r-in"><span><span class="va">task_collection</span><span class="op">$</span><span class="va">tasks</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         id          task                           data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      3 &lt;OMLTask[25]&gt;                       kr-vs-kp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      6 &lt;OMLTask[25]&gt;                         letter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     11 &lt;OMLTask[25]&gt;                  balance-scale</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     12 &lt;OMLTask[25]&gt;                  mfeat-factors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     14 &lt;OMLTask[25]&gt;                  mfeat-fourier</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     15 &lt;OMLTask[25]&gt;                       breast-w</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     16 &lt;OMLTask[25]&gt;                 mfeat-karhunen</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:     18 &lt;OMLTask[25]&gt;            mfeat-morphological</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:     22 &lt;OMLTask[25]&gt;                  mfeat-zernike</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:     23 &lt;OMLTask[25]&gt;                            cmc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:     28 &lt;OMLTask[25]&gt;                      optdigits</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:     29 &lt;OMLTask[25]&gt;                credit-approval</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:     31 &lt;OMLTask[25]&gt;                       credit-g</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:     32 &lt;OMLTask[25]&gt;                      pendigits</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:     37 &lt;OMLTask[25]&gt;                       diabetes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:     43 &lt;OMLTask[25]&gt;                       spambase</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:     45 &lt;OMLTask[25]&gt;                         splice</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:     49 &lt;OMLTask[25]&gt;                    tic-tac-toe</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:     53 &lt;OMLTask[25]&gt;                        vehicle</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    219 &lt;OMLTask[25]&gt;                    electricity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:   2074 &lt;OMLTask[25]&gt;                       satimage</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:   2079 &lt;OMLTask[25]&gt;                     eucalyptus</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:   3021 &lt;OMLTask[25]&gt;                           sick</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:   3022 &lt;OMLTask[25]&gt;                          vowel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:   3481 &lt;OMLTask[25]&gt;                         isolet</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:   3549 &lt;OMLTask[25]&gt;         analcatdata_authorship</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:   3560 &lt;OMLTask[25]&gt;               analcatdata_dmft</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:   3573 &lt;OMLTask[25]&gt;                      mnist_784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:   3902 &lt;OMLTask[25]&gt;                            pc4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:   3903 &lt;OMLTask[25]&gt;                            pc3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:   3904 &lt;OMLTask[25]&gt;                            jm1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:   3913 &lt;OMLTask[25]&gt;                            kc2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:   3917 &lt;OMLTask[25]&gt;                            kc1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:   3918 &lt;OMLTask[25]&gt;                            pc1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:   7592 &lt;OMLTask[25]&gt;                          adult</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:   9910 &lt;OMLTask[25]&gt;                    Bioresponse</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:   9946 &lt;OMLTask[25]&gt;                           wdbc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:   9952 &lt;OMLTask[25]&gt;                        phoneme</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:   9957 &lt;OMLTask[25]&gt;                    qsar-biodeg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:   9960 &lt;OMLTask[25]&gt;          wall-robot-navigation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:   9964 &lt;OMLTask[25]&gt;                        semeion</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:   9971 &lt;OMLTask[25]&gt;                           ilpd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:   9976 &lt;OMLTask[25]&gt;                        madelon</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:   9977 &lt;OMLTask[25]&gt;                          nomao</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:   9978 &lt;OMLTask[25]&gt;                ozone-level-8hr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:   9981 &lt;OMLTask[25]&gt;                         cnae-9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:   9985 &lt;OMLTask[25]&gt;    first-order-theorem-proving</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:  10093 &lt;OMLTask[25]&gt;        banknote-authentication</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:  10101 &lt;OMLTask[25]&gt; blood-transfusion-service[...]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:  14952 &lt;OMLTask[25]&gt;               PhishingWebsites</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:  14954 &lt;OMLTask[25]&gt;                 cylinder-bands</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:  14965 &lt;OMLTask[25]&gt;                 bank-marketing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:  14969 &lt;OMLTask[25]&gt; GesturePhaseSegmentationP[...]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:  14970 &lt;OMLTask[25]&gt;                            har</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55: 125920 &lt;OMLTask[25]&gt;                  dresses-sales</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56: 125922 &lt;OMLTask[25]&gt;                        texture</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57: 146195 &lt;OMLTask[25]&gt;                      connect-4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58: 146800 &lt;OMLTask[25]&gt;                    MiceProtein</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59: 146817 &lt;OMLTask[25]&gt;             steel-plates-fault</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60: 146819 &lt;OMLTask[25]&gt; climate-model-simulation-[...]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61: 146820 &lt;OMLTask[25]&gt;                           wilt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62: 146821 &lt;OMLTask[25]&gt;                            car</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63: 146822 &lt;OMLTask[25]&gt;                        segment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64: 146824 &lt;OMLTask[25]&gt;                    mfeat-pixel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65: 146825 &lt;OMLTask[25]&gt;                  Fashion-MNIST</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66: 167119 &lt;OMLTask[25]&gt; jungle_chess_2pcs_raw_end[...]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67: 167120 &lt;OMLTask[25]&gt;                    numerai28.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68: 167121 &lt;OMLTask[25]&gt;               Devnagari-Script</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69: 167124 &lt;OMLTask[25]&gt;                       CIFAR_10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70: 167125 &lt;OMLTask[25]&gt;        Internet-Advertisements</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71: 167140 &lt;OMLTask[25]&gt;                            dna</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72: 167141 &lt;OMLTask[25]&gt;                          churn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         id          task                           data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     task_type                    target  nrow ncol missing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1: Supervised Classification                     class  3196   37       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2: Supervised Classification                     class 20000   17       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3: Supervised Classification                     class   625    5       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4: Supervised Classification                     class  2000  217       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5: Supervised Classification                     class  2000   77       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6: Supervised Classification                     Class   699   10      16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7: Supervised Classification                     class  2000   65       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8: Supervised Classification                     class  2000    7       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9: Supervised Classification                     class  2000   48       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10: Supervised Classification Contraceptive_method_used  1473   10       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11: Supervised Classification                     class  5620   65       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12: Supervised Classification                     class   690   16      67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13: Supervised Classification                     class  1000   21       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14: Supervised Classification                     class 10992   17       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15: Supervised Classification                     class   768    9       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16: Supervised Classification                     class  4601   58       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17: Supervised Classification                     Class  3190   61       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18: Supervised Classification                     Class   958   10       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19: Supervised Classification                     Class   846   19       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20: Supervised Classification                     class 45312    9       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21: Supervised Classification                     class  6430   37       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22: Supervised Classification                   Utility   736   20     448</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23: Supervised Classification                     Class  3772   30    6064</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24: Supervised Classification                     Class   990   13       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25: Supervised Classification                     class  7797  618       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26: Supervised Classification                    Author   841   71       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27: Supervised Classification                Prevention   797    5       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28: Supervised Classification                     class 70000  785       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29: Supervised Classification                         c  1458   38       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30: Supervised Classification                         c  1563   38       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31: Supervised Classification                   defects 10885   22      25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32: Supervised Classification                  problems   522   22       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33: Supervised Classification                   defects  2109   22       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34: Supervised Classification                   defects  1109   22       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35: Supervised Classification                     class 48842   15    6465</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36: Supervised Classification                    target  3751 1777       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37: Supervised Classification                     Class   569   31       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38: Supervised Classification                     Class  5404    6       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39: Supervised Classification                     Class  1055   42       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40: Supervised Classification                     Class  5456   25       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41: Supervised Classification                     Class  1593  257       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42: Supervised Classification                     Class   583   11       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43: Supervised Classification                     Class  2600  501       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44: Supervised Classification                     Class 34465  119       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45: Supervised Classification                     Class  2534   73       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46: Supervised Classification                     Class  1080  857       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47: Supervised Classification                     Class  6118   52       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48: Supervised Classification                     Class  1372    5       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49: Supervised Classification                     Class   748    5       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50: Supervised Classification                    Result 11055   31       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51: Supervised Classification                 band_type   540   40     999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52: Supervised Classification                     Class 45211   17       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53: Supervised Classification                     Phase  9873   33       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54: Supervised Classification                     Class 10299  562       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55: Supervised Classification                     Class   500   13     835</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56: Supervised Classification                     Class  5500   41       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57: Supervised Classification                     class 67557   43       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58: Supervised Classification                     class  1080   82    1396</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59: Supervised Classification                    target  1941   28       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60: Supervised Classification                   outcome   540   21       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61: Supervised Classification                     class  4839    6       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62: Supervised Classification                     class  1728    7       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63: Supervised Classification                     class  2310   20       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64: Supervised Classification                     class  2000  241       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65: Supervised Classification                     class 70000  785       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66: Supervised Classification                     class 44819    7       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67: Supervised Classification              attribute_21 96320   22       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68: Supervised Classification                 character 92000 1025       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69: Supervised Classification                     class 60000 3073       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70: Supervised Classification                     class  3279 1559       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71: Supervised Classification                     class  3186  181       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72: Supervised Classification                     class  5000   21       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     task_type                    target  nrow ncol missing</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     numeric symbolic binary     task_splits</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:       0       37     35 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      16        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:       4        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     216        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      76        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       9        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:      64        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       6        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      47        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:       2        8      3 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:      64        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:       6       10      5 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:       7       14      3 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:      16        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:       8        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:      57        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:       0       61      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:       0       10      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:      18        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:       7        2      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:      36        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:      14        6      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:       7       23     21 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:      10        3      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:     617        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:      70        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:       0        5      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:     784        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:      37        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:      37        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:      21        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:      21        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:      21        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:      21        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:       6        9      2 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:    1776        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:      30        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:       5        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:      41        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:      24        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:     256        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:       9        2      2 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:     500        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:      89       30      3 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:      72        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:     856        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:      51        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:       4        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:       4        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:       0       31     23 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:      18       22      4 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:       7       10      4 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:      32        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:     561        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55:       1       12      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56:      40        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57:       0       43      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58:      77        5      3 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59:      27        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60:      20        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61:       5        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62:       0        7      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63:      19        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64:     240        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65:     784        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66:       6        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67:      21        1      1 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68:    1024        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69:    3072        1      0 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70:       3     1556   1556 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71:       0      181    180 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72:      16        5      3 crossvalidation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     numeric symbolic binary     task_splits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         id          task                    data                 task_type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     20 &lt;OMLTask[25]&gt;             mfeat-pixel Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     28 &lt;OMLTask[25]&gt;               optdigits Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:     29 &lt;OMLTask[25]&gt;         credit-approval Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:     32 &lt;OMLTask[25]&gt;               pendigits Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:     37 &lt;OMLTask[25]&gt;                diabetes Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:     49 &lt;OMLTask[25]&gt;             tic-tac-toe Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   3549 &lt;OMLTask[25]&gt;  analcatdata_authorship Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   3560 &lt;OMLTask[25]&gt;        analcatdata_dmft Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  10093 &lt;OMLTask[25]&gt; banknote-authentication Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  14970 &lt;OMLTask[25]&gt;                     har Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 125922 &lt;OMLTask[25]&gt;                 texture Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 146227 &lt;OMLTask[25]&gt;                   churn Supervised Classification</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         target  nrow ncol missing numeric symbolic binary     task_splits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      class  2000  241       0       0      241      0 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:      class  5620   65       0      64        1      0 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:      class   690   16      67       6       10      5 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:      class 10992   17       0      16        1      0 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:      class   768    9       0       8        1      1 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      Class   958   10       0       0       10      1 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:     Author   841   71       0      70        1      0 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8: Prevention   797    5       0       0        5      1 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:      Class  1372    5       0       4        1      1 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:      Class 10299  562       0     561        1      0 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:      Class  5500   41       0      40        1      0 crossvalidation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:      class  5000   21       0      16        5      3 crossvalidation</span>
 <span class="r-in"><span><span class="va">task_collection</span><span class="op">$</span><span class="va">data</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        id          data                                   name  nrow ncol</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:     3 &lt;OMLData[25]&gt;                               kr-vs-kp  3196   37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:     6 &lt;OMLData[25]&gt;                                 letter 20000   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:    11 &lt;OMLData[25]&gt;                          balance-scale   625    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:    12 &lt;OMLData[25]&gt;                          mfeat-factors  2000  217</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:    14 &lt;OMLData[25]&gt;                          mfeat-fourier  2000   77</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:    15 &lt;OMLData[25]&gt;                               breast-w   699   10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:    16 &lt;OMLData[25]&gt;                         mfeat-karhunen  2000   65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:    18 &lt;OMLData[25]&gt;                    mfeat-morphological  2000    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:    22 &lt;OMLData[25]&gt;                          mfeat-zernike  2000   48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:    23 &lt;OMLData[25]&gt;                                    cmc  1473   10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:    28 &lt;OMLData[25]&gt;                              optdigits  5620   65</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:    29 &lt;OMLData[25]&gt;                        credit-approval   690   16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:    31 &lt;OMLData[25]&gt;                               credit-g  1000   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:    32 &lt;OMLData[25]&gt;                              pendigits 10992   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:    37 &lt;OMLData[25]&gt;                               diabetes   768    9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    38 &lt;OMLData[25]&gt;                                   sick  3772   30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:    44 &lt;OMLData[25]&gt;                               spambase  4601   58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:    46 &lt;OMLData[25]&gt;                                 splice  3190   61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:    50 &lt;OMLData[25]&gt;                            tic-tac-toe   958   10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:    54 &lt;OMLData[25]&gt;                                vehicle   846   19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:   151 &lt;OMLData[25]&gt;                            electricity 45312    9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:   182 &lt;OMLData[25]&gt;                               satimage  6430   37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:   188 &lt;OMLData[25]&gt;                             eucalyptus   736   20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:   300 &lt;OMLData[25]&gt;                                 isolet  7797  618</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:   307 &lt;OMLData[25]&gt;                                  vowel   990   13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:   458 &lt;OMLData[25]&gt;                 analcatdata_authorship   841   71</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:   469 &lt;OMLData[25]&gt;                       analcatdata_dmft   797    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:   554 &lt;OMLData[25]&gt;                              mnist_784 70000  785</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:  1049 &lt;OMLData[25]&gt;                                    pc4  1458   38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:  1050 &lt;OMLData[25]&gt;                                    pc3  1563   38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:  1053 &lt;OMLData[25]&gt;                                    jm1 10885   22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:  1063 &lt;OMLData[25]&gt;                                    kc2   522   22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:  1067 &lt;OMLData[25]&gt;                                    kc1  2109   22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:  1068 &lt;OMLData[25]&gt;                                    pc1  1109   22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:  1461 &lt;OMLData[25]&gt;                         bank-marketing 45211   17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:  1462 &lt;OMLData[25]&gt;                banknote-authentication  1372    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:  1464 &lt;OMLData[25]&gt;       blood-transfusion-service-center   748    5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:  1468 &lt;OMLData[25]&gt;                                 cnae-9  1080  857</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:  1475 &lt;OMLData[25]&gt;            first-order-theorem-proving  6118   52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:  1478 &lt;OMLData[25]&gt;                                    har 10299  562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:  1480 &lt;OMLData[25]&gt;                                   ilpd   583   11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:  1485 &lt;OMLData[25]&gt;                                madelon  2600  501</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:  1486 &lt;OMLData[25]&gt;                                  nomao 34465  119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:  1487 &lt;OMLData[25]&gt;                        ozone-level-8hr  2534   73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:  1489 &lt;OMLData[25]&gt;                                phoneme  5404    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:  1494 &lt;OMLData[25]&gt;                            qsar-biodeg  1055   42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:  1497 &lt;OMLData[25]&gt;                  wall-robot-navigation  5456   25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:  1501 &lt;OMLData[25]&gt;                                semeion  1593  257</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:  1510 &lt;OMLData[25]&gt;                                   wdbc   569   31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:  1590 &lt;OMLData[25]&gt;                                  adult 48842   15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:  4134 &lt;OMLData[25]&gt;                            Bioresponse  3751 1777</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:  4534 &lt;OMLData[25]&gt;                       PhishingWebsites 11055   31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:  4538 &lt;OMLData[25]&gt;      GesturePhaseSegmentationProcessed  9873   33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:  6332 &lt;OMLData[25]&gt;                         cylinder-bands   540   40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55: 23381 &lt;OMLData[25]&gt;                          dresses-sales   500   13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56: 23517 &lt;OMLData[25]&gt;                            numerai28.6 96320   22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57: 40499 &lt;OMLData[25]&gt;                                texture  5500   41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58: 40668 &lt;OMLData[25]&gt;                              connect-4 67557   43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59: 40670 &lt;OMLData[25]&gt;                                    dna  3186  181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60: 40701 &lt;OMLData[25]&gt;                                  churn  5000   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61: 40923 &lt;OMLData[25]&gt;                       Devnagari-Script 92000 1025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62: 40927 &lt;OMLData[25]&gt;                               CIFAR_10 60000 3073</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63: 40966 &lt;OMLData[25]&gt;                            MiceProtein  1080   82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64: 40975 &lt;OMLData[25]&gt;                                    car  1728    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65: 40978 &lt;OMLData[25]&gt;                Internet-Advertisements  3279 1559</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66: 40979 &lt;OMLData[25]&gt;                            mfeat-pixel  2000  241</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67: 40982 &lt;OMLData[25]&gt;                     steel-plates-fault  1941   28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68: 40983 &lt;OMLData[25]&gt;                                   wilt  4839    6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69: 40984 &lt;OMLData[25]&gt;                                segment  2310   20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70: 40994 &lt;OMLData[25]&gt;       climate-model-simulation-crashes   540   21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71: 40996 &lt;OMLData[25]&gt;                          Fashion-MNIST 70000  785</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72: 41027 &lt;OMLData[25]&gt; jungle_chess_2pcs_raw_endgame_complete 44819    7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        id          data                                   name  nrow ncol</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     missing numeric symbolic binary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  1:       0       0       37     35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  2:       0      16        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  3:       0       4        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  4:       0     216        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  5:       0      76        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  6:      16       9        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7:       0      64        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  8:       0       6        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  9:       0      47        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10:       0       2        8      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11:       0      64        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12:      67       6       10      5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13:       0       7       14      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14:       0      16        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15:       0       8        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16:    6064       7       23     21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17:       0      57        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18:       0       0       61      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19:       0       0       10      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20:       0      18        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21:       0       7        2      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22:       0      36        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23:     448      14        6      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24:       0     617        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25:       0      10        3      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26:       0      70        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27:       0       0        5      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28:       0     784        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29:       0      37        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30:       0      37        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31:      25      21        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32:       0      21        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33:       0      21        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34:       0      21        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35:       0       7       10      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36:       0       4        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37:       0       4        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38:       0     856        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39:       0      51        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40:       0     561        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41:       0       9        2      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42:       0     500        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43:       0      89       30      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44:       0      72        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45:       0       5        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46:       0      41        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47:       0      24        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48:       0     256        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49:       0      30        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50:    6465       6        9      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51:       0    1776        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52:       0       0       31     23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53:       0      32        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54:     999      18       22      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55:     835       1       12      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56:       0      21        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57:       0      40        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58:       0       0       43      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59:       0       0      181    180</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60:       0      16        5      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61:       0    1024        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62:       0    3072        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63:    1396      77        5      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64:       0       0        7      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65:       0       3     1556   1556</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66:       0     240        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67:       0      27        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68:       0       5        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69:       0      19        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70:       0      20        1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71:       0     784        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72:       0       6        1      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     missing numeric symbolic binary</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        id          data                    name  nrow ncol missing numeric</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:    20 &lt;OMLData[25]&gt;             mfeat-pixel  2000  241       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:    28 &lt;OMLData[25]&gt;               optdigits  5620   65       0      64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:    29 &lt;OMLData[25]&gt;         credit-approval   690   16      67       6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:    32 &lt;OMLData[25]&gt;               pendigits 10992   17       0      16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:    37 &lt;OMLData[25]&gt;                diabetes   768    9       0       8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:    50 &lt;OMLData[25]&gt;             tic-tac-toe   958   10       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:   458 &lt;OMLData[25]&gt;  analcatdata_authorship   841   71       0      70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:   469 &lt;OMLData[25]&gt;        analcatdata_dmft   797    5       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:  1462 &lt;OMLData[25]&gt; banknote-authentication  1372    5       0       4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:  1478 &lt;OMLData[25]&gt;                     har 10299  562       0     561</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11: 40499 &lt;OMLData[25]&gt;                 texture  5500   41       0      40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12: 40701 &lt;OMLData[25]&gt;                   churn  5000   21       0      16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     symbolic binary</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1:      241      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  2:        1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3:       10      5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  4:        1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  5:        1      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6:       10      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  7:        1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  8:        5      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  9:        1      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10:        1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11:        1      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12:        5      3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># mlr3 conversion</span></span></span>
 <span class="r-in"><span><span class="va">tasks</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_tasks</a></span><span class="op">(</span><span class="va">task_collection</span><span class="op">)</span></span></span>
