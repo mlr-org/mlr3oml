@@ -12,7 +12,8 @@ test_that("list_oml_measures", {
   expect_subset(c("precision", "recall"), tab$measure)
 })
 
-test_that("list_oml_measures", {
-  tab = list_oml_measures(test_server = TRUE)
-  expect_data_table(tab)
-})
+# Test server not working properly
+# test_that("list_oml_measures", {
+#   tab = list_oml_measures(test_server = TRUE)
+#   expect_data_table(tab)
+# })
