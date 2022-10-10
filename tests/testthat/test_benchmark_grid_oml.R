@@ -1,5 +1,3 @@
-skip_on_cran()
-
 test_that("benchmark_grid_oml works on non-oml inputs", {
   tasks = mlr3::tsks(c("pima", "iris"))
   learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
@@ -23,16 +21,6 @@ test_that("benchmark_grid_oml works on non-oml inputs", {
   expect_true(identical(design$learner[[1]], design$learner[[3]]))
   expect_true(identical(design$learner[[2]], design$learner[[4]]))
   expect_false(identical(design$learner[[2]], design$learner[[3]]))
-})
-
-test_that("benchmark_grid_oml works on oml inputs", {
-  with_public_server()
-  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
-  suite = OMLCollection$new(268L)
-  tasks = mlr3::as_tasks(suite)
-  resamplings = mlr3::as_resamplings(suite)
-  design = benchmark_grid_oml(tasks, learners, resamplings)
-  expect_true(nrow(design) == 16L)
 })
 
 test_that("Resamplings must be instantiated", {
@@ -63,3 +51,16 @@ test_that("Resamplings and tasks must have corresponding hashes", {
   resamplings = rev(resamplings)
   expect_error(benchmark_grid_oml(tasks, learners, resamplings))
 })
+
+skip_on_cran()
+
+test_that("benchmark_grid_oml works on oml inputs", {
+  with_public_server()
+  learners = suppressWarnings(mlr3::lrns(c("classif.featureless", "classif.rpart")))
+  suite = OMLCollection$new(268L)
+  tasks = mlr3::as_tasks(suite)
+  resamplings = mlr3::as_resamplings(suite)
+  design = benchmark_grid_oml(tasks, learners, resamplings)
+  expect_true(nrow(design) == 16L)
+})
+

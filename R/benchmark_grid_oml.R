@@ -9,7 +9,7 @@
 #' @param resamplings (`list()` or `Resampling`) A list of [mlr3::Resampling]s that are instantiated on the given tasks.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library("mlr3")
 #' collection = OMLCollection$new(258)
 #' otasks = collection$tasks[nrow <= 550, ][["task"]]

@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("No issues when upgrading from 0.5.0 to 0.6.0 for public server", {
   # This emulated the migration from 0.5.0 to 0.6.0
 

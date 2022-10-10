@@ -1,6 +1,7 @@
 ^LICENSE$
 ^LICENSE.md$
 ^README.Rmd$
+^README.html$
 ^tic\.R$
 ^appveyor\.yml$
 .ignore

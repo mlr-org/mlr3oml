@@ -17,8 +17,8 @@
 #'
 #' @export
 #' @examples
-#' library("mlr3")
 #' \donttest{
+#' library("mlr3")
 #' # Get a task from OpenML:
 #' otask = OMLTask$new(id = 31)
 #' # using sugar

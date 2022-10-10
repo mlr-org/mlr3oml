@@ -19,7 +19,7 @@ a benchmark design from a list of tasks and corresponding instantiated resamplin
 function can be used.
 }
 \examples{
-\dontrun{
+\donttest{
 library("mlr3")
 collection = OMLCollection$new(258)
 otasks = collection$tasks[nrow <= 550, ][["task"]]

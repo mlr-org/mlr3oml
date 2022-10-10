@@ -19,8 +19,8 @@ This object can also be constructed using the sugar function \code{\link[=oml_ta
 }
 
 \examples{
-library("mlr3")
 \donttest{
+library("mlr3")
 # Get a task from OpenML:
 otask = OMLTask$new(id = 31)
 # using sugar
@@ -130,7 +130,8 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.}
+If parquet is not available, it will fall back to arff.
+Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server

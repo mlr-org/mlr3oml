@@ -8,6 +8,7 @@ library("mlr3oml")
 lgr::get_logger("mlr3")$set_threshold("warn")
 set.seed(1)
 options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.verbose = FALSE)
+options(mlr3oml.cache = tempfile())
 ```
 
 # mlr3oml
@@ -16,7 +17,8 @@ options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.ver
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 
-**mlr3oml** allows to create [mlr3](https://mlr3.mlr-org.com/) tasks directly from [OpenML](https://openml.org) data sets.
+
+**mlr3oml** enables downloading [OpenML](https://openml.org) datasets, tasks, flows, runs, and collections and allows to convert them to the corresponding [mlr3](https://mlr3.mlr-org.com/) object.
 Furthermore, you can also obtain the data and the resampling for a given OpenML task.
 Caching can be enabled by setting the option `"mlr3oml.cache"`.
 Uploading to OpenML is currently not supported, use the [OpenML package](https://cran.r-project.org/package=OpenML) package for this.
@@ -40,25 +42,69 @@ tsk("oml", task_id = 59)
 rsmp("oml", task_id = 59)
 
 # R6 class for data sets
-oml_data = OMLData$new(61)
-oml_data$name
-oml_data$nrow
-oml_data$ncol
-oml_data$data
+odata = OMLData$new(61) # or
+odata = oml_data(61)
 
-# R6 class for tasks
-oml_task = OMLTask$new(31)
-oml_task$name
-oml_task$nrow
-oml_task$ncol
-oml_task$task
-oml_task$resampling
+odata$name
+odata$nrow
+odata$ncol
+head(odata$data)
+
+backend = as_data_backend(odata)
+backend
 
 # list oml data sets with 5 features and 50 - 200 instances
 tab = list_oml_data(number_features = 5, number_instances = c(50, 200))
 head(tab[, .(data_id, name)])
 
+# R6 class for tasks
+otask = OMLTask$new(31) # or
+otask = oml_task(31)
+
+task = as_task(otask)
+task
+resampling = as_resampling(otask)
+resampling
+
+otask$data
+otask$name
+otask$nrow
+otask$ncol
+otask$task
+otask$resampling
+
+
 # list first 10 oml tasks
 tab = list_oml_tasks(limit = 10)
 tab[, .(task_id, data_id, name)]
+
+# R6 class for flows
+oflow = OMLFlow$new(100) # or
+oflow = oml_flow(100)
+
+oflow$dependencies
+oflow$parameter
+
+# non-executable pseudo learner
+learner = as_learner(oflow, "regr")
+learner
+
+# R6Class for run
+
+orun = OMLRun$new(538858)
+orun$data
+orun$task
+orun$flow
+head(orun$prediction)
+
+rr = as_resample_result(orun)
+rr
+
+
+# R6 class for collection
+
+ocol = OMLCollection$new(232) # or
+ocol = oml_collection(232)
+
+ocol$tasks
 ```
