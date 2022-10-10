@@ -1,12 +1,12 @@
 ^LICENSE$
-^LICENSE.md$
-^README.Rmd$
-^README.html$
+^LICENSE\.md$
+^README\.Rmd$
+^README\.html$
 ^tic\.R$
 ^appveyor\.yml$
-.ignore
-.editorconfig
-.gitignore
+\.ignore
+\.editorconfig
+\.gitignore
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -21,4 +21,3 @@
 ^\.github$
 ^\.lintr$
 ^\.pre-commit-config\.yaml$
-^TODO.md$
