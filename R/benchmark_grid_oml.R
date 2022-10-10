@@ -12,7 +12,7 @@
 #' \donttest{
 #' library("mlr3")
 #' collection = OMLCollection$new(258)
-#' otasks = collection$tasks[nrow <= 550, ][["task"]]
+#' otasks = collection$tasks[1:2, ][["task"]]
 #' tasks = as_tasks(otasks)
 #' resamplings = as_resamplings(otasks)
 #' learners = lrns(c("classif.rpart", "classif.featureless"))
