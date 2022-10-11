@@ -9,7 +9,7 @@ Authors@R:
 Description: Provides an interface to 'OpenML.org' to list and download
     machine learning data, tasks and experiments. The 'OpenML' objects can be
     automatically converted to 'mlr3' objects.
-    For a more sophisticated interface which also allows uploading to OpenML,
+    For a more sophisticated interface which also allows uploading to 'OpenML',
     see the 'OpenML' package.
 License: LGPL-3
 URL: https://mlr3oml.mlr-org.com, https://github.com/mlr-org/mlr3oml
