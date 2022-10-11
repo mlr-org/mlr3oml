@@ -2,7 +2,7 @@
 
 None
 
-## R cmd check results
+## R CMD check results
 
 There is only one note that informs about the maintainer change.
 
@@ -16,4 +16,7 @@ Old maintainer(s):
 
 ## Comments
 
-* This package is relying on a REST API and therefore wraps examples in "\dontrun{...}" and also disables tests on CRAN
+This package uses a REST API and therefore:
+
+* wraps examples in "\dontrun{...}"
+* disables tests relying on an existing server and internet connection on CRAN

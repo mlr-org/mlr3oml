@@ -21,3 +21,4 @@
 ^\.github$
 ^\.lintr$
 ^\.pre-commit-config\.yaml$
+^cran-comments\.md$
