@@ -1,26 +1,40 @@
 # mlr3oml 0.6.0
 
+**Features**
+
 * Add R6 classes for `OMLCollection`, `OMLRun`, `OMLFlow`.
-* Add sugar functions `oml_flow`, `oml_data`, `oml_task`, `oml_run`,
+* Added function `benchmark_grid_oml` that allows for easier creation of
+  benchmark designs from OpenML task-resampling pairs.
+* Added sugar functions `oml_flow`, `oml_data`, `oml_task`, `oml_run`,
   `oml_collection` for all OpenML objects.
-* Conversion from OpenML to mlr3 objects is now only possible with the usual s3
-  converters `as_xxx`. This improves the consistency by ensuring that the
+* Conversion from OpenML to mlr3 objects is now only possible with the usual
+  s3-converters `as_<object>`. This improves consistency by ensuring that the
   subcomponents of OpenML objects are always OpenML objects and not suddenly
   mlr3 objects.
 * Added more converter functions: `as_learner`, `as_resample_result`,
   `as_data_backend`, `as_benchmark_result`.
 * Added support for parquet files that were recently introduced on OpenML.
   The global option `mlr3oml.parquet` can be used to enable or disable this.
-  By default it is `FALSE`
+  By default it is `FALSE`. This is implemented via the duckdb backend from
+  `mlr3db`.
+* Support to use the OpenML test server. This can be globally enabled using the
+  option `mlr3oml.test_server` or individually for objects.
+  Options to globally define an API-key for the test server are through the
+  environment variable `TESTOPENMLAPIKEY` or the option `mlr3oml.test_api_key`
+
+**Fixes**
+
+* Removed support for survival tasks as mlr3proba is no longer on CRAN
+* OpenML tasks can now also be filtered according to the task type
+
+**Other**
+
 * Implement an arff writer and remove the arff dependency, therefore also
   removing the option `"farff"` as the `mlr3oml.arff_parser`
 * Increment the cache version number due to changes in the cache structure: This
   will flush the previous cache folder.
-* Support to use the OpenML test server. This can be globally enabled using the
-  option `mlr3oml.test_server`. Options to globally define a api key for the
-  test server are via the environment variable `TESTOPENMLAPIKEY` or the option
-  `mlr3oml.test_api_key`
-* Bugfix: OpenML tasks can now also be filtered according to the task type
+* Simplified the code structure by adding `OMLObject` class from which all other
+  OpenML objects like `OMLData`, `OMLTask` inherit.
 
 # mlr3oml 0.5.0
 
