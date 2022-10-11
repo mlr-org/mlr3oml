@@ -6,7 +6,7 @@
 \title{OpenML Collection}
 \description{
 This is the class for collections (previously known as studies) served on
-\url{https://openml.org}.
+\url{https://www.openml.org}.
 A collection can either be a \href{https://www.openml.org/search?type=study&study_type=task}{task collection}
 or \href{https://www.openml.org/search?type=study&study_type=run}{run collection}.
 This object can also be constructed using the sugar function \code{\link[=oml_collection]{oml_collection()}}.

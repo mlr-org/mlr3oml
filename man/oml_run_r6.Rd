@@ -5,7 +5,7 @@
 \alias{OMLRun}
 \title{Interface to OpenML Runs}
 \description{
-This is the class for OpenML \href{https://openml.org/r}{Runs}, which are
+This is the class for OpenML \href{https://www.openml.org/r}{Runs}, which are
 conceptually similar to \link[mlr3:ResampleResult]{mlr3::ResampleResult}s.
 This object can also be constructed using the sugar function \code{\link[=oml_run]{oml_run()}}.
 }

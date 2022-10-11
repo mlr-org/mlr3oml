@@ -3,7 +3,7 @@
 #' @name oml_run_r6
 #'
 #' @description
-#' This is the class for OpenML [Runs](https://openml.org/r), which are
+#' This is the class for OpenML [Runs](https://www.openml.org/r), which are
 #' conceptually similar to [mlr3::ResampleResult]s.
 #' This object can also be constructed using the sugar function [oml_run()].
 #'

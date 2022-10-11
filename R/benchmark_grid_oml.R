@@ -20,6 +20,7 @@
 #' print(design)
 #' bmr = benchmark(design)
 #' }
+#' @return ([`data.table()`])
 #' @export
 benchmark_grid_oml = function(tasks, learners, resamplings) {
   tasks = assert_tasks(as_tasks(tasks))

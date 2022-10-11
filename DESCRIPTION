@@ -7,7 +7,7 @@ Authors@R:
       person("Sebastian", "Fischer", , "sebf.fischer@gmail.com", role = c("cre", "aut"),
              comment = c(ORCID = "0000-0002-9609-3197")))
 Description: Provides an interface to 'OpenML.org' to list and download
-    machine learning data, tasks and experiments. The OpenML objects can be
+    machine learning data, tasks and experiments. The 'OpenML' objects can be
     automatically converted to 'mlr3' objects.
     For a more sophisticated interface which also allows uploading to OpenML,
     see the 'OpenML' package.

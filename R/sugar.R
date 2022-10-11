@@ -1,17 +1,20 @@
 #' Syntactic Sugar for Object Construction
 #'
 #' Functions to create OpenML objects. The following functions are available:
-#' * `oml_data()` - creates an instance of the R6 class [OMLData].
-#' * `oml_task()` - creates an instance of the R6 class [OMLTask].
-#' * `oml_flow()` - creates an instance of the R6 class [OMLFlow].
-#' * `oml_run()` - creates an instance of the R6 class [OMLRun].
-#' * `oml_collection()` - creates an instance of the R6 class [OMLCollection].
+#' * `oml_data()` - creates an instance of the R6 class [`OMLData`].
+#' * `oml_task()` - creates an instance of the R6 class [`OMLTask`].
+#' * `oml_flow()` - creates an instance of the R6 class [`OMLFlow`].
+#' * `oml_run()` - creates an instance of the R6 class [`OMLRun`].
+#' * `oml_collection()` - creates an instance of the R6 class [`OMLCollection`].
 #'
 #' @name oml_sugar
 #' @template param_id
 #' @template param_cache
 #' @template param_test_server
 #' @template param_parquet
+#'
+#' @return ([`OMLObject`])
+#'
 #' @export
 oml_data = function(
   id,

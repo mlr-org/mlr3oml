@@ -5,7 +5,7 @@
 \alias{OMLTask}
 \title{Interface to OpenML Tasks}
 \description{
-This is the class for tasks served on \href{https://openml.org/search?type=task&sort=runs}{OpenML}.
+This is the class for tasks served on \href{https://www.openml.org/search?type=task&sort=runs}{OpenML}.
 It consists of a dataset and other meta-information such as the target variable for supervised
 problems.
 This object can also be constructed using the sugar function \code{\link[=oml_task]{oml_task()}}.

@@ -18,7 +18,7 @@ options(mlr3oml.cache = tempfile())
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 
 
-**mlr3oml** enables downloading [OpenML](https://openml.org) datasets, tasks, flows, runs, and collections and allows to convert them to the corresponding [mlr3](https://mlr3.mlr-org.com/) object.
+**mlr3oml** enables downloading [OpenML](https://www.openml.org) datasets, tasks, flows, runs, and collections and allows to convert them to the corresponding [mlr3](https://mlr3.mlr-org.com/) object.
 Furthermore, you can also obtain the data and the resampling for a given OpenML task.
 Caching can be enabled by setting the option `"mlr3oml.cache"`.
 Uploading to OpenML is currently not supported, use the [OpenML package](https://cran.r-project.org/package=OpenML) package for this.

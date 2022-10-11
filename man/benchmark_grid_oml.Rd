@@ -13,6 +13,9 @@ benchmark_grid_oml(tasks, learners, resamplings)
 
 \item{resamplings}{(\code{list()} or \code{Resampling}) A list of \link[mlr3:Resampling]{mlr3::Resampling}s that are instantiated on the given tasks.}
 }
+\value{
+(\code{\link[=data.table]{data.table()}})
+}
 \description{
 \link{OMLTask}s contain tasks as well as resamplings. In order to create
 a benchmark design from a list of tasks and corresponding instantiated resamplings, this
