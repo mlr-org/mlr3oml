@@ -9,10 +9,10 @@
 #' @param resamplings (`list()` or `Resampling`) A list of [mlr3::Resampling]s that are instantiated on the given tasks.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library("mlr3")
 #' collection = OMLCollection$new(258)
-#' otasks = collection$tasks[nrow <= 550, ][["task"]]
+#' otasks = collection$tasks[1:2, ][["task"]]
 #' tasks = as_tasks(otasks)
 #' resamplings = as_resamplings(otasks)
 #' learners = lrns(c("classif.rpart", "classif.featureless"))
@@ -20,6 +20,7 @@
 #' print(design)
 #' bmr = benchmark(design)
 #' }
+#' @return ([`data.table()`])
 #' @export
 benchmark_grid_oml = function(tasks, learners, resamplings) {
   tasks = assert_tasks(as_tasks(tasks))

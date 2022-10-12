@@ -39,7 +39,7 @@ test_that("OpenML CC-18 should work: arff", {
   )
   for (task_id in task_ids) {
     task = OMLTask$new(task_id, parquet = FALSE)
-    print(task_id)
+    # print(task_id)
     if (task$task_type %in% task_types) {
       expect_oml_task(task)
     }
@@ -56,7 +56,7 @@ test_that("OpenML CC-18 should work: parquet", {
   )
   for (task_id in task_ids) {
     task = OMLTask$new(task_id, parquet = TRUE)
-    print(task_id)
+    # print(task_id)
     if (task$task_type %in% task_types) {
       expect_oml_task(task)
     }

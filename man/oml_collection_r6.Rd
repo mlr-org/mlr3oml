@@ -6,7 +6,7 @@
 \title{OpenML Collection}
 \description{
 This is the class for collections (previously known as studies) served on
-\url{https://openml.org}.
+\url{https://www.openml.org}.
 A collection can either be a \href{https://www.openml.org/search?type=study&study_type=task}{task collection}
 or \href{https://www.openml.org/search?type=study&study_type=run}{run collection}.
 This object can also be constructed using the sugar function \code{\link[=oml_collection]{oml_collection()}}.
@@ -170,7 +170,8 @@ the contained elements are cached when loaded, e.g. when accessing the included 
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.}
+If parquet is not available, it will fall back to arff.
+Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server

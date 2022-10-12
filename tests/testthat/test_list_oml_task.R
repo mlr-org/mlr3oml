@@ -16,15 +16,16 @@ test_that("list_oml_tasks", {
 })
 
 test_that("Can query tasks of certain type", {
-  tab = list_oml_tasks(type = "2", limit = 10, test_server = TRUE)
+  tab = list_oml_tasks(type = "2", limit = 10)
   expect_true(unique(tab$task_type) == "Supervised Regression")
 
-  tab = list_oml_tasks(type = "1", limit = 10, test_server = TRUE)
+  tab = list_oml_tasks(type = "1", limit = 10)
   expect_true(unique(tab$task_type) == "Supervised Classification")
 })
 
-test_that("list_oml_tasks test server", {
-  tab = list_oml_tasks(limit = 10, test_server = TRUE)
-  expect_data_table(tab, nrows = 10, min.cols = 10)
-})
-
+# Test server not working properly
+# test_that("list_oml_tasks test server", {
+#   tab = list_oml_tasks(limit = 10, test_server = TRUE)
+#   expect_data_table(tab, nrows = 10, min.cols = 10)
+# })
+#

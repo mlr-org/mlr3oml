@@ -5,7 +5,7 @@
 #'
 #' @description
 #' This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
-#' from \url{https://openml.org/d} using some simple filter criteria.
+#' from \url{https://www.openml.org/d} using some simple filter criteria.
 #'
 #' @details
 #' Filter values are usually provided as single atomic values (typically integer or character).

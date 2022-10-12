@@ -4,7 +4,7 @@
 #'
 #' @description
 #' This is the class for collections (previously known as studies) served on
-#' \url{https://openml.org}.
+#' \url{https://www.openml.org}.
 #' A collection can either be a [task collection](https://www.openml.org/search?type=study&study_type=task)
 #' or [run collection](https://www.openml.org/search?type=study&study_type=run).
 #' This object can also be constructed using the sugar function [oml_collection()].

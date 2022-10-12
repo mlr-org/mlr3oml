@@ -3,7 +3,7 @@
 #' @name oml_task_r6
 #'
 #' @description
-#' This is the class for tasks served on [OpenML](https://openml.org/search?type=task&sort=runs).
+#' This is the class for tasks served on [OpenML](https://www.openml.org/search?type=task&sort=runs).
 #' It consists of a dataset and other meta-information such as the target variable for supervised
 #' problems.
 #' This object can also be constructed using the sugar function [oml_task()].
@@ -17,8 +17,8 @@
 #'
 #' @export
 #' @examples
-#' library("mlr3")
 #' \donttest{
+#' library("mlr3")
 #' # Get a task from OpenML:
 #' otask = OMLTask$new(id = 31)
 #' # using sugar

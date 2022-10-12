@@ -49,20 +49,24 @@ Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{parquet}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.}
+If parquet is not available, it will fall back to arff.
+Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{test_server}{(\code{character(1)})\cr
 Whether to use the OpenML test server (https://test.openml.org/) or public server
 (https://www.openml.org/).
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 }
+\value{
+(\code{\link{OMLObject}})
+}
 \description{
 Functions to create OpenML objects. The following functions are available:
 \itemize{
-\item \code{oml_data()} - creates an instance of the R6 class \link{OMLData}.
-\item \code{oml_task()} - creates an instance of the R6 class \link{OMLTask}.
-\item \code{oml_flow()} - creates an instance of the R6 class \link{OMLFlow}.
-\item \code{oml_run()} - creates an instance of the R6 class \link{OMLRun}.
-\item \code{oml_collection()} - creates an instance of the R6 class \link{OMLCollection}.
+\item \code{oml_data()} - creates an instance of the R6 class \code{\link{OMLData}}.
+\item \code{oml_task()} - creates an instance of the R6 class \code{\link{OMLTask}}.
+\item \code{oml_flow()} - creates an instance of the R6 class \code{\link{OMLFlow}}.
+\item \code{oml_run()} - creates an instance of the R6 class \code{\link{OMLRun}}.
+\item \code{oml_collection()} - creates an instance of the R6 class \code{\link{OMLCollection}}.
 }
 }

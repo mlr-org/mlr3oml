@@ -1,15 +1,15 @@
 Package: mlr3oml
 Title: Connector Between 'mlr3' and 'OpenML'
-Version: 0.5.0-9000
+Version: 0.6.0
 Authors@R:
-    c(person("Michel", "Lang", , "michellang@gmail.com", role = c("cre", "aut"),
+    c(person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
              comment = c(ORCID = "0000-0001-9754-0393")),
-      person("Sebastian", "Fischer", , "sebf.fischer@gmail.com", role = "aut",
+      person("Sebastian", "Fischer", , "sebf.fischer@gmail.com", role = c("cre", "aut"),
              comment = c(ORCID = "0000-0002-9609-3197")))
 Description: Provides an interface to 'OpenML.org' to list and download
-    machine learning data, tasks and experiments. The OpenML objects can be
+    machine learning data, tasks and experiments. The 'OpenML' objects can be
     automatically converted to 'mlr3' objects.
-    For a more sophisticated interface which also allows uploading to OpenML,
+    For a more sophisticated interface which also allows uploading to 'OpenML',
     see the 'OpenML' package.
 License: LGPL-3
 URL: https://mlr3oml.mlr-org.com, https://github.com/mlr-org/mlr3oml

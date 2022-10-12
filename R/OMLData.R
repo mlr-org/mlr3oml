@@ -36,8 +36,8 @@
 #'
 #' @export
 #' @examples
-#' library("mlr3")
 #' \donttest{
+#' library("mlr3")
 #' # OpenML Data object
 #' odata = OMLData$new(id = 9)
 #' # using sugar

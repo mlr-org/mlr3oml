@@ -6,7 +6,7 @@
 \alias{mlr3oml-package}
 \title{mlr3oml: Connector Between 'mlr3' and 'OpenML'}
 \description{
-Provides an interface to 'OpenML.org' to list and download machine learning data, tasks and experiments. The OpenML objects can be automatically converted to 'mlr3' objects. For a more sophisticated interface which also allows uploading to OpenML, see the 'OpenML' package.
+Provides an interface to 'OpenML.org' to list and download machine learning data, tasks and experiments. The 'OpenML' objects can be automatically converted to 'mlr3' objects. For a more sophisticated interface which also allows uploading to 'OpenML', see the 'OpenML' package.
 }
 \section{mlr3 Integration}{
 
@@ -28,7 +28,7 @@ If set to \code{FALSE}, caching is disabled.
 If set to \code{TRUE}, cache directory as reported by \code{\link[=R_user_dir]{R_user_dir()}} is used.
 Alternatively, you can specify a path on the local file system here.
 Default is \code{FALSE}.
-\item \code{mlr3oml.api_key}: API key to use. All operations  supported by this package
+\item \code{mlr3oml.api_key}: API key to use. All operations supported by this package
 work without an API key, but you might get rate limited without an API key.
 If not set, defaults to the value of the environment variable \code{OPENMLAPIKEY}.
 \item \code{mlr3oml.arff_parser}: ARFF parser to use, defaults to the internal one relies
@@ -69,11 +69,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
+\strong{Maintainer}: Sebastian Fischer \email{sebf.fischer@gmail.com} (\href{https://orcid.org/0000-0002-9609-3197}{ORCID})
 
 Authors:
 \itemize{
-  \item Sebastian Fischer \email{sebf.fischer@gmail.com} (\href{https://orcid.org/0000-0002-9609-3197}{ORCID})
+  \item Michel Lang \email{michellang@gmail.com} (\href{https://orcid.org/0000-0001-9754-0393}{ORCID})
 }
 
 }
