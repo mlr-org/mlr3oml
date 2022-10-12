@@ -10,9 +10,6 @@
     <loc>https://mlr3oml.mlr-org.com/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/TODO.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3oml.mlr-org.com/authors.html</loc>
   </url>
   <url>
@@ -22,34 +19,10 @@
     <loc>https://mlr3oml.mlr-org.com/news/index.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/OMLCollection.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/OMLData.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/OMLDataSplit.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/OMLFlow.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/OMLRun.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/OMLTask.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3oml.mlr-org.com/reference/as_learner.OMLFlow.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/benchmark_design.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/delete.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/get_server.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/benchmark_grid_oml.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/index.html</loc>
@@ -58,19 +31,31 @@
     <loc>https://mlr3oml.mlr-org.com/reference/list_oml.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/make_description.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3oml.mlr-org.com/reference/mlr3oml-package.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/publish.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_collection_r6.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_data_r6.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_flow_r6.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_object_r6.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_run_r6.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_sugar.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_task_r6.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/read_arff.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/split_predictions.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/write_arff.html</loc>

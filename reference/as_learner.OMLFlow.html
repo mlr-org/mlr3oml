@@ -18,7 +18,7 @@ according to the OpenML docs."><!-- mathjax --><script src="https://cdnjs.cloudf
     
     <a class="navbar-brand me-2" href="../index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,7 +93,7 @@ according to the OpenML docs.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for OMLFlow</span></span>
-<span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="va">x</span>, task_type <span class="op">=</span> <span class="cn">NULL</span>, from_binary <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="va">x</span>, task_type <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -104,20 +104,11 @@ according to the OpenML docs.</p>
 
 <dt>task_type</dt>
 <dd><p>(<code>character(1)</code>)
-The task type to constrct a pseudo-learner. For more information see <a href="OMLFlow.html">OMLFlow</a>.</p></dd>
-
-
-<dt>from_binary</dt>
-<dd><p>(<code>logical(1)</code>) Whether to construct an actual mlr3 learner.
-flow (works of course only for mlr3 Flows).</p></dd>
-
-
-<dt>verbose</dt>
-<dd><p>(<code>logical(1)</code>) Whether to be verbose.</p></dd>
+The task type to constrct a pseudo-learner. For more information see <a href="oml_flow_r6.html">OMLFlow</a>.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional arguments</p></dd>
+<dd><p>Additional arguments.</p></dd>
 
 </dl></div>
 
@@ -126,7 +117,7 @@ flow (works of course only for mlr3 Flows).</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Michel Lang.</p>
+  <p></p><p>Developed by Michel Lang, Sebastian Fischer.</p>
 </div>
 
 <div class="pkgdown-footer-right">
