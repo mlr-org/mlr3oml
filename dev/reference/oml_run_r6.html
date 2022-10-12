@@ -14,7 +14,7 @@ This object can also be constructed using the sugar function oml_run()."><meta n
     
     <a class="navbar-brand me-2" href="../index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5.0-9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0-9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@ This object can also be constructed using the sugar function oml_run()."><meta n
     </div>
 
     <div class="ref-description section level2">
-    <p>This is the class for OpenML <a href="https://openml.org/r" class="external-link">Runs</a>, which are
+    <p>This is the class for OpenML <a href="https://www.openml.org/r" class="external-link">Runs</a>, which are
 conceptually similar to <a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a>s.
 This object can also be constructed using the sugar function <code><a href="oml_sugar.html">oml_run()</a></code>.</p>
     </div>
@@ -219,7 +219,8 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <dt><code>parquet</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.</p></dd>
+If parquet is not available, it will fall back to arff.
+Defaults to value of option <code>"mlr3oml.parquet"</code> or <code>FALSE</code> if not set.</p></dd>
 
 
 <dt><code>test_server</code></dt>

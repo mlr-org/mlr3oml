@@ -24,7 +24,7 @@ oml_collection() - creates an instance of the R6 class OMLCollection.
     
     <a class="navbar-brand me-2" href="../index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5.0-9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0-9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,11 +89,11 @@ oml_collection() - creates an instance of the R6 class OMLCollection.
     </div>
 
     <div class="ref-description section level2">
-    <p>Functions to create OpenML objects. The following functions are available:</p><ul><li><p><code>oml_data()</code> - creates an instance of the R6 class <a href="oml_data_r6.html">OMLData</a>.</p></li>
-<li><p><code>oml_task()</code> - creates an instance of the R6 class <a href="oml_task_r6.html">OMLTask</a>.</p></li>
-<li><p><code>oml_flow()</code> - creates an instance of the R6 class <a href="oml_flow_r6.html">OMLFlow</a>.</p></li>
-<li><p><code>oml_run()</code> - creates an instance of the R6 class <a href="oml_run_r6.html">OMLRun</a>.</p></li>
-<li><p><code>oml_collection()</code> - creates an instance of the R6 class <a href="oml_collection_r6.html">OMLCollection</a>.</p></li>
+    <p>Functions to create OpenML objects. The following functions are available:</p><ul><li><p><code>oml_data()</code> - creates an instance of the R6 class <code><a href="oml_data_r6.html">OMLData</a></code>.</p></li>
+<li><p><code>oml_task()</code> - creates an instance of the R6 class <code><a href="oml_task_r6.html">OMLTask</a></code>.</p></li>
+<li><p><code>oml_flow()</code> - creates an instance of the R6 class <code><a href="oml_flow_r6.html">OMLFlow</a></code>.</p></li>
+<li><p><code>oml_run()</code> - creates an instance of the R6 class <code><a href="oml_run_r6.html">OMLRun</a></code>.</p></li>
+<li><p><code>oml_collection()</code> - creates an instance of the R6 class <code><a href="oml_collection_r6.html">OMLCollection</a></code>.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -145,7 +145,8 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <dt>parquet</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.</p></dd>
+If parquet is not available, it will fall back to arff.
+Defaults to value of option <code>"mlr3oml.parquet"</code> or <code>FALSE</code> if not set.</p></dd>
 
 
 <dt>test_server</dt>
@@ -155,6 +156,12 @@ Whether to use the OpenML test server (https://test.openml.org/) or public serve
 Defaults to value of option <code>"mlr3oml.test_server"</code>, or <code>FALSE</code> if not set.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>(<code><a href="oml_object_r6.html">OMLObject</a></code>)</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

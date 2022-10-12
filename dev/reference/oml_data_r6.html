@@ -12,7 +12,7 @@ This object can also be constructed using the sugar function oml_data()."><meta 
     
     <a class="navbar-brand me-2" href="../index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5.0-9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.6.0-9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -246,7 +246,8 @@ Defaults to value of option <code>"mlr3oml.cache"</code>, or <code>FALSE</code> 
 <dt><code>parquet</code></dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.</p></dd>
+If parquet is not available, it will fall back to arff.
+Defaults to value of option <code>"mlr3oml.parquet"</code> or <code>FALSE</code> if not set.</p></dd>
 
 
 <dt><code>test_server</code></dt>
@@ -307,8 +308,8 @@ Name of the quality to extract.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># OpenML Data object</span></span></span>
 <span class="r-in"><span><span class="va">odata</span> <span class="op">=</span> <span class="va">OMLData</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>id <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># using sugar</span></span></span>
