@@ -4,7 +4,7 @@
 \alias{OMLData}
 \title{Interface to OpenML Data Sets}
 \description{
-This is the class for data sets served on \href{https://www.openml.org/d/}{OpenML}.
+This is the class for data sets served on \href{https://www.openml.org/search?type=data&status=active}{OpenML}.
 This object can also be constructed using the sugar function \code{\link[=oml_data]{oml_data()}}.
 }
 \section{mlr3 Integration}{

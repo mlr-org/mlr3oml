@@ -135,7 +135,7 @@ Vector of setup ids to restrict to.}
 }
 \description{
 This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
-from \url{https://www.openml.org/d} using some simple filter criteria.
+from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
 }
 \details{
 Filter values are usually provided as single atomic values (typically integer or character).
@@ -144,7 +144,7 @@ Provide a numeric vector of length 2 (\code{c(l, u)}) to find matches in the ran
 Note that only a subset of filters is exposed here.
 For a more feature-complete package, see \CRANpkg{OpenML}.
 Alternatively, you can pass additional filters via \code{...} using the names of the official API,
-c.f. \url{https://www.openml.org/api_docs}.
+c.f. the \emph{REST} tab of \url{https://www.openml.org/apis}.
 }
 \examples{
 \donttest{

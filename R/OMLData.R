@@ -3,7 +3,7 @@
 #' @name OMLData
 #'
 #' @description
-#' This is the class for data sets served on [OpenML](https://www.openml.org/d/).
+#' This is the class for data sets served on [OpenML](https://www.openml.org/search?type=data&status=active).
 #' This object can also be constructed using the sugar function [oml_data()].
 #'
 #' @section mlr3 Integration:

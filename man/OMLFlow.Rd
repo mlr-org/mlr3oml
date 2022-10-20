@@ -4,7 +4,7 @@
 \alias{OMLFlow}
 \title{Interface to OpenML Flows}
 \description{
-This is the class for flows served on \href{https://www.openml.org/f}{OpenML}.
+This is the class for flows served on \href{https://www.openml.org/search?type=flow&sort=runs}{OpenML}.
 Flows represent machine learning algorithms.
 This object can also be constructed using the sugar function \code{\link[=oml_flow]{oml_flow()}}.
 }

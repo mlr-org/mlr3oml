@@ -3,7 +3,7 @@
 #' @name OMLFlow
 #'
 #' @description
-#' This is the class for flows served on [OpenML](https://www.openml.org/f).
+#' This is the class for flows served on [OpenML](https://www.openml.org/search?type=flow&sort=runs).
 #' Flows represent machine learning algorithms.
 #' This object can also be constructed using the sugar function [oml_flow()].
 #'
