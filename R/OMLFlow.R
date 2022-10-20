@@ -1,6 +1,6 @@
 #' @title Interface to OpenML Flows
 #'
-#' @name oml_flow_r6
+#' @name OMLFlow
 #'
 #' @description
 #' This is the class for flows served on [OpenML](https://www.openml.org/f).

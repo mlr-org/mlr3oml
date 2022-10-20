@@ -1,6 +1,6 @@
 #' @title Interface to OpenML Tasks
 #'
-#' @name oml_task_r6
+#' @name OMLTask
 #'
 #' @description
 #' This is the class for tasks served on [OpenML](https://www.openml.org/search?type=task&sort=runs).
