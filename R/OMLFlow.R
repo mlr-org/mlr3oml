@@ -5,7 +5,7 @@
 #' @description
 #' This is the class for flows served on [OpenML](https://www.openml.org/search?type=flow&sort=runs).
 #' Flows represent machine learning algorithms.
-#' This object can also be constructed using the sugar function [oml_flow()].
+#' This object can also be constructed using the sugar function [oflw()].
 #'
 #' @section mlr3 Integration:
 #' * Obtain a [mlr3::Learner] using [mlr3::as_learner()].
@@ -20,7 +20,7 @@
 #' # mlr3 flow:
 #' flow = OMLFlow$new(id = 19103)
 #' # using sugar
-#' flow = oml_flow(id = 19103)
+#' flow = oflw(id = 19103)
 #' learner = as_learner(flow, "classif")
 #' # python flow
 #' python_flow = OMLFlow$new(19090)

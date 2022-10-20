@@ -50,7 +50,7 @@ library("mlr3")
 # OpenML Data object
 odata = OMLData$new(id = 9)
 # using sugar
-odata = oml_data(id = 9)
+odata = odt(id = 9)
 print(odata)
 print(odata$target_names)
 print(odata$feature_names)
@@ -68,7 +68,7 @@ tsk("oml", data_id = 9)
 if (requireNamespace("duckdb")) {
   odata = OMLData$new(id = 9, parquet = TRUE)
   # using sugar
-  odata = oml_data(id = 9)
+  odata = odt(id = 9)
 
   print(odata)
   print(odata$target_names)

@@ -63,7 +63,7 @@ rsmp("oml", task_id = 59)
 ``` r
 # R6 class for data sets
 odata = OMLData$new(61) # or
-odata = oml_data(61)
+odata = odt(61)
 
 odata$name
 ```
@@ -223,17 +223,17 @@ oflow$parameter
 ```
 
     ##     name data_type default_value
-    ##  1:    A      flag              
-    ##  2:    B      flag              
+    ##  1:    A      flag
+    ##  2:    B      flag
     ##  3:    C    option          0.25
-    ##  4:    J      flag              
-    ##  5:    L      flag              
+    ##  4:    J      flag
+    ##  5:    L      flag
     ##  6:    M    option             2
-    ##  7:    N    option              
-    ##  8:    O      flag              
-    ##  9:    Q    option              
-    ## 10:    R      flag              
-    ## 11:    S      flag              
+    ##  7:    N    option
+    ##  8:    O      flag
+    ##  9:    Q    option
+    ## 10:    R      flag
+    ## 11:    S      flag
     ## 12:    U      flag
 
 ``` r

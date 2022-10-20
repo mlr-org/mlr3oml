@@ -2,37 +2,37 @@
 % Please edit documentation in R/sugar.R
 \name{oml_sugar}
 \alias{oml_sugar}
-\alias{oml_data}
-\alias{oml_task}
-\alias{oml_flow}
-\alias{oml_run}
-\alias{oml_collection}
+\alias{odt}
+\alias{otsk}
+\alias{oflw}
+\alias{orn}
+\alias{ocl}
 \title{Syntactic Sugar for Object Construction}
 \usage{
-oml_data(
+odt(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )
 
-oml_task(
+otsk(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )
 
-oml_flow(id, cache = cache_default(), test_server = test_server_default())
+oflw(id, cache = cache_default(), test_server = test_server_default())
 
-oml_run(
+orn(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )
 
-oml_collection(
+ocl(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
@@ -63,10 +63,10 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 \description{
 Functions to create OpenML objects. The following functions are available:
 \itemize{
-\item \code{oml_data()} - creates an instance of the R6 class \code{\link{OMLData}}.
-\item \code{oml_task()} - creates an instance of the R6 class \code{\link{OMLTask}}.
-\item \code{oml_flow()} - creates an instance of the R6 class \code{\link{OMLFlow}}.
-\item \code{oml_run()} - creates an instance of the R6 class \code{\link{OMLRun}}.
-\item \code{oml_collection()} - creates an instance of the R6 class \code{\link{OMLCollection}}.
+\item \code{odt()} - creates an instance of the R6 class \code{\link{OMLData}}.
+\item \code{otsk()} - creates an instance of the R6 class \code{\link{OMLTask}}.
+\item \code{oflw()} - creates an instance of the R6 class \code{\link{OMLFlow}}.
+\item \code{orn()} - creates an instance of the R6 class \code{\link{OMLRun}}.
+\item \code{ocl()} - creates an instance of the R6 class \code{\link{OMLCollection}}.
 }
 }

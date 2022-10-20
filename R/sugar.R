@@ -1,11 +1,11 @@
 #' Syntactic Sugar for Object Construction
 #'
 #' Functions to create OpenML objects. The following functions are available:
-#' * `oml_data()` - creates an instance of the R6 class [`OMLData`].
-#' * `oml_task()` - creates an instance of the R6 class [`OMLTask`].
-#' * `oml_flow()` - creates an instance of the R6 class [`OMLFlow`].
-#' * `oml_run()` - creates an instance of the R6 class [`OMLRun`].
-#' * `oml_collection()` - creates an instance of the R6 class [`OMLCollection`].
+#' * `odt()` - creates an instance of the R6 class [`OMLData`].
+#' * `otsk()` - creates an instance of the R6 class [`OMLTask`].
+#' * `oflw()` - creates an instance of the R6 class [`OMLFlow`].
+#' * `orn()` - creates an instance of the R6 class [`OMLRun`].
+#' * `ocl()` - creates an instance of the R6 class [`OMLCollection`].
 #'
 #' @name oml_sugar
 #' @template param_id
@@ -16,7 +16,7 @@
 #' @return ([`OMLObject`])
 #'
 #' @export
-oml_data = function(
+odt = function(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
@@ -27,7 +27,7 @@ oml_data = function(
 
 #' @rdname oml_sugar
 #' @export
-oml_task = function(
+otsk = function(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
@@ -38,7 +38,7 @@ oml_task = function(
 
 #' @rdname oml_sugar
 #' @export
-oml_flow = function(
+oflw = function(
   id,
   cache = cache_default(),
   test_server = test_server_default()
@@ -48,7 +48,7 @@ oml_flow = function(
 
 #' @rdname oml_sugar
 #' @export
-oml_run = function(
+orn = function(
   id,
   cache = cache_default(),
   parquet = parquet_default(),
@@ -59,7 +59,7 @@ oml_run = function(
 
 #' @rdname oml_sugar
 #' @export
-oml_collection = function(
+ocl = function(
   id,
   cache = cache_default(),
   parquet = parquet_default(),

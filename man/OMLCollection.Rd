@@ -8,7 +8,7 @@ This is the class for collections (previously known as studies) served on
 \url{https://www.openml.org}.
 A collection can either be a \href{https://www.openml.org/search?type=study&study_type=task}{task collection}
 or \href{https://www.openml.org/search?type=study&study_type=run}{run collection}.
-This object can also be constructed using the sugar function \code{\link[=oml_collection]{oml_collection()}}.
+This object can also be constructed using the sugar function \code{\link[=ocl]{ocl()}}.
 
 \strong{Run Collection}
 
@@ -47,7 +47,7 @@ library("mlr3")
 # OpenML Run collection:
 run_collection = OMLCollection$new(id = 232)
 # using sugar
-run_collection = oml_collection(id = 232)
+run_collection = ocl(id = 232)
 run_collection$main_entity_type
 run_collection$tasks
 run_collection$data
@@ -65,7 +65,7 @@ bmr$score(msr("classif.ce"))
 # OpenML task collection
 task_collection = OMLCollection$new(id = 258)
 # using sugar
-task_collection = oml_collection(id = 258)
+task_collection = ocl(id = 258)
 
 task_collection$main_entity_type
 task_collection$tasks

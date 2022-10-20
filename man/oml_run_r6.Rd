@@ -34,7 +34,7 @@ This object can also be constructed using the sugar function \code{\link[=oml_ru
 library("mlr3")
 orun = OMLRun$new(id = 10587724)
 # sugar
-orun = oml_run(id = 10587724)
+orun = orn(id = 10587724)
 print(orun)
 print(orun$task) # OMLTask
 print(orun$data) # OMLData
