@@ -75,6 +75,7 @@ list_oml_tasks(
   tag = NULL,
   limit = limit_default(),
   test_server = test_server_default(),
+  type = NULL,
   ...
 )
 }
@@ -129,6 +130,9 @@ Filter for flow id.}
 
 \item{setup_id}{(\code{integer()})\cr
 Vector of setup ids to restrict to.}
+
+\item{type}{(\code{character(1)})\cr
+The task type, supported values are: clasisf, regr, surv and clust.}
 }
 \value{
 (\code{data.table()}) of results, or a null data.table if no data set matches the filter criteria.

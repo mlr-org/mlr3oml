@@ -15,5 +15,6 @@ test_that("list_oml_data", {
   expect_data_table(list_oml_data(data_id = 999999999), nrows = 0L)
 })
 
+
 # listing data from test server does not work:
 # https://github.com/openml/OpenML/issues/1159#issuecomment-1225720284
