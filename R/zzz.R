@@ -82,7 +82,8 @@ utils::globalVariables(c("super"))
   ResampleResult$private_fields$oml = NULL
   BenchmarkResult$private_fields$oml = NULL
   library.dynam.unload("mlr3oml", libpath)
+  mlr_tasks$remove("oml")
+  mlr_resamplings$remove("oml")
 } # nocov end
-
 
 leanify_package()
