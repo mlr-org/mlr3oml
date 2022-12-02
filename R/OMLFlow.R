@@ -1,11 +1,11 @@
 #' @title Interface to OpenML Flows
 #'
-#' @name oml_flow_r6
+#' @name oml_flow
 #'
 #' @description
-#' This is the class for flows served on [OpenML](https://www.openml.org/f).
+#' This is the class for flows served on [OpenML](https://www.openml.org/search?type=flow&sort=runs).
 #' Flows represent machine learning algorithms.
-#' This object can also be constructed using the sugar function [oml_flow()].
+#' This object can also be constructed using the sugar function [oflw()].
 #'
 #' @section mlr3 Integration:
 #' * Obtain a [mlr3::Learner] using [mlr3::as_learner()].
@@ -15,18 +15,18 @@
 #'
 #' @export
 #' @examples
-#' \donttest{
-#' library("mlr3")
-#' # mlr3 flow:
-#' flow = OMLFlow$new(id = 19103)
-#' # using sugar
-#' flow = oml_flow(id = 19103)
-#' learner = as_learner(flow, "classif")
-#' # python flow
-#' python_flow = OMLFlow$new(19090)
-#' # conversion to pseudo Learner
-#' plearner = as_learner(python_flow, "classif")
-#' }
+#' try({
+#'   library("mlr3")
+#'   # mlr3 flow:
+#'   flow = OMLFlow$new(id = 19103)
+#'   # using sugar
+#'   flow = oflw(id = 19103)
+#'   learner = as_learner(flow, "classif")
+#'   # python flow
+#'   python_flow = OMLFlow$new(19090)
+#'   # conversion to pseudo Learner
+#'   plearner = as_learner(python_flow, "classif")
+#'   }, silent = TRUE)
 OMLFlow = R6Class("OMLFlow",
   inherit = OMLObject,
   public = list(

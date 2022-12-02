@@ -75,6 +75,7 @@ list_oml_tasks(
   tag = NULL,
   limit = limit_default(),
   test_server = test_server_default(),
+  type = NULL,
   ...
 )
 }
@@ -129,13 +130,16 @@ Filter for flow id.}
 
 \item{setup_id}{(\code{integer()})\cr
 Vector of setup ids to restrict to.}
+
+\item{type}{(\code{character(1)})\cr
+The task type, supported values are: clasisf, regr, surv and clust.}
 }
 \value{
 (\code{data.table()}) of results, or a null data.table if no data set matches the filter criteria.
 }
 \description{
 This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
-from \url{https://www.openml.org/d} using some simple filter criteria.
+from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
 }
 \details{
 Filter values are usually provided as single atomic values (typically integer or character).
@@ -144,7 +148,7 @@ Provide a numeric vector of length 2 (\code{c(l, u)}) to find matches in the ran
 Note that only a subset of filters is exposed here.
 For a more feature-complete package, see \CRANpkg{OpenML}.
 Alternatively, you can pass additional filters via \code{...} using the names of the official API,
-c.f. \url{https://www.openml.org/api_docs}.
+c.f. the \emph{REST} tab of \url{https://www.openml.org/apis}.
 }
 \examples{
 \donttest{

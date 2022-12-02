@@ -1,39 +1,39 @@
 skip_on_cran()
 
 test_that("OMLData iris arff", {
-  oml_data = OMLData$new(61, parquet = FALSE)
-  expect_oml_data(oml_data)
-  expect_identical(oml_data$name, "iris")
-  expect_identical(oml_data$nrow, 150L)
-  expect_identical(oml_data$ncol, 5L)
-  expect_identical(oml_data$target_names, "class")
-  expect_r6(mlr3::as_task(oml_data), "TaskClassif")
-  expect_data_table(oml_data$data, nrows = 150L, ncols = 5L)
+  odata = OMLData$new(61, parquet = FALSE)
+  expect_oml_data(odata)
+  expect_identical(odata$name, "iris")
+  expect_identical(odata$nrow, 150L)
+  expect_identical(odata$ncol, 5L)
+  expect_identical(odata$target_names, "class")
+  expect_r6(mlr3::as_task(odata), "TaskClassif")
+  expect_data_table(odata$data, nrows = 150L, ncols = 5L)
 })
 
 test_that("Correct warning when dataset is missing columns", {
   id = 313
-  odata = oml_data(313, parquet = TRUE)
+  odata = odt(313, parquet = TRUE)
   expect_warning(odata$data)
 })
 
 test_that("OMLData iris parquet", {
-  oml_data = OMLData$new(61, parquet = TRUE)
-  expect_oml_data(oml_data)
-  expect_identical(oml_data$name, "iris")
-  expect_identical(oml_data$nrow, 150L)
-  expect_identical(oml_data$ncol, 5L)
-  expect_identical(oml_data$target_names, "class")
-  expect_r6(mlr3::as_task(oml_data), "TaskClassif")
-  expect_data_table(oml_data$data, nrows = 150L, ncols = 5L)
+  odata = OMLData$new(61, parquet = TRUE)
+  expect_oml_data(odata)
+  expect_identical(odata$name, "iris")
+  expect_identical(odata$nrow, 150L)
+  expect_identical(odata$ncol, 5L)
+  expect_identical(odata$target_names, "class")
+  expect_r6(mlr3::as_task(odata), "TaskClassif")
+  expect_data_table(odata$data, nrows = 150L, ncols = 5L)
 })
 
 test_that("no default target column fails gracefully (#1)", {
   data_id = 4535L
-  oml_data = OMLData$new(data_id, FALSE)
-  expect_oml_data(oml_data)
-  expect_error(mlr3::as_task(oml_data), "default target attribute")
-  expect_r6(mlr3::as_task(oml_data, "V10"), "Task")
+  odata = OMLData$new(data_id, FALSE)
+  expect_oml_data(odata)
+  expect_error(mlr3::as_task(odata), "default target attribute")
+  expect_r6(mlr3::as_task(odata, "V10"), "Task")
   expect_r6(mlr3::tsk("oml", data_id = data_id, target_names = "V10"), "Task")
 })
 
@@ -112,7 +112,7 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
 })
 
 test_that("Logicals are converted to factor", {
-  odata = oml_data(1050)
+  odata = odt(1050)
   backend = as_data_backend(odata)
   # renaming worked
   assert_true("c" %in% backend$colnames)

@@ -1,9 +1,9 @@
 #' @title Interface to OpenML Runs
 #'
-#' @name oml_run_r6
+#' @name oml_run
 #'
 #' @description
-#' This is the class for OpenML [Runs](https://www.openml.org/r), which are
+#' This is the class for OpenML [Runs](https://www.openml.org/search?type=run&sort=date), which are
 #' conceptually similar to [mlr3::ResampleResult]s.
 #' This object can also be constructed using the sugar function [oml_run()].
 #'
@@ -24,22 +24,22 @@
 #'
 #' @export
 #' @examples
-#' \donttest{
-#' library("mlr3")
-#' orun = OMLRun$new(id = 10587724)
-#' # sugar
-#' orun = oml_run(id = 10587724)
-#' print(orun)
-#' print(orun$task) # OMLTask
-#' print(orun$data) # OMLData
-#' print(orun$flow) # OMLFlow
-#' print(orun$prediction)
-#' as_task(orun)
-#' as_resampling(orun)
-#' as_data_backend(orun)
-#' rr = as_resample_result(orun)
-#' rr$score(msr("classif.ce"))
-#' }
+#' try({
+#'   library("mlr3")
+#'   orun = OMLRun$new(id = 10587724)
+#'   # sugar
+#'   orun = orn(id = 10587724)
+#'   print(orun)
+#'   print(orun$task) # OMLTask
+#'   print(orun$data) # OMLData
+#'   print(orun$flow) # OMLFlow
+#'   print(orun$prediction)
+#'   as_task(orun)
+#'   as_resampling(orun)
+#'   as_data_backend(orun)
+#'   rr = as_resample_result(orun)
+#'   rr$score(msr("classif.ce"))
+#'   }, silent = TRUE)
 OMLRun = R6Class("OMLRun",
   inherit = OMLObject,
   public = list(
