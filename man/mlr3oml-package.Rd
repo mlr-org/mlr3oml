@@ -45,7 +45,7 @@ Default is \code{FALSE}.
 \strong{Relevant for developers}
 \itemize{
 \item \code{mlr3oml.test_server}:
-The default value for whether to use the OpenML \href{https://test.openml.org/}{test server}.
+The default value for whether to use the OpenML test server.
 Default is \code{FALSE}.
 \item \code{mlr3oml.test_api_key}:
 API key to use for the test server. If not set, defaults to the value of the environment

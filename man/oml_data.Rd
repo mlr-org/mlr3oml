@@ -193,8 +193,7 @@ If parquet is not available, it will fall back to arff.
 Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
-Whether to use the OpenML test server (https://test.openml.org/) or public server
-(https://www.openml.org/).
+Whether to use the OpenML test server or public server.
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 }
 \if{html}{\out{</div>}}

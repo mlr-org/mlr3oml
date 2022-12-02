@@ -106,8 +106,7 @@ Limit the results to \code{limit} records.
 Default is the value of option \code{"mlr3oml.limit"}, defaulting to 5000.}
 
 \item{test_server}{(\code{character(1)})\cr
-Whether to use the OpenML test server (https://test.openml.org/) or public server
-(https://www.openml.org/).
+Whether to use the OpenML test server or public server.
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 
 \item{...}{(any)\cr
