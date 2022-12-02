@@ -236,9 +236,7 @@ OMLData = R6Class("OMLData",
           backend = try(as_duckdb_backend_character(path, primary_key = primary_key), silent = TRUE)
           if (inherits(backend, "try-error")) {
             msg = paste(
-              "Parquet available but failed to create backend, reverting to arff.",
-              "This might be due to a bug in duckdb, that happens with many columns.",
-              "It might also be that the parquet version of the dataset is faulty.",
+              "Parquet available but failed to create backend, reverting to arff."
               sep = "\n"
             )
             lg$info(msg, id = self$id)
