@@ -1,13 +1,14 @@
 # mlr3oml 0.7.0
 
-* fix: Fixed some OpenML links
+* docs: Fixed some OpenML links
 * docs: Renamed the docs for OpenML objects
 * Renamed the sugar functions from:
-  *  `oml_data()` is now `odt()`
+  * `oml_data()` is now `odt()`
   * `oml_task() `is now `otsk()`
   * `oml_flow()` is now `oflw()`
   * `oml_run()` is now `orn`
   * `oml_collection()` is now `ocl()`
+* Addresses a CRAN issue: examples fail gracefully if OpenML server is busy.
 
 
 # mlr3oml 0.6.0
