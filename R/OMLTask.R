@@ -1,6 +1,6 @@
 #' @title Interface to OpenML Tasks
 #'
-#' @name OMLTask
+#' @name oml_task
 #'
 #' @description
 #' This is the class for tasks served on [OpenML](https://www.openml.org/search?type=task&sort=runs).
@@ -17,22 +17,22 @@
 #'
 #' @export
 #' @examples
-#' \donttest{
-#' library("mlr3")
-#' # Get a task from OpenML:
-#' otask = OMLTask$new(id = 31)
-#' # using sugar
-#' otask = otsk(id = 31)
-#' otask$data
-#' otask$target_names
-#' otask$feature_names
+#' try({
+#'   library("mlr3")
+#'   # Get a task from OpenML:
+#'   otask = OMLTask$new(id = 31)
+#'   # using sugar
+#'   otask = otsk(id = 31)
+#'   otask$data
+#'   otask$target_names
+#'   otask$feature_names
 #'
-#' # convert to mlr3 Task:
-#' task = as_task(otask)
+#'   # convert to mlr3 Task:
+#'   task = as_task(otask)
 #'
-#' # get a task via tsk():
-#' tsk("oml", task_id = 31L)
-#' }
+#'   # get a task via tsk():
+#'   tsk("oml", task_id = 31L)
+#'   }, silent = TRUE)
 OMLTask = R6Class("OMLTask",
   inherit = OMLObject,
   public = list(

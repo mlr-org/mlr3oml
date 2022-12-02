@@ -1,6 +1,6 @@
 #' @title Interface to OpenML Data Sets
 #'
-#' @name OMLData
+#' @name oml_data
 #'
 #' @description
 #' This is the class for data sets served on [OpenML](https://www.openml.org/search?type=data&status=active).
@@ -36,43 +36,43 @@
 #'
 #' @export
 #' @examples
-#' \donttest{
-#' library("mlr3")
-#' # OpenML Data object
-#' odata = OMLData$new(id = 9)
-#' # using sugar
-#' odata = odt(id = 9)
-#' print(odata)
-#' print(odata$target_names)
-#' print(odata$feature_names)
-#' print(odata$tags)
-#'
-#' # mlr3 conversion:
-#' task = as_task(odata)
-#' backend = as_data_backend(odata)
-#' class(backend)
-#'
-#' # get a task via tsk():
-#' tsk("oml", data_id = 9)
-#'
-#' # For parquet files
-#' if (requireNamespace("duckdb")) {
-#'   odata = OMLData$new(id = 9, parquet = TRUE)
+#' try({
+#'   library("mlr3")
+#'   # OpenML Data object
+#'   odata = OMLData$new(id = 9)
 #'   # using sugar
 #'   odata = odt(id = 9)
-#'
 #'   print(odata)
 #'   print(odata$target_names)
 #'   print(odata$feature_names)
 #'   print(odata$tags)
 #'
+#'   # mlr3 conversion:
+#'   task = as_task(odata)
 #'   backend = as_data_backend(odata)
 #'   class(backend)
-#'   task = as_task(odata)
-#'   task = tsk("oml", data_id = 9, parquet = TRUE)
-#'   class(task$backend)
-#' }
-#' }
+#'
+#'   # get a task via tsk():
+#'   tsk("oml", data_id = 9)
+#'
+#'   # For parquet files
+#'   if (requireNamespace("duckdb")) {
+#'     odata = OMLData$new(id = 9, parquet = TRUE)
+#'     # using sugar
+#'     odata = odt(id = 9)
+#'
+#'     print(odata)
+#'     print(odata$target_names)
+#'     print(odata$feature_names)
+#'     print(odata$tags)
+#'
+#'     backend = as_data_backend(odata)
+#'     class(backend)
+#'     task = as_task(odata)
+#'     task = tsk("oml", data_id = 9, parquet = TRUE)
+#'     class(task$backend)
+#'   }
+#' }, silent = TRUE)
 OMLData = R6Class("OMLData",
   inherit = OMLObject,
   public = list(
