@@ -11,12 +11,6 @@ test_that("OMLData iris arff", {
   expect_data_table(odata$data, nrows = 150L, ncols = 5L)
 })
 
-test_that("Correct warning when dataset is missing columns", {
-  id = 313
-  odata = odt(313, parquet = TRUE)
-  expect_warning(odata$data)
-})
-
 test_that("OMLData iris parquet", {
   odata = OMLData$new(61, parquet = TRUE)
   expect_oml_data(odata)
