@@ -7,6 +7,9 @@
 #' This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
 #' from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
 #'
+#' To find datasets for a specific task type, use [`list_oml_tasks()`] which supports filtering according to the task
+#' type.
+#'
 #' @details
 #' Filter values are usually provided as single atomic values (typically integer or character).
 #' Provide a numeric vector of length 2 (`c(l, u)`) to find matches in the range \eqn{[l, u]}.

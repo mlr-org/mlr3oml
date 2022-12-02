@@ -132,7 +132,7 @@ Filter for flow id.}
 Vector of setup ids to restrict to.}
 
 \item{type}{(\code{character(1)})\cr
-The task type, supported values are: clasisf, regr, surv and clust.}
+The task type, supported values are: \code{"clasisf"}, \code{"regr"}, \code{"surv"} and \code{"clust"}.}
 }
 \value{
 (\code{data.table()}) of results, or a null data.table if no data set matches the filter criteria.
@@ -140,6 +140,9 @@ The task type, supported values are: clasisf, regr, surv and clust.}
 \description{
 This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
 from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
+
+To find datasets for a specific task type, use \code{\link[=list_oml_tasks]{list_oml_tasks()}} which supports filtering according to the task
+type.
 }
 \details{
 Filter values are usually provided as single atomic values (typically integer or character).
