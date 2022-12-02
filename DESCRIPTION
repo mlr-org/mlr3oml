@@ -33,7 +33,7 @@ Imports:
     withr
 Suggests:
     DBI,
-    duckdb,
+    duckdb (>= 0.6.0),
     mlr3db (>= 0.5.0),
     qs,
     RWeka,
