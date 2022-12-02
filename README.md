@@ -126,7 +126,7 @@ head(tab[, .(data_id, name)])
 ``` r
 # R6 class for tasks
 otask = OMLTask$new(31) # or
-otask = oml_task(31)
+otask = otsk(31)
 
 task = as_task(otask)
 task
@@ -211,7 +211,7 @@ tab[, .(task_id, data_id, name)]
 ``` r
 # R6 class for flows
 oflow = OMLFlow$new(100) # or
-oflow = oml_flow(100)
+oflow = oflw(100)
 
 oflow$dependencies
 ```
@@ -223,17 +223,17 @@ oflow$parameter
 ```
 
     ##     name data_type default_value
-    ##  1:    A      flag
-    ##  2:    B      flag
+    ##  1:    A      flag              
+    ##  2:    B      flag              
     ##  3:    C    option          0.25
-    ##  4:    J      flag
-    ##  5:    L      flag
+    ##  4:    J      flag              
+    ##  5:    L      flag              
     ##  6:    M    option             2
-    ##  7:    N    option
-    ##  8:    O      flag
-    ##  9:    Q    option
-    ## 10:    R      flag
-    ## 11:    S      flag
+    ##  7:    N    option              
+    ##  8:    O      flag              
+    ##  9:    Q    option              
+    ## 10:    R      flag              
+    ## 11:    S      flag              
     ## 12:    U      flag
 
 ``` r
@@ -253,7 +253,9 @@ learner
 ``` r
 # R6Class for run
 
-orun = OMLRun$new(538858)
+orun = OMLRun$new(538858) # o
+orun = orn(538858)
+
 orun$data
 ```
 
@@ -326,7 +328,7 @@ rr
 # R6 class for collection
 
 ocol = OMLCollection$new(232) # or
-ocol = oml_collection(232)
+ocol = ocl(232)
 
 ocol$tasks
 ```
