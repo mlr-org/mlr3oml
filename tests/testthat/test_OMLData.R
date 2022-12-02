@@ -118,3 +118,15 @@ test_that("Logicals are converted to factor", {
   assert_true("c" %in% backend$colnames)
   expect_oml_data(odata)
 })
+
+test_that("strings and nominals are distringuished for parquet files", {
+  odata_pq = odt(41701, parquet = TRUE)
+  dat = odata_pq$data
+  expect_class(dat[["instance_id"]], "character")
+  expect_class(dat[["runstatus"]], "factor")
+
+  odata_arff = odt(41701)
+  dat = odata_arff$data
+  expect_class(dat[["instance_id"]], "character")
+  expect_class(dat[["runstatus"]], "factor")
+})

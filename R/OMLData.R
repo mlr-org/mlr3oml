@@ -233,7 +233,8 @@ OMLData = R6Class("OMLData",
         if (inherits(path, "try-error")) {
           lg$info("Failed to download parquet, trying arff.", id = self$id)
         } else {
-          backend = try(as_duckdb_backend_character(path, primary_key = primary_key), silent = TRUE)
+          factors = self$features[get("data_type") == "nominal", "name"][[1L]]
+          backend = try(as_duckdb_backend_character(path, primary_key = primary_key, factors = factors), silent = TRUE)
           if (inherits(backend, "try-error")) {
             msg = paste(
               "Parquet available but failed to create backend, reverting to arff.",
