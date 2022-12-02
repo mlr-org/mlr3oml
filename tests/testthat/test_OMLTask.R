@@ -1,32 +1,32 @@
 skip_on_cran()
 
 test_that("OMLTask iris", {
-  oml_task = OMLTask$new(59, FALSE)
-  expect_oml_task(oml_task)
-  expect_string(oml_task$name, pattern = "iris")
-  expect_identical(oml_task$nrow, 150L)
-  expect_identical(oml_task$ncol, 5L)
-  expect_identical(oml_task$target_names, "class")
+  otask = OMLTask$new(59, FALSE)
+  expect_oml_task(otask)
+  expect_string(otask$name, pattern = "iris")
+  expect_identical(otask$nrow, 150L)
+  expect_identical(otask$ncol, 5L)
+  expect_identical(otask$target_names, "class")
 })
 
 test_that("data backend", {
-  oml_task = OMLTask$new(59)
-  expect_backend(mlr3::as_data_backend(oml_task))
+  otask = OMLTask$new(59)
+  expect_backend(mlr3::as_data_backend(otask))
 })
 
 test_that("Task 1 works", {
-  oml_task = OMLTask$new(1)
-  expect_oml_task(oml_task)
+  otask = OMLTask$new(1)
+  expect_oml_task(otask)
 })
 
 test_that("Task 1 works with arff", {
-  oml_task = OMLTask$new(1, parquet = FALSE)
-  expect_oml_task(oml_task)
+  otask = OMLTask$new(1, parquet = FALSE)
+  expect_oml_task(otask)
 })
 
 test_that("Task 100 works", {
-  oml_task = OMLTask$new(1)
-  expect_oml_task(oml_task)
+  otask = OMLTask$new(1)
+  expect_oml_task(otask)
 })
 
 test_that("OpenML CC-18 should work: arff", {
@@ -38,10 +38,10 @@ test_that("OpenML CC-18 should work: arff", {
     "Supervised Classification"
   )
   for (task_id in task_ids) {
-    task = OMLTask$new(task_id, parquet = FALSE)
+    otask = OMLTask$new(task_id, parquet = FALSE)
     # print(task_id)
-    if (task$task_type %in% task_types) {
-      expect_oml_task(task)
+    if (otask$task_type %in% task_types) {
+      expect_oml_task(otask)
     }
   }
 })
@@ -55,10 +55,10 @@ test_that("OpenML CC-18 should work: parquet", {
     "Supervised Classification"
   )
   for (task_id in task_ids) {
-    task = OMLTask$new(task_id, parquet = TRUE)
+    otask = OMLTask$new(task_id, parquet = TRUE)
     # print(task_id)
-    if (task$task_type %in% task_types) {
-      expect_oml_task(task)
+    if (otask$task_type %in% task_types) {
+      expect_oml_task(otask)
     }
   }
 })

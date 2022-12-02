@@ -5,7 +5,7 @@
 #'
 #' @description
 #' This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
-#' from \url{https://www.openml.org/d} using some simple filter criteria.
+#' from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
 #'
 #' @details
 #' Filter values are usually provided as single atomic values (typically integer or character).
@@ -14,8 +14,7 @@
 #' Note that only a subset of filters is exposed here.
 #' For a more feature-complete package, see \CRANpkg{OpenML}.
 #' Alternatively, you can pass additional filters via `...` using the names of the official API,
-#' c.f. \url{https://www.openml.org/api_docs}.
-#'
+#' c.f. the *REST* tab of \url{https://www.openml.org/apis}.
 #'
 #' @param data_id (`integer()`)\cr
 #'   Vector of data ids to restrict to.
@@ -71,6 +70,7 @@
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {
+
   tab = get_paginated_table("data",
     data_id = data_id,
     data_name = data_name,

@@ -63,7 +63,7 @@ rsmp("oml", task_id = 59)
 ``` r
 # R6 class for data sets
 odata = OMLData$new(61) # or
-odata = oml_data(61)
+odata = odt(61)
 
 odata$name
 ```
@@ -126,7 +126,7 @@ head(tab[, .(data_id, name)])
 ``` r
 # R6 class for tasks
 otask = OMLTask$new(31) # or
-otask = oml_task(31)
+otask = otsk(31)
 
 task = as_task(otask)
 task
@@ -211,7 +211,7 @@ tab[, .(task_id, data_id, name)]
 ``` r
 # R6 class for flows
 oflow = OMLFlow$new(100) # or
-oflow = oml_flow(100)
+oflow = oflw(100)
 
 oflow$dependencies
 ```
@@ -253,7 +253,9 @@ learner
 ``` r
 # R6Class for run
 
-orun = OMLRun$new(538858)
+orun = OMLRun$new(538858) # o
+orun = orn(538858)
+
 orun$data
 ```
 
@@ -326,7 +328,7 @@ rr
 # R6 class for collection
 
 ocol = OMLCollection$new(232) # or
-ocol = oml_collection(232)
+ocol = ocl(232)
 
 ocol$tasks
 ```

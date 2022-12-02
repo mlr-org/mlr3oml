@@ -16,10 +16,10 @@ test_that("list_oml_tasks", {
 })
 
 test_that("Can query tasks of certain type", {
-  tab = list_oml_tasks(type = "2", limit = 10)
+  tab = list_oml_tasks(type = "regr", limit = 10)
   expect_true(unique(tab$task_type) == "Supervised Regression")
 
-  tab = list_oml_tasks(type = "1", limit = 10)
+  tab = list_oml_tasks(type = "classif", limit = 10)
   expect_true(unique(tab$task_type) == "Supervised Classification")
 })
 
