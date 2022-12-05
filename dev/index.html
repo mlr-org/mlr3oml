@@ -151,8 +151,8 @@
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Parameters: list()</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># R6 class for data sets</span></span>
-<span><span class="va">odata</span> <span class="op">=</span> <span class="va"><a href="reference/oml_data_r6.html">OMLData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">61</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">oml_data</a></span><span class="op">(</span><span class="fl">61</span><span class="op">)</span></span>
+<span><span class="va">odata</span> <span class="op">=</span> <span class="va"><a href="reference/oml_data.html">OMLData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">61</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">odt</a></span><span class="op">(</span><span class="fl">61</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">odata</span><span class="op">$</span><span class="va">name</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "iris"</span></span></code></pre></div>
@@ -196,8 +196,8 @@
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:     668 witmer_census_1980</span></span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># R6 class for tasks</span></span>
-<span><span class="va">otask</span> <span class="op">=</span> <span class="va"><a href="reference/oml_task_r6.html">OMLTask</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">otask</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">oml_task</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span><span class="va">otask</span> <span class="op">=</span> <span class="va"><a href="reference/oml_task.html">OMLTask</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">otask</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">otsk</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">otask</span><span class="op">)</span></span>
 <span><span class="va">task</span></span></code></pre></div>
@@ -254,8 +254,8 @@
 <span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:      11      11   balance-scale</span></span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># R6 class for flows</span></span>
-<span><span class="va">oflow</span> <span class="op">=</span> <span class="va"><a href="reference/oml_flow_r6.html">OMLFlow</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">oflow</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">oml_flow</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">oflow</span> <span class="op">=</span> <span class="va"><a href="reference/oml_flow.html">OMLFlow</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">oflow</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">oflw</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">oflow</span><span class="op">$</span><span class="va">dependencies</span></span></code></pre></div>
 <div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "Weka_3.7.5"</span></span></code></pre></div>
@@ -288,7 +288,9 @@
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># R6Class for run</span></span>
 <span></span>
-<span><span class="va">orun</span> <span class="op">=</span> <span class="va"><a href="reference/oml_run_r6.html">OMLRun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">538858</span><span class="op">)</span></span>
+<span><span class="va">orun</span> <span class="op">=</span> <span class="va"><a href="reference/oml_run.html">OMLRun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">538858</span><span class="op">)</span> <span class="co"># o</span></span>
+<span><span class="va">orun</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">orn</a></span><span class="op">(</span><span class="fl">538858</span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">orun</span><span class="op">$</span><span class="va">data</span></span></code></pre></div>
 <div class="sourceCode" id="cb44"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLData:952:prnn_fglass&gt; (214x10)</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Default target: type</span></span></code></pre></div>
@@ -345,8 +347,8 @@
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># R6 class for collection</span></span>
 <span></span>
-<span><span class="va">ocol</span> <span class="op">=</span> <span class="va"><a href="reference/oml_collection_r6.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">232</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">ocol</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">oml_collection</a></span><span class="op">(</span><span class="fl">232</span><span class="op">)</span></span>
+<span><span class="va">ocol</span> <span class="op">=</span> <span class="va"><a href="reference/oml_collection.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">232</span><span class="op">)</span> <span class="co"># or</span></span>
+<span><span class="va">ocol</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">ocl</a></span><span class="op">(</span><span class="fl">232</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ocol</span><span class="op">$</span><span class="va">tasks</span></span></code></pre></div>
 <div class="sourceCode" id="cb54"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">##    id          task     data                 task_type target  nrow ncol</span></span>
