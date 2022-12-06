@@ -50,7 +50,7 @@
 #' try({
 #'   ### query data sets
 #'   # search for titanic data set
-#'   data_sets = try(list_oml_data(data_name = "titanic")
+#'   data_sets = list_oml_data(data_name = "titanic")
 #'   print(data_sets)
 #'
 #'   # search for a reduced version
