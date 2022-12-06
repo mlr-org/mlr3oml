@@ -153,29 +153,29 @@ Alternatively, you can pass additional filters via \code{...} using the names of
 c.f. the \emph{REST} tab of \url{https://www.openml.org/apis}.
 }
 \examples{
-\donttest{
-### query data sets
-# search for titanic data set
-data_sets = list_oml_data(data_name = "titanic")
-print(data_sets)
+try({
+  ### query data sets
+  # search for titanic data set
+  data_sets = try(list_oml_data(data_name = "titanic")
+  print(data_sets)
 
-# search for a reduced version
-data_sets = list_oml_data(
-  data_name = "titanic",
-  number_instances = c(2200, 2300),
-  number_features = 4
-)
-print(data_sets)
+  # search for a reduced version
+  data_sets = list_oml_data(
+    data_name = "titanic",
+    number_instances = c(2200, 2300),
+    number_features = 4
+  )
+  print(data_sets)
 
-### search tasks for this data set
-tasks = list_oml_tasks(data_id = data_sets$data_id)
-print(tasks)
+  ### search tasks for this data set
+  tasks = list_oml_tasks(data_id = data_sets$data_id)
+  print(tasks)
 
 
-# query runs, group by number of runs per task_id
-runs = list_oml_runs(task_id = tasks$task_id)
-runs[, .N, by = task_id]
-}
+  # query runs, group by number of runs per task_id
+  runs = list_oml_runs(task_id = tasks$task_id)
+  runs[, .N, by = task_id]
+}, silent = TRUE)
 }
 \references{
 Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, Vanschoren J, Bischl B (2017).
