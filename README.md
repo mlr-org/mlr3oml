@@ -1,10 +1,11 @@
 
 # mlr3oml
 
-[![tic](https://github.com/mlr-org/mlr3oml/workflows/tic/badge.svg?branch=main)](https://github.com/mlr-org/mlr3oml/actions?query=workflow%3Atic)
+[![r-cmd-check](https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
+[![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
 **mlr3oml** enables downloading [OpenML](https://www.openml.org)
 datasets, tasks, flows, runs, and collections and allows to convert them
