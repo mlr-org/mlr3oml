@@ -7,6 +7,9 @@
 #' This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
 #' from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
 #'
+#' To find datasets for a specific task type, use [`list_oml_tasks()`] which supports filtering according to the task
+#' type.
+#'
 #' @details
 #' Filter values are usually provided as single atomic values (typically integer or character).
 #' Provide a numeric vector of length 2 (`c(l, u)`) to find matches in the range \eqn{[l, u]}.
@@ -44,29 +47,29 @@
 #'
 #' @export
 #' @examples
-#' \donttest{
-#' ### query data sets
-#' # search for titanic data set
-#' data_sets = list_oml_data(data_name = "titanic")
-#' print(data_sets)
+#' try({
+#'   ### query data sets
+#'   # search for titanic data set
+#'   data_sets = list_oml_data(data_name = "titanic")
+#'   print(data_sets)
 #'
-#' # search for a reduced version
-#' data_sets = list_oml_data(
-#'   data_name = "titanic",
-#'   number_instances = c(2200, 2300),
-#'   number_features = 4
-#' )
-#' print(data_sets)
+#'   # search for a reduced version
+#'   data_sets = list_oml_data(
+#'     data_name = "titanic",
+#'     number_instances = c(2200, 2300),
+#'     number_features = 4
+#'   )
+#'   print(data_sets)
 #'
-#' ### search tasks for this data set
-#' tasks = list_oml_tasks(data_id = data_sets$data_id)
-#' print(tasks)
+#'   ### search tasks for this data set
+#'   tasks = list_oml_tasks(data_id = data_sets$data_id)
+#'   print(tasks)
 #'
 #'
-#' # query runs, group by number of runs per task_id
-#' runs = list_oml_runs(task_id = tasks$task_id)
-#' runs[, .N, by = task_id]
-#' }
+#'   # query runs, group by number of runs per task_id
+#'   runs = list_oml_runs(task_id = tasks$task_id)
+#'   runs[, .N, by = task_id]
+#' }, silent = TRUE)
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {

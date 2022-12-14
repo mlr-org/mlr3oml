@@ -106,8 +106,7 @@ Limit the results to \code{limit} records.
 Default is the value of option \code{"mlr3oml.limit"}, defaulting to 5000.}
 
 \item{test_server}{(\code{character(1)})\cr
-Whether to use the OpenML test server (https://test.openml.org/) or public server
-(https://www.openml.org/).
+Whether to use the OpenML test server or public server.
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 
 \item{...}{(any)\cr
@@ -132,7 +131,7 @@ Filter for flow id.}
 Vector of setup ids to restrict to.}
 
 \item{type}{(\code{character(1)})\cr
-The task type, supported values are: clasisf, regr, surv and clust.}
+The task type, supported values are: \code{"clasisf"}, \code{"regr"}, \code{"surv"} and \code{"clust"}.}
 }
 \value{
 (\code{data.table()}) of results, or a null data.table if no data set matches the filter criteria.
@@ -140,6 +139,9 @@ The task type, supported values are: clasisf, regr, surv and clust.}
 \description{
 This function allows to query data sets, tasks, flows, setups, runs, and evaluation measures
 from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using some simple filter criteria.
+
+To find datasets for a specific task type, use \code{\link[=list_oml_tasks]{list_oml_tasks()}} which supports filtering according to the task
+type.
 }
 \details{
 Filter values are usually provided as single atomic values (typically integer or character).
@@ -151,29 +153,29 @@ Alternatively, you can pass additional filters via \code{...} using the names of
 c.f. the \emph{REST} tab of \url{https://www.openml.org/apis}.
 }
 \examples{
-\donttest{
-### query data sets
-# search for titanic data set
-data_sets = list_oml_data(data_name = "titanic")
-print(data_sets)
+try({
+  ### query data sets
+  # search for titanic data set
+  data_sets = list_oml_data(data_name = "titanic")
+  print(data_sets)
 
-# search for a reduced version
-data_sets = list_oml_data(
-  data_name = "titanic",
-  number_instances = c(2200, 2300),
-  number_features = 4
-)
-print(data_sets)
+  # search for a reduced version
+  data_sets = list_oml_data(
+    data_name = "titanic",
+    number_instances = c(2200, 2300),
+    number_features = 4
+  )
+  print(data_sets)
 
-### search tasks for this data set
-tasks = list_oml_tasks(data_id = data_sets$data_id)
-print(tasks)
+  ### search tasks for this data set
+  tasks = list_oml_tasks(data_id = data_sets$data_id)
+  print(tasks)
 
 
-# query runs, group by number of runs per task_id
-runs = list_oml_runs(task_id = tasks$task_id)
-runs[, .N, by = task_id]
-}
+  # query runs, group by number of runs per task_id
+  runs = list_oml_runs(task_id = tasks$task_id)
+  runs[, .N, by = task_id]
+}, silent = TRUE)
 }
 \references{
 Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, Vanschoren J, Bischl B (2017).

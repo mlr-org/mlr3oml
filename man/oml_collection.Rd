@@ -49,32 +49,13 @@ try({
   run_collection = OMLCollection$new(id = 232)
   # using sugar
   run_collection = ocl(id = 232)
-  run_collection$main_entity_type
-  run_collection$tasks
-  run_collection$data
-  run_collection$flows
-  run_collection$runs
+  print(run_collection)
 
-  # mlr3 conversion:
-  tasks = as_tasks(run_collection)
-  resamplings = as_resamplings(run_collection)
-  learners = as_learners(run_collection, "classif")
-
-  bmr = as_benchmark_result(run_collection)
-  bmr$score(msr("classif.ce"))
-
-  # OpenML task collection
+  # OpenML task collection:
   task_collection = OMLCollection$new(id = 258)
   # using sugar
   task_collection = ocl(id = 258)
-
-  task_collection$main_entity_type
-  task_collection$tasks
-  task_collection$data
-
-  # mlr3 conversion
-  tasks = as_tasks(task_collection)
-  resamplings = as_resamplings(task_collection)
+  print(task_collection)
   }, silent = TRUE)
 }
 \references{
@@ -174,8 +155,7 @@ If parquet is not available, it will fall back to arff.
 Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
-Whether to use the OpenML test server (https://test.openml.org/) or public server
-(https://www.openml.org/).
+Whether to use the OpenML test server or public server.
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 }
 \if{html}{\out{</div>}}

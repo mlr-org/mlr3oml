@@ -39,7 +39,7 @@
 #' **Relevant for developers**
 #'
 #' * `mlr3oml.test_server`:
-#'   The default value for whether to use the OpenML [test server](https://test.openml.org/).
+#'   The default value for whether to use the OpenML test server.
 #'   Default is `FALSE`.
 #' * `mlr3oml.test_api_key`:
 #'   API key to use for the test server. If not set, defaults to the value of the environment
@@ -82,7 +82,8 @@ utils::globalVariables(c("super"))
   ResampleResult$private_fields$oml = NULL
   BenchmarkResult$private_fields$oml = NULL
   library.dynam.unload("mlr3oml", libpath)
+  mlr_tasks$remove("oml")
+  mlr_resamplings$remove("oml")
 } # nocov end
-
 
 leanify_package()

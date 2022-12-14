@@ -1,5 +1,7 @@
 # mlr3oml 0.7.0
 
+* feature: Add argument `task_type` to function `list_oml_tasks()`.
+* fix: strings and nominals are distinguished for parquet files
 * docs: Fixed some OpenML links
 * docs: Renamed the docs for OpenML objects
 * Renamed the sugar functions from:

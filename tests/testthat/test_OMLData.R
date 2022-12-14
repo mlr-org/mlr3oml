@@ -11,12 +11,6 @@ test_that("OMLData iris arff", {
   expect_data_table(odata$data, nrows = 150L, ncols = 5L)
 })
 
-test_that("Correct warning when dataset is missing columns", {
-  id = 313
-  odata = odt(313, parquet = TRUE)
-  expect_warning(odata$data)
-})
-
 test_that("OMLData iris parquet", {
   odata = OMLData$new(61, parquet = TRUE)
   expect_oml_data(odata)
@@ -117,4 +111,16 @@ test_that("Logicals are converted to factor", {
   # renaming worked
   assert_true("c" %in% backend$colnames)
   expect_oml_data(odata)
+})
+
+test_that("strings and nominals are distringuished for parquet files", {
+  odata_pq = odt(41701, parquet = TRUE)
+  dat = odata_pq$data
+  expect_class(dat[["instance_id"]], "character")
+  expect_class(dat[["runstatus"]], "factor")
+
+  odata_arff = odt(41701)
+  dat = odata_arff$data
+  expect_class(dat[["instance_id"]], "character")
+  expect_class(dat[["runstatus"]], "factor")
 })
