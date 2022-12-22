@@ -124,3 +124,12 @@ test_that("strings and nominals are distringuished for parquet files", {
   expect_class(dat[["instance_id"]], "character")
   expect_class(dat[["runstatus"]], "factor")
 })
+
+test_that("ignore features are properly ignored when names are converted", {
+  odata = odt(940, cache = TRUE)
+
+  # don't test using odata$desc$ignore, at least in the past this was not necessarily correct
+  # https://github.com/openml/OpenML/issues/1046
+  ignore = odata$features[get("is_ignore"), "name"][[1L]]
+  expect_true(all(ignore %nin% colnames(odata$data)))
+})
