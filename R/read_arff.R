@@ -120,7 +120,15 @@ read_arff = function(path) {
 
   for (j in which(col_classes == "integer")) {
     x = data[[j]]
-    if (!is.integer(x) && test_integerish(x)) {
+
+    if (inherits(x, "integer64")) {
+      print(j)
+      if (all(between(x, -.Machine$integer.max, .Machine$integer.max))) {
+        set(data, j = j, value = as.integer(x))
+      } else {
+        set(data, j = j, value = as.double(x))
+      }
+    } else if (!is.integer(x) && test_integerish(x)) {
       set(data, j = j, value = as.integer(x))
     }
   }
