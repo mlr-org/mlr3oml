@@ -122,7 +122,6 @@ read_arff = function(path) {
     x = data[[j]]
 
     if (inherits(x, "integer64")) {
-      print(j)
       if (all(between(x, -.Machine$integer.max, .Machine$integer.max))) {
         set(data, j = j, value = as.integer(x))
       } else {
