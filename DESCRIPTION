@@ -19,6 +19,7 @@ Depends:
     R (>= 3.1.0)
 Imports:
     backports (>= 1.1.6),
+    bit64,
     checkmate,
     curl,
     data.table,
@@ -33,7 +34,6 @@ Imports:
     uuid,
     withr
 Suggests:
-    bit64,
     DBI,
     duckdb (>= 0.6.0),
     mlr3db (>= 0.5.0),
