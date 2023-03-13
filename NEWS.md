@@ -1,3 +1,7 @@
+# mlr3oml 0.7.1
+
+* Fixed argument names of S3 method for `as_data_backend` to comply with new CRAN checks
+
 # mlr3oml 0.7.0
 
 * feature: Add argument `task_type` to function `list_oml_tasks()`.

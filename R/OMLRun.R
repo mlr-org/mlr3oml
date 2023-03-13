@@ -222,7 +222,7 @@ as_task.OMLRun = function(x, ...) {
 
 #' @importFrom mlr3 as_data_backend
 #' @export
-as_data_backend.OMLRun = function(x, primary_key = NULL, ...) {
+as_data_backend.OMLRun = function(data, primary_key = NULL, ...) {
   as_data_backend(x$data, primary_key = primary_key, ...)
 }
 
