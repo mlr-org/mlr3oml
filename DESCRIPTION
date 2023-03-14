@@ -1,6 +1,6 @@
 Package: mlr3oml
 Title: Connector Between 'mlr3' and 'OpenML'
-Version: 0.7.1
+Version: 0.7.1-9000
 Authors@R:c(
     person("Michel", "Lang", , "michellang@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0001-9754-0393")),
