@@ -24,13 +24,13 @@ function can be used.
 \examples{
 try({
   library("mlr3")
-  collection = OMLCollection$new(258)
-  otasks = collection$tasks[1:2, ][["task"]]
-  tasks = as_tasks(otasks)
-  resamplings = as_resamplings(otasks)
-  learners = lrns(c("classif.rpart", "classif.featureless"))
-  design = benchmark_grid_oml(tasks, learners, resamplings)
-  print(design)
+  learner = lrn("regr.rpart")
+  tasks = tsks(c("mtcars", "boston_housing"))
+  resamplings = rsmps(c("cv", "holdout"))
+  lapply(1:2, function(i) resamplings[[i]]$instantiate(tasks[[i]]))
+
+  design = benchmark_grid_oml(tasks, learner, resamplings)
+  design
   bmr = benchmark(design)
 }, silent = TRUE)
 }
