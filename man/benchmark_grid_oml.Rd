@@ -21,16 +21,3 @@ benchmark_grid_oml(tasks, learners, resamplings)
 a benchmark design from a list of tasks and corresponding instantiated resamplings, this
 function can be used.
 }
-\examples{
-try({
-  library("mlr3")
-  learner = lrn("regr.rpart")
-  tasks = tsks(c("mtcars", "boston_housing"))
-  resamplings = rsmps(c("cv", "holdout"))
-  lapply(1:2, function(i) resamplings[[i]]$instantiate(tasks[[i]]))
-
-  design = benchmark_grid_oml(tasks, learner, resamplings)
-  design
-  bmr = benchmark(design)
-}, silent = TRUE)
-}

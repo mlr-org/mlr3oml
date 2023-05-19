@@ -84,3 +84,9 @@ test_that("Error when task does not provide task_splits", {
 test_that("Can open help page for OpenML Task", {
   expect_error(OMLTask$new(31)$help(), regexp = NA)
 })
+
+test_that("ignored features are respected when creating tasks", {
+  otask = otsk(14954)
+  task = as_task(otask)
+  expect_set_equal(task$feature_names, otask$feature_names)
+})

@@ -1,5 +1,9 @@
 # mlr3oml 0.7.1-90000
 
+* Fix: target is added to features when converting a `OMLData` object to a task
+* Deprecated `benchmark_grid_oml()` in favour of `mlr3::benchmark_grid(..., paired = TRUE)` 
+* Fix: Incremented cache version for `data` objects for int64 data types.
+
 # mlr3oml 0.7.1
 
 * Fixed argument names of S3 method for `as_data_backend` to comply with new CRAN checks
@@ -17,7 +21,6 @@
   * `oml_run()` is now `orn`
   * `oml_collection()` is now `ocl()`
 * Addresses a CRAN issue: examples fail gracefully if OpenML server is busy.
-
 
 # mlr3oml 0.6.0
 

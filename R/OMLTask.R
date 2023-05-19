@@ -180,9 +180,14 @@ as_task.OMLTask = function(x, ...) {
   target = x$target_names
   feature_names = x$feature_names
   backend = as_data_backend(x)
-  miss = setdiff(target, backend$colnames)
-  if (length(miss)) {
-    stopf("Task %i could not be created: target '%s' not found in data", x$id, miss[1L])
+  miss_target = setdiff(target, backend$colnames)
+  if (length(miss_target)) {
+    stopf("Task %i could not be created: target '%s' not found in data", x$id, miss_target[1L])
+  }
+  miss_features = setdiff(feature_names, backend$colnames)
+  if (length(miss_features)) {
+    stopf("Task %i could not be created: features %s not found in data", x$id,
+      paste0("'", miss_features, "'", collapse = ", "))
   }
 
   constructor = switch(x$desc$task_type,
@@ -193,9 +198,7 @@ as_task.OMLTask = function(x, ...) {
     stopf("Unsupported task type '%s'.", x$desc$task_type)
   )
   task = constructor$new(name, backend, target = target)
-  backend$hash = sprintf("mlr3oml::task_%i", x$id)
-  task$.__enclos_env__$private$oml$id = x$id
-  task$.__enclos_env__$private$oml$hash = task$hash
+  task$col_roles$feature = feature_names
   return(task)
 }
 
@@ -210,14 +213,10 @@ as_resampling.OMLTask = function(x, task = NULL, ...) {
   test_sets = task_splits[get("type") == "TEST", list(row_id = list(as.integer(rowid) + 1L)),
     keyby = c("repeat.", "fold")]$row_id
 
-
   task = task %??% as_task(x)
 
   resampling = mlr3::ResamplingCustom$new()
   resampling$instantiate(task, train_sets = train_sets, test_sets = test_sets)
-  resampling$.__enclos_env__$private$oml$id = x$id
-  resampling$.__enclos_env__$private$oml$hash = resampling$hash
-
   resampling
 }
 
@@ -225,8 +224,3 @@ as_resampling.OMLTask = function(x, task = NULL, ...) {
 as_data_backend.OMLTask = function(data, primary_key = NULL, ...) {
   as_data_backend(data$data, primary_key = primary_key, ...)
 }
-
-
-
-
-

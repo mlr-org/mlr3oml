@@ -8,37 +8,9 @@
 #' @param learners (`list()` or `Learner`) A list of [mlr3::Learner]s.
 #' @param resamplings (`list()` or `Resampling`) A list of [mlr3::Resampling]s that are instantiated on the given tasks.
 #'
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   learner = lrn("regr.rpart")
-#'   tasks = tsks(c("mtcars", "boston_housing"))
-#'   resamplings = rsmps(c("cv", "holdout"))
-#'   lapply(1:2, function(i) resamplings[[i]]$instantiate(tasks[[i]]))
-#'
-#'   design = benchmark_grid_oml(tasks, learner, resamplings)
-#'   design
-#'   bmr = benchmark(design)
-#' }, silent = TRUE)
 #' @return ([`data.table()`])
 #' @export
 benchmark_grid_oml = function(tasks, learners, resamplings) {
-  tasks = assert_tasks(as_tasks(tasks))
-  learners = assert_learners(as_learners(learners))
-  resamplings = assert_resamplings(as_resamplings(resamplings))
-  assert_true(length(tasks) == length(resamplings))
-  assert_true(all(map_lgl(resamplings, "is_instantiated")))
-  same_hash = function(task, resampling) task$hash == resampling$task_hash
-  assert(all(pmap_lgl(list(tasks, resamplings), same_hash)))
-
-  grid = CJ(task = seq_along(tasks), learner = seq_along(learners))
-  grid$instance = seq_row(grid)
-
-  design = data.table(
-    task = tasks[grid$task],
-    learner = learners[grid$learner],
-    resampling = resamplings[grid$task]
-  )
-
-  return(design)
+  .Deprecated("mlr3::benchmark_grid(..., paired = TRUE)")
+  mlr3::benchmark_grid(tasks, learners, resamplings, paired = TRUE)
 }
