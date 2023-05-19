@@ -6,15 +6,19 @@
 \title{Interface to OpenML Data Sets}
 \description{
 This is the class for data sets served on \href{https://www.openml.org/search?type=data&status=active}{OpenML}.
-This object can also be constructed using the sugar function \code{\link[=oml_data]{oml_data()}}.
+This object can also be constructed using the sugar function \code{\link[=odt]{odt()}}.
 }
 \section{mlr3 Integration}{
 
 \itemize{
 \item A \link[mlr3:Task]{mlr3::Task} can be obtained by calling \code{\link[mlr3:as_task]{mlr3::as_task()}}.
+The target column must either be the default target (this is the default behaviour) or one of \verb{$feature_names}.
+In case the target is specified to be one of \verb{$feature_names}, the default target is added to the features
+of the task.
 \item A \link[mlr3:DataBackend]{mlr3::DataBackend} can be obtained by calling \code{\link[mlr3:as_data_backend]{mlr3::as_data_backend()}}. Depending on the
 selected file-type, the returned backend is a \link[mlr3:DataBackendDataTable]{mlr3::DataBackendDataTable} (arff) or
 \link[mlr3db:DataBackendDuckDB]{mlr3db::DataBackendDuckDB} (parquet).
+Note that a converted backend can contain columns beyond the target and the features (id column or ignore columns).
 }
 }
 

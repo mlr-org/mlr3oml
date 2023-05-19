@@ -24,9 +24,9 @@ test_that("OMLData iris parquet", {
 
 test_that("no default target column fails gracefully (#1)", {
   data_id = 4535L
-  odata = OMLData$new(data_id, FALSE)
+  odata = OMLData$new(data_id)
   expect_oml_data(odata)
-  expect_error(mlr3::as_task(odata), "default target attribute")
+  expect_error(mlr3::as_task(odata), "must be available or argument")
   expect_r6(mlr3::as_task(odata, "V10"), "Task")
   expect_r6(mlr3::tsk("oml", data_id = data_id, target_names = "V10"), "Task")
 })
@@ -123,4 +123,33 @@ test_that("strings and nominals are distringuished for parquet files", {
   dat = odata_arff$data
   expect_class(dat[["instance_id"]], "character")
   expect_class(dat[["runstatus"]], "factor")
+})
+
+test_that("ignore columns are respected when converting to task", {
+  odata = odt(6332)
+  task = as_task(odata)
+  expect_set_equal(odata$feature_names, task$feature_names)
+})
+
+test_that("task converter works when using feature as target", {
+  odata = odt(6332)
+  task = as_task(odata, target = "customer")
+  expect_true(task$target_names == "customer")
+  expect_true(odata$target_names %in% task$feature_names)
+
+  expect_error(as_task(odata, target = "timestamp"))
+})
+
+test_that("task converter works when no default target is present", {
+  odata = odt(493)
+  target = "station_45"
+  task = as_task(odata, target_names = target)
+  expect_r6(task, "Task")
+  expect_set_equal(task$feature_names, setdiff(odata$feature_names, target))
+})
+
+test_that("converted data_backend contains all columns", {
+  odata = odt(61)
+  backend = as_data_backend(odata)
+  expect_set_equal(setdiff(backend$colnames, "..row_id"), odata$features$name)
 })

@@ -6,7 +6,7 @@
 CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
-  data = 2L,
+  data = 3L,
   data_parquet = 2L,
   data_desc = 2L,
   data_qualities = 2L,

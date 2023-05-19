@@ -4,13 +4,17 @@
 #'
 #' @description
 #' This is the class for data sets served on [OpenML](https://www.openml.org/search?type=data&status=active).
-#' This object can also be constructed using the sugar function [oml_data()].
+#' This object can also be constructed using the sugar function [odt()].
 #'
 #' @section mlr3 Integration:
 #' * A [mlr3::Task] can be obtained by calling [mlr3::as_task()].
+#'   The target column must either be the default target (this is the default behaviour) or one of `$feature_names`.
+#'   In case the target is specified to be one of `$feature_names`, the default target is added to the features
+#'   of the task.
 #' * A [mlr3::DataBackend] can be obtained by calling [mlr3::as_data_backend()]. Depending on the
 #'   selected file-type, the returned backend is a [mlr3::DataBackendDataTable] (arff) or
 #'   [mlr3db::DataBackendDuckDB] (parquet).
+#'   Note that a converted backend can contain columns beyond the target and the features (id column or ignore columns).
 #'
 #' @section Name conversion:
 #' Column names that don't comply with R's naming scheme are renamed (see [base::make.names()]).
@@ -263,24 +267,34 @@ as_data_backend.OMLData = function(data, primary_key = NULL, ...) {
 #' @importFrom mlr3 as_task
 #' @export
 as_task.OMLData = function(x, target_names = NULL, ...) {
+  # maybe we could also allow ignore columns here
   target = target_names %??% x$target_names
-  assert_subset(target, c(x$target_names, x$feature_names))
-  if (length(target) == 0L) {
-    stopf("Data set with id '%i' does not have a default target attribute", x$id)
+  if (is.null(target) || !length(target)) {
+    stopf("Either a default target must be available or argument 'target_names' must be specified.")
+  } else if (!test_subset(target, c(x$target_names, x$feature_names))) {
+    stopf("Target '%s' not found in target names or feature names.", target)
   }
-  constructor = NULL
+
   if (length(target) == 1L) {
     constructor = switch(as.character(x$features[list(target), "data_type", on = "name", with = FALSE][[1L]]),
       "nominal" = TaskClassif,
       "numeric" = TaskRegr,
-      NULL
+      stopf("Unable to determine the task type")
     )
   } else if (length(target) == 2L) {
     stopf("mlr3proba currently not supported.")
   }
-  if (is.null(constructor)) {
-    stopf("Unable to determine the task type")
+  task = constructor$new(x$name, as_data_backend(x), target = target)
+
+  if (!length(x$target_names)) {
+    task$col_roles$feature = setdiff(x$feature_names, target)
+  } else if (x$target_names == target) {
+    task$col_roles$feature = x$feature_names
+  } else {
+    # In case default target exists but we use another target, we add the default target
+    # to the features
+    task$col_roles$feature = setdiff(c(x$feature_names, x$target_names), target)
   }
-  constructor$new(x$name, as_data_backend(x), target = target)
+  return(task)
 }
 
