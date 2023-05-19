@@ -18,6 +18,7 @@ of the task.
 \item A \link[mlr3:DataBackend]{mlr3::DataBackend} can be obtained by calling \code{\link[mlr3:as_data_backend]{mlr3::as_data_backend()}}. Depending on the
 selected file-type, the returned backend is a \link[mlr3:DataBackendDataTable]{mlr3::DataBackendDataTable} (arff) or
 \link[mlr3db:DataBackendDuckDB]{mlr3db::DataBackendDuckDB} (parquet).
+Note that a converted backend can contain columns beyond the target and the features (id column or ignore columns).
 }
 }
 

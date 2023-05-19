@@ -60,11 +60,6 @@ utils::globalVariables(c("super"))
   mlr3::mlr_tasks$add("oml", OMLTaskConnector)
   mlr3::mlr_resamplings$add("oml", OMLResamplingConnector)
 
-  mlr3::Task$set("private", "oml", NULL, overwrite = TRUE)
-  mlr3::Resampling$set("private", "oml", NULL, overwrite = TRUE)
-  mlr3::ResampleResult$set("private", "oml", NULL, overwrite = TRUE)
-  mlr3::BenchmarkResult$set("private", "oml", NULL, overwrite = TRUE)
-
   # setup logger
   assign("lg", lgr::get_logger(pkgname), envir = parent.env(environment()))
   if (Sys.getenv("IN_PKGDOWN") == "true") {
@@ -76,11 +71,6 @@ utils::globalVariables(c("super"))
 
 .onUnload = function(libpath) { # nolint
   # nocov start
-  Task$private_fields$oml = NULL
-  Learner$private_fields$oml = NULL
-  Resampling$private_fields$oml = NULL
-  ResampleResult$private_fields$oml = NULL
-  BenchmarkResult$private_fields$oml = NULL
   library.dynam.unload("mlr3oml", libpath)
   mlr_tasks$remove("oml")
   mlr_resamplings$remove("oml")

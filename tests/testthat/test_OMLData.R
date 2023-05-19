@@ -147,3 +147,9 @@ test_that("task converter works when no default target is present", {
   expect_r6(task, "Task")
   expect_set_equal(task$feature_names, setdiff(odata$feature_names, target))
 })
+
+test_that("converted data_backend contains all columns", {
+  odata = odt(61)
+  backend = as_data_backend(odata)
+  expect_set_equal(setdiff(backend$colnames, "..row_id"), odata$features$name)
+})

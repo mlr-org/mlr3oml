@@ -14,6 +14,7 @@
 #' * A [mlr3::DataBackend] can be obtained by calling [mlr3::as_data_backend()]. Depending on the
 #'   selected file-type, the returned backend is a [mlr3::DataBackendDataTable] (arff) or
 #'   [mlr3db::DataBackendDuckDB] (parquet).
+#'   Note that a converted backend can contain columns beyond the target and the features (id column or ignore columns).
 #'
 #' @section Name conversion:
 #' Column names that don't comply with R's naming scheme are renamed (see [base::make.names()]).
