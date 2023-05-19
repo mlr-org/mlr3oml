@@ -3,7 +3,7 @@
 * Fix: target is added to features when converting a `OMLData` object to a task
 * Deprecated `benchmark_grid_oml()` in favour of `mlr3::benchmark_grid(..., paired = TRUE)` 
 * Fix: Incremented cache version for `data` objects for int64 data types.
-* Fixed: Bug in task converter
+* Fix: Bug in task converter
 
 # mlr3oml 0.7.1
 
