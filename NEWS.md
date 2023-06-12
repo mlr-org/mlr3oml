@@ -1,13 +1,14 @@
 # mlr3oml 0.7.1
 
-* Fix: target is added to features when converting a `OMLData` object to a task with an explicit
-  target variable that is not the default target.
+* Fix: target is added to features when converting a `OMLData` object to a task with an explicit target variable that is **not** the default target.
 * Deprecated `benchmark_grid_oml()` in favour of `mlr3::benchmark_grid(..., paired = TRUE)`
 * Fix: Incremented cache version for data objects for int64 data types (introduced in the previous
   release).
-* Fix: Incremented cache version for data description as `make.names()` was not applied to ignore
-  attributes.
+* Fix: Incremented cache version for data description and fixed bug, as `make.names()` was not
+  applied to ignore attributes.
 * Fix bug in task converter (features were sometimes not set correctly)
+* Collection now shows name in printer
+* Better error message when parquet dataset creation fails
 
 # mlr3oml 0.7.0
 
