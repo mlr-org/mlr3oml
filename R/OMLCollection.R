@@ -79,7 +79,7 @@ OMLCollection = R6Class("OMLCollection",
     #' @description
     #' Prints the object.
     print = function() {
-      catf("<OMLCollection: %i>", self$id)
+      catf("<OMLCollection: %i> %s", self$id, as_short_string(self$name))
       catf(" * data:  %i", length(self$data_ids))
       catf(" * tasks: %i", length(self$task_ids))
       if (self$main_entity_type == "run") {
