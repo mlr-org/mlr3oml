@@ -240,9 +240,9 @@ OMLData = R6Class("OMLData",
           factors = self$features[get("data_type") == "nominal", "name"][[1L]]
           backend = try(as_duckdb_backend_character(path, primary_key = primary_key, factors = factors), silent = TRUE)
           if (inherits(backend, "try-error")) {
-            msg = paste(
-              "Parquet available but failed to create backend, reverting to arff.",
-              sep = "\n"
+            msg = sprintf(
+              "Parquet available but failed to create backend, reverting to arff. Error message is '%s'", # nolint
+              backend
             )
             lg$info(msg, id = self$id)
           }
