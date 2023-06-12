@@ -99,6 +99,11 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
   table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('%s')", tbl))
   old = table_info$name
   new = make.names(vars_orig)
+  if (anyDuplicated(new)) {
+    # This should be caught much earlier already (when downloading the data description)
+    # but we add it here as a precaution
+    stopf("Duplicated names detected after conversion.")
+  }
   # recoding bools always creates names that have to be fixed
   if (any(old != new)) {
     tbl_prev = tbl
