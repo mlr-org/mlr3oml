@@ -21,5 +21,6 @@ list_oml_setups = function(flow_id = NULL, setup_id = NULL, tag = NULL, limit = 
       as.integer(get("flow_id"))
     )][]
   }
-  return(tab)
+
+  return(tab[])
 }

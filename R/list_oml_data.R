@@ -93,5 +93,5 @@ list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NU
     rcbind(remove_named(tab, c("md5_checksum", "file_id", "format", "quality")), qualities)
   }
 
-  return(tab)
+  return(tab[])
 }

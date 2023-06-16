@@ -36,5 +36,5 @@ list_oml_tasks = function(task_id = NULL, data_id = NULL, number_instances = NUL
     rcbind(remove_named(tab, c("task_type_id", "task_type_id", "format", "input", "quality")), qualities)
   }
 
-  return(tab)
+  return(tab[])
 }

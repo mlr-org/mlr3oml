@@ -14,5 +14,5 @@ list_oml_runs = function(run_id = NULL, task_id = NULL, tag = NULL, flow_id = NU
     ...
   )
 
-  return(tab)
+  return(tab[])
 }
