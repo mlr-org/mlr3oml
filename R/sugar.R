@@ -61,10 +61,9 @@ orn = function(
 #' @export
 ocl = function(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
   ) {
-  OMLCollection$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
+  OMLCollection$new(id = id, parquet = parquet, test_server = test_server)
 }
 

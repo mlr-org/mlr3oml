@@ -90,3 +90,22 @@ test_that("ignored features are respected when creating tasks", {
   task = as_task(otask)
   expect_set_equal(task$feature_names, otask$feature_names)
 })
+
+
+test_that("printer works", {
+  old_threshold = lg$threshold
+  lg$set_threshold("info")
+  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+
+  oml_task = otsk(31, cache = FALSE)
+  observed = capture.output(print(oml_task))[5:9]
+
+  expected = c(
+    "<OMLTask:31>",
+    " * Type: Supervised Classification",
+    " * Data: credit-g (id: 31; dim: 1000x21)",
+    " * Target: class",
+    " * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)"
+  )
+  expect_equal(observed, expected)
+})

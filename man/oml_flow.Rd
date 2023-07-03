@@ -16,20 +16,6 @@ This object can also be constructed using the sugar function \code{\link[=oflw]{
 }
 }
 
-\examples{
-try({
-  library("mlr3")
-  # mlr3 flow:
-  flow = OMLFlow$new(id = 19103)
-  # using sugar
-  flow = oflw(id = 19103)
-  learner = as_learner(flow, "classif")
-  # python flow
-  python_flow = OMLFlow$new(19090)
-  # conversion to pseudo Learner
-  plearner = as_learner(python_flow, "classif")
-  }, silent = TRUE)
-}
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}

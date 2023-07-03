@@ -52,6 +52,7 @@
 
 # To silence RCMD CHECK
 utils::globalVariables(c("super"))
+bit64::integer64() # use any function (otherwise we get unused import warning)
 
 .onLoad = function(libname, pkgname) { # nolint
   # nocov start

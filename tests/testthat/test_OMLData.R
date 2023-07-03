@@ -153,3 +153,17 @@ test_that("converted data_backend contains all columns", {
   backend = as_data_backend(odata)
   expect_set_equal(setdiff(backend$colnames, "..row_id"), odata$features$name)
 })
+
+
+test_that("printer works", {
+  old_threshold = lg$threshold
+  lg$set_threshold("info")
+  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  oml_data = odt(id = 31, cache = FALSE)
+  observed = capture.output(print(oml_data))[4:5]
+  expected = c(
+    "<OMLData:31:credit-g> (1000x21)",
+    " * Default target: class"
+  )
+  expect_equal(observed, expected)
+})

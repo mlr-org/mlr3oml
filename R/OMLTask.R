@@ -16,23 +16,6 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   # Get a task from OpenML:
-#'   otask = OMLTask$new(id = 31)
-#'   # using sugar
-#'   otask = otsk(id = 31)
-#'   otask$data
-#'   otask$target_names
-#'   otask$feature_names
-#'
-#'   # convert to mlr3 Task:
-#'   task = as_task(otask)
-#'
-#'   # get a task via tsk():
-#'   tsk("oml", task_id = 31L)
-#'   }, silent = TRUE)
 OMLTask = R6Class("OMLTask",
   inherit = OMLObject,
   public = list(
@@ -56,6 +39,10 @@ OMLTask = R6Class("OMLTask",
     #' Prints the object.
     #' For a more detailed printer, convert to a [mlr3::Task] via `$task`.
     print = function() {
+      # trigger download first for better printing
+      self$desc
+      self$data$qualities
+      self$data$features
       catf("<OMLTask:%i>", self$id)
       catf(" * Type: %s", self$desc$task_type)
       catf(" * Data: %s (id: %s; dim: %ix%i)", self$data_name, self$data_id, self$nrow, self$ncol)

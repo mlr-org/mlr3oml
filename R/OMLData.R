@@ -39,44 +39,6 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   # OpenML Data object
-#'   odata = OMLData$new(id = 9)
-#'   # using sugar
-#'   odata = odt(id = 9)
-#'   print(odata)
-#'   print(odata$target_names)
-#'   print(odata$feature_names)
-#'   print(odata$tags)
-#'
-#'   # mlr3 conversion:
-#'   task = as_task(odata)
-#'   backend = as_data_backend(odata)
-#'   class(backend)
-#'
-#'   # get a task via tsk():
-#'   tsk("oml", data_id = 9)
-#'
-#'   # For parquet files
-#'   if (requireNamespace("duckdb")) {
-#'     odata = OMLData$new(id = 9, parquet = TRUE)
-#'     # using sugar
-#'     odata = odt(id = 9)
-#'
-#'     print(odata)
-#'     print(odata$target_names)
-#'     print(odata$feature_names)
-#'     print(odata$tags)
-#'
-#'     backend = as_data_backend(odata)
-#'     class(backend)
-#'     task = as_task(odata)
-#'     task = tsk("oml", data_id = 9, parquet = TRUE)
-#'     class(task$backend)
-#'   }
-#' }, silent = TRUE)
 OMLData = R6Class("OMLData",
   inherit = OMLObject,
   public = list(
@@ -100,6 +62,8 @@ OMLData = R6Class("OMLData",
     #' Prints the object.
     #' For a more detailed printer, convert to a [mlr3::Task] via `as_task()`.
     print = function() {
+      # trigger download first for better printing
+      self$desc
       catf("<OMLData:%i:%s> (%ix%i)", self$id, as_short_string(self$name), self$nrow, self$ncol)
       dt = if (length(self$target_names)) as_short_string(self$target_names) else "<none>"
       catf(" * Default target: %s", dt)

@@ -49,45 +49,6 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 For the handling of parquet files, we rely on \CRANpkg{duckdb} and \verb{CRANpkg\{DBI\}}.
 }
 
-\examples{
-try({
-  library("mlr3")
-  # OpenML Data object
-  odata = OMLData$new(id = 9)
-  # using sugar
-  odata = odt(id = 9)
-  print(odata)
-  print(odata$target_names)
-  print(odata$feature_names)
-  print(odata$tags)
-
-  # mlr3 conversion:
-  task = as_task(odata)
-  backend = as_data_backend(odata)
-  class(backend)
-
-  # get a task via tsk():
-  tsk("oml", data_id = 9)
-
-  # For parquet files
-  if (requireNamespace("duckdb")) {
-    odata = OMLData$new(id = 9, parquet = TRUE)
-    # using sugar
-    odata = odt(id = 9)
-
-    print(odata)
-    print(odata$target_names)
-    print(odata$feature_names)
-    print(odata$tags)
-
-    backend = as_data_backend(odata)
-    class(backend)
-    task = as_task(odata)
-    task = tsk("oml", data_id = 9, parquet = TRUE)
-    class(task$backend)
-  }
-}, silent = TRUE)
-}
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}

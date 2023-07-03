@@ -29,7 +29,7 @@ OMLObject = R6Class("OMLObject",
       private$.id = assert_count(id, coerce = TRUE)
       private$.cache_dir = get_cache_dir(cache, test_server)
       private$.type = assert_choice(type, c("data", "flow", "study", "collection", "run", "task"))
-      initialize_cache(self$cache_dir)
+      initialize_cache(private$.cache_dir)
     },
     #' @description
     #' Opens the corresponding help page referenced by field `$man`.
@@ -55,6 +55,12 @@ OMLObject = R6Class("OMLObject",
     #' @template field_cache_dir
     cache_dir = function(rhs) {
       assert_ro_binding(rhs)
+      if (!isFALSE(private$.cache_dir) && !dir.exists(private$.cache_dir)) {
+        # an OMLObject on different PCs
+        lg$info(sprintf("Cache directory '%s' does not exist, disabling caching for this object.", private$.cache_dir))
+        private$.cache_dir = FALSE
+      }
+
       private$.cache_dir
     },
     #' @field id (`integer(1)`)\cr

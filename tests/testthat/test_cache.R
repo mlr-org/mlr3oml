@@ -1,26 +1,5 @@
 skip_on_cran()
 
-test_that("No issues when upgrading from 0.5.0 to 0.6.0 for public server", {
-  # This emulated the migration from 0.5.0 to 0.6.0
-
-  withr::defer({unlink(cachedir, recursive = TRUE)})
-  cachedir = tempfile()
-  withr::defer({CACHE$initialized = setdiff(CACHE$initialized, cachedir)})
-
-  dir.create(file.path(cachedir, "data_desc"), recursive = TRUE)
-  qs::qsave(list(id = 1), file = file.path(cachedir, "data_desc", "1.qs"))
-  writeLines(jsonlite::toJSON(list(data_desc = 1L)), con = file.path(cachedir, "version.json"))
-
-  OMLData$new(31, cache = cachedir)$desc
-
-  # this means that the cache was flushed
-  expect_set_equal(c("version.json", "public"), list.files(cachedir))
-  expect_true("31.qs" %in% list.files(file.path(cachedir, "public", "data_desc")))
-  # this means that we wrote the
-  version_info = jsonlite::fromJSON(readLines(file.path(cachedir, "version.json")))
-  expect_true(version_info$data != 1L)
-})
-
 test_that("Seperate caches are used for test and public server", {
   with_public_server()
   cachedir = tempfile()

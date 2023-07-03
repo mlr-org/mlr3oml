@@ -58,3 +58,17 @@ test_that("Conversion of mlr flow works as intended", {
 test_that("Can open help page for OpenML Flow", {
   expect_error(OMLFlow$new(1)$help(), regexp = NA)
 })
+
+test_that("Printer works", {
+  old_threshold = lg$threshold
+  lg$set_threshold("info")
+  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  oml_flow = oflw(6794, cache = FALSE)
+  observed = capture.output(print(oml_flow))[2:4]
+  expected = c(
+    "<OMLFlow:6794>",
+    " * Name: mlr.classif.ranger",
+    " * Dependencies: R_3.3.2, OpenML_1.3, mlr_2.11, ranger_0.8.0"
+  )
+  expect_equal(observed, expected)
+})

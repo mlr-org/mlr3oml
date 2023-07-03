@@ -18,24 +18,6 @@ This object can also be constructed using the sugar function \code{\link[=otsk]{
 }
 }
 
-\examples{
-try({
-  library("mlr3")
-  # Get a task from OpenML:
-  otask = OMLTask$new(id = 31)
-  # using sugar
-  otask = otsk(id = 31)
-  otask$data
-  otask$target_names
-  otask$feature_names
-
-  # convert to mlr3 Task:
-  task = as_task(otask)
-
-  # get a task via tsk():
-  tsk("oml", task_id = 31L)
-  }, silent = TRUE)
-}
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}

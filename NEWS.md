@@ -1,5 +1,13 @@
-# mlr3oml 0.7.2-9000
+# mlr3oml 0.8.0
 
+* Listing functions don't return the tables invisibly anymore.
+* Address CRAN NOTE regarding unused bit64 import.
+* Improved the printer for all OpenML objects.
+* Removed `benchmark_grid_oml()`, which was already deprecated in release 0.7.2.
+* Removed the fields `runs`, `flows`, `data`, `tasks` from the `OMLCollection` class.
+  Consequently, the `cache` option can no longer be set for `OMLCollection` objects,
+  see the class documentation for more information.
+* Removed the examples, as they caused problems with CRAN checks when OpenML was unavailable.
 # mlr3oml 0.7.2
 
 * Fix: target is added to features when converting a `OMLData` object to a task with an explicit target variable that is **not** the default target.

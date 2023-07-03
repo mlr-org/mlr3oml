@@ -23,23 +23,6 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   orun = OMLRun$new(id = 10587724)
-#'   # sugar
-#'   orun = orn(id = 10587724)
-#'   print(orun)
-#'   print(orun$task) # OMLTask
-#'   print(orun$data) # OMLData
-#'   print(orun$flow) # OMLFlow
-#'   print(orun$prediction)
-#'   as_task(orun)
-#'   as_resampling(orun)
-#'   as_data_backend(orun)
-#'   rr = as_resample_result(orun)
-#'   rr$score(msr("classif.ce"))
-#'   }, silent = TRUE)
 OMLRun = R6Class("OMLRun",
   inherit = OMLObject,
   public = list(
@@ -62,6 +45,10 @@ OMLRun = R6Class("OMLRun",
     #' @description
     #' Prints the object.
     print = function() {
+      # trigger download first for better printing
+      self$desc
+      self$task$desc
+      self$flow$desc
       catf("<OMLRun:%i>", self$id)
       catf(" * Task: %s (id: %s)", as_short_string(self$task$data_name), self$task_id)
       ep = self$task$estimation_procedure

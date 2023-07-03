@@ -95,3 +95,17 @@ test_that("OMLRun components inherit correct cache directory", {
 test_that("Can open help page for OpenML Run", {
   expect_error(OMLRun$new(51)$help(), regexp = NA)
 })
+
+test_that("printer works", {
+  old_threshold = lg$threshold
+  lg$set_threshold("info")
+  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  oml_run = orn(10593878, cache = FALSE)
+  observed = capture.output(print(oml_run))[4:6]
+  expected = c(
+    "<OMLRun:10593878>",
+    " * Task: kr-vs-kp (id: 3)",
+    " * Flow: sklearn.pipeline.Pipeline[...] (id: 19521)"
+  )
+  expect_equal(observed, expected)
+})

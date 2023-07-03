@@ -29,24 +29,6 @@ This object can also be constructed using the sugar function \code{\link[=oml_ru
 }
 }
 
-\examples{
-try({
-  library("mlr3")
-  orun = OMLRun$new(id = 10587724)
-  # sugar
-  orun = orn(id = 10587724)
-  print(orun)
-  print(orun$task) # OMLTask
-  print(orun$data) # OMLData
-  print(orun$flow) # OMLFlow
-  print(orun$prediction)
-  as_task(orun)
-  as_resampling(orun)
-  as_data_backend(orun)
-  rr = as_resample_result(orun)
-  rr$score(msr("classif.ce"))
-  }, silent = TRUE)
-}
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
 \dQuote{OpenML.}

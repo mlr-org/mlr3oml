@@ -14,19 +14,6 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   # mlr3 flow:
-#'   flow = OMLFlow$new(id = 19103)
-#'   # using sugar
-#'   flow = oflw(id = 19103)
-#'   learner = as_learner(flow, "classif")
-#'   # python flow
-#'   python_flow = OMLFlow$new(19090)
-#'   # conversion to pseudo Learner
-#'   plearner = as_learner(python_flow, "classif")
-#'   }, silent = TRUE)
 OMLFlow = R6Class("OMLFlow",
   inherit = OMLObject,
   public = list(
@@ -46,6 +33,8 @@ OMLFlow = R6Class("OMLFlow",
     #' @description
     #' Prints the object.
     print = function() {
+      # trigger download first for better printing
+      self$desc
       catf("<OMLFlow:%i>", self$id)
       catf(" * Name: %s", as_short_string(self$name))
       catf(" * Dependencies: %s", paste(self$desc$dependencies, collapse = ", "))
