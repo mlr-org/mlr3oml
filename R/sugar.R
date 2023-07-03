@@ -1,19 +1,14 @@
-#' Syntactic Sugar for Object Construction
+#' @title Syntactic Sugar for Data Construction
 #'
-#' Functions to create OpenML objects. The following functions are available:
-#' * `odt()` - creates an instance of the R6 class [`OMLData`].
-#' * `otsk()` - creates an instance of the R6 class [`OMLTask`].
-#' * `oflw()` - creates an instance of the R6 class [`OMLFlow`].
-#' * `orn()` - creates an instance of the R6 class [`OMLRun`].
-#' * `ocl()` - creates an instance of the R6 class [`OMLCollection`].
+#' @description
+#' Creates an [`OMLData`] instance.
 #'
-#' @name oml_sugar
 #' @template param_id
 #' @template param_cache
 #' @template param_test_server
 #' @template param_parquet
 #'
-#' @return ([`OMLObject`])
+#' @return ([`OMLData`])
 #'
 #' @export
 odt = function(
@@ -25,7 +20,18 @@ odt = function(
   OMLData$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }
 
-#' @rdname oml_sugar
+#' @title Syntactic Sugar for Task Construction
+#'
+#' @description
+#' Creates an [`OMLTask`] instance.
+#'
+#' @template param_id
+#' @template param_cache
+#' @template param_test_server
+#' @template param_parquet
+#'
+#' @return ([`OMLTask`])
+#'
 #' @export
 otsk = function(
   id,
@@ -36,7 +42,18 @@ otsk = function(
   OMLTask$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }
 
-#' @rdname oml_sugar
+#' @title Syntactic Sugar for Flow Construction
+#'
+#' @description
+#' Creates an [`OMLFlow`] instance.
+#'
+#' @template param_id
+#' @template param_cache
+#' @template param_test_server
+#' @template param_parquet
+#'
+#' @return ([`OMLFlow`])
+#'
 #' @export
 oflw = function(
   id,
@@ -46,7 +63,18 @@ oflw = function(
   OMLFlow$new(id = id, cache = cache, test_server = test_server)
 }
 
-#' @rdname oml_sugar
+#' @title Syntactic Sugar for Run Construction
+#'
+#' @description
+#' Creates an [`OMLRun`] instance.
+#'
+#' @template param_id
+#' @template param_cache
+#' @template param_test_server
+#' @template param_parquet
+#'
+#' @return ([`OMLRun`])
+#'
 #' @export
 orn = function(
   id,
@@ -57,7 +85,17 @@ orn = function(
   OMLRun$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
 }
 
-#' @rdname oml_sugar
+#' @title Syntactic Sugar for Collection Construction
+#'
+#' @description
+#' Creates an [`OMLCollection`] instance.
+#'
+#' @template param_id
+#' @template param_test_server
+#' @template param_parquet
+#'
+#' @return ([`OMLCollection`])
+#'
 #' @export
 ocl = function(
   id,
