@@ -5,7 +5,8 @@
 #' @importFrom R6 R6Class
 #' @importFrom methods hasArg
 #' @importFrom stats rnorm
-#' @importFrom utils installed.packages tail
+#' @importFrom utils installed.packages tai
+#' @importFrom bit64 integer64
 #'
 #'
 #' @section Documentation:
@@ -57,7 +58,6 @@
 
 # To silence RCMD CHECK
 utils::globalVariables(c("super"))
-bit64::integer64() # use any function (otherwise we get unused import warning)
 
 .onLoad = function(libname, pkgname) { # nolint
   # nocov start
