@@ -42,15 +42,12 @@ OMLCollection = R6Class("OMLCollection",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      parquet = parquet_default(),
       test_server = test_server_default()
       ) {
-      private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache = FALSE, test_server, "collection")
+      super$initialize(id, test_server, "collection")
     },
     #' @description
     #' Prints the object.

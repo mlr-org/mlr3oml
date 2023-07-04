@@ -23,17 +23,15 @@ OMLTask = R6Class("OMLTask",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       parquet = parquet_default(),
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache, test_server, "task")
+      super$initialize(id, test_server, "task")
     },
     #' @description
     #' Prints the object.
@@ -109,8 +107,8 @@ OMLTask = R6Class("OMLTask",
     #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$data_id, cache = self$cache_dir,
-          parquet = self$parquet, test_server = self$test_server
+        private$.data = OMLData$new(self$data_id, parquet = self$parquet,
+          test_server = self$test_server
         )
       }
 

@@ -3,7 +3,7 @@ skip("Expensive manual test")
 test_that("data is cached", {
   path = tempfile()
 
-  odata = OMLData$new(9, cache = path)
+  odata = with_cache(OMLData$new(9), cache = path)
   expect_file_exists(file.path(path, "version.json"))
 
   expect_list(odata$desc)
@@ -18,7 +18,7 @@ test_that("data is cached", {
 
   # ensure that cache is not overwritten
   mtime_before = file.mtime(path_data)
-  expect_data_table(OMLData$new(9, cache = path)$data)
+  expect_data_table(with_cache(OMLData$new(9), cache = path)$data)
   expect_equal(mtime_before, file.mtime(path_data))
 
   # increase version number of data desc
@@ -43,7 +43,7 @@ test_that("study 99 can be loaded and parsed", {
   withr::local_options(list(warn = 2L))
 
   for (data_id in data_ids) {
-    odata = OMLData$new(data_id, cache = cache)
+    odata = with_cache(OMLData$new(data_id), cache = cache)
     expect_oml_data(odata)
     # expect_count(odata$id)
     # expect_identical(odata$id, data_id)

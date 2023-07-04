@@ -4,24 +4,15 @@
 \alias{oflw}
 \title{Syntactic Sugar for Flow Construction}
 \usage{
-oflw(id, cache = cache_default(), test_server = test_server_default())
+oflw(id, test_server = test_server_default())
 }
 \arguments{
 \item{id}{(\code{integer(1)})\cr
 OpenML id for the object.}
 
-\item{cache}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
-
 \item{test_server}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
-
-\item{parquet}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.
-Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 }
 \value{
 (\code{\link{OMLFlow}})

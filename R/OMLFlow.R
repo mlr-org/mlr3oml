@@ -21,14 +21,12 @@ OMLFlow = R6Class("OMLFlow",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       test_server = test_server_default()
       ) {
-      super$initialize(id, cache, test_server, "flow")
+      super$initialize(id, test_server, "flow")
     },
     #' @description
     #' Prints the object.

@@ -13,22 +13,20 @@ OMLObject = R6Class("OMLObject",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_test_server
     #' @param type (`charcater()`)\cr
     #'   The type of OpenML object (e.g. run, task, ...).
     initialize = function(
       id,
-      cache = cache_default(),
       test_server = test_server_default(),
       type
       ) {
+      private$.type = assert_choice(type, c("data", "flow", "study", "collection", "run", "task"))
       private$.test_server = assert_flag(test_server)
       private$.server = get_server(test_server)
 
       private$.id = assert_count(id, coerce = TRUE)
-      private$.cache_dir = get_cache_dir(cache, test_server)
-      private$.type = assert_choice(type, c("data", "flow", "study", "collection", "run", "task"))
+      private$.cache_dir = get_cache_dir(getOption("mlr3oml.cache", FALSE))
       initialize_cache(private$.cache_dir)
     },
     #' @description
@@ -56,9 +54,12 @@ OMLObject = R6Class("OMLObject",
     cache_dir = function(rhs) {
       assert_ro_binding(rhs)
       if (!isFALSE(private$.cache_dir) && !dir.exists(private$.cache_dir)) {
-        # an OMLObject on different PCs
-        lg$info(sprintf("Cache directory '%s' does not exist, disabling caching for this object.", private$.cache_dir))
-        private$.cache_dir = FALSE
+        # e.g. an OMLObject on different PCs
+        prev_cache_dir = private$.cache_dir
+        private$.cache_dir = get_cache_dir(getOption("mlr3oml.cache", FALSE))
+        lg$info(sprintf("Cache directory '%s' changed since initializing this object and is now '%s'.",
+          prev_cache_dir, private$.cache_dir)) # nolint
+        initialize_cache(private$.cache_dir)
       }
 
       private$.cache_dir

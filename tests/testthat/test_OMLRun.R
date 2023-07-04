@@ -11,14 +11,14 @@ skip_on_cran()
 #
 
 test_that("Run 538858", {
-  with_public_server()
+  local_public_server()
   id = 538858L
   run = OMLRun$new(id)
   expect_oml_run(run)
 })
 
 test_that("Runs 10417460 10417461 10417462 10417463", {
-  with_public_server()
+  local_public_server()
   ids = OMLCollection$new(232L)$run_ids
   runs = map(
     ids,
@@ -34,7 +34,7 @@ test_that("Runs 10417460 10417461 10417462 10417463", {
 })
 
 test_that("classification, mlr, 538858", {
-  with_public_server()
+  local_public_server()
   run_id = 538858L
 
   run = OMLRun$new(run_id, FALSE)
@@ -48,7 +48,7 @@ test_that("classification, mlr, 538858", {
 })
 
 test_that("classification, mlr, 8000000", {
-  with_public_server()
+  local_public_server()
   run_id = 8000000
   run = OMLRun$new(run_id)
   expect_equal(run$task_type, "Supervised Classification")
@@ -61,7 +61,7 @@ test_that("classification, mlr, 8000000", {
 })
 
 test_that("id = 10587951", {
-  with_public_server()
+  local_public_server()
   id = 10587951
   run = OMLRun$new(id)
   flow = run$flow
@@ -69,7 +69,7 @@ test_that("id = 10587951", {
 })
 
 test_that("Can extract prediction for sklearn", {
-  with_public_server()
+  local_public_server()
   id = 10587656L
   run = OMLRun$new(id, FALSE)
   expect_error(rr <- mlr3::as_resample_result(run), regexp = NA)
@@ -77,18 +77,10 @@ test_that("Can extract prediction for sklearn", {
 })
 
 test_that("Can extract prediction for mlr", {
-  with_public_server()
+  local_public_server()
   id = 10587674L
   run = OMLRun$new(id, FALSE)
   expect_error(mlr3::as_resample_result(run), regexp = NA)
-})
-
-test_that("OMLRun components inherit correct cache directory", {
-  dir = tempfile()
-  orun = OMLRun$new(50, cache = dir)
-  expect_true(orun$data$cache_dir == dir)
-  expect_true(orun$task$cache_dir == dir)
-  expect_true(orun$flow$cache_dir == dir)
 })
 
 
@@ -100,12 +92,14 @@ test_that("printer works", {
   old_threshold = lg$threshold
   lg$set_threshold("info")
   on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
-  oml_run = orn(10593878, cache = FALSE)
-  observed = capture.output(print(oml_run))[4:6]
-  expected = c(
-    "<OMLRun:10593878>",
-    " * Task: kr-vs-kp (id: 3)",
-    " * Flow: sklearn.pipeline.Pipeline[...] (id: 19521)"
-  )
-  expect_equal(observed, expected)
+  with_cache({
+    oml_run = orn(10593878)
+    observed = capture.output(print(oml_run))[4:6]
+    expected = c(
+      "<OMLRun:10593878>",
+      " * Task: kr-vs-kp (id: 3)",
+      " * Flow: sklearn.pipeline.Pipeline[...] (id: 19521)"
+    )
+    expect_equal(observed, expected)
+   }, cache = FALSE)
 })

@@ -96,11 +96,7 @@ An vector containing the task ids of the collection.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(
-  id,
-  parquet = parquet_default(),
-  test_server = test_server_default()
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(id, test_server = test_server_default())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -108,11 +104,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.
-Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.

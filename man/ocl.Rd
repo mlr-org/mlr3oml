@@ -4,16 +4,11 @@
 \alias{ocl}
 \title{Syntactic Sugar for Collection Construction}
 \usage{
-ocl(id, parquet = parquet_default(), test_server = test_server_default())
+ocl(id, test_server = test_server_default())
 }
 \arguments{
 \item{id}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{parquet}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.
-Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{test_server}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.

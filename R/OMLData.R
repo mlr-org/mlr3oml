@@ -33,7 +33,7 @@
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
 #'
 #' @section Parquet Files:
-#' For the handling of parquet files, we rely on \CRANpkg{duckdb} and `CRANpkg{DBI}`.
+#' For the handling of parquet files, we rely on \CRANpkg{duckdb} and \CRANpkg{DBI}.
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
@@ -46,17 +46,15 @@ OMLData = R6Class("OMLData",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       parquet = parquet_default(),
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache, test_server, "data")
+      super$initialize(id, test_server, "data")
     },
     #' @description
     #' Prints the object.

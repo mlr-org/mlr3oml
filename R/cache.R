@@ -23,9 +23,8 @@ CACHE$initialized = character()
 
 #' Returns the cache directory
 #' @param cache Whether to cache.
-#' @param test_server Whether to use the test server.
 #' @noRd
-get_cache_dir = function(cache, test_server) {
+get_cache_dir = function(cache) {
   assert_true(is.logical(cache) || is.character(cache))
   if (isFALSE(cache)) {
     return(FALSE)

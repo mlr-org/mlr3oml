@@ -8,6 +8,9 @@
   Consequently, the `cache` option can no longer be set for `OMLCollection` objects,
   see the class documentation for more information.
 * Removed the examples, as they caused problems with CRAN checks when OpenML was unavailable.
+* Caching can no longer be specified at the instance level but only globally through
+  the option `mlr3oml.cache`
+
 # mlr3oml 0.7.2
 
 * Fix: target is added to features when converting a `OMLData` object to a task with an explicit target variable that is **not** the default target.

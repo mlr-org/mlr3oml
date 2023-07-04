@@ -46,7 +46,7 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 
 \section{Parquet Files}{
 
-For the handling of parquet files, we rely on \CRANpkg{duckdb} and \verb{CRANpkg\{DBI\}}.
+For the handling of parquet files, we rely on \CRANpkg{duckdb} and \CRANpkg{DBI}.
 }
 
 \references{
@@ -136,7 +136,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$new(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )}\if{html}{\out{</div>}}
@@ -147,10 +146,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.

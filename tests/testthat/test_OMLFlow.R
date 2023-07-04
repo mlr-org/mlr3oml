@@ -1,7 +1,7 @@
 skip_on_cran()
 
 test_that("Download mlr Flow: 3364", {
-  with_public_server()
+  local_public_server()
   flow_id = 3364L
   flow = OMLFlow$new(flow_id, FALSE)
   expect_equal(flow$desc$upload_date, as.POSIXct("2016-03-21 16:06:43", tz = "UTC"))
@@ -15,14 +15,14 @@ test_that("Download mlr Flow: 3364", {
 })
 
 test_that("Cannot download non-existing flow", {
-  with_public_server()
+  local_public_server()
   invalid_id = 100000000L
   flow = OMLFlow$new(invalid_id, FALSE)
   expect_error(flow$desc)
 })
 
 test_that("Flows 17374 17369", {
-  with_public_server()
+  local_public_server()
   ids = OMLCollection$new(232, FALSE)$flow_ids
 
   flows = mlr3misc::map(
@@ -39,7 +39,7 @@ test_that("Flows 17374 17369", {
 })
 
 test_that("Can convert pseudo OML Learner", {
-  with_public_server()
+  local_public_server()
   oml_flow = OMLFlow$new(1, F)
   learner_classif = mlr3::as_learner(oml_flow, "classif")
   learner_regr = mlr3::as_learner(oml_flow, "regr")
@@ -63,12 +63,15 @@ test_that("Printer works", {
   old_threshold = lg$threshold
   lg$set_threshold("info")
   on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
-  oml_flow = oflw(6794, cache = FALSE)
-  observed = capture.output(print(oml_flow))[2:4]
-  expected = c(
-    "<OMLFlow:6794>",
-    " * Name: mlr.classif.ranger",
-    " * Dependencies: R_3.3.2, OpenML_1.3, mlr_2.11, ranger_0.8.0"
-  )
-  expect_equal(observed, expected)
+  with_cache({
+    oml_flow = oflw(6794)
+    observed = capture.output(print(oml_flow))[2:4]
+    expected = c(
+      "<OMLFlow:6794>",
+      " * Name: mlr.classif.ranger",
+      " * Dependencies: R_3.3.2, OpenML_1.3, mlr_2.11, ranger_0.8.0"
+    )
+    expect_equal(observed, expected)
+    }, cache = FALSE)
+
 })

@@ -80,11 +80,11 @@ test_that("Can open help page for OpenML Data", {
 })
 
 test_that("OMLData arff fallback works when parquet does not exist", {
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$data
   expect_true(inherits(odata$.__enclos_env__$private$.backend, "DataBackendDuckDB"))
 
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$desc
   # non-existing file
   odata$.__enclos_env__$private$.desc$minio_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
@@ -93,14 +93,14 @@ test_that("OMLData arff fallback works when parquet does not exist", {
 })
 
 test_that("as_data_backend falls back to arff when parquet does not exist", {
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$desc
   # non-existing file
   odata$.__enclos_env__$private$.desc$minio_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDataTable")
 
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDuckDB")
 })
@@ -159,11 +159,13 @@ test_that("printer works", {
   old_threshold = lg$threshold
   lg$set_threshold("info")
   on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
-  oml_data = odt(id = 31, cache = FALSE)
-  observed = capture.output(print(oml_data))[4:5]
-  expected = c(
-    "<OMLData:31:credit-g> (1000x21)",
-    " * Default target: class"
-  )
-  expect_equal(observed, expected)
+  with_cache({
+    oml_data = odt(id = 31)
+    observed = capture.output(print(oml_data))[4:5]
+    expected = c(
+      "<OMLData:31:credit-g> (1000x21)",
+      " * Default target: class"
+    )
+    expect_equal(observed, expected)
+  }, cache = FALSE)
 })

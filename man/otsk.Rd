@@ -4,20 +4,11 @@
 \alias{otsk}
 \title{Syntactic Sugar for Task Construction}
 \usage{
-otsk(
-  id,
-  cache = cache_default(),
-  parquet = parquet_default(),
-  test_server = test_server_default()
-)
+otsk(id, parquet = parquet_default(), test_server = test_server_default())
 }
 \arguments{
 \item{id}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{cache}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{parquet}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.

@@ -21,7 +21,7 @@ test_that("64 bit ints are converted to double", {
   id = 42572
   col = "f1c272f04"
 
-  odata = odt(id, parquet = FALSE, cache = FALSE)
+  odata = with_cache(odt(id, parquet = FALSE), cache = FALSE)
   expect_equal(as.character(odata$features[.(col), data_type, on = "name"]), "numeric")
   expect_double(odata$data[[col]], any.missing = FALSE)
 })

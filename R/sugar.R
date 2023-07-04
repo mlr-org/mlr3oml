@@ -4,7 +4,6 @@
 #' Creates an [`OMLData`] instance.
 #'
 #' @template param_id
-#' @template param_cache
 #' @template param_test_server
 #' @template param_parquet
 #'
@@ -13,11 +12,10 @@
 #' @export
 odt = function(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
   ) {
-  OMLData$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
+  OMLData$new(id = id, parquet = parquet, test_server = test_server)
 }
 
 #' @title Syntactic Sugar for Task Construction
@@ -26,7 +24,6 @@ odt = function(
 #' Creates an [`OMLTask`] instance.
 #'
 #' @template param_id
-#' @template param_cache
 #' @template param_test_server
 #' @template param_parquet
 #'
@@ -35,11 +32,10 @@ odt = function(
 #' @export
 otsk = function(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
   ) {
-  OMLTask$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
+  OMLTask$new(id = id, parquet = parquet, test_server = test_server)
 }
 
 #' @title Syntactic Sugar for Flow Construction
@@ -48,19 +44,16 @@ otsk = function(
 #' Creates an [`OMLFlow`] instance.
 #'
 #' @template param_id
-#' @template param_cache
 #' @template param_test_server
-#' @template param_parquet
 #'
 #' @return ([`OMLFlow`])
 #'
 #' @export
 oflw = function(
   id,
-  cache = cache_default(),
   test_server = test_server_default()
   ) {
-  OMLFlow$new(id = id, cache = cache, test_server = test_server)
+  OMLFlow$new(id = id, test_server = test_server)
 }
 
 #' @title Syntactic Sugar for Run Construction
@@ -69,7 +62,6 @@ oflw = function(
 #' Creates an [`OMLRun`] instance.
 #'
 #' @template param_id
-#' @template param_cache
 #' @template param_test_server
 #' @template param_parquet
 #'
@@ -78,11 +70,10 @@ oflw = function(
 #' @export
 orn = function(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
   ) {
-  OMLRun$new(id = id, cache = cache, parquet = parquet, test_server = test_server)
+  OMLRun$new(id = id, parquet = parquet, test_server = test_server)
 }
 
 #' @title Syntactic Sugar for Collection Construction
@@ -92,16 +83,14 @@ orn = function(
 #'
 #' @template param_id
 #' @template param_test_server
-#' @template param_parquet
 #'
 #' @return ([`OMLCollection`])
 #'
 #' @export
 ocl = function(
   id,
-  parquet = parquet_default(),
   test_server = test_server_default()
   ) {
-  OMLCollection$new(id = id, parquet = parquet, test_server = test_server)
+  OMLCollection$new(id = id, test_server = test_server)
 }
 

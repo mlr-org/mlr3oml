@@ -30,17 +30,15 @@ OMLRun = R6Class("OMLRun",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       parquet = parquet_default(),
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache, test_server, "run")
+      super$initialize(id, test_server, "run")
     },
     #' @description
     #' Prints the object.
@@ -67,9 +65,7 @@ OMLRun = R6Class("OMLRun",
     #'  The OpenML Flow.
     flow = function() {
       if (is.null(private$.flow)) {
-        private$.flow = OMLFlow$new(self$flow_id, cache = self$cache_dir,
-          test_server = self$test_server
-        )
+        private$.flow = OMLFlow$new(self$flow_id, test_server = self$test_server)
       }
       private$.flow
     },
@@ -91,8 +87,8 @@ OMLRun = R6Class("OMLRun",
     #' The task solved by this run.
     task = function() {
       if (is.null(private$.task)) {
-        private$.task = OMLTask$new(self$task_id, self$cache_dir,
-          test_server = self$test_server, parquet = self$parquet
+        private$.task = OMLTask$new(self$task_id, test_server = self$test_server,
+          parquet = self$parquet
         )
       }
       private$.task

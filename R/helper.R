@@ -1,10 +1,10 @@
 #' @noRd
-with_test_server = function(env = parent.frame()) {
+local_test_server = function(env = parent.frame()) {
   op = options(mlr3oml.test_server = TRUE)
   withr::defer(options(op), env)
 }
 
-with_public_server = function(env = parent.frame()) {
+local_public_server = function(env = parent.frame()) {
   op = options(mlr3oml.test_server = FALSE)
   withr::defer(options(op), env)
 }
@@ -151,4 +151,8 @@ get_paginated_table = function(query_type, ..., limit, server) {
   return(tab)
 }
 
-
+with_cache = function(code, cache) {
+  old_options = options(mlr3oml.cache = cache)
+  on.exit({options(old_options)}, add = TRUE)
+  force(code)
+}

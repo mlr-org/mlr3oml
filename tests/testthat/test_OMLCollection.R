@@ -1,7 +1,7 @@
 skip_on_cran()
 
 test_that("Collection 232", {
-  with_public_server()
+  local_public_server()
   collection = OMLCollection$new(232L)
   expect_equal(collection$id, 232L)
   expect_oml_collection(collection)
@@ -32,6 +32,7 @@ test_that("printer works", {
   old_threshold = lg$threshold
   lg$set_threshold("info")
   on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+
   # task collection
   oml_collection = ocl(99)
   observed = capture.output(oml_collection)[2:4]
