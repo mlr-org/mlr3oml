@@ -9,6 +9,8 @@
 #'
 #' To find datasets for a specific task type, use [`list_oml_tasks()`] which supports filtering according to the task
 #' type.
+#' Another heuristic to search for possible regression tasks is to search for data sets with
+#' 0 number of classes, i.e. by specifying `number_classes = 0`.
 #'
 #' @details
 #' Filter values are usually provided as single atomic values (typically integer or character).

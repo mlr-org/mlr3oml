@@ -117,6 +117,7 @@ Note that this also normalizes the names of the parquet file.}
 \itemize{
 \item \href{#method-OMLData-new}{\code{OMLData$new()}}
 \item \href{#method-OMLData-print}{\code{OMLData$print()}}
+\item \href{#method-OMLData-download}{\code{OMLData$download()}}
 \item \href{#method-OMLData-quality}{\code{OMLData$quality()}}
 \item \href{#method-OMLData-clone}{\code{OMLData$clone()}}
 }
@@ -167,6 +168,16 @@ Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code{as_task()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLData-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$download()}\if{html}{\out{</div>}}
 }
 
 }
