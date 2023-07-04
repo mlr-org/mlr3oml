@@ -9,6 +9,12 @@ local_public_server = function(env = parent.frame()) {
   withr::defer(options(op), env)
 }
 
+local_log_info = function(env = parent.frame()) {
+  prev_threshold = lg$threshold
+  lg$set_threshold("info")
+  withr::defer({lg$set_threshold(prev_threshold)}, env)
+}
+
 #' Returns the api key (if available) for the selected server.
 #' @param server (`character(1)`)\cr
 #'   The server to use.

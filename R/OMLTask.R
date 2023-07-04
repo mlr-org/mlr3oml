@@ -51,6 +51,14 @@ OMLTask = R6Class("OMLTask",
       if (self$test_server) {
         catf(" * Using test server")
       }
+    },
+    #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      self$task_splits
+      self$data$download()
+      invisible(self)
     }
   ),
   active = list(

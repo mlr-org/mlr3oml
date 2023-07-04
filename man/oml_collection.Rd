@@ -80,6 +80,7 @@ An vector containing the task ids of the collection.}
 \itemize{
 \item \href{#method-OMLCollection-new}{\code{OMLCollection$new()}}
 \item \href{#method-OMLCollection-print}{\code{OMLCollection$print()}}
+\item \href{#method-OMLCollection-download}{\code{OMLCollection$download()}}
 \item \href{#method-OMLCollection-clone}{\code{OMLCollection$clone()}}
 }
 }
@@ -119,6 +120,16 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLCollection-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLCollection-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$download()}\if{html}{\out{</div>}}
 }
 
 }

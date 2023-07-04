@@ -60,9 +60,8 @@ test_that("Can open help page for OpenML Flow", {
 })
 
 test_that("Printer works", {
-  old_threshold = lg$threshold
-  lg$set_threshold("info")
-  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  local_log_info()
+
   with_cache({
     oml_flow = oflw(6794)
     observed = capture.output(print(oml_flow))[2:4]
@@ -74,4 +73,13 @@ test_that("Printer works", {
     expect_equal(observed, expected)
     }, cache = FALSE)
 
+})
+
+
+test_that("download runs without error", {
+  local_log_info()
+
+  # simple sanity check
+  out = capture.output(with_cache(oflw(6794)$download(), cache = FALSE))
+  expect_true(length(out) == 1L)
 })

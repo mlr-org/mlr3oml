@@ -29,9 +29,7 @@ test_that("Can open help page for OpenML Collection", {
 })
 
 test_that("printer works", {
-  old_threshold = lg$threshold
-  lg$set_threshold("info")
-  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  local_log_info()
 
   # task collection
   oml_collection = ocl(99)
@@ -55,3 +53,14 @@ test_that("printer works", {
   )
   expect_equal(observed1, expected1)
 })
+
+test_that("download runs without error", {
+  local_log_info()
+
+  # simple sanity check
+  out = capture.output(with_cache(ocl(72)$download(), cache = FALSE))
+  # just the desc
+  expect_true(length(out) == 1L)
+})
+
+

@@ -76,6 +76,7 @@ Name of the dataset (inferred from the task name).}
 \itemize{
 \item \href{#method-OMLTask-new}{\code{OMLTask$new()}}
 \item \href{#method-OMLTask-print}{\code{OMLTask$print()}}
+\item \href{#method-OMLTask-download}{\code{OMLTask$download()}}
 \item \href{#method-OMLTask-clone}{\code{OMLTask$clone()}}
 }
 }
@@ -125,6 +126,16 @@ Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLTask$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLTask-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLTask-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLTask$download()}\if{html}{\out{</div>}}
 }
 
 }

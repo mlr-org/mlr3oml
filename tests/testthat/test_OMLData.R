@@ -110,10 +110,11 @@ test_that("Logicals are converted to factor", {
   backend = as_data_backend(odata)
   # renaming worked
   assert_true("c" %in% backend$colnames)
+  expect_class(backend$data(1, "c")[[1L]], "factor")
   expect_oml_data(odata)
 })
 
-test_that("strings and nominals are distringuished for parquet files", {
+test_that("strings and nominals are distringuished for parquet and arff files", {
   odata_pq = odt(41701, parquet = TRUE)
   dat = odata_pq$data
   expect_class(dat[["instance_id"]], "character")
@@ -156,9 +157,7 @@ test_that("converted data_backend contains all columns", {
 
 
 test_that("printer works", {
-  old_threshold = lg$threshold
-  lg$set_threshold("info")
-  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  local_log_info()
   with_cache({
     oml_data = odt(id = 31)
     observed = capture.output(print(oml_data))[4:5]
@@ -168,4 +167,11 @@ test_that("printer works", {
     )
     expect_equal(observed, expected)
   }, cache = FALSE)
+})
+
+test_that("download runs without error", {
+  local_log_info()
+  # simple sanity check
+  out = capture.output(with_cache(odt(31)$download(), cache = FALSE))
+  expect_true(length(out) == 4L)
 })

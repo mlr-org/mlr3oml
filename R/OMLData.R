@@ -70,6 +70,15 @@ OMLData = R6Class("OMLData",
       }
     },
     #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      self$data
+      self$qualities
+      self$features
+      invisible(self)
+    },
+    #' @description
     #' Returns the value of a single OpenML data set quality.
     #'
     #' @param name (`character(1)`)\cr

@@ -142,6 +142,8 @@ from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using
 
 To find datasets for a specific task type, use \code{\link[=list_oml_tasks]{list_oml_tasks()}} which supports filtering according to the task
 type.
+Another heuristic to search for possible regression tasks is to search for data sets with
+0 number of classes, i.e. by specifying \code{number_classes = 0}.
 }
 \details{
 Filter values are usually provided as single atomic values (typically integer or character).

@@ -87,9 +87,7 @@ test_that("ignored features are respected when creating tasks", {
 
 
 test_that("printer works", {
-  old_threshold = lg$threshold
-  lg$set_threshold("info")
-  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  local_log_info()
 
   oml_task = with_cache({
     oml_task = otsk(31)
@@ -104,4 +102,13 @@ test_that("printer works", {
     expect_equal(observed, expected)
   }, cache = FALSE)
 
+})
+
+
+test_that("download runs without error", {
+  local_log_info()
+  # simple sanity check
+  out = capture.output(with_cache(otsk(31)$download(), cache = FALSE))
+  # data + task_desc + task_splits
+  expect_true(length(out) == 6L)
 })

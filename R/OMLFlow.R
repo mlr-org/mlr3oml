@@ -39,7 +39,12 @@ OMLFlow = R6Class("OMLFlow",
       if (self$test_server) {
         catf(" * Using test server")
       }
-
+    },
+    #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      invisible(self)
     }
   ),
   active = list(

@@ -89,9 +89,8 @@ test_that("Can open help page for OpenML Run", {
 })
 
 test_that("printer works", {
-  old_threshold = lg$threshold
-  lg$set_threshold("info")
-  on.exit({lg$set_threshold(old_threshold)}, add = TRUE)
+  local_log_info()
+
   with_cache({
     oml_run = orn(10593878)
     observed = capture.output(print(oml_run))[4:6]
@@ -102,4 +101,13 @@ test_that("printer works", {
     )
     expect_equal(observed, expected)
    }, cache = FALSE)
+})
+
+
+test_that("download runs without error", {
+  local_log_info()
+  # simple sanity check
+  out = capture.output(with_cache(orn(10593878)$download(), cache = FALSE))
+  # flow (1) + task (6) + prediction + desc
+  expect_true(length(out) == 9L)
 })

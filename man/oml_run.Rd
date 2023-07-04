@@ -86,6 +86,7 @@ The evaluations calculated by the OpenML server.}
 \itemize{
 \item \href{#method-OMLRun-new}{\code{OMLRun$new()}}
 \item \href{#method-OMLRun-print}{\code{OMLRun$print()}}
+\item \href{#method-OMLRun-download}{\code{OMLRun$download()}}
 \item \href{#method-OMLRun-clone}{\code{OMLRun$clone()}}
 }
 }
@@ -134,6 +135,16 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLRun$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLRun-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLRun-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLRun$download()}\if{html}{\out{</div>}}
 }
 
 }

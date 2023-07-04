@@ -55,6 +55,16 @@ OMLRun = R6Class("OMLRun",
       if (self$test_server) {
         catf(" * Using test server")
       }
+    },
+    #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      self$prediction
+      # task download includes data donwload
+      self$task$download()
+      self$flow$download()
+      invisible(self)
     }
   ),
   active = list(

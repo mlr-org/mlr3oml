@@ -44,6 +44,7 @@ Returns all tags of the object.}
 \itemize{
 \item \href{#method-OMLFlow-new}{\code{OMLFlow$new()}}
 \item \href{#method-OMLFlow-print}{\code{OMLFlow$print()}}
+\item \href{#method-OMLFlow-download}{\code{OMLFlow$download()}}
 \item \href{#method-OMLFlow-clone}{\code{OMLFlow$clone()}}
 }
 }
@@ -83,6 +84,16 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLFlow$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLFlow-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$download()}\if{html}{\out{</div>}}
 }
 
 }
