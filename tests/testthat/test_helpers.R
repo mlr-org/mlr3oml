@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("with_cache works", {
   prev_cache_opt = getOption("mlr3oml.cache")
   cache_dir = tempfile()
