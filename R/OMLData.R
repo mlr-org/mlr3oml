@@ -39,6 +39,7 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
+#' @template examples
 OMLData = R6Class("OMLData",
   inherit = OMLObject,
   public = list(
@@ -62,6 +63,8 @@ OMLData = R6Class("OMLData",
     print = function() {
       # trigger download first for better printing
       self$desc
+      self$qualities
+      self$features
       catf("<OMLData:%i:%s> (%ix%i)", self$id, as_short_string(self$name), self$nrow, self$ncol)
       dt = if (length(self$target_names)) as_short_string(self$target_names) else "<none>"
       catf(" * Default target: %s", dt)

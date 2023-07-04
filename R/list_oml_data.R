@@ -48,6 +48,7 @@
 #' `r format_bib("openml_r", "vanschoren2014")`
 #'
 #' @export
+#' @template examples
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {

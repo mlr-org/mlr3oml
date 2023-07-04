@@ -23,6 +23,7 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
+#' @template examples
 OMLRun = R6Class("OMLRun",
   inherit = OMLObject,
   public = list(

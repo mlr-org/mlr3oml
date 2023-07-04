@@ -14,6 +14,7 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
+#' @template examples
 OMLFlow = R6Class("OMLFlow",
   inherit = OMLObject,
   public = list(

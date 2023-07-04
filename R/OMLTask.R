@@ -16,6 +16,7 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
+#' @template examples
 OMLTask = R6Class("OMLTask",
   inherit = OMLObject,
   public = list(

@@ -154,6 +154,13 @@ For a more feature-complete package, see \CRANpkg{OpenML}.
 Alternatively, you can pass additional filters via \code{...} using the names of the official API,
 c.f. the \emph{REST} tab of \url{https://www.openml.org/apis}.
 }
+\examples{
+# For technical reasons, examples cannot be included in this R package.
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
+}
 \references{
 Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, Vanschoren J, Bischl B (2017).
 \dQuote{OpenML: An R Package to Connect to the Machine Learning Platform OpenML.}

@@ -35,6 +35,7 @@
 #' @references
 #' `r format_bib("vanschoren2014")`
 #' @export
+#' @template examples
 OMLCollection = R6Class("OMLCollection",
   inherit = OMLObject,
   public = list(
