@@ -1,0 +1,345 @@
+---
+title: Getting Started
+output: html_document
+---
+
+```{r, include = FALSE}
+library(mlr3oml)
+logger = lgr::get_logger("mlr3oml")
+logger$set_threshold("warn")
+options(mlr3oml.cache = FALSE)
+```
+
+# mlr3oml
+
+This tutorial will give you a quick overview of the main features of `mlr3oml`.
+If you are not familiar with [OpenML](https://docs.openml.org/), we recommend to read [its documentation](https://docs.openml.org) first, as we will not explain the OpenML concepts in detail here.
+Further coverage of some selected `mlr3oml` features can be found in the [Large-Scale Benchmarking chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html) of the `mlr3book`.
+Note that `mlr3oml` currently only supports downloading objects from OpenML.
+Uploading can for example be achieved through the [website](https://openml.org).
+
+First, we will briefly cover the different OpenML objects that can be downloaded using `mlr3oml`.
+Then we will show how to find objects with certain properties on OpenML.
+Finally, we will quickly discuss some further aspects of `mlr3oml`, which includes caching, file formats, laziness, the logger, and the API key.
+
+## OpenML Objects {#sec-objects}
+
+`mlr3oml` supports five different types of OpenML objects that are listed below.
+All objects can be converted to their corresponding `mlr3` pandeaunt.
+
+* [`OMLData`](https://mlr3oml.mlr-org.com/reference/oml_data.html) represents an [OpenML dataset](https://www.openml.org/search?type=data&sort=runs&status=active). These are (usually tabular) sets with additional meta-data, which includes e.g. a description of the dataset or a license.
+  The most similar `mlr3` class is the [`mlr3::DataBackend`](https://mlr3.mlr-org.com/reference/DataBackend.html).
+*  [`OMLTask`](https://mlr3oml.mlr-org.com/reference/oml_task.html) represents an [OpenML task](https://www.openml.org/search?type=task&sort=runs). This is a concrete problem speficiation on top of an OpenML dataset.
+  While being similar to [`mlr3::Task`](https://mlr3.mlr-org.com/reference/Task.html) objects, a major difference is that the OpenML task also contains the resampling splits and can therefore also be converted to an [`mlr3::Resampling`](https://mlr3.mlr-org.com/reference/Resampling.html).
+* [`OMLFlow`](https://mlr3oml.mlr-org.com/reference/oml_flow.html) represents an [OpenML flow](https://www.openml.org/search?type=flow&sort=runs). This is a reusable and executable representation of a machine learning pipeline or workflow.
+  The closest `mlr3` class is the [`Learner`](https://mlr3.mlr-org.com/reference/Learner.html).
+* [`OMLRun`](https://mlr3oml.mlr-org.com/reference/oml_run.html) represents an [OpenML run](https://www.openml.org/search?type=run&sort=date). An OpenML run refers to the execution of a specific machine learning flow on a particular task, recording all relevant information such as hyperparameters, performance metrics, and intermediate results.
+  This is similar to an [`mlr3::ResampleResult`](https://mlr3.mlr-org.com/reference/ResampleResult.html) object.
+* [`OMLCollection`](https://mlr3oml.mlr-org.com/reference/oml_collection.html) represents an OpenML collection, which can either be a [run collection](https://www.openml.org/search?type=study&study_type=run) or a [task collection](https://www.openml.org/search?type=study&study_type=task).
+  These are container objects that allow to bundle tasks (resulting in benchmarking suites) or runs (which can be used to represent benchmark experiments).
+  There is no `mlr3` pendant for the former (other than a list of tasks), while the latter would correspond to an [`mlr3::BenchmarkResult`](https://mlr3.mlr-org.com/reference/BenchmarkResult.html).
+
+Each object on OpenML has a unique identifier, by which it can be retrieved.
+We will now briefly show how to access and work with these objects.
+
+### Data
+
+Below, we retrieve the dataset with ID 31, which is the credit-g data and can be viewed online [here](https://www.openml.org/search?type=data&sort=runs&status=active&id=31).
+Like in other `mlr3` packages, sugar functions exist for the construction of `R6` classes.
+We always show both ways to construct the objects.
+
+```{r}
+library(mlr3oml)
+library(mlr3)
+
+oml_data = OMLData$new(id = 31)
+# is the same as
+oml_data = odt(id = 31)
+oml_data
+```
+
+The full meta data can be accessed using the `$desc` field.
+Some fields, such as the number of rows and columns can be accessed directly.
+
+```{r}
+# the usage licence
+oml_data$desc$licence
+
+# the data dimension
+c(n_rows = oml_data$nrow, n_cols = oml_data$ncol)
+```
+
+Information about the features can be accessed through the `$features` field.
+This includes information regarding the data types, missing values, whether they should be ignored for learning or whether they are the row identifier.
+
+```{r}
+head(oml_data$features)
+```
+
+The data itself can be accessed using the `$data` field.
+We only show a subset of the data here for readability.
+
+```{r}
+oml_data$data[1:5, 1:3]
+```
+
+We can convert this object to an `mlr3::DataBackend` using the `as_data_backend()` function.
+
+```{r}
+backend = as_data_backend(oml_data)
+backend
+```
+
+Because this specific dataset has a default target in its meta data, we can also directly convert it to an `mlr3::Task`.
+
+```{r}
+# the default target
+oml_data$target_names
+
+# convert the OpenML data to an mlr3 task
+task = as_task(oml_data)
+```
+
+With either the `backend` or the `task`, we are now in `mlr3` land again, and can work with the objects as usual:
+
+```{r}
+rr = resample(task, lrn("classif.rpart"), rsmp("holdout"))
+```
+
+### Task
+
+Below, we access the OpenML task with [ID 261](https://www.openml.org/search?type=task&id=261&sort=runs), which is a classification task built on top of the credit-g data used above.
+Its associated resampling is a 2/3 holdout split.
+
+```{r}
+oml_task = OMLTask$new(id = 261)
+# is the same as
+oml_task = otsk(id = 261)
+oml_task
+```
+
+The OpenML data that the task is built on top of can be accessed through `$data`.
+
+```{r}
+oml_task$data
+```
+
+We can also access the target columns and the features.
+Note that this target *can* differ from the default target shown in the previous section.
+
+```{r}
+oml_task$target_names
+oml_task$feature_names
+```
+
+The associated resampling splits can be accessed using `$task_splits`.
+
+```{r}
+oml_task$task_splits
+```
+
+The conversion to an `mlr3::Task` is possible using the `as_task()` converter.
+
+```{r}
+# Convert OpenML task to mlr3 task
+task = as_task(oml_task)
+task
+```
+
+The associated resampling can be obtained by calling `as_resampling()`.
+
+```{r}
+# Convert OpenML task to mlr3 resampling
+resampling = as_resampling(oml_task)
+resampling
+```
+
+To simplify this, there exist `"oml"` tasks and resamplings:
+
+```{r}
+tsk("oml", task_id = 261)
+rsmp("oml", task_id = 261)
+```
+
+
+### Flows and Runs
+
+We can access the flow with [ID 1068](https://www.openml.org/search?type=flow&sort=runs&id=1068) as shown below:
+
+```{r}
+flow = OMLFlow$new(id = 1068)
+# is the same as
+flow = oflw(id = 1068)
+flow
+```
+
+Flows themself only become interesting once they are applied to a task, the result of which is an OpenML run.
+
+For example, the run with [ID 169061](https://www.openml.org/search?type=run&sort=date&id=169061) contains the result of applying the above flow to task 261 from above:
+
+```{r}
+run = OMLRun$new(id = 169061)
+# is the same as
+run = orn(id = 169061)
+run
+
+# the corresponding flow and and task can be accessed directly
+run$flow
+run$task
+```
+
+The result of this experiment are the predictions, as well as the evaluation of these predictions.
+
+```{r}
+head(run$prediction)
+head(run$evaluation)
+```
+
+OpenML runs can be converted to `mlr3::ResampleResult`s using the `as_resample_result()` function.
+
+
+```{r}
+rr = as_resample_result(run)
+rr
+```
+
+
+### Collection
+
+Below, we access the [OpenML-CC18](https://www.openml.org/search?type=study&study_type=task&id=99), which is a curated collection of 72 OpenML classification tasks, i.e. a task collection.
+
+```{r}
+cc18 = OMLCollection$new(id = 99)
+# is the same as
+cc18 = ocl(id = 99)
+```
+
+The ids of the tasks and datasets contained in this benchmarking suite can be accessed through the fields `$task_ids` and `$data_ids` respectively.
+
+```{r}
+# the first 10 task ids
+cc18$task_ids[1:10]
+# the first 10 data ids
+cc18$data_ids[1:10]
+```
+
+We can, e.g., create an `mlr3::Task` from the first of these tasks as follows:
+
+```{r}
+task1 = tsk("oml", task_id = cc18$task_ids[1])
+task1
+```
+
+## Listing {#sec-listing}
+
+While we showed how to work with objects with known IDs, another important question is how to find the relevant IDs.
+This can either be achieved through the OpenML [website](https://openml.org) or through the REST API.
+To access the latter, `mlr3oml` provides the following [listing functions](https://mlr3oml.mlr-org.com/reference/list_oml.html):
+
+* `list_oml_data()` - Find datasets
+* `list_oml_tasks()` - Find tasks
+* `list_oml_flows()` - Find flows
+* `list_oml_runs()` - Find runs
+
+As an example, we will only show the usage of the first function, but all others work analogously.
+
+We can, for example, subset the datasets contained in the CC-18 even further.
+Below, we only select datasets that have between 0 and 10 features.
+
+```{r}
+cc18_filtered = list_oml_tasks(
+  data_id = cc18$data_ids,
+  number_features = c(0, 10)
+)
+cc18_filtered[1:5, c("task_id", "name")]
+```
+
+Note that not all possible property specifications can be directly queried on OpenML.
+As the resulting tables are `data.table`s containing information about the datasets, they can be further filtered using the usual `data.table` syntax.
+
+## Further Options
+
+### Logger
+
+`mlr3oml` has its own logger, which can be accessed using `lgr::get_logger("mlr3oml")`.
+For more information about logging in general (such as chaning the logging threshold), we refer to the corresponding [section](https://mlr3book.mlr-org.com/chapters/chapter10/advanced_technical_aspects_of_mlr3.html#sec-logging) in the `mlr3book`.
+
+## Laziness
+
+All objects accessed through `mlr3oml` must be downloaded from the OpenML server.
+This is done lazily, which means that data is only downloaded when it is actually accessed.
+To show this, we change the logging level, which was previously set to `"warn"` (to keep the output clean), to `"info"`.
+
+```{r}
+logger = lgr::get_logger("mlr3oml")
+logger$set_threshold("info")
+
+oml_data = odt(31)
+# to print the object, some meta data must be downloaded
+oml_data
+```
+
+To download all information associated with an object, the `$download()` method can be called.
+This can be useful to ensure that all information is available offline.
+In this case, only the actual underlying data is downloaded, as everything else was already implicityly accessed above.
+
+```{r}
+oml_data$download()
+```
+
+
+### Caching
+
+Caching of OpenML objects can be enabled by setting the `mlr3oml.cache` option to either `TRUE` or `FALSE` (default), or to a specific folder to be used as the cache directory.
+When this is enabled, many OpenML objects are also available offline.
+Note that OpenML collections are not cached, as IDs can be added or removed.
+
+```{r}
+# Set a temporary directy as the cache folder
+cache_dir = tempfile()
+options(mlr3oml.cache = cache_dir)
+
+odata = odt(31)
+odata
+
+# When accessing the data again, nothing has to be downloaded
+# because the information is loaded from the cache
+odata_again = odt(31)
+odata_again
+
+# set back the logger
+logger$set_threshold("warn")
+```
+
+### Data Types
+
+The datasets on OpenML are available in two different formats, namely [*arff*](https://www.cs.waikato.ac.nz/ml/weka/arff.html) and [*parquet*](https://parquet.apache.org/).
+The former is used by default, but this default can be changed by setting the `mlr3oml.parquet` option to `TRUE`.
+It is also possible to specify this during construction of a specific OpenML object.
+
+While the parquet format is more efficient, arff was the original format and might therefore considered to be more stable.
+Moreover, minor differences for the two different formats for a given data ID can occur, e.g. regarding the data type.
+
+When converting an `OMLData` object to an `mlr3::DataBackend` using the parquet file type, the resulting backend is an [`mlr3db::DataBackendDuckDB`](https://mlr3db.mlr-org.com/reference/DataBackendDuckDB.html) object.
+For the arff file format, the resulting backend is a [`mlr3::DataBackendDataTable`](https://mlr3.mlr-org.com/reference/DataBackendDataTable.html).
+
+```{r}
+library(mlr3db)
+odata_pq = odt(id = 31, parquet = TRUE)
+backend_pq = as_data_backend(odata_pq)
+class(backend_pq)
+
+# compare with arff
+odata_arff = odt(id = 31, parquet = FALSE)
+backend_arff = as_data_backend(odata_arff)
+class(backend_arff)
+```
+
+For more information on data backends, see the corresponding [section](https://mlr3book.mlr-org.com/chapters/chapter10/advanced_technical_aspects_of_mlr3.html#sec-backends) in the `mlr3book`.
+
+
+## API Key
+
+All operations supported by this package work without an API key, but you might get rate limited without an API key.
+The API key can be specified via the option `mlr3oml.apy_key` or the environment variable `OPENMLAPIKEY` (where the latter has precedence over the former).
+To obtain an API key, you must [create an account on OpenML](https://www.openml.org/auth/sign-up).

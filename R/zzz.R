@@ -5,12 +5,13 @@
 #' @importFrom R6 R6Class
 #' @importFrom methods hasArg
 #' @importFrom stats rnorm
-#' @importFrom utils installed.packages tai
+#' @importFrom utils installed.packages tail
 #' @importFrom bit64 integer64
 #'
 #'
 #' @section Documentation:
-#' Start by reading the [Large-Scale Benchmarking chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
+#' Start by reading the Large-Scale Benchmarking
+#' [chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
 #' from the mlr3book.
 #'
 #' @section mlr3 Integration:

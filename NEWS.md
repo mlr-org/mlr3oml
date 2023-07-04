@@ -10,6 +10,9 @@
 * Removed the examples, as they caused problems with CRAN checks when OpenML was unavailable.
 * Caching can no longer be specified at the instance level but only globally through
   the option `mlr3oml.cache`
+* Added `$download()` method for all OML objects to fully download an object for offline usage.
+* Incremented the cache version for parquet data due to a change in OpenML.
+* Added an online tutorial for the package.
 
 # mlr3oml 0.7.2
 

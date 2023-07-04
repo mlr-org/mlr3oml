@@ -10,7 +10,8 @@ Provides an interface to 'OpenML.org' to list and download machine learning data
 }
 \section{Documentation}{
 
-Start by reading the \href{https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html}{Large-Scale Benchmarking chapter}
+Start by reading the Large-Scale Benchmarking
+\href{https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html}{chapter}
 from the mlr3book.
 }
 
