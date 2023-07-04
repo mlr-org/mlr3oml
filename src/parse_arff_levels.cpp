@@ -1,7 +1,8 @@
-#include <R.h>
-#include <Rdefines.h>
+#define R_NO_REMAP
 #include <string>
 #include <vector>
+#include <R.h>
+#include <Rdefines.h>
 
 extern "C" {
 
@@ -105,7 +106,7 @@ SEXP c_parse_arff_levels(SEXP buffer_) {
         Rf_error("Incomplete set of categorical attributes detected.");
     }
 
-    SEXP result = PROTECT(allocVector(STRSXP, levels.size()));
+    SEXP result = PROTECT(Rf_allocVector(STRSXP, levels.size()));
     for (size_t i = 0; i < levels.size(); i++) {
         SET_STRING_ELT(result, i, Rf_mkCharCE(levels[i].c_str(), CE_UTF8));
     }

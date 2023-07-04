@@ -1,6 +1,7 @@
+#define R_NO_REMAP
+#include <string>
 #include <R.h>
 #include <Rdefines.h>
-#include <string>
 
 static int remove_comment(std::string line) {
     enum states { DULL, IN_QUOTE, ESCAPING } state = DULL;
@@ -41,8 +42,8 @@ static int remove_comment(std::string line) {
 extern "C" {
 
 SEXP c_remove_comment(SEXP lines_) {
-    const R_len_t n = length(lines_);
-    SEXP result_ = PROTECT(allocVector(STRSXP, n));
+    const R_len_t n = Rf_length(lines_);
+    SEXP result_ = PROTECT(Rf_allocVector(STRSXP, n));
 
     for (R_len_t i = 0; i < n; i++) {
         std::string line = Rf_translateCharUTF8(STRING_ELT(lines_, i));
