@@ -34,15 +34,15 @@ catf_estimation_procedure = function(estimation_procedure) {
         parameter[get("name") == "number_folds", "value"][[1L]]
       )
     } else if (type == "holdout") {
-      catf(" * Type: holdout (id: %s; test size: %s)",
+      catf(" * Estimation: holdout (id: %s; test size: %s%%)",
         estimation_procedure$id,
         parameter[get("name") == "percentage", "value"][[1L]]
       )
     } else if (type == "leaveoneout") {
-      catf(" * Type: leaveoneout (id: %s)", estimation_procedure$id)
+      catf(" * Estimation: leaveoneout (id: %s)", estimation_procedure$id)
     }
   } else {
-    catf(" * Estimation: missing")
+    catf(" * Estimation: <missing>")
   }
 }
 
