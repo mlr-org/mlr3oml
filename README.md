@@ -104,8 +104,8 @@ odatasets[, c("data_id", "name")]
   - Start by reading the [Large-Scale Benchmarking
     chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
     from the `mlr3` book.
-  - The package website contains a [getting started
-    guide](https://mlr3oml.mlr-org.com/articles/tutorial.html).
+  - The [package website](https://mlr3oml.mlr-org.com/) contains a
+    getting started guide.
   - The OpenML [API documentation](https://www.openml.org/apis) is also
     a good resource.
 
