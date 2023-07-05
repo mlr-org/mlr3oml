@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 #include <string>
 #define R_NO_REMAP
 #include <R.h>
 #include <Rdefines.h>
 
+=======
+#define R_NO_REMAP
+#include <string>
+#include <R.h>
+#include <Rdefines.h>
+>>>>>>> main
 
 static int remove_comment(std::string line) {
     enum states { DULL, IN_QUOTE, ESCAPING } state = DULL;

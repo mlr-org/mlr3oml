@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 #include <string>
 #include <vector>
 #define R_NO_REMAP
 #include <R.h>
 #include <Rdefines.h>
 
+=======
+#define R_NO_REMAP
+#include <string>
+#include <vector>
+#include <R.h>
+#include <Rdefines.h>
+>>>>>>> main
 
 extern "C" {
 
