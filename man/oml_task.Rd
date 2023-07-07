@@ -19,22 +19,14 @@ This object can also be constructed using the sugar function \code{\link[=otsk]{
 }
 
 \examples{
-try({
-  library("mlr3")
-  # Get a task from OpenML:
-  otask = OMLTask$new(id = 31)
-  # using sugar
-  otask = otsk(id = 31)
-  otask$data
-  otask$target_names
-  otask$feature_names
-
-  # convert to mlr3 Task:
-  task = as_task(otask)
-
-  # get a task via tsk():
-  tsk("oml", task_id = 31L)
-  }, silent = TRUE)
+# For technical reasons, examples cannot be included in this R package.
+# Instead, these are some relevant resources:
+#
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+#
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
@@ -94,6 +86,7 @@ Name of the dataset (inferred from the task name).}
 \itemize{
 \item \href{#method-OMLTask-new}{\code{OMLTask$new()}}
 \item \href{#method-OMLTask-print}{\code{OMLTask$print()}}
+\item \href{#method-OMLTask-download}{\code{OMLTask$download()}}
 \item \href{#method-OMLTask-clone}{\code{OMLTask$clone()}}
 }
 }
@@ -112,7 +105,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLTask$new(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )}\if{html}{\out{</div>}}
@@ -123,10 +115,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
@@ -148,6 +136,16 @@ Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \verb{$task}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLTask$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLTask-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLTask-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLTask$download()}\if{html}{\out{</div>}}
 }
 
 }

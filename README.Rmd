@@ -6,12 +6,16 @@ output: github_document
 library("mlr3")
 library("mlr3oml")
 lgr::get_logger("mlr3")$set_threshold("warn")
+lgr::get_logger("mlr3oml")$set_threshold("warn")
 set.seed(1)
 options(datatable.print.class = FALSE, datatable.print.keys = FALSE, mlr3oml.verbose = FALSE)
-options(mlr3oml.cache = tempfile())
 ```
 
 # mlr3oml
+
+Package website: [release](https://mlr3oml.mlr-org.com/) | [dev](https://mlr3oml.mlr-org.com/dev/)
+
+OpenML integration to the [mlr3 ecosystem](https://mlr-org.com/).
 
 [![r-cmd-check](https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
@@ -19,95 +23,68 @@ options(mlr3oml.cache = tempfile())
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
 
-**mlr3oml** enables downloading [OpenML](https://www.openml.org) datasets, tasks, flows, runs, and collections and allows to convert them to the corresponding [mlr3](https://mlr3.mlr-org.com/) object.
-Furthermore, you can also obtain the data and the resampling for a given OpenML task.
-Caching can be enabled by setting the option `"mlr3oml.cache"`.
-Uploading to OpenML is currently not supported, use the [OpenML package](https://cran.r-project.org/package=OpenML) package for this.
+## What is `mlr3oml`?
 
-## Short Demo
+[OpenML](https://www.openml.org) is an open-source platform that facilitates the sharing and dissemination of machine learning research data.
+All entities on the platform have unique identifiers and standardized (meta)data that can be accessed via an open-access REST API or the web interface.
+`mlr3oml` allows to work with the REST API through R and integrates [OpenML](https://www.openml.org) with the `mlr3` ecosystem.
+Note that uploading to OpenML is currently not supported, use the [OpenML package](https://cran.r-project.org/package=OpenML) package for this.
+
+As a brief demo, we show how to access an OpenML task, convert it to an `mlr3::Task` and associated `mlr3::Resampling`, and conduct a simple resample experiment.
 
 ```{r}
-library("mlr3")
-library("mlr3oml")
+library(mlr3oml)
+library(mlr3)
 
-# be less verbose
-lgr::get_logger("mlr3oml")$set_threshold("warn")
+# Download and print the OpenML task with ID 145953
+oml_task = otsk(145953)
+oml_task
 
-# retrieve data set as task from OML
-tsk("oml", data_id = 31)
+# Access the OpenML data object on which the task is built
+oml_task$data
 
-# retrieve a regular task from OML
-tsk("oml", task_id = 59)
+# Convert the OpenML task to an mlr3 task and resampling
+task = as_task(oml_task)
+resampling = as_resampling(oml_task)
 
-# retrieve resampling from OML
-rsmp("oml", task_id = 59)
-
-# R6 class for data sets
-odata = OMLData$new(61) # or
-odata = odt(61)
-
-odata$name
-odata$nrow
-odata$ncol
-head(odata$data)
-
-backend = as_data_backend(odata)
-backend
-
-# list oml data sets with 5 features and 50 - 200 instances
-tab = list_oml_data(number_features = 5, number_instances = c(50, 200))
-head(tab[, .(data_id, name)])
-
-# R6 class for tasks
-otask = OMLTask$new(31) # or
-otask = otsk(31)
-
-task = as_task(otask)
-task
-resampling = as_resampling(otask)
-resampling
-
-otask$data
-otask$name
-otask$nrow
-otask$ncol
-otask$task
-otask$resampling
-
-
-# list first 10 oml tasks
-tab = list_oml_tasks(limit = 10)
-tab[, .(task_id, data_id, name)]
-
-# R6 class for flows
-oflow = OMLFlow$new(100) # or
-oflow = oflw(100)
-
-oflow$dependencies
-oflow$parameter
-
-# non-executable pseudo learner
-learner = as_learner(oflow, "regr")
-learner
-
-# R6Class for run
-
-orun = OMLRun$new(538858) # o
-orun = orn(538858)
-
-orun$data
-orun$task
-orun$flow
-head(orun$prediction)
-
-rr = as_resample_result(orun)
-rr
-
-
-# R6 class for collection
-
-ocol = OMLCollection$new(232) # or
-ocol = ocl(232)
-
-ocol$tasks
+# Conduct a simple resample experiment
+rr = resample(task, lrn("classif.rpart"), resampling)
+rr$aggregate()
 ```
+
+Besides working with objects with known IDs, data of interest can also be queried using listing functions. Below, we search for datasets with 10 - 20 features, 45000 to 50000 observations and 2 classes.
+
+```{r}
+odatasets = list_oml_data(
+  number_features = c(10, 20),
+  number_instances = c(45000, 50000),
+  number_classes = 2
+)
+
+odatasets[, c("data_id", "name")]
+```
+## Feature Overview
+
+* Datasets, tasks, flows, runs, and collections can be downloaded from [OpenML](https://www.openml.org) and are represented as `R6` classes.
+* OpenML objects can be easily converted to the corresponding `mlr3` counterpart.
+* Filtering of OpenML objects can be achieved using listing functions.
+* Downloaded objects can be cached by setting the `mlr3oml.cache` option.
+* Both the `arff` and `parquet` filetype for datasets are supported.
+
+## Documentation
+
+* Start by reading the [Large-Scale Benchmarking chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html) from the `mlr3` book.
+* The [package website](https://mlr3oml.mlr-org.com/) contains a getting started guide.
+* The OpenML [API documentation](https://www.openml.org/apis) is also a good resource.
+
+
+## Bugs, Questions, Feedback
+
+*mlr3oml* is a free and open source software project that
+encourages participation and feedback. If you have any issues,
+questions, suggestions or feedback, please do not hesitate to open an
+“issue” about it on the GitHub page\!
+
+In case of problems / bugs, it is often helpful if you provide a
+“minimum working example” that showcases the behaviour (but don’t
+worry about this if the bug is obvious).

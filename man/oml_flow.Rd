@@ -17,18 +17,14 @@ This object can also be constructed using the sugar function \code{\link[=oflw]{
 }
 
 \examples{
-try({
-  library("mlr3")
-  # mlr3 flow:
-  flow = OMLFlow$new(id = 19103)
-  # using sugar
-  flow = oflw(id = 19103)
-  learner = as_learner(flow, "classif")
-  # python flow
-  python_flow = OMLFlow$new(19090)
-  # conversion to pseudo Learner
-  plearner = as_learner(python_flow, "classif")
-  }, silent = TRUE)
+# For technical reasons, examples cannot be included in this R package.
+# Instead, these are some relevant resources:
+#
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+#
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
@@ -58,6 +54,7 @@ Returns all tags of the object.}
 \itemize{
 \item \href{#method-OMLFlow-new}{\code{OMLFlow$new()}}
 \item \href{#method-OMLFlow-print}{\code{OMLFlow$print()}}
+\item \href{#method-OMLFlow-download}{\code{OMLFlow$download()}}
 \item \href{#method-OMLFlow-clone}{\code{OMLFlow$clone()}}
 }
 }
@@ -74,7 +71,7 @@ Returns all tags of the object.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$new(id, cache = cache_default(), test_server = test_server_default())}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$new(id, test_server = test_server_default())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -82,10 +79,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.
@@ -101,6 +94,16 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLFlow$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLFlow-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLFlow-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLFlow$download()}\if{html}{\out{</div>}}
 }
 
 }

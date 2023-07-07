@@ -1,12 +1,18 @@
 #' @noRd
-with_test_server = function(env = parent.frame()) {
+local_test_server = function(env = parent.frame()) {
   op = options(mlr3oml.test_server = TRUE)
   withr::defer(options(op), env)
 }
 
-with_public_server = function(env = parent.frame()) {
+local_public_server = function(env = parent.frame()) {
   op = options(mlr3oml.test_server = FALSE)
   withr::defer(options(op), env)
+}
+
+local_log_info = function(env = parent.frame()) {
+  prev_threshold = lg$threshold
+  lg$set_threshold("info")
+  withr::defer({lg$set_threshold(prev_threshold)}, env)
 }
 
 #' Returns the api key (if available) for the selected server.
@@ -151,4 +157,8 @@ get_paginated_table = function(query_type, ..., limit, server) {
   return(tab)
 }
 
-
+with_cache = function(code, cache) {
+  old_options = options(mlr3oml.cache = cache)
+  on.exit({options(old_options)}, add = TRUE)
+  force(code)
+}

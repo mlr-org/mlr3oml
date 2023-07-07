@@ -8,6 +8,13 @@
 \description{
 Provides an interface to 'OpenML.org' to list and download machine learning data, tasks and experiments. The 'OpenML' objects can be automatically converted to 'mlr3' objects. For a more sophisticated interface which also allows uploading to 'OpenML', see the 'OpenML' package.
 }
+\section{Documentation}{
+
+Start by reading the Large-Scale Benchmarking
+\href{https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html}{chapter}
+from the mlr3book.
+}
+
 \section{mlr3 Integration}{
 
 This package adds the \link[mlr3:Task]{mlr3::Task} \code{"oml"} and the \link[mlr3:Resampling]{mlr3::Resampling} \code{"oml"} to

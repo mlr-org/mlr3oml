@@ -7,7 +7,7 @@ CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
   data = 3L,
-  data_parquet = 2L,
+  data_parquet = 3L,
   data_desc = 3L,
   data_qualities = 2L,
   data_features = 2L,
@@ -23,9 +23,8 @@ CACHE$initialized = character()
 
 #' Returns the cache directory
 #' @param cache Whether to cache.
-#' @param test_server Whether to use the test server.
 #' @noRd
-get_cache_dir = function(cache, test_server) {
+get_cache_dir = function(cache) {
   assert_true(is.logical(cache) || is.character(cache))
   if (isFALSE(cache)) {
     return(FALSE)

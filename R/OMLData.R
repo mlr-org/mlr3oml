@@ -33,50 +33,13 @@
 #' automatically falls back to the implementation in ([RWeka::read.arff()]).
 #'
 #' @section Parquet Files:
-#' For the handling of parquet files, we rely on \CRANpkg{duckdb} and `CRANpkg{DBI}`.
+#' For the handling of parquet files, we rely on \CRANpkg{duckdb} and \CRANpkg{DBI}.
 #'
 #' @references
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   # OpenML Data object
-#'   odata = OMLData$new(id = 9)
-#'   # using sugar
-#'   odata = odt(id = 9)
-#'   print(odata)
-#'   print(odata$target_names)
-#'   print(odata$feature_names)
-#'   print(odata$tags)
-#'
-#'   # mlr3 conversion:
-#'   task = as_task(odata)
-#'   backend = as_data_backend(odata)
-#'   class(backend)
-#'
-#'   # get a task via tsk():
-#'   tsk("oml", data_id = 9)
-#'
-#'   # For parquet files
-#'   if (requireNamespace("duckdb")) {
-#'     odata = OMLData$new(id = 9, parquet = TRUE)
-#'     # using sugar
-#'     odata = odt(id = 9)
-#'
-#'     print(odata)
-#'     print(odata$target_names)
-#'     print(odata$feature_names)
-#'     print(odata$tags)
-#'
-#'     backend = as_data_backend(odata)
-#'     class(backend)
-#'     task = as_task(odata)
-#'     task = tsk("oml", data_id = 9, parquet = TRUE)
-#'     class(task$backend)
-#'   }
-#' }, silent = TRUE)
+#' @template examples
 OMLData = R6Class("OMLData",
   inherit = OMLObject,
   public = list(
@@ -84,28 +47,39 @@ OMLData = R6Class("OMLData",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       parquet = parquet_default(),
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache, test_server, "data")
+      super$initialize(id, test_server, "data")
     },
     #' @description
     #' Prints the object.
     #' For a more detailed printer, convert to a [mlr3::Task] via `as_task()`.
     print = function() {
+      # trigger download first for better printing
+      self$desc
+      self$qualities
+      self$features
       catf("<OMLData:%i:%s> (%ix%i)", self$id, as_short_string(self$name), self$nrow, self$ncol)
       dt = if (length(self$target_names)) as_short_string(self$target_names) else "<none>"
       catf(" * Default target: %s", dt)
       if (self$test_server) {
         catf(" * Using test server")
       }
+    },
+    #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      self$data
+      self$qualities
+      self$features
+      invisible(self)
     },
     #' @description
     #' Returns the value of a single OpenML data set quality.

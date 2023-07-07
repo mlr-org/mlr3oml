@@ -1,8 +1,8 @@
 #define R_NO_REMAP
 #include <R.h>
 #include <Rinternals.h>
-#include <stdlib.h>
 #include <R_ext/Rdynload.h>
+
 
 extern SEXP c_parse_arff_levels(SEXP);
 extern SEXP c_remove_comment(SEXP);

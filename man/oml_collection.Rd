@@ -26,10 +26,8 @@ The datasets are those used in the tasks.
 }
 \section{Caching}{
 
-The OpenML collection itself cannot be not cached, this is because it can be modified in-place
-on the server, e.g. by adding or removing tasks or runs.
-The construction argument \code{cache} therefore only controls wether caching is applied to the
-OpenML objects that are contained in the collection.
+Because collections on OpenML can be modified (ids can be added), it is not possible to cache
+this object.
 }
 
 \section{mlr3 Intergration}{
@@ -43,20 +41,14 @@ OpenML objects that are contained in the collection.
 }
 
 \examples{
-try({
-  library("mlr3")
-  # OpenML Run collection:
-  run_collection = OMLCollection$new(id = 232)
-  # using sugar
-  run_collection = ocl(id = 232)
-  print(run_collection)
-
-  # OpenML task collection:
-  task_collection = OMLCollection$new(id = 258)
-  # using sugar
-  task_collection = ocl(id = 258)
-  print(task_collection)
-  }, silent = TRUE)
+# For technical reasons, examples cannot be included in this R package.
+# Instead, these are some relevant resources:
+#
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+#
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
@@ -90,20 +82,6 @@ An vector containing the run ids of the collection.}
 
 \item{\code{task_ids}}{(\code{integer(n)})\cr
 An vector containing the task ids of the collection.}
-
-\item{\code{runs}}{(\code{data.table()})
-A data.table summarizing the runs included in the collection. Returns NULL for
-Task Collections.}
-
-\item{\code{flows}}{(\code{data.table()})
-A data.table summarizing the flows included in the collection. Returns \code{NULL} for
-Task Collections.}
-
-\item{\code{data}}{(\code{data.table()})
-A data.table summarizing the datasets included in the collection.}
-
-\item{\code{tasks}}{(\code{data.table()})
-A data.table summarizing the tasks included in the collection.}
 }
 \if{html}{\out{</div>}}
 }
@@ -112,6 +90,7 @@ A data.table summarizing the tasks included in the collection.}
 \itemize{
 \item \href{#method-OMLCollection-new}{\code{OMLCollection$new()}}
 \item \href{#method-OMLCollection-print}{\code{OMLCollection$print()}}
+\item \href{#method-OMLCollection-download}{\code{OMLCollection$download()}}
 \item \href{#method-OMLCollection-clone}{\code{OMLCollection$clone()}}
 }
 }
@@ -128,12 +107,7 @@ A data.table summarizing the tasks included in the collection.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(
-  id,
-  cache = cache_default(),
-  parquet = parquet_default(),
-  test_server = test_server_default()
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$new(id, test_server = test_server_default())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -141,18 +115,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.
-The collection itself is not cached, this is because it can be modified in-place on OpenML,
-e.g. by adding or removing tasks or runs. This parameter therefore only controls whether
-the contained elements are cached when loaded, e.g. when accessing the included tasks.}
-
-\item{\code{parquet}}{(\code{logical(1)})\cr
-Whether to use parquet instead of arff.
-If parquet is not available, it will fall back to arff.
-Defaults to value of option \code{"mlr3oml.parquet"} or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.
@@ -168,6 +130,16 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLCollection$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLCollection-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLCollection-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLCollection$download()}\if{html}{\out{</div>}}
 }
 
 }

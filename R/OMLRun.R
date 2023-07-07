@@ -23,23 +23,7 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   orun = OMLRun$new(id = 10587724)
-#'   # sugar
-#'   orun = orn(id = 10587724)
-#'   print(orun)
-#'   print(orun$task) # OMLTask
-#'   print(orun$data) # OMLData
-#'   print(orun$flow) # OMLFlow
-#'   print(orun$prediction)
-#'   as_task(orun)
-#'   as_resampling(orun)
-#'   as_data_backend(orun)
-#'   rr = as_resample_result(orun)
-#'   rr$score(msr("classif.ce"))
-#'   }, silent = TRUE)
+#' @template examples
 OMLRun = R6Class("OMLRun",
   inherit = OMLObject,
   public = list(
@@ -47,21 +31,23 @@ OMLRun = R6Class("OMLRun",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       parquet = parquet_default(),
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache, test_server, "run")
+      super$initialize(id, test_server, "run")
     },
     #' @description
     #' Prints the object.
     print = function() {
+      # trigger download first for better printing
+      self$desc
+      self$task$desc
+      self$flow$desc
       catf("<OMLRun:%i>", self$id)
       catf(" * Task: %s (id: %s)", as_short_string(self$task$data_name), self$task_id)
       ep = self$task$estimation_procedure
@@ -70,6 +56,16 @@ OMLRun = R6Class("OMLRun",
       if (self$test_server) {
         catf(" * Using test server")
       }
+    },
+    #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      self$prediction
+      # task download includes data donwload
+      self$task$download()
+      self$flow$download()
+      invisible(self)
     }
   ),
   active = list(
@@ -80,9 +76,7 @@ OMLRun = R6Class("OMLRun",
     #'  The OpenML Flow.
     flow = function() {
       if (is.null(private$.flow)) {
-        private$.flow = OMLFlow$new(self$flow_id, cache = self$cache_dir,
-          test_server = self$test_server
-        )
+        private$.flow = OMLFlow$new(self$flow_id, test_server = self$test_server)
       }
       private$.flow
     },
@@ -104,8 +98,8 @@ OMLRun = R6Class("OMLRun",
     #' The task solved by this run.
     task = function() {
       if (is.null(private$.task)) {
-        private$.task = OMLTask$new(self$task_id, self$cache_dir,
-          test_server = self$test_server, parquet = self$parquet
+        private$.task = OMLTask$new(self$task_id, test_server = self$test_server,
+          parquet = self$parquet
         )
       }
       private$.task

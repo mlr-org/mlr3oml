@@ -142,6 +142,8 @@ from \url{https://www.openml.org/search?type=data&sort=runs&status=active} using
 
 To find datasets for a specific task type, use \code{\link[=list_oml_tasks]{list_oml_tasks()}} which supports filtering according to the task
 type.
+Another heuristic to search for possible regression tasks is to search for data sets with
+0 number of classes, i.e. by specifying \code{number_classes = 0}.
 }
 \details{
 Filter values are usually provided as single atomic values (typically integer or character).
@@ -153,29 +155,14 @@ Alternatively, you can pass additional filters via \code{...} using the names of
 c.f. the \emph{REST} tab of \url{https://www.openml.org/apis}.
 }
 \examples{
-try({
-  ### query data sets
-  # search for titanic data set
-  data_sets = list_oml_data(data_name = "titanic")
-  print(data_sets)
-
-  # search for a reduced version
-  data_sets = list_oml_data(
-    data_name = "titanic",
-    number_instances = c(2200, 2300),
-    number_features = 4
-  )
-  print(data_sets)
-
-  ### search tasks for this data set
-  tasks = list_oml_tasks(data_id = data_sets$data_id)
-  print(tasks)
-
-
-  # query runs, group by number of runs per task_id
-  runs = list_oml_runs(task_id = tasks$task_id)
-  runs[, .N, by = task_id]
-}, silent = TRUE)
+# For technical reasons, examples cannot be included in this R package.
+# Instead, these are some relevant resources:
+#
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+#
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
 }
 \references{
 Casalicchio G, Bossek J, Lang M, Kirchhoff D, Kerschke P, Hofner B, Seibold H, Vanschoren J, Bischl B (2017).

@@ -80,11 +80,11 @@ test_that("Can open help page for OpenML Data", {
 })
 
 test_that("OMLData arff fallback works when parquet does not exist", {
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$data
   expect_true(inherits(odata$.__enclos_env__$private$.backend, "DataBackendDuckDB"))
 
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$desc
   # non-existing file
   odata$.__enclos_env__$private$.desc$minio_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
@@ -93,14 +93,14 @@ test_that("OMLData arff fallback works when parquet does not exist", {
 })
 
 test_that("as_data_backend falls back to arff when parquet does not exist", {
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$desc
   # non-existing file
   odata$.__enclos_env__$private$.desc$minio_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDataTable")
 
-  odata = OMLData$new(31, parquet = TRUE, cache = FALSE)
+  odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDuckDB")
 })
@@ -110,10 +110,11 @@ test_that("Logicals are converted to factor", {
   backend = as_data_backend(odata)
   # renaming worked
   assert_true("c" %in% backend$colnames)
+  expect_class(backend$data(1, "c")[[1L]], "factor")
   expect_oml_data(odata)
 })
 
-test_that("strings and nominals are distringuished for parquet files", {
+test_that("strings and nominals are distringuished for parquet and arff files", {
   odata_pq = odt(41701, parquet = TRUE)
   dat = odata_pq$data
   expect_class(dat[["instance_id"]], "character")
@@ -152,4 +153,25 @@ test_that("converted data_backend contains all columns", {
   odata = odt(61)
   backend = as_data_backend(odata)
   expect_set_equal(setdiff(backend$colnames, "..row_id"), odata$features$name)
+})
+
+
+test_that("printer works", {
+  local_log_info()
+  with_cache({
+    oml_data = odt(id = 31)
+    observed = capture.output(print(oml_data))[4:5]
+    expected = c(
+      "<OMLData:31:credit-g> (1000x21)",
+      " * Default target: class"
+    )
+    expect_equal(observed, expected)
+  }, cache = FALSE)
+})
+
+test_that("download runs without error", {
+  local_log_info()
+  # simple sanity check
+  out = capture.output(with_cache(odt(31)$download(), cache = FALSE))
+  expect_true(length(out) == 4L)
 })

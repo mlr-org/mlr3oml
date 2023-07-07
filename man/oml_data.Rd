@@ -46,47 +46,18 @@ automatically falls back to the implementation in (\code{\link[RWeka:read.arff]{
 
 \section{Parquet Files}{
 
-For the handling of parquet files, we rely on \CRANpkg{duckdb} and \verb{CRANpkg\{DBI\}}.
+For the handling of parquet files, we rely on \CRANpkg{duckdb} and \CRANpkg{DBI}.
 }
 
 \examples{
-try({
-  library("mlr3")
-  # OpenML Data object
-  odata = OMLData$new(id = 9)
-  # using sugar
-  odata = odt(id = 9)
-  print(odata)
-  print(odata$target_names)
-  print(odata$feature_names)
-  print(odata$tags)
-
-  # mlr3 conversion:
-  task = as_task(odata)
-  backend = as_data_backend(odata)
-  class(backend)
-
-  # get a task via tsk():
-  tsk("oml", data_id = 9)
-
-  # For parquet files
-  if (requireNamespace("duckdb")) {
-    odata = OMLData$new(id = 9, parquet = TRUE)
-    # using sugar
-    odata = odt(id = 9)
-
-    print(odata)
-    print(odata$target_names)
-    print(odata$feature_names)
-    print(odata$tags)
-
-    backend = as_data_backend(odata)
-    class(backend)
-    task = as_task(odata)
-    task = tsk("oml", data_id = 9, parquet = TRUE)
-    class(task$backend)
-  }
-}, silent = TRUE)
+# For technical reasons, examples cannot be included in this R package.
+# Instead, these are some relevant resources:
+#
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+#
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
@@ -156,6 +127,7 @@ Note that this also normalizes the names of the parquet file.}
 \itemize{
 \item \href{#method-OMLData-new}{\code{OMLData$new()}}
 \item \href{#method-OMLData-print}{\code{OMLData$print()}}
+\item \href{#method-OMLData-download}{\code{OMLData$download()}}
 \item \href{#method-OMLData-quality}{\code{OMLData$quality()}}
 \item \href{#method-OMLData-clone}{\code{OMLData$clone()}}
 }
@@ -175,7 +147,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$new(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )}\if{html}{\out{</div>}}
@@ -186,10 +157,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
@@ -211,6 +178,16 @@ Prints the object.
 For a more detailed printer, convert to a \link[mlr3:Task]{mlr3::Task} via \code{as_task()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLData$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLData-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLData-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLData$download()}\if{html}{\out{</div>}}
 }
 
 }

@@ -6,6 +6,13 @@
 #' @importFrom methods hasArg
 #' @importFrom stats rnorm
 #' @importFrom utils installed.packages tail
+#' @importFrom bit64 integer64
+#'
+#'
+#' @section Documentation:
+#' Start by reading the Large-Scale Benchmarking
+#' [chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
+#' from the mlr3book.
 #'
 #' @section mlr3 Integration:
 #' This package adds the [mlr3::Task] `"oml"` and the [mlr3::Resampling] `"oml"` to

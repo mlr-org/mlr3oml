@@ -56,12 +56,7 @@ Whether the object is using the test server.}
 \subsection{Method \code{new()}}{
 Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OMLObject$new(
-  id,
-  cache = cache_default(),
-  test_server = test_server_default(),
-  type
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OMLObject$new(id, test_server = test_server_default(), type)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -69,10 +64,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{test_server}}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.

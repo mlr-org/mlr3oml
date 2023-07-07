@@ -70,12 +70,6 @@ test_that("parquet works", {
 })
 
 
-test_that("OMLTask components inherit correct cache directory", {
-  dir = tempfile()
-  orun = OMLTask$new(50, cache = dir)
-  expect_true(orun$data$cache_dir == dir)
-})
-
 test_that("Error when task does not provide task_splits", {
   otask = OMLTask$new(147517)
   expect_error(as_resampling(otask), "OpenML task with id")
@@ -89,4 +83,32 @@ test_that("ignored features are respected when creating tasks", {
   otask = otsk(14954)
   task = as_task(otask)
   expect_set_equal(task$feature_names, otask$feature_names)
+})
+
+
+test_that("printer works", {
+  local_log_info()
+
+  oml_task = with_cache({
+    oml_task = otsk(31)
+    expected = c(
+      "<OMLTask:31>",
+      " * Type: Supervised Classification",
+      " * Data: credit-g (id: 31; dim: 1000x21)",
+      " * Target: class",
+      " * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)"
+    )
+    observed = capture.output(print(oml_task))[5:9]
+    expect_equal(observed, expected)
+  }, cache = FALSE)
+
+})
+
+
+test_that("download runs without error", {
+  local_log_info()
+  # simple sanity check
+  out = capture.output(with_cache(otsk(31)$download(), cache = FALSE))
+  # data + task_desc + task_splits
+  expect_true(length(out) == 6L)
 })

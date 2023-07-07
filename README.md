@@ -1,342 +1,121 @@
 
 # mlr3oml
 
+Package website: [release](https://mlr3oml.mlr-org.com/) |
+[dev](https://mlr3oml.mlr-org.com/dev/)
+
+OpenML integration to the [mlr3 ecosystem](https://mlr-org.com/).
+
 [![r-cmd-check](https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml/badge.svg)](https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml)
 [![CRAN Status
 Badge](https://www.r-pkg.org/badges/version-ago/mlr3oml)](https://cran.r-project.org/package=mlr3oml)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
 [![Mattermost](https://img.shields.io/badge/chat-mattermost-orange.svg)](https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/)
 
-**mlr3oml** enables downloading [OpenML](https://www.openml.org)
-datasets, tasks, flows, runs, and collections and allows to convert them
-to the corresponding [mlr3](https://mlr3.mlr-org.com/) object.
-Furthermore, you can also obtain the data and the resampling for a given
-OpenML task. Caching can be enabled by setting the option
-`"mlr3oml.cache"`. Uploading to OpenML is currently not supported, use
+## What is `mlr3oml`?
+
+[OpenML](https://www.openml.org) is an open-source platform that
+facilitates the sharing and dissemination of machine learning research
+data. All entities on the platform have unique identifiers and
+standardized (meta)data that can be accessed via an open-access REST API
+or the web interface. `mlr3oml` allows to work with the REST API through
+R and integrates [OpenML](https://www.openml.org) with the `mlr3`
+ecosystem. Note that uploading to OpenML is currently not supported, use
 the [OpenML package](https://cran.r-project.org/package=OpenML) package
 for this.
 
-## Short Demo
+As a brief demo, we show how to access an OpenML task, convert it to an
+`mlr3::Task` and associated `mlr3::Resampling`, and conduct a simple
+resample experiment.
 
 ``` r
-library("mlr3")
-library("mlr3oml")
+library(mlr3oml)
+library(mlr3)
 
-# be less verbose
-lgr::get_logger("mlr3oml")$set_threshold("warn")
-
-# retrieve data set as task from OML
-tsk("oml", data_id = 31)
+# Download and print the OpenML task with ID 145953
+oml_task = otsk(145953)
+oml_task
 ```
 
-    ## <TaskClassif:credit-g> (1000 x 21)
-    ## * Target: class
-    ## * Properties: twoclass
-    ## * Features (20):
-    ##   - fct (13): checking_status, credit_history, employment,
-    ##     foreign_worker, housing, job, other_parties, other_payment_plans,
-    ##     own_telephone, personal_status, property_magnitude, purpose,
-    ##     savings_status
-    ##   - int (7): age, credit_amount, duration, existing_credits,
-    ##     installment_commitment, num_dependents, residence_since
-
-``` r
-# retrieve a regular task from OML
-tsk("oml", task_id = 59)
-```
-
-    ## <TaskClassif:iris> (150 x 5)
-    ## * Target: class
-    ## * Properties: multiclass
-    ## * Features (4):
-    ##   - dbl (4): petallength, petalwidth, sepallength, sepalwidth
-
-``` r
-# retrieve resampling from OML
-rsmp("oml", task_id = 59)
-```
-
-    ## <ResamplingCustom>: Custom Splits
-    ## * Iterations: 10
-    ## * Instantiated: TRUE
-    ## * Parameters: list()
-
-``` r
-# R6 class for data sets
-odata = OMLData$new(61) # or
-odata = odt(61)
-
-odata$name
-```
-
-    ## [1] "iris"
-
-``` r
-odata$nrow
-```
-
-    ## [1] 150
-
-``` r
-odata$ncol
-```
-
-    ## [1] 5
-
-``` r
-head(odata$data)
-```
-
-    ##    sepallength sepalwidth petallength petalwidth       class
-    ## 1:         5.1        3.5         1.4        0.2 Iris-setosa
-    ## 2:         4.9        3.0         1.4        0.2 Iris-setosa
-    ## 3:         4.7        3.2         1.3        0.2 Iris-setosa
-    ## 4:         4.6        3.1         1.5        0.2 Iris-setosa
-    ## 5:         5.0        3.6         1.4        0.2 Iris-setosa
-    ## 6:         5.4        3.9         1.7        0.4 Iris-setosa
-
-``` r
-backend = as_data_backend(odata)
-backend
-```
-
-    ## <DataBackendDataTable> (150x6)
-    ##  sepallength sepalwidth petallength petalwidth       class ..row_id
-    ##          5.1        3.5         1.4        0.2 Iris-setosa        1
-    ##          4.9        3.0         1.4        0.2 Iris-setosa        2
-    ##          4.7        3.2         1.3        0.2 Iris-setosa        3
-    ##          4.6        3.1         1.5        0.2 Iris-setosa        4
-    ##          5.0        3.6         1.4        0.2 Iris-setosa        5
-    ##          5.4        3.9         1.7        0.4 Iris-setosa        6
-    ## [...] (144 rows omitted)
-
-``` r
-# list oml data sets with 5 features and 50 - 200 instances
-tab = list_oml_data(number_features = 5, number_instances = c(50, 200))
-head(tab[, .(data_id, name)])
-```
-
-    ##    data_id               name
-    ## 1:      61               iris
-    ## 2:     199           fruitfly
-    ## 3:     214           baskball
-    ## 4:     329         hayes-roth
-    ## 5:     346               aids
-    ## 6:     668 witmer_census_1980
-
-``` r
-# R6 class for tasks
-otask = OMLTask$new(31) # or
-otask = otsk(31)
-
-task = as_task(otask)
-task
-```
-
-    ## <TaskClassif:credit-g> (1000 x 21)
-    ## * Target: class
-    ## * Properties: twoclass
-    ## * Features (20):
-    ##   - fct (13): checking_status, credit_history, employment,
-    ##     foreign_worker, housing, job, other_parties, other_payment_plans,
-    ##     own_telephone, personal_status, property_magnitude, purpose,
-    ##     savings_status
-    ##   - int (7): age, credit_amount, duration, existing_credits,
-    ##     installment_commitment, num_dependents, residence_since
-
-``` r
-resampling = as_resampling(otask)
-resampling
-```
-
-    ## <ResamplingCustom>: Custom Splits
-    ## * Iterations: 10
-    ## * Instantiated: TRUE
-    ## * Parameters: list()
-
-``` r
-otask$data
-```
-
-    ## <OMLData:31:credit-g> (1000x21)
-    ##  * Default target: class
-
-``` r
-otask$name
-```
-
-    ## [1] "Task 31: credit-g (Supervised Classification)"
-
-``` r
-otask$nrow
-```
-
-    ## [1] 1000
-
-``` r
-otask$ncol
-```
-
-    ## [1] 21
-
-``` r
-otask$task
-```
-
-    ## NULL
-
-``` r
-otask$resampling
-```
-
-    ## NULL
-
-``` r
-# list first 10 oml tasks
-tab = list_oml_tasks(limit = 10)
-tab[, .(task_id, data_id, name)]
-```
-
-    ##     task_id data_id            name
-    ##  1:       2       2          anneal
-    ##  2:       3       3        kr-vs-kp
-    ##  3:       4       4           labor
-    ##  4:       5       5      arrhythmia
-    ##  5:       6       6          letter
-    ##  6:       7       7       audiology
-    ##  7:       8       8 liver-disorders
-    ##  8:       9       9           autos
-    ##  9:      10      10           lymph
-    ## 10:      11      11   balance-scale
-
-``` r
-# R6 class for flows
-oflow = OMLFlow$new(100) # or
-oflow = oflw(100)
-
-oflow$dependencies
-```
-
-    ## [1] "Weka_3.7.5"
-
-``` r
-oflow$parameter
-```
-
-    ##     name data_type default_value
-    ##  1:    A      flag              
-    ##  2:    B      flag              
-    ##  3:    C    option          0.25
-    ##  4:    J      flag              
-    ##  5:    L      flag              
-    ##  6:    M    option             2
-    ##  7:    N    option              
-    ##  8:    O      flag              
-    ##  9:    Q    option              
-    ## 10:    R      flag              
-    ## 11:    S      flag              
-    ## 12:    U      flag
-
-``` r
-# non-executable pseudo learner
-learner = as_learner(oflow, "regr")
-learner
-```
-
-    ## <LearnerRegrOML100:oml.100>
-    ## * Model: -
-    ## * Parameters: list()
-    ## * Packages: mlr3
-    ## * Predict Types:  [response]
-    ## * Feature Types: -
-    ## * Properties: -
-
-``` r
-# R6Class for run
-
-orun = OMLRun$new(538858) # o
-orun = orn(538858)
-
-orun$data
-```
-
-    ## <OMLData:952:prnn_fglass> (214x10)
-    ##  * Default target: type
-
-``` r
-orun$task
-```
-
-    ## <OMLTask:3815>
+    ## <OMLTask:145953>
     ##  * Type: Supervised Classification
-    ##  * Data: prnn_fglass (id: 952; dim: 214x10)
-    ##  * Target: type
+    ##  * Data: kr-vs-kp (id: 3; dim: 3196x37)
+    ##  * Target: class
     ##  * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)
 
 ``` r
-orun$flow
+# Access the OpenML data object on which the task is built
+oml_task$data
 ```
 
-    ## <OMLFlow:3364>
-    ##  * Name: classif.boosting
-    ##  * Dependencies: mlr_2.8, adabag_4.1, rpart_4.1.10
+    ## <OMLData:3:kr-vs-kp> (3196x37)
+    ##  * Default target: class
 
 ``` r
-head(orun$prediction)
+# Convert the OpenML task to an mlr3 task and resampling
+task = as_task(oml_task)
+resampling = as_resampling(oml_task)
+
+# Conduct a simple resample experiment
+rr = resample(task, lrn("classif.rpart"), resampling)
+rr$aggregate()
 ```
 
-    ##    repeat. fold row_id             prediction              truth
-    ## 1:       0    0     33     window_float_glass window_float_glass
-    ## 2:       0    0     52     window_float_glass window_float_glass
-    ## 3:       0    0     67     window_float_glass window_float_glass
-    ## 4:       0    0     49     window_float_glass window_float_glass
-    ## 5:       0    0     41     window_float_glass window_float_glass
-    ## 6:       0    0      5 window_non-float_glass window_float_glass
-    ##    confidence.containers confidence.tableware confidence.vehicle_glass
-    ## 1:                     0                    0                        0
-    ## 2:                     0                    0                        0
-    ## 3:                     0                    0                        0
-    ## 4:                     0                    0                        0
-    ## 5:                     0                    0                        0
-    ## 6:                     0                    0                        0
-    ##    confidence.vehicle_headlamp_glass confidence.window_float_glass
-    ## 1:                                 0                             1
-    ## 2:                                 0                             1
-    ## 3:                                 0                             1
-    ## 4:                                 0                             1
-    ## 5:                                 0                             1
-    ## 6:                                 0                             0
-    ##    confidence.window_non.float_glass
-    ## 1:                                 0
-    ## 2:                                 0
-    ## 3:                                 0
-    ## 4:                                 0
-    ## 5:                                 0
-    ## 6:                                 1
+    ## classif.ce 
+    ##  0.0319181
+
+Besides working with objects with known IDs, data of interest can also
+be queried using listing functions. Below, we search for datasets with
+10 - 20 features, 45000 to 50000 observations and 2 classes.
 
 ``` r
-rr = as_resample_result(orun)
-rr
+odatasets = list_oml_data(
+  number_features = c(10, 20),
+  number_instances = c(45000, 50000),
+  number_classes = 2
+)
+
+odatasets[, c("data_id", "name")]
 ```
 
-    ## <ResampleResult> of 10 iterations
-    ## * Task: prnn_fglass
-    ## * Learner: oml.3364
-    ## * Warnings: 0 in 0 iterations
-    ## * Errors: 0 in 0 iterations
+    ##    data_id                        name
+    ## 1:     179                       adult
+    ## 2:    1461              bank-marketing
+    ## 3:    1590                       adult
+    ## 4:   43898                       adult
+    ## 5:   44234 Bank_marketing_data_set_UCI
+    ## 6:   45051                  adult-test
+    ## 7:   45068                       adult
 
-``` r
-# R6 class for collection
+## Feature Overview
 
-ocol = OMLCollection$new(232) # or
-ocol = ocl(232)
+  - Datasets, tasks, flows, runs, and collections can be downloaded from
+    [OpenML](https://www.openml.org) and are represented as `R6`
+    classes.
+  - OpenML objects can be easily converted to the corresponding `mlr3`
+    counterpart.
+  - Filtering of OpenML objects can be achieved using listing functions.
+  - Downloaded objects can be cached by setting the `mlr3oml.cache`
+    option.
+  - Both the `arff` and `parquet` filetype for datasets are supported.
 
-ocol$tasks
-```
+## Documentation
 
-    ##    id          task     data                 task_type target  nrow ncol
-    ## 1:  3 <OMLTask[25]> kr-vs-kp Supervised Classification  class  3196   37
-    ## 2:  6 <OMLTask[25]>   letter Supervised Classification  class 20000   17
-    ##    missing numeric symbolic binary     task_splits
-    ## 1:       0       0       37     35 crossvalidation
-    ## 2:       0      16        1      0 crossvalidation
+  - Start by reading the [Large-Scale Benchmarking
+    chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
+    from the `mlr3` book.
+  - The [package website](https://mlr3oml.mlr-org.com/) contains a
+    getting started guide.
+  - The OpenML [API documentation](https://www.openml.org/apis) is also
+    a good resource.
+
+## Bugs, Questions, Feedback
+
+*mlr3oml* is a free and open source software project that encourages
+participation and feedback. If you have any issues, questions,
+suggestions or feedback, please do not hesitate to open an “issue” about
+it on the GitHub page\!
+
+In case of problems / bugs, it is often helpful if you provide a
+“minimum working example” that showcases the behaviour (but don’t
+worry about this if the bug is obvious).

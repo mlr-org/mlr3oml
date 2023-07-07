@@ -9,6 +9,8 @@
 #'
 #' To find datasets for a specific task type, use [`list_oml_tasks()`] which supports filtering according to the task
 #' type.
+#' Another heuristic to search for possible regression tasks is to search for data sets with
+#' 0 number of classes, i.e. by specifying `number_classes = 0`.
 #'
 #' @details
 #' Filter values are usually provided as single atomic values (typically integer or character).
@@ -46,30 +48,7 @@
 #' `r format_bib("openml_r", "vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   ### query data sets
-#'   # search for titanic data set
-#'   data_sets = list_oml_data(data_name = "titanic")
-#'   print(data_sets)
-#'
-#'   # search for a reduced version
-#'   data_sets = list_oml_data(
-#'     data_name = "titanic",
-#'     number_instances = c(2200, 2300),
-#'     number_features = 4
-#'   )
-#'   print(data_sets)
-#'
-#'   ### search tasks for this data set
-#'   tasks = list_oml_tasks(data_id = data_sets$data_id)
-#'   print(tasks)
-#'
-#'
-#'   # query runs, group by number of runs per task_id
-#'   runs = list_oml_runs(task_id = tasks$task_id)
-#'   runs[, .N, by = task_id]
-#' }, silent = TRUE)
+#' @template examples
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {

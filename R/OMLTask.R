@@ -16,23 +16,7 @@
 #' `r format_bib("vanschoren2014")`
 #'
 #' @export
-#' @examples
-#' try({
-#'   library("mlr3")
-#'   # Get a task from OpenML:
-#'   otask = OMLTask$new(id = 31)
-#'   # using sugar
-#'   otask = otsk(id = 31)
-#'   otask$data
-#'   otask$target_names
-#'   otask$feature_names
-#'
-#'   # convert to mlr3 Task:
-#'   task = as_task(otask)
-#'
-#'   # get a task via tsk():
-#'   tsk("oml", task_id = 31L)
-#'   }, silent = TRUE)
+#' @template examples
 OMLTask = R6Class("OMLTask",
   inherit = OMLObject,
   public = list(
@@ -40,22 +24,24 @@ OMLTask = R6Class("OMLTask",
     #' Creates a new instance of this [R6][R6::R6Class] class.
     #'
     #' @template param_id
-    #' @template param_cache
     #' @template param_parquet
     #' @template param_test_server
     initialize = function(
       id,
-      cache = cache_default(),
       parquet = parquet_default(),
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
-      super$initialize(id, cache, test_server, "task")
+      super$initialize(id, test_server, "task")
     },
     #' @description
     #' Prints the object.
     #' For a more detailed printer, convert to a [mlr3::Task] via `$task`.
     print = function() {
+      # trigger download first for better printing
+      self$desc
+      self$data$qualities
+      self$data$features
       catf("<OMLTask:%i>", self$id)
       catf(" * Type: %s", self$desc$task_type)
       catf(" * Data: %s (id: %s; dim: %ix%i)", self$data_name, self$data_id, self$nrow, self$ncol)
@@ -66,6 +52,14 @@ OMLTask = R6Class("OMLTask",
       if (self$test_server) {
         catf(" * Using test server")
       }
+    },
+    #' @description
+    #' Downloads the whole object for offline usage.
+    download = function() {
+      self$desc
+      self$task_splits
+      self$data$download()
+      invisible(self)
     }
   ),
   active = list(
@@ -122,8 +116,8 @@ OMLTask = R6Class("OMLTask",
     #' Access to the underlying OpenML data set via a [OMLData] object.
     data = function() {
       if (is.null(private$.data)) {
-        private$.data = OMLData$new(self$data_id, cache = self$cache_dir,
-          parquet = self$parquet, test_server = self$test_server
+        private$.data = OMLData$new(self$data_id, parquet = self$parquet,
+          test_server = self$test_server
         )
       }
 

@@ -33,7 +33,6 @@ test_that("S3 converter work for data", {
 test_that("S3 converter work for collection", {
   id = 232
   collection = OMLCollection$new(id)
-  collection$runs
   expect_r6(mlr3::as_benchmark_result(collection), "BenchmarkResult")
   expect_true(all(map_lgl(mlr3::as_tasks(collection), function(x) test_r6(x, "Task"))))
   expect_true(all(map_lgl(mlr3::as_resamplings(collection), function(x) test_r6(x, "Resampling"))))

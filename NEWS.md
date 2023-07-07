@@ -1,4 +1,18 @@
-# mlr3oml 0.7.2-9000
+# mlr3oml 0.8.0
+
+* Listing functions don't return the tables invisibly anymore.
+* Address CRAN NOTE regarding unused bit64 import.
+* Improved the printer for all OpenML objects.
+* Removed `benchmark_grid_oml()`, which was already deprecated in release 0.7.2.
+* Removed the fields `runs`, `flows`, `data`, `tasks` from the `OMLCollection` class.
+  Consequently, the `cache` option can no longer be set for `OMLCollection` objects,
+  see the class documentation for more information.
+* Removed the examples, as they caused problems with CRAN checks when OpenML was unavailable.
+* Caching can no longer be specified at the instance level but only globally through
+  the option `mlr3oml.cache`
+* Added `$download()` method for all OML objects to fully download an object for offline usage.
+* Incremented the cache version for parquet data due to a change in OpenML.
+* Added an online tutorial for the package.
 
 # mlr3oml 0.7.2
 

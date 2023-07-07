@@ -30,22 +30,14 @@ This object can also be constructed using the sugar function \code{\link[=oml_ru
 }
 
 \examples{
-try({
-  library("mlr3")
-  orun = OMLRun$new(id = 10587724)
-  # sugar
-  orun = orn(id = 10587724)
-  print(orun)
-  print(orun$task) # OMLTask
-  print(orun$data) # OMLData
-  print(orun$flow) # OMLFlow
-  print(orun$prediction)
-  as_task(orun)
-  as_resampling(orun)
-  as_data_backend(orun)
-  rr = as_resample_result(orun)
-  rr$score(msr("classif.ce"))
-  }, silent = TRUE)
+# For technical reasons, examples cannot be included in this R package.
+# Instead, these are some relevant resources:
+#
+# Large-Scale Benchmarking chapter in the mlr3book:
+# https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html
+#
+# Package Article:
+# https://mlr3oml.mlr-org.com/articles/tutorial.html
 }
 \references{
 Vanschoren J, van Rijn JN, Bischl B, Torgo L (2014).
@@ -104,6 +96,7 @@ The evaluations calculated by the OpenML server.}
 \itemize{
 \item \href{#method-OMLRun-new}{\code{OMLRun$new()}}
 \item \href{#method-OMLRun-print}{\code{OMLRun$print()}}
+\item \href{#method-OMLRun-download}{\code{OMLRun$download()}}
 \item \href{#method-OMLRun-clone}{\code{OMLRun$clone()}}
 }
 }
@@ -122,7 +115,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLRun$new(
   id,
-  cache = cache_default(),
   parquet = parquet_default(),
   test_server = test_server_default()
 )}\if{html}{\out{</div>}}
@@ -133,10 +125,6 @@ Creates a new instance of this \link[R6:R6Class]{R6} class.
 \describe{
 \item{\code{id}}{(\code{integer(1)})\cr
 OpenML id for the object.}
-
-\item{\code{cache}}{(\code{logical(1)} | \code{character(1)})\cr
-See field \code{cache} for an explanation of possible values.
-Defaults to value of option \code{"mlr3oml.cache"}, or \code{FALSE} if not set.}
 
 \item{\code{parquet}}{(\code{logical(1)})\cr
 Whether to use parquet instead of arff.
@@ -157,6 +145,16 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 Prints the object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OMLRun$print()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OMLRun-download"></a>}}
+\if{latex}{\out{\hypertarget{method-OMLRun-download}{}}}
+\subsection{Method \code{download()}}{
+Downloads the whole object for offline usage.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OMLRun$download()}\if{html}{\out{</div>}}
 }
 
 }

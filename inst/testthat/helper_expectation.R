@@ -144,30 +144,9 @@ expect_oml_collection = function(collection) {
   expect_choice(collection$main_entity_type, c("task", "run"))
   expect_integer(collection$task_ids)
   expect_integer(collection$data_ids)
-  expect_data_table(collection$tasks, key = "id", nrows = length(collection$task_ids), ncols = 12L)
-  expect_named(collection$tasks,
-    c("id", "task", "data", "task_type", "target", "nrow", "ncol", "missing", "numeric",
-      "symbolic", "binary", "task_splits"
-    )
-  )
-  expect_data_table(collection$data, key = "id")
-  expect_named(collection$data,
-    c("id", "data", "name", "nrow", "ncol", "missing", "numeric", "symbolic", "binary")
-  )
   if (collection$main_entity_type == "run") {
     expect_integer(collection$flow_ids)
-    expect_data_table(collection$flows, key = "id", nrows = length(collection$flow_ids), ncols = 3L)
-    expect_named(collection$flows,
-      c("id", "flow", "name")
-    )
     expect_integer(collection$run_ids)
-    expect_data_table(collection$runs, key = "id", nrows = length(collection$run_ids), ncols = 6L)
-    expect_named(collection$runs, c("id", "run", "task_type", "data", "flow", "task_splits"))
-  } else {
-    testthat::expect_message(collection$runs, "Main entity type is task, returning NULL.")
-    expect_true(is.null(collection$runs))
-    testthat::expect_message(collection$flows, "Main entity type is task, returning NULL.")
-    expect_true(is.null(collection$flows))
   }
   test_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
 }
