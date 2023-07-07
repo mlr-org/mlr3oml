@@ -66,26 +66,42 @@ rr$aggregate()
 
 Besides working with objects with known IDs, data of interest can also
 be queried using listing functions. Below, we search for datasets with
-10 - 20 features, 45000 to 50000 observations and 2 classes.
+10 - 20 features, 100 to 10000 observations and 2 classes.
 
 ``` r
 odatasets = list_oml_data(
   number_features = c(10, 20),
-  number_instances = c(45000, 50000),
+  number_instances = c(100, 10000),
   number_classes = 2
 )
 
 odatasets[, c("data_id", "name")]
 ```
 
-    ##    data_id                        name
-    ## 1:     179                       adult
-    ## 2:    1461              bank-marketing
-    ## 3:    1590                       adult
-    ## 4:   43898                       adult
-    ## 5:   44234 Bank_marketing_data_set_UCI
-    ## 6:   45051                  adult-test
-    ## 7:   45068                       adult
+    ##      data_id
+    ##   1:      13
+    ##   2:      15
+    ##   3:      29
+    ##   4:      49
+    ##   5:      50
+    ##  ---        
+    ## 238:   44767
+    ## 239:   45039
+    ## 240:   45063
+    ## 241:   45562
+    ## 242:   45568
+    ##                                                                              name
+    ##   1:                                                                breast-cancer
+    ##   2:                                                                     breast-w
+    ##   3:                                                              credit-approval
+    ##   4:                                                                      heart-c
+    ##   5:                                                                  tic-tac-toe
+    ##  ---                                                                             
+    ## 238: Click_prediction_small_seed_4_nrows_2000_nclasses_10_ncols_100_stratify_True
+    ## 239:                                                             compas-two-years
+    ## 240:                                                              credit-approval
+    ## 241:                                                                seismic-bumps
+    ## 242:                                                         telco-customer-churn
 
 ## Feature Overview
 
@@ -104,7 +120,7 @@ odatasets[, c("data_id", "name")]
   - Start by reading the [Large-Scale Benchmarking
     chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
     from the `mlr3` book.
-  - The [package website](https://mlr3oml.mlr-org.com/) contains a
+  - The [package website](https://mlr3oml.mlr-org.com/dev/) contains a
     getting started guide.
   - The OpenML [API documentation](https://www.openml.org/apis) is also
     a good resource.

@@ -52,12 +52,12 @@ rr = resample(task, lrn("classif.rpart"), resampling)
 rr$aggregate()
 ```
 
-Besides working with objects with known IDs, data of interest can also be queried using listing functions. Below, we search for datasets with 10 - 20 features, 45000 to 50000 observations and 2 classes.
+Besides working with objects with known IDs, data of interest can also be queried using listing functions. Below, we search for datasets with 10 - 20 features, 100 to 10000 observations and 2 classes.
 
 ```{r}
 odatasets = list_oml_data(
   number_features = c(10, 20),
-  number_instances = c(45000, 50000),
+  number_instances = c(100, 10000),
   number_classes = 2
 )
 
@@ -74,7 +74,7 @@ odatasets[, c("data_id", "name")]
 ## Documentation
 
 * Start by reading the [Large-Scale Benchmarking chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html) from the `mlr3` book.
-* The [package website](https://mlr3oml.mlr-org.com/) contains a getting started guide.
+* The [package website](https://mlr3oml.mlr-org.com/dev/) contains a getting started guide.
 * The OpenML [API documentation](https://www.openml.org/apis) is also a good resource.
 
 
