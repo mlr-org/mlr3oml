@@ -6,10 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="Provides an interface to OpenML.org to list and download
-    machine learning data, tasks and experiments. The OpenML objects can be
-    automatically converted to mlr3 objects.
-    For a more sophisticated interface which also allows uploading to OpenML,
-    see the OpenML package.">
+    machine learning data, tasks and experiments. The OpenML objects can
+    be automatically converted to mlr3 objects.  For a more
+    sophisticated interface which also allows uploading to OpenML, see
+    the OpenML package.">
 <title>Connector Between mlr3 and OpenML • mlr3oml</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -18,18 +18,18 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="deps/Roboto-0.4.4/font.css" rel="stylesheet">
-<link href="deps/JetBrains_Mono-0.4.4/font.css" rel="stylesheet">
-<link href="deps/Roboto_Slab-0.4.4/font.css" rel="stylesheet">
+<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="deps/Roboto-0.4.6/font.css" rel="stylesheet">
+<link href="deps/JetBrains_Mono-0.4.6/font.css" rel="stylesheet">
+<link href="deps/Roboto_Slab-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connector Between mlr3 and OpenML">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Connector Between mlr3 and OpenML">
 <meta property="og:description" content="Provides an interface to OpenML.org to list and download
-    machine learning data, tasks and experiments. The OpenML objects can be
-    automatically converted to mlr3 objects.
-    For a more sophisticated interface which also allows uploading to OpenML,
-    see the OpenML package.">
+    machine learning data, tasks and experiments. The OpenML objects can
+    be automatically converted to mlr3 objects.  For a more
+    sophisticated interface which also allows uploading to OpenML, see
+    the OpenML package.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -43,7 +43,7 @@
     
     <a class="navbar-brand me-2" href="index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,253 +109,84 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="mlr3oml">mlr3oml<a class="anchor" aria-label="anchor" href="#mlr3oml"></a>
 </h1></div>
-
-<p><strong>mlr3oml</strong> enables downloading <a href="https://www.openml.org" class="external-link">OpenML</a> datasets, tasks, flows, runs, and collections and allows to convert them to the corresponding <a href="https://mlr3.mlr-org.com/" class="external-link">mlr3</a> object. Furthermore, you can also obtain the data and the resampling for a given OpenML task. Caching can be enabled by setting the option <code>"mlr3oml.cache"</code>. Uploading to OpenML is currently not supported, use the <a href="https://cran.r-project.org/package=OpenML" class="external-link">OpenML package</a> package for this.</p>
+<p>Package website: <a href="https://mlr3oml.mlr-org.com/">release</a> | <a href="https://mlr3oml.mlr-org.com/dev/">dev</a></p>
+<p>OpenML integration to the <a href="https://mlr-org.com/" class="external-link">mlr3 ecosystem</a>.</p>
+<p><a href="https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml" class="external-link"><img src="https://github.com/mlr-org/mlr3oml/actions/workflows/r-cmd-check.yml/badge.svg" alt="r-cmd-check"></a> <a href="https://cran.r-project.org/package=mlr3oml" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/mlr3oml" alt="CRAN Status Badge"></a> <a href="https://stackoverflow.com/questions/tagged/mlr3" class="external-link"><img src="https://img.shields.io/badge/stackoverflow-mlr3-orange.svg" alt="StackOverflow"></a> <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/" class="external-link"><img src="https://img.shields.io/badge/chat-mattermost-orange.svg" alt="Mattermost"></a></p>
 <div class="section level2">
-<h2 id="short-demo">Short Demo<a class="anchor" aria-label="anchor" href="#short-demo"></a>
+<h2 id="what-is-mlr3oml">What is <code>mlr3oml</code>?<a class="anchor" aria-label="anchor" href="#what-is-mlr3oml"></a>
 </h2>
+<p><a href="https://www.openml.org" class="external-link">OpenML</a> is an open-source platform that facilitates the sharing and dissemination of machine learning research data. All entities on the platform have unique identifiers and standardized (meta)data that can be accessed via an open-access REST API or the web interface. <code>mlr3oml</code> allows to work with the REST API through R and integrates <a href="https://www.openml.org" class="external-link">OpenML</a> with the <code>mlr3</code> ecosystem. Note that uploading to OpenML is currently not supported, use the <a href="https://cran.r-project.org/package=OpenML" class="external-link">OpenML package</a> package for this.</p>
+<p>As a brief demo, we show how to access an OpenML task, convert it to an <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a></code> and associated <code><a href="https://mlr3.mlr-org.com/reference/Resampling.html" class="external-link">mlr3::Resampling</a></code>, and conduct a simple resample experiment.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3.mlr-org.com" class="external-link">"mlr3"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mlr3oml.mlr-org.com">"mlr3oml"</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3oml.mlr-org.com">mlr3oml</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3.mlr-org.com" class="external-link">mlr3</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># be less verbose</span></span>
-<span><span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"mlr3oml"</span><span class="op">)</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># retrieve data set as task from OML</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, data_id <span class="op">=</span> <span class="fl">31</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Target: class</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Properties: twoclass</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Features (20):</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   - fct (13): checking_status, credit_history, employment,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     savings_status</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
+<span><span class="co"># Download and print the OpenML task with ID 145953</span></span>
+<span><span class="va">oml_task</span> <span class="op">=</span> <span class="fu"><a href="reference/otsk.html">otsk</a></span><span class="op">(</span><span class="fl">145953</span><span class="op">)</span></span>
+<span><span class="va">oml_task</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLTask:145953&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Type: Supervised Classification</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Data: kr-vs-kp (id: 3; dim: 3196x37)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Target: class</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># retrieve a regular task from OML</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;TaskClassif:iris&gt; (150 x 5)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Target: class</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Properties: multiclass</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Features (4):</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   - dbl (4): petallength, petalwidth, sepallength, sepalwidth</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Access the OpenML data object on which the task is built</span></span>
+<span><span class="va">oml_task</span><span class="op">$</span><span class="va">data</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLData:3:kr-vs-kp&gt; (3196x37)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Default target: class</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># retrieve resampling from OML</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">59</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;ResamplingCustom&gt;: Custom Splits</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Iterations: 10</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Instantiated: TRUE</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Parameters: list()</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Convert the OpenML task to an mlr3 task and resampling</span></span>
+<span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">oml_task</span><span class="op">)</span></span>
+<span><span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resampling</a></span><span class="op">(</span><span class="va">oml_task</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Conduct a simple resample experiment</span></span>
+<span><span class="va">rr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/resample.html" class="external-link">resample</a></span><span class="op">(</span><span class="va">task</span>, <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"classif.rpart"</span><span class="op">)</span>, <span class="va">resampling</span><span class="op">)</span></span>
+<span><span class="va">rr</span><span class="op">$</span><span class="fu">aggregate</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## classif.ce </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  0.0319181</span></span></code></pre></div>
+<p>Besides working with objects with known IDs, data of interest can also be queried using listing functions. Below, we search for datasets with 10 - 20 features, 45000 to 50000 observations and 2 classes.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># R6 class for data sets</span></span>
-<span><span class="va">odata</span> <span class="op">=</span> <span class="va"><a href="reference/oml_data.html">OMLData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">61</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">odt</a></span><span class="op">(</span><span class="fl">61</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">odatasets</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data</a></span><span class="op">(</span></span>
+<span>  number_features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>  number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">45000</span>, <span class="fl">50000</span><span class="op">)</span>,</span>
+<span>  number_classes <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">odata</span><span class="op">$</span><span class="va">name</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "iris"</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">odata</span><span class="op">$</span><span class="va">nrow</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 150</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">odata</span><span class="op">$</span><span class="va">ncol</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">odata</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">##    sepallength sepalwidth petallength petalwidth       class</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:         5.1        3.5         1.4        0.2 Iris-setosa</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:         4.9        3.0         1.4        0.2 Iris-setosa</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:         4.7        3.2         1.3        0.2 Iris-setosa</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:         4.6        3.1         1.5        0.2 Iris-setosa</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:         5.0        3.6         1.4        0.2 Iris-setosa</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:         5.4        3.9         1.7        0.4 Iris-setosa</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">backend</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata</span><span class="op">)</span></span>
-<span><span class="va">backend</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;DataBackendDataTable&gt; (150x6)</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  sepallength sepalwidth petallength petalwidth       class ..row_id</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          5.1        3.5         1.4        0.2 Iris-setosa        1</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">##          4.9        3.0         1.4        0.2 Iris-setosa        2</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">##          4.7        3.2         1.3        0.2 Iris-setosa        3</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="do">##          4.6        3.1         1.5        0.2 Iris-setosa        4</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">##          5.0        3.6         1.4        0.2 Iris-setosa        5</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          5.4        3.9         1.7        0.4 Iris-setosa        6</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [...] (144 rows omitted)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># list oml data sets with 5 features and 50 - 200 instances</span></span>
-<span><span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_data</a></span><span class="op">(</span>number_features <span class="op">=</span> <span class="fl">5</span>, number_instances <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">##    data_id               name</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:      61               iris</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:     199           fruitfly</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:     214           baskball</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:     329         hayes-roth</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:     346               aids</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:     668 witmer_census_1980</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># R6 class for tasks</span></span>
-<span><span class="va">otask</span> <span class="op">=</span> <span class="va"><a href="reference/oml_task.html">OMLTask</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">otask</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">otsk</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">otask</span><span class="op">)</span></span>
-<span><span class="va">task</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Target: class</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Properties: twoclass</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Features (20):</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   - fct (13): checking_status, credit_history, employment,</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="do">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     savings_status</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     installment_commitment, num_dependents, residence_since</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/as_resampling.html" class="external-link">as_resampling</a></span><span class="op">(</span><span class="va">otask</span><span class="op">)</span></span>
-<span><span class="va">resampling</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;ResamplingCustom&gt;: Custom Splits</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Iterations: 10</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Instantiated: TRUE</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Parameters: list()</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">otask</span><span class="op">$</span><span class="va">data</span></span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Default target: class</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">otask</span><span class="op">$</span><span class="va">name</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "Task 31: credit-g (Supervised Classification)"</span></span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">otask</span><span class="op">$</span><span class="va">nrow</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1000</span></span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">otask</span><span class="op">$</span><span class="va">ncol</span></span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 21</span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">otask</span><span class="op">$</span><span class="va">task</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="do">## NULL</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">otask</span><span class="op">$</span><span class="va">resampling</span></span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## NULL</span></span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># list first 10 oml tasks</span></span>
-<span><span class="va">tab</span> <span class="op">=</span> <span class="fu"><a href="reference/list_oml.html">list_oml_tasks</a></span><span class="op">(</span>limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">tab</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span><span class="va">task_id</span>, <span class="va">data_id</span>, <span class="va">name</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">##     task_id data_id            name</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  1:       2       2          anneal</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  2:       3       3        kr-vs-kp</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  3:       4       4           labor</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  4:       5       5      arrhythmia</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  5:       6       6          letter</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  6:       7       7       audiology</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  7:       8       8 liver-disorders</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  8:       9       9           autos</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  9:      10      10           lymph</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:      11      11   balance-scale</span></span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># R6 class for flows</span></span>
-<span><span class="va">oflow</span> <span class="op">=</span> <span class="va"><a href="reference/oml_flow.html">OMLFlow</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">oflow</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">oflw</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">oflow</span><span class="op">$</span><span class="va">dependencies</span></span></code></pre></div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "Weka_3.7.5"</span></span></code></pre></div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">oflow</span><span class="op">$</span><span class="va">parameter</span></span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">##     name data_type default_value</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  1:    A      flag              </span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  2:    B      flag              </span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  3:    C    option          0.25</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  4:    J      flag              </span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  5:    L      flag              </span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  6:    M    option             2</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  7:    N    option              </span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  8:    O      flag              </span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  9:    Q    option              </span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 10:    R      flag              </span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 11:    S      flag              </span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 12:    U      flag</span></span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># non-executable pseudo learner</span></span>
-<span><span class="va">learner</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/as_learner.html" class="external-link">as_learner</a></span><span class="op">(</span><span class="va">oflow</span>, <span class="st">"regr"</span><span class="op">)</span></span>
-<span><span class="va">learner</span></span></code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;LearnerRegrOML100:oml.100&gt;</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Model: -</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Parameters: list()</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Packages: mlr3</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="do">## * Predict Types:  [response]</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="do">## * Feature Types: -</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="do">## * Properties: -</span></span></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># R6Class for run</span></span>
-<span></span>
-<span><span class="va">orun</span> <span class="op">=</span> <span class="va"><a href="reference/oml_run.html">OMLRun</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">538858</span><span class="op">)</span> <span class="co"># o</span></span>
-<span><span class="va">orun</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">orn</a></span><span class="op">(</span><span class="fl">538858</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">orun</span><span class="op">$</span><span class="va">data</span></span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLData:952:prnn_fglass&gt; (214x10)</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Default target: type</span></span></code></pre></div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">orun</span><span class="op">$</span><span class="va">task</span></span></code></pre></div>
-<div class="sourceCode" id="cb46"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLTask:3815&gt;</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Type: Supervised Classification</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Data: prnn_fglass (id: 952; dim: 214x10)</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Target: type</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Estimation: crossvalidation (id: 1; repeats: 1, folds: 10)</span></span></code></pre></div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">orun</span><span class="op">$</span><span class="va">flow</span></span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;OMLFlow:3364&gt;</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Name: classif.boosting</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  * Dependencies: mlr_2.8, adabag_4.1, rpart_4.1.10</span></span></code></pre></div>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">orun</span><span class="op">$</span><span class="va">prediction</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb50"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">##    repeat. fold row_id             prediction              truth</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:       0    0     33     window_float_glass window_float_glass</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:       0    0     52     window_float_glass window_float_glass</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:       0    0     67     window_float_glass window_float_glass</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:       0    0     49     window_float_glass window_float_glass</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:       0    0     41     window_float_glass window_float_glass</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:       0    0      5 window_non-float_glass window_float_glass</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    confidence.containers confidence.tableware confidence.vehicle_glass</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:                     0                    0                        0</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:                     0                    0                        0</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:                     0                    0                        0</span></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:                     0                    0                        0</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:                     0                    0                        0</span></span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:                     0                    0                        0</span></span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="do">##    confidence.vehicle_headlamp_glass confidence.window_float_glass</span></span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:                                 0                             1</span></span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:                                 0                             1</span></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:                                 0                             1</span></span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:                                 0                             1</span></span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:                                 0                             1</span></span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:                                 0                             0</span></span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="do">##    confidence.window_non.float_glass</span></span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:                                 0</span></span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:                                 0</span></span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:                                 0</span></span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:                                 0</span></span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:                                 0</span></span>
-<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:                                 1</span></span></code></pre></div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mlr3/man/as_resample_result.html" class="external-link">as_resample_result</a></span><span class="op">(</span><span class="va">orun</span><span class="op">)</span></span>
-<span><span class="va">rr</span></span></code></pre></div>
-<div class="sourceCode" id="cb52"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## &lt;ResampleResult&gt; of 10 iterations</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="do">## * Task: prnn_fglass</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="do">## * Learner: oml.3364</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="do">## * Warnings: 0 in 0 iterations</span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="do">## * Errors: 0 in 0 iterations</span></span></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># R6 class for collection</span></span>
-<span></span>
-<span><span class="va">ocol</span> <span class="op">=</span> <span class="va"><a href="reference/oml_collection.html">OMLCollection</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="fl">232</span><span class="op">)</span> <span class="co"># or</span></span>
-<span><span class="va">ocol</span> <span class="op">=</span> <span class="fu"><a href="reference/oml_sugar.html">ocl</a></span><span class="op">(</span><span class="fl">232</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ocol</span><span class="op">$</span><span class="va">tasks</span></span></code></pre></div>
-<div class="sourceCode" id="cb54"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">##    id          task     data                 task_type target  nrow ncol</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:  3 &lt;OMLTask[25]&gt; kr-vs-kp Supervised Classification  class  3196   37</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:  6 &lt;OMLTask[25]&gt;   letter Supervised Classification  class 20000   17</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    missing numeric symbolic binary     task_splits</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:       0       0       37     35 crossvalidation</span></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:       0      16        1      0 crossvalidation</span></span></code></pre></div>
+<span><span class="va">odatasets</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data_id"</span>, <span class="st">"name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">##    data_id                        name</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1:     179                       adult</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2:    1461              bank-marketing</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 3:    1590                       adult</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 4:   43898                       adult</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 5:   44234 Bank_marketing_data_set_UCI</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 6:   45051                  adult-test</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 7:   45068                       adult</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="feature-overview">Feature Overview<a class="anchor" aria-label="anchor" href="#feature-overview"></a>
+</h2>
+<ul>
+<li>Datasets, tasks, flows, runs, and collections can be downloaded from <a href="https://www.openml.org" class="external-link">OpenML</a> and are represented as <code>R6</code> classes.</li>
+<li>OpenML objects can be easily converted to the corresponding <code>mlr3</code> counterpart.</li>
+<li>Filtering of OpenML objects can be achieved using listing functions.</li>
+<li>Downloaded objects can be cached by setting the <code>mlr3oml.cache</code> option.</li>
+<li>Both the <code>arff</code> and <code>parquet</code> filetype for datasets are supported.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<ul>
+<li>Start by reading the <a href="https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html" class="external-link">Large-Scale Benchmarking chapter</a> from the <code>mlr3</code> book.</li>
+<li>The <a href="https://mlr3oml.mlr-org.com/">package website</a> contains a getting started guide.</li>
+<li>The OpenML <a href="https://www.openml.org/apis" class="external-link">API documentation</a> is also a good resource.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="bugs-questions-feedback">Bugs, Questions, Feedback<a class="anchor" aria-label="anchor" href="#bugs-questions-feedback"></a>
+</h2>
+<p><em>mlr3oml</em> is a free and open source software project that encourages participation and feedback. If you have any issues, questions, suggestions or feedback, please do not hesitate to open an “issue” about it on the GitHub page!</p>
+<p>In case of problems / bugs, it is often helpful if you provide a “minimum working example” that showcases the behaviour (but don’t worry about this if the bug is obvious).</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -404,7 +235,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>

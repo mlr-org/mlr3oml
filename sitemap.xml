@@ -10,6 +10,12 @@
     <loc>https://mlr3oml.mlr-org.com/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://mlr3oml.mlr-org.com/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/articles/tutorial.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3oml.mlr-org.com/authors.html</loc>
   </url>
   <url>
@@ -22,9 +28,6 @@
     <loc>https://mlr3oml.mlr-org.com/reference/as_learner.OMLFlow.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/benchmark_grid_oml.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3oml.mlr-org.com/reference/index.html</loc>
   </url>
   <url>
@@ -32,6 +35,15 @@
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/mlr3oml-package.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/ocl.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/odt.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/oflw.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/oml_collection.html</loc>
@@ -49,10 +61,13 @@
     <loc>https://mlr3oml.mlr-org.com/reference/oml_run.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_sugar.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/oml_task.html</loc>
   </url>
   <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_task.html</loc>
+    <loc>https://mlr3oml.mlr-org.com/reference/orn.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/otsk.html</loc>
   </url>
   <url>
     <loc>https://mlr3oml.mlr-org.com/reference/read_arff.html</loc>
