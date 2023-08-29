@@ -55,6 +55,10 @@ OMLData = R6Class("OMLData",
       test_server = test_server_default()
       ) {
       private$.parquet = assert_flag(parquet)
+      if (parquet) {
+        require_namespaces(c("duckdb", "DBI"))
+      }
+
       super$initialize(id, test_server, "data")
     },
     #' @description
