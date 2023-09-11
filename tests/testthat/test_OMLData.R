@@ -106,7 +106,7 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
 })
 
 test_that("Logicals are converted to factor", {
-  odata = odt(1050, parquet = TRUE, cache = FALSE)
+  odata = odt(1050, parquet = TRUE)
   backend = as_data_backend(odata)
   # renaming worked
   assert_true("c" %in% backend$colnames)
