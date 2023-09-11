@@ -106,7 +106,7 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
 })
 
 test_that("Logicals are converted to factor", {
-  odata = odt(1050)
+  odata = odt(1050, parquet = TRUE, cache = FALSE)
   backend = as_data_backend(odata)
   # renaming worked
   assert_true("c" %in% backend$colnames)
@@ -174,4 +174,10 @@ test_that("download runs without error", {
   # simple sanity check
   out = capture.output(with_cache(odt(31)$download(), cache = FALSE))
   expect_true(length(out) == 4L)
+})
+
+test_that("Renamings and boolean conversion works, datetime works", {
+  odata = odt(41707, parquet = TRUE)
+  expect_data_table(odata$data)
+  expect_class(odata$data[["Timestamp"]], "POSIXct")
 })

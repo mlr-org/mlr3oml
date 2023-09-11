@@ -1,5 +1,7 @@
 # mlr3oml 0.8.0-9000
 
+* Fix: Parquet datasets now work where columns simultaneously have to be renamed
+and converted.
 
 # mlr3oml 0.8.0
 

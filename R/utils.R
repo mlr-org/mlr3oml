@@ -88,7 +88,8 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
     tbl = "mlr3db_view_recoded"
     type = table_info$type
     vars = paste0("\"", vars_orig, "\"")
-    vars[type == "BOOLEAN"] = paste0(vars[type == "BOOLEAN"], "::VARCHAR")
+    tmp = vars[type == "BOOLEAN"]
+    vars[type == "BOOLEAN"] = paste0(tmp, "::VARCHAR as", tmp)
     vars = paste(vars, collapse = ", ")
 
     query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'", tbl, vars, tbl_prev)
@@ -124,7 +125,9 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
     query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'",
       tbl, renamings, tbl_prev
     )
-    DBI::dbExecute(con, query)
+    out = DBI::dbExecute(con, query)
+
+    return(out)
   }
 
   backend = mlr3db::DataBackendDuckDB$new(con, table = tbl, primary_key = primary_key,
