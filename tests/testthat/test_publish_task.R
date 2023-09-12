@@ -1,4 +1,4 @@
-skip("OpenML Test server is unstable")
+skip_on_cran()
 
 test_that("Can publish task on test server", {
   test_server = TRUE
