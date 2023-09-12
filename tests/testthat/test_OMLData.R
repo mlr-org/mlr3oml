@@ -176,8 +176,9 @@ test_that("download runs without error", {
   expect_true(length(out) == 4L)
 })
 
-test_that("Renamings and boolean conversion works, datetime works", {
-  odata = odt(41707, parquet = TRUE)
-  expect_data_table(odata$data)
-  expect_class(odata$data[["Timestamp"]], "POSIXct")
-})
+# Parquet file not available anymore
+#test_that("Renamings and boolean conversion works, datetime works", {
+#  odata = odt(41707, parquet = TRUE)
+#  expect_data_table(odata$data)
+#  expect_class(odata$data[["Timestamp"]], "POSIXct")
+#})
