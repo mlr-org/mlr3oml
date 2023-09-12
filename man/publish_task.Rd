@@ -8,7 +8,7 @@ publish_task(
   id,
   type,
   estimation_procedure,
-  target = NULL,
+  target,
   api_key = NULL,
   test_server = test_server_default()
 )

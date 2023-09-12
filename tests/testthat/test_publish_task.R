@@ -8,9 +8,9 @@ test_that("Can publish task on public server", {
 
   Sys.sleep(5)
 
-  task_id = publish_task(id = data_id, type = "regr", target = "Target", estimation_procedure = 7)
+  task_id = publish_task(id = data_id, type = "regr", target = "Target", estimation_procedure = 7, test_server = test_server)
   expect_message({
-    task_id2 <<- publish_task(id = data_id, type = "regr", target = "Target", estimation_procedure = 7)},
+    task_id2 <<- publish_task(id = data_id, type = "regr", target = "Target", estimation_procedure = 7, test_server = test_serve)},
     "already exists"
   )
   expect_equal(task_id, task_id2)

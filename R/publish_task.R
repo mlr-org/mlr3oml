@@ -16,7 +16,7 @@
 #' @template param_test_server
 #'
 #' @export
-publish_task = function(id, type, estimation_procedure, target = NULL, api_key = NULL,
+publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
   test_server = test_server_default()) {
   require_namespaces(c("xml2", "httr"))
   assert_flag(test_server)
@@ -35,7 +35,7 @@ publish_task = function(id, type, estimation_procedure, target = NULL, api_key =
   } else {
     assert_int(type, lower = 1L)
   }
-  assert_character(target, len = 1L, null.ok = TRUE)
+  assert_character(target, len = 1L)
   estimation_procedure = assert_int(estimation_procedure)
 
   add = function(name, value) {
