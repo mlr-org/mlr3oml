@@ -1,0 +1,72 @@
+#' @title Publish a task to OpenML
+#' @description
+#' Publish a task to OpenML.
+#' @param id (`integer(1)`)\cr
+#'   The dataset id.
+#' @param type (`character(1)` or `integer(1)`)\cr
+#'   Can either be `"classif"` or `"regr"` or an integer indicating the task type.
+#' @param estimation_procedure (`integer(1)`)\cr
+#'   The id of the estimation procedure.
+#' @param target (`character(1)`)\cr
+#'   The target variable (if applicable).
+#' @template param_api_key
+#'
+#' @template param_api_key
+publish_task = function(id, type, estimation_procedure, target = NULL, api_key = NULL,
+  test_server = test_server_default()) {
+  assert_flag(test_server)
+  if (is.null(api_key)) {
+    api_key = get_api_key(get_server(test_server))
+  } else {
+    assert_string(api_key)
+  }
+  assert_int(id, lower = 1L)
+  if (test_character(type, len = 1L)) {
+    type = switch(type,
+      regr = "2",
+      classif = "1",
+      stopf("Invalid type '%s'.", type)
+    )
+  } else {
+    assert_int(type, lower = 1L)
+  }
+  assert_character(target, len = 1L, null.ok = TRUE)
+  estimation_procedure = assert_int(estimation_procedure)
+
+  add = function(name, value) {
+    if (!is.null(value)) {
+      xml2::xml_add_child(.x = task, "oml:input", name = name, value)
+    }
+  }
+
+  doc = xml2::xml_new_document()
+  task = xml2::xml_add_child(doc, "oml:task_inputs", "xmlns:oml" = "http://openml.org/openml")
+  xml2::xml_add_child(task, "oml:task_type_id", type)
+  add("source_data", id)
+  if (!is.null(target)) add("target_feature", target)
+  add("estimation_procedure", estimation_procedure)
+
+  withr::defer(unlink(desc_path))
+  desc_path = tempfile(fileext = ".xml")
+  xml2::write_xml(x = doc, file = desc_path)
+
+  response = httr::POST(
+    url = sprintf("%s/task", get_server(test_server)),
+    body = list(
+      description = httr::upload_file(desc_path)
+    ),
+    query = list(api_key = api_key)
+  )
+
+  response_list = xml2::as_list(httr::content(response))
+  if (httr::http_error(response)) {
+    warningf(
+      paste(response_list$error$message, response_list$error$additional_information, collapse = "\n"))
+
+    return(NULL)
+  } else {
+    id = as.integer(response_list$upload_task$id[[1L]])
+    return(id)
+  }
+}
+
