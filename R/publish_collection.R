@@ -18,8 +18,8 @@
 #' @template param_api_key
 #'
 #' @export
-publish_collection = function(ids, main_entity_type = "task", name, desc, alias = NULL,
-  api_key = NULL, test_server = test_server_default()) {
+publish_collection = function(ids, name, desc, alias = NULL, main_entity_type = "task", api_key = NULL,
+  test_server = test_server_default()) {
   assert_flag(test_server)
   if (is.null(api_key)) {
     api_key = get_api_key(get_server(test_server))
