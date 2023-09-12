@@ -31,11 +31,11 @@ The alias for the collection.}
 The main entity type of the collection. Can be either "task" or "run".}
 
 \item{api_key}{(\code{character(1)})
-The API key to perform the action, if left NULL it first tries getOption("mlr3oml.api_key") and
-then Sys.getenv("OMLAPIKEY").
+The API key to perform the action, if left NULL it first tries the "mlr3oml.api_key" R option and
+then the environment variablre \code{OPENMLAPIKEY}.
 
-If \code{test_server} is TRUE (only relevant for developers) the test server API key is used, i.e. first the option
-\code{"mlr3oml.test_api_key"} and then the environment variable \code{TESTOPENMLAPIKEY}.}
+In case \code{test_server} is TRUE (only relevant for developers) the test server API key is used, i.e. first the option
+"mlr3oml.test_api_key" and then the environment variable \code{TESTOPENMLAPIKEY}.}
 
 \item{test_server}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.

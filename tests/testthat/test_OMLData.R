@@ -180,5 +180,7 @@ test_that("download runs without error", {
 #test_that("Renamings and boolean conversion works, datetime works", {
 #  odata = odt(41707, parquet = TRUE)
 #  expect_data_table(odata$data)
-#  expect_class(odata$data[["Timestamp"]], "POSIXct")
+#  #expect_class(odata$data[["Timestamp"]], "POSIXct")
 #})
+
+
