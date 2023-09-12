@@ -11,8 +11,7 @@ publish_collection(
   desc,
   alias = NULL,
   api_key = NULL,
-  test_server = test_server_default(),
-  ...
+  test_server = test_server_default()
 )
 }
 \arguments{
@@ -23,14 +22,18 @@ The IDs to include in the collection.}
 The main entity type of the collection. Can be either "task" or "run".}
 
 \item{name}{(\code{character(1)})\cr
-The name of the collection.}
+The name for the collection.}
 
 \item{desc}{(\code{character(1)})\cr
-The descrition of the collection.}
+The description of the collection.}
 
 \item{alias}{(\code{chraacter(1)})\cr
-The alias of the collection.}
+The alias for the collection.}
+
+\item{test_server}{(\code{character(1)})\cr
+Whether to use the OpenML test server or public server.
+Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 }
 \description{
-Publish a collectio to OpenML
+Publish a collection to OpenML
 }

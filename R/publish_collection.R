@@ -1,20 +1,21 @@
 #' @title Publish a Collection to OpenML
 #' @description
-#' Publish a collectio to OpenML
+#' Publish a collection to OpenML
 #' @param ids (`integer()`)\cr
 #'   The IDs to include in the collection.
 #' @param main_entity_type (`character(1)`)\cr
 #'   The main entity type of the collection. Can be either "task" or "run".
 #' @param name (`character(1)`)\cr
-#'   The name of the collection.
+#'   The name for the collection.
 #' @param desc (`character(1)`)\cr
-#'   The descrition of the collection.
+#'   The description of the collection.
 #' @param alias (`chraacter(1)`)\cr
-#'   The alias of the collection.
+#'   The alias for the collection.
+#' @template param_test_server
 #'
 #' @export
 publish_collection = function(ids, main_entity_type = "task", name, desc, alias = NULL,
-  api_key = NULL, test_server = test_server_default(), ...) {
+  api_key = NULL, test_server = test_server_default()) {
   assert_flag(test_server)
   if (is.null(api_key)) {
     api_key = get_api_key(get_server(test_server))
