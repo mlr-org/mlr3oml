@@ -147,6 +147,6 @@ expect_oml_collection = function(collection) {
   if (collection$main_entity_type == "run") {
     expect_integer(collection$flow_ids)
     expect_integer(collection$run_ids)
+    expect_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
   }
-  test_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
 }

@@ -10,13 +10,14 @@ test_that("Can publish collection on public server", {
     name = "test",
     desc = "test collection",
     alias = "test_alias",
-    test_sever = test_server
+    test_server = test_server
   )
 
   assert_int(collection_id)
   Sys.sleep(5)
 
   ocollection = ocl(collection_id)
+  expect_oml_collection(ocollection)
 
   expect_equal(ocollection$main_entity_type, "task")
   expect_set_equal(ocollection$task_ids, c(31, 61))

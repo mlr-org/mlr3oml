@@ -18,6 +18,7 @@
 #' @export
 publish_task = function(id, type, estimation_procedure, target = NULL, api_key = NULL,
   test_server = test_server_default()) {
+  require_namespaces(c("xml2", "httr"))
   assert_flag(test_server)
   if (is.null(api_key)) {
     api_key = get_api_key(get_server(test_server))

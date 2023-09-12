@@ -47,7 +47,7 @@ Which columns to ignore during modeling.}
 \item{original_data_url}{(character(1))\cr
 The URL of the original data set.}
 
-\item{paper_url}{(\code{character(1)})\c
+\item{paper_url}{(\code{character(1)})\cr
 The URL of the paper describing the data set.}
 
 \item{test_server}{(\code{character(1)})\cr

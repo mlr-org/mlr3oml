@@ -6,10 +6,10 @@
 \usage{
 publish_collection(
   ids,
-  main_entity_type = "task",
   name,
   desc,
   alias = NULL,
+  main_entity_type = "task",
   api_key = NULL,
   test_server = test_server_default()
 )
@@ -17,9 +17,6 @@ publish_collection(
 \arguments{
 \item{ids}{(\code{integer()})\cr
 The IDs to include in the collection.}
-
-\item{main_entity_type}{(\code{character(1)})\cr
-The main entity type of the collection. Can be either "task" or "run".}
 
 \item{name}{(\code{character(1)})\cr
 The name for the collection.}
@@ -29,6 +26,9 @@ The description of the collection.}
 
 \item{alias}{(\code{character(1)})\cr
 The alias for the collection.}
+
+\item{main_entity_type}{(\code{character(1)})\cr
+The main entity type of the collection. Can be either "task" or "run".}
 
 \item{api_key}{(\code{character(1)})
 The API key to perform the action, if left NULL it first tries getOption("mlr3oml.api_key") and

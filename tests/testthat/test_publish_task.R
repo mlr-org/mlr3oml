@@ -16,6 +16,7 @@ test_that("Can publish task on public server", {
   expect_equal(task_id, task_id2)
 
   otask = otsk(task_id)
+  expect_oml_task(otask)
 
   expect_equal(otask$estimation_procedure$id, 7L)
   expect_equal(otask$data_id, data_id)

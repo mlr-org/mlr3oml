@@ -33,6 +33,7 @@ test_that("data publishing works", {
   Sys.sleep(5)
 
   odata = odt(id)
+  expect_oml_data(odata)
 
   expect_set_equal(colnames(odata$data), setdiff(colnames(iris), ignore_attribute))
   expect_equal(odata$desc$licence, license)

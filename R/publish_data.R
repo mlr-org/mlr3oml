@@ -18,7 +18,7 @@
 #'   How to cite the dataset.
 #' @param original_data_url (character(1))\cr
 #'   The URL of the original data set.
-#' @param paper_url (`character(1)`)\c
+#' @param paper_url (`character(1)`)\cr
 #'   The URL of the paper describing the data set.
 #' @param row_identifier (`character(1)`)\cr
 #'   Whether any of the columns is a row identifier.
@@ -31,6 +31,7 @@
 publish_data = function(data, name, desc, license = NULL, default_target = NULL, citation = NULL,
   row_identifier = NULL, ignore_attribute = NULL, original_data_url = NULL, paper_url = NULL,
   test_server = test_server_default(), api_key = NULL) {
+  require_namespaces(c("xml2", "httr"))
   assert_flag(test_server)
   if (is.null(api_key)) {
     api_key = get_api_key(get_server(test_server))
