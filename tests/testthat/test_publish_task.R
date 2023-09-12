@@ -1,25 +1,24 @@
 skip("OpenML Test server is unstable")
 
-test_that("Can publish task on public server", {
-  test_server = FALSE
+test_that("Can publish task on test server", {
+  test_server = TRUE
   withr::defer(delete(type = "task", id = task_id, test_server = test_server))
 
-  data_id = 45650
+  data_id = 150 # iris
 
+  task_id = publish_task(id = data_id, type = "classif", target = "Species", estimation_procedure = 6, test_server = test_server)
   Sys.sleep(5)
-
-  task_id = publish_task(id = data_id, type = "regr", target = "Target", estimation_procedure = 7, test_server = test_server)
   expect_message({
-    task_id2 <<- publish_task(id = data_id, type = "regr", target = "Target", estimation_procedure = 7, test_server = test_serve)},
+    task_id2 <<- publish_task(id = data_id, type = "classif", target = "Species", estimation_procedure = 6, test_server = test_server)},
     "already exists"
   )
   expect_equal(task_id, task_id2)
 
-  otask = otsk(task_id)
+  otask = otsk(task_id, test_server = TRUE)
   expect_oml_task(otask)
 
-  expect_equal(otask$estimation_procedure$id, 7L)
+  expect_equal(otask$estimation_procedure$id, 6L)
   expect_equal(otask$data_id, data_id)
-  expect_equal(otask$target_names, "Target")
-  expect_equal(otask$task_type, "Supervised Regression")
+  expect_equal(otask$target_names, "Species")
+  expect_equal(otask$task_type, "Supervised Classification")
 })

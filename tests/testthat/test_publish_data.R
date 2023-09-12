@@ -1,7 +1,8 @@
 skip("OpenML Test server is unstable")
 
 test_that("data publishing works", {
-  test_server = FALSE
+  test_server = TRUE
+  data = iris
   withr::defer(delete(type = "data", id = id, test_server = test_server))
   data$id = 1:150
   name = "a"
@@ -30,9 +31,9 @@ test_that("data publishing works", {
   )
 
   expect_int(id)
-  Sys.sleep(5)
+  Sys.sleep(10)
 
-  odata = odt(id)
+  odata = odt(id, test_server = test_server)
   expect_oml_data(odata)
 
   expect_set_equal(colnames(odata$data), setdiff(colnames(iris), ignore_attribute))
@@ -42,5 +43,4 @@ test_that("data publishing works", {
   expect_equal(odata$desc$ignore_attribute, ignore_attribute)
   expect_equal(odata$desc$original_data_url, original_data_url)
   expect_equal(odata$desc$paper_url, paper_url)
-
 })

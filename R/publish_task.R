@@ -65,10 +65,17 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
 
   response_list = xml2::as_list(httr::content(response))
   if (httr::http_error(response)) {
-    warningf(
-      paste(response_list$error$message, response_list$error$additional_information, collapse = "\n"))
-
-    return(NULL)
+    if (isTRUE(response_list$error$code[[1L]] == "614")) { # Task already exists.
+      info = response_list$error$additional_information[[1L]]
+      id = as.integer(substr(info, 17L, nchar(info) - 1L))
+      messagef("Task already exists with id %s.", id)
+      return(id)
+    } else {
+      warningf(
+        paste(response_list$error$message, response_list$error$additional_information, collapse = "\n")
+      )
+      return(response)
+    }
   } else {
     id = as.integer(response_list$upload_task$id[[1L]])
     return(id)
