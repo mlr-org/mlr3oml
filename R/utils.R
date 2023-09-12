@@ -125,9 +125,7 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
     query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'",
       tbl, renamings, tbl_prev
     )
-    out = DBI::dbExecute(con, query)
-
-    return(out)
+    DBI::dbExecute(con, query)
   }
 
   backend = mlr3db::DataBackendDuckDB$new(con, table = tbl, primary_key = primary_key,
