@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Upload a dataset to OpenML.
-#' This can also be achieved through the [website](https://opennml.org)
+#' This can also be achieved through the [website](https://opennml.org).
 #'
 #' @param data ([`data.frame()`])\cr
 #'   The data to upload.
@@ -24,9 +24,7 @@
 #'   Whether any of the columns is a row identifier.
 #' @param ignore_attribute (`character(1)`)\cr
 #'   Which columns to ignore during modeling.
-#' @param test_server (`logical(1)`)\c
-#'   Whether to use the test_server. The default is `FALSE`.
-#'   Only relevant for developers.
+#' @template param_test_server
 #' @template param_api_key
 #'
 #' @export

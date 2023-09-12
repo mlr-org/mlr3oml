@@ -1,6 +1,9 @@
 #' @title Publish a Collection to OpenML
+#'
 #' @description
 #' Publish a collection to OpenML
+#' This can also be achieved through the [website](https://opennml.org).
+#'
 #' @param ids (`integer()`)\cr
 #'   The IDs to include in the collection.
 #' @param main_entity_type (`character(1)`)\cr
@@ -9,9 +12,10 @@
 #'   The name for the collection.
 #' @param desc (`character(1)`)\cr
 #'   The description of the collection.
-#' @param alias (`chraacter(1)`)\cr
+#' @param alias (`character(1)`)\cr
 #'   The alias for the collection.
 #' @template param_test_server
+#' @template param_api_key
 #'
 #' @export
 publish_collection = function(ids, main_entity_type = "task", name, desc, alias = NULL,

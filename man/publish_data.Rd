@@ -50,9 +50,9 @@ The URL of the original data set.}
 \item{paper_url}{(\code{character(1)})\c
 The URL of the paper describing the data set.}
 
-\item{test_server}{(\code{logical(1)})\c
-Whether to use the test_server. The default is \code{FALSE}.
-Only relevant for developers.}
+\item{test_server}{(\code{character(1)})\cr
+Whether to use the OpenML test server or public server.
+Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 
 \item{api_key}{(\code{character(1)})
 The API key to perform the action, if left NULL it first tries getOption("mlr3oml.api_key") and
@@ -63,5 +63,5 @@ If \code{test_server} is TRUE (only relevant for developers) the test server API
 }
 \description{
 Upload a dataset to OpenML.
-This can also be achieved through the \href{https://opennml.org}{website}
+This can also be achieved through the \href{https://opennml.org}{website}.
 }

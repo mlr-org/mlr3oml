@@ -1,6 +1,9 @@
 #' @title Publish a task to OpenML
+#'
 #' @description
 #' Publish a task to OpenML.
+#' This can also be achieved through the [website](https://opennml.org).
+#'
 #' @param id (`integer(1)`)\cr
 #'   The dataset id.
 #' @param type (`character(1)` or `integer(1)`)\cr
@@ -10,8 +13,8 @@
 #' @param target (`character(1)`)\cr
 #'   The target variable (if applicable).
 #' @template param_api_key
+#' @template param_test_server
 #'
-#' @template param_api_key
 #' @export
 publish_task = function(id, type, estimation_procedure, target = NULL, api_key = NULL,
   test_server = test_server_default()) {

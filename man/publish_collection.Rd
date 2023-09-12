@@ -27,8 +27,15 @@ The name for the collection.}
 \item{desc}{(\code{character(1)})\cr
 The description of the collection.}
 
-\item{alias}{(\code{chraacter(1)})\cr
+\item{alias}{(\code{character(1)})\cr
 The alias for the collection.}
+
+\item{api_key}{(\code{character(1)})
+The API key to perform the action, if left NULL it first tries getOption("mlr3oml.api_key") and
+then Sys.getenv("OMLAPIKEY").
+
+If \code{test_server} is TRUE (only relevant for developers) the test server API key is used, i.e. first the option
+\code{"mlr3oml.test_api_key"} and then the environment variable \code{TESTOPENMLAPIKEY}.}
 
 \item{test_server}{(\code{character(1)})\cr
 Whether to use the OpenML test server or public server.
@@ -36,4 +43,5 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 }
 \description{
 Publish a collection to OpenML
+This can also be achieved through the \href{https://opennml.org}{website}.
 }
