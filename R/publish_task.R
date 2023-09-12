@@ -12,6 +12,7 @@
 #' @template param_api_key
 #'
 #' @template param_api_key
+#' @export
 publish_task = function(id, type, estimation_procedure, target = NULL, api_key = NULL,
   test_server = test_server_default()) {
   assert_flag(test_server)

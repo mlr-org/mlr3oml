@@ -20,9 +20,9 @@ data. All entities on the platform have unique identifiers and
 standardized (meta)data that can be accessed via an open-access REST API
 or the web interface. `mlr3oml` allows to work with the REST API through
 R and integrates [OpenML](https://www.openml.org) with the `mlr3`
-ecosystem. Note that uploading to OpenML is currently not supported, use
-the [OpenML package](https://cran.r-project.org/package=OpenML) package
-for this.
+ecosystem. Note that some upload options are currently not supported,
+use the [OpenML package](https://cran.r-project.org/package=OpenML)
+package for this.
 
 As a brief demo, we show how to access an OpenML task, convert it to an
 `mlr3::Task` and associated `mlr3::Resampling`, and conduct a simple
