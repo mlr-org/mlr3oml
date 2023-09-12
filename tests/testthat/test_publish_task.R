@@ -3,18 +3,20 @@ skip_on_cran()
 test_that("Can publish task on test server", {
   test_server = TRUE
   withr::defer(delete(type = "task", id = task_id, test_server = test_server))
+  withr::defer(delete(type = "task", id = task_id2, test_server = test_server))
 
   data_id = 150 # iris
 
-  task_id = publish_task(id = data_id, type = "classif", target = "Species", estimation_procedure = 6, test_server = test_server)
+  f = function() {
+    publish_task(id = data_id, type = "classif", target = "Species", estimation_procedure = 6, test_server = test_server) # nolint
+  }
+
+  task_id = f()
   Sys.sleep(5)
-  expect_message({
-    task_id2 <<- publish_task(id = data_id, type = "classif", target = "Species", estimation_procedure = 6, test_server = test_server)},
-    "already exists"
-  )
+  expect_message(task_id2 <<- f(), "already exists")
   expect_equal(task_id, task_id2)
 
-  otask = otsk(task_id, test_server = TRUE)
+  otask = otsk(task_id, test_server = test_server)
   expect_oml_task(otask)
 
   expect_equal(otask$estimation_procedure$id, 6L)
