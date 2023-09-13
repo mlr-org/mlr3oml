@@ -2,7 +2,7 @@
 % Please edit documentation in R/publish_task.R
 \name{publish_task}
 \alias{publish_task}
-\title{Publish a task to OpenML}
+\title{Publish a task on OpenML}
 \usage{
 publish_task(
   id,
@@ -28,7 +28,7 @@ The target variable (if applicable).}
 
 \item{api_key}{(\code{character(1)})
 The API key to perform the action, if left NULL it first tries the "mlr3oml.api_key" R option and
-then the environment variablre \code{OPENMLAPIKEY}.
+then the environment variable \code{OPENMLAPIKEY}.
 
 In case \code{test_server} is TRUE (only relevant for developers) the test server API key is used, i.e. first the option
 "mlr3oml.test_api_key" and then the environment variable \code{TESTOPENMLAPIKEY}.}
@@ -38,6 +38,6 @@ Whether to use the OpenML test server or public server.
 Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not set.}
 }
 \description{
-Publish a task to OpenML.
-This can also be achieved through the \href{https://opennml.org}{website}.
+Publish a task on OpenML.
+This can also be achieved through the \href{https://openml.org}{website}.
 }

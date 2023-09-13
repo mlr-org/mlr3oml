@@ -1,8 +1,8 @@
-#' @title Publish a task to OpenML
+#' @title Publish a task on OpenML
 #'
 #' @description
-#' Publish a task to OpenML.
-#' This can also be achieved through the [website](https://opennml.org).
+#' Publish a task on OpenML.
+#' This can also be achieved through the [website](https://openml.org).
 #'
 #' @param id (`integer(1)`)\cr
 #'   The dataset id.
@@ -28,8 +28,8 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
   assert_int(id, lower = 1L)
   if (test_character(type, len = 1L)) {
     type = switch(type,
-      regr = "2",
-      classif = "1",
+      regr = 2,
+      classif = 1,
       stopf("Invalid type '%s'.", type)
     )
   } else {
@@ -76,9 +76,8 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
       )
       return(response)
     }
-  } else {
-    id = as.integer(response_list$upload_task$id[[1L]])
-    return(id)
   }
+
+  as.integer(response_list$upload_task$id[[1L]])
 }
 

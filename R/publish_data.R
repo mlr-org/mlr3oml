@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Upload a dataset to OpenML.
-#' This can also be achieved through the [website](https://opennml.org).
+#' This can also be achieved through the [website](https://openml.org).
 #'
 #' @param data ([`data.frame()`])\cr
 #'   The data to upload.
@@ -88,8 +88,14 @@ publish_data = function(data, name, desc, license = NULL, default_target = NULL,
     ),
     query = list(api_key = api_key)
   )
-  response = xml2::as_list(httr::content(response))
-  id = as.integer(response$upload_data_set$id[[1]])
+  response_list = xml2::as_list(httr::content(response))
 
-  return(id)
+  if (httr::http_error(response)) {
+    warningf(
+      paste(response_list$error$message, response_list$error$additional_information, collapse = "\n")
+    )
+    return(response)
+  }
+
+  as.integer(response_list$upload_data_set$id[[1]])
 }

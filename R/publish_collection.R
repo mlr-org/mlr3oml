@@ -2,10 +2,11 @@
 #'
 #' @description
 #' Publish a collection to OpenML
-#' This can also be achieved through the [website](https://opennml.org).
+#' This can also be achieved through the [website](https://openml.org).
 #'
 #' @param ids (`integer()`)\cr
 #'   The IDs to include in the collection.
+#'   Depending on the main entity tupe, these can be task or run IDs.
 #' @param main_entity_type (`character(1)`)\cr
 #'   The main entity type of the collection. Can be either "task" or "run".
 #' @param name (`character(1)`)\cr
@@ -18,7 +19,7 @@
 #' @template param_api_key
 #'
 #' @export
-publish_collection = function(ids, name, desc, alias = NULL, main_entity_type = "task", api_key = NULL,
+publish_collection = function(ids, name, desc, main_entity_type = "task", alias = NULL, api_key = NULL,
   test_server = test_server_default()) {
   require_namespaces(c("xml2", "httr"))
   assert_flag(test_server)

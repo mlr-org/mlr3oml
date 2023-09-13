@@ -177,6 +177,7 @@ test_that("download runs without error", {
 })
 
 # Parquet file not available anymore
+# FIXME: enable again then parquet files are available
 #test_that("Renamings and boolean conversion works, datetime works", {
 #  odata = odt(41707, parquet = TRUE)
 #  expect_data_table(odata$data)
