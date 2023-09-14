@@ -264,30 +264,6 @@ As the resulting tables are `data.table`s containing information about the datas
 `mlr3oml` has its own logger, which can be accessed using `lgr::get_logger("mlr3oml")`.
 For more information about logging in general (such as chaning the logging threshold), we refer to the corresponding [section](https://mlr3book.mlr-org.com/chapters/chapter10/advanced_technical_aspects_of_mlr3.html#sec-logging) in the `mlr3book`.
 
-## Laziness
-
-All objects accessed through `mlr3oml` must be downloaded from the OpenML server.
-This is done lazily, which means that data is only downloaded when it is actually accessed.
-To show this, we change the logging level, which was previously set to `"warn"` (to keep the output clean), to `"info"`.
-
-```{r}
-logger = lgr::get_logger("mlr3oml")
-logger$set_threshold("info")
-
-oml_data = odt(31)
-# to print the object, some meta data must be downloaded
-oml_data
-```
-
-To download all information associated with an object, the `$download()` method can be called.
-This can be useful to ensure that all information is available offline.
-In this case, only the actual underlying data is downloaded, as everything else was already implicityly accessed above.
-
-```{r}
-oml_data$download()
-```
-
-
 ### Caching
 
 Caching of OpenML objects can be enabled by setting the `mlr3oml.cache` option to either `TRUE` or `FALSE` (default), or to a specific folder to be used as the cache directory.
@@ -336,6 +312,31 @@ class(backend_arff)
 ```
 
 For more information on data backends, see the corresponding [section](https://mlr3book.mlr-org.com/chapters/chapter10/advanced_technical_aspects_of_mlr3.html#sec-backends) in the `mlr3book`.
+
+## Laziness
+
+All objects accessed through `mlr3oml` must be downloaded from the OpenML server.
+This is done lazily, which means that data is only downloaded when it is actually accessed.
+To show this, we change the logging level, which was previously set to `"warn"` (to keep the output clean), to `"info"`.
+
+```{r}
+logger = lgr::get_logger("mlr3oml")
+logger$set_threshold("info")
+
+oml_data = odt(31)
+# to print the object, some meta data must be downloaded
+oml_data
+```
+
+To download all information associated with an object, the `$download()` method can be called.
+This can be useful to ensure that all information is available offline.
+In this case, only the actual underlying data is downloaded, as everything else was already implicityly accessed above.
+
+```{r}
+oml_data$download()
+```
+
+
 
 
 ## API Key
