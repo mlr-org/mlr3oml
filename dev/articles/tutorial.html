@@ -550,6 +550,32 @@ containing information about the datasets, they can be further filtered
 using the usual <code>data.table</code> syntax.</p>
 </div>
 <div class="section level3">
+<h3 id="uploading">Uploading<a class="anchor" aria-label="anchor" href="#uploading"></a>
+</h3>
+<p>You can currently upload datasets to OpenML or create tasks and
+collections using the functions:</p>
+<ul>
+<li>
+<code><a href="../reference/publish_data.html">publish_data()</a></code> to upload a dataset,</li>
+<li>
+<code><a href="../reference/publish_task.html">publish_task()</a></code> to create a task, and</li>
+<li>
+<code><a href="../reference/publish_collection.html">publish_collection()</a></code> to create a collection.</li>
+</ul>
+<p>For this, you need an API key.</p>
+</div>
+<div class="section level3">
+<h3 id="api-key">API Key<a class="anchor" aria-label="anchor" href="#api-key"></a>
+</h3>
+<p>All download operations supported by this package work without an API
+key, but you might get rate limited without an API key. For uploading to
+OpenML, you need an API key. The API key can be specified via the option
+<code>mlr3oml.api_key</code> or the environment variable
+<code>OPENMLAPIKEY</code> (where the former has precedence over the
+latter). To obtain an API key, you must <a href="https://www.openml.org/auth/sign-up" class="external-link">create an account on
+OpenML</a>.</p>
+</div>
+<div class="section level3">
 <h3 id="further-options">Further Options<a class="anchor" aria-label="anchor" href="#further-options"></a>
 </h3>
 <div class="section level4">
@@ -648,16 +674,6 @@ actual underlying data is downloaded, as everything else was already
 implicityly accessed above.</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="api-key">API Key<a class="anchor" aria-label="anchor" href="#api-key"></a>
-</h3>
-<p>All operations supported by this package work without an API key, but
-you might get rate limited without an API key. The API key can be
-specified via the option <code>mlr3oml.apy_key</code> or the environment
-variable <code>OPENMLAPIKEY</code> (where the latter has precedence over
-the former). To obtain an API key, you must <a href="https://www.openml.org/auth/sign-up" class="external-link">create an account on
-OpenML</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
