@@ -70,6 +70,15 @@
     <loc>https://mlr3oml.mlr-org.com/reference/otsk.html</loc>
   </url>
   <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/publish_collection.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/publish_data.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3oml.mlr-org.com/reference/publish_task.html</loc>
+  </url>
+  <url>
     <loc>https://mlr3oml.mlr-org.com/reference/read_arff.html</loc>
   </url>
   <url>

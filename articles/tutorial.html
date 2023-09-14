@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.6/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.6/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.6/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,9 @@
      
     mlr3book
   </a>
+</li>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/tutorial.html">Getting Started</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -573,9 +576,9 @@ keep the output clean), to <code>"info"</code>.</p>
 <span><span class="va">oml_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="co"># to print the object, some meta data must be downloaded</span></span>
 <span><span class="va">oml_data</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [08:23:32.796] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [08:23:32.979] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [08:23:33.121] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<pre><code><span><span class="co">## INFO  [06:58:20.468] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [06:58:20.717] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [06:58:20.920] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
 <span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <p>To download all information associated with an object, the
@@ -585,7 +588,7 @@ actual underlying data is downloaded, as everything else was already
 implicityly accessed above.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [08:23:33.329] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
+<pre><code><span><span class="co">## INFO  [06:58:21.203] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
 <div class="section level4">
 <h4 id="caching">Caching<a class="anchor" aria-label="anchor" href="#caching"></a>
 </h4>
@@ -602,9 +605,9 @@ can be added or removed.</p>
 <span></span>
 <span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [08:23:33.755] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [08:23:33.878] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [08:23:34.002] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<pre><code><span><span class="co">## INFO  [06:58:21.786] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [06:58:21.977] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [06:58:22.179] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
 <span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
