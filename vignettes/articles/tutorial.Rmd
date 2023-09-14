@@ -257,6 +257,25 @@ cc18_filtered[1:5, c("task_id", "name")]
 Note that not all possible property specifications can be directly queried on OpenML.
 As the resulting tables are `data.table`s containing information about the datasets, they can be further filtered using the usual `data.table` syntax.
 
+
+## Uploading
+
+You can currently upload datasets to OpenML or create tasks and collections using the functions:
+
+* `publish_data()` to upload a dataset,
+* `publish_task()` to create a task, and
+* `publish_collection()` to create a collection.
+
+For this, you need an API key.
+
+## API Key
+
+All download operations supported by this package work without an API key, but you might get rate limited without an API key.
+For uploading to OpenML, you need an API key.
+The API key can be specified via the option `mlr3oml.api_key` or the environment variable `OPENMLAPIKEY` (where the former has precedence over the latter).
+To obtain an API key, you must [create an account on OpenML](https://www.openml.org/auth/sign-up).
+
+
 ## Further Options
 
 ### Logger
@@ -335,12 +354,3 @@ In this case, only the actual underlying data is downloaded, as everything else 
 ```{r}
 oml_data$download()
 ```
-
-
-
-
-## API Key
-
-All operations supported by this package work without an API key, but you might get rate limited without an API key.
-The API key can be specified via the option `mlr3oml.apy_key` or the environment variable `OPENMLAPIKEY` (where the latter has precedence over the former).
-To obtain an API key, you must [create an account on OpenML](https://www.openml.org/auth/sign-up).
