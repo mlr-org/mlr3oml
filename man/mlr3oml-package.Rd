@@ -6,7 +6,7 @@
 \alias{mlr3oml-package}
 \title{mlr3oml: Connector Between 'mlr3' and 'OpenML'}
 \description{
-Provides an interface to 'OpenML.org' to list and download machine learning data, tasks and experiments. The 'OpenML' objects can be automatically converted to 'mlr3' objects. For a more sophisticated interface which also allows uploading to 'OpenML', see the 'OpenML' package.
+Provides an interface to 'OpenML.org' to list and download machine learning data, tasks and experiments. The 'OpenML' objects can be automatically converted to 'mlr3' objects. For a more sophisticated interface with more upload options, see the 'OpenML' package.
 }
 \section{Documentation}{
 

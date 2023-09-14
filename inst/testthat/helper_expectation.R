@@ -96,7 +96,7 @@ expect_oml_task = function(task) {
   if (!is.null(task$desc$input$estimation_procedure$task_splits_url)) {
     expect_r6(as_resampling(task), "Resampling")
   }
-  expect_character(task$tags)
+  expect_character(task$tags, null.ok = TRUE)
   expect_identical(task$data_id, task$data$id)
   task_splits = task$task_splits
 }
@@ -147,6 +147,6 @@ expect_oml_collection = function(collection) {
   if (collection$main_entity_type == "run") {
     expect_integer(collection$flow_ids)
     expect_integer(collection$run_ids)
+    expect_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
   }
-  test_r6(suppressWarnings(as_benchmark_result(collection)), "BenchmarkResult")
 }

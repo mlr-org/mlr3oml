@@ -2,7 +2,7 @@ test_that("roundtrips", {
   N = 10
   dataset = data.frame(
     date = Sys.Date() + 1:10,
-    time = round(Sys.time() + 1:10, "secs"),
+    time = as.POSIXct(round(Sys.time() + 1:10, "secs")),
     lgl = sample(0:1, 10, replace = TRUE) == 1L,
     int = sample(N),
     dbl = runif(10),

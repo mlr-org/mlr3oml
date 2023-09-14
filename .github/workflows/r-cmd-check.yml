@@ -50,6 +50,8 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
+        env:
+          TESTOPENMLAPIKEY: ${{ secrets.TESTOPENMLAPIKEY }}
 
       - uses: mxschmitt/action-tmate@v3
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
