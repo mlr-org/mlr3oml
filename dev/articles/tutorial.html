@@ -561,35 +561,6 @@ logging in general (such as chaning the logging threshold), we refer to
 the corresponding <a href="https://mlr3book.mlr-org.com/chapters/chapter10/advanced_technical_aspects_of_mlr3.html#sec-logging" class="external-link">section</a>
 in the <code>mlr3book</code>.</p>
 </div>
-</div>
-<div class="section level3">
-<h3 id="laziness">Laziness<a class="anchor" aria-label="anchor" href="#laziness"></a>
-</h3>
-<p>All objects accessed through <code>mlr3oml</code> must be downloaded
-from the OpenML server. This is done lazily, which means that data is
-only downloaded when it is actually accessed. To show this, we change
-the logging level, which was previously set to <code>"warn"</code> (to
-keep the output clean), to <code>"info"</code>.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">logger</span> <span class="op">=</span> <span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"mlr3oml"</span><span class="op">)</span></span>
-<span><span class="va">logger</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"info"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">oml_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
-<span><span class="co"># to print the object, some meta data must be downloaded</span></span>
-<span><span class="va">oml_data</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [06:53:23.091] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [06:53:23.330] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [06:53:23.531] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
-<span><span class="co">##  * Default target: class</span></span></code></pre>
-<p>To download all information associated with an object, the
-<code>$download()</code> method can be called. This can be useful to
-ensure that all information is available offline. In this case, only the
-actual underlying data is downloaded, as everything else was already
-implicityly accessed above.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [06:53:23.812] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
 <div class="section level4">
 <h4 id="caching">Caching<a class="anchor" aria-label="anchor" href="#caching"></a>
 </h4>
@@ -599,26 +570,23 @@ implicityly accessed above.</p>
 cache directory. When this is enabled, many OpenML objects are also
 available offline. Note that OpenML collections are not cached, as IDs
 can be added or removed.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set a temporary directy as the cache folder</span></span>
 <span><span class="va">cache_dir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mlr3oml.cache <span class="op">=</span> <span class="va">cache_dir</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [06:53:24.390] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [06:53:24.578] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [06:53:24.778] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
+<pre><code><span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># When accessing the data again, nothing has to be downloaded</span></span>
 <span><span class="co"># because the information is loaded from the cache</span></span>
 <span><span class="va">odata_again</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata_again</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set back the logger</span></span>
 <span><span class="va">logger</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -640,13 +608,13 @@ e.g. regarding the data type.</p>
 <code><a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">mlr3::DataBackend</a></code> using the parquet file type, the
 resulting backend is an <a href="https://mlr3db.mlr-org.com/reference/DataBackendDuckDB.html" class="external-link"><code>mlr3db::DataBackendDuckDB</code></a>
 object. For the arff file format, the resulting backend is a <a href="https://mlr3.mlr-org.com/reference/DataBackendDataTable.html" class="external-link"><code>mlr3::DataBackendDataTable</code></a>.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https:///mlr3db.mlr-org.com" class="external-link">mlr3db</a></span><span class="op">)</span></span>
 <span><span class="va">odata_pq</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">31</span>, parquet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">backend_pq</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata_pq</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">backend_pq</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "DataBackendDuckDB" "DataBackend"       "R6"</span></span></code></pre>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare with arff</span></span>
 <span><span class="va">odata_arff</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">31</span>, parquet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">backend_arff</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata_arff</span><span class="op">)</span></span>
@@ -655,6 +623,31 @@ object. For the arff file format, the resulting backend is a <a href="https://ml
 <p>For more information on data backends, see the corresponding <a href="https://mlr3book.mlr-org.com/chapters/chapter10/advanced_technical_aspects_of_mlr3.html#sec-backends" class="external-link">section</a>
 in the <code>mlr3book</code>.</p>
 </div>
+</div>
+<div class="section level3">
+<h3 id="laziness">Laziness<a class="anchor" aria-label="anchor" href="#laziness"></a>
+</h3>
+<p>All objects accessed through <code>mlr3oml</code> must be downloaded
+from the OpenML server. This is done lazily, which means that data is
+only downloaded when it is actually accessed. To show this, we change
+the logging level, which was previously set to <code>"warn"</code> (to
+keep the output clean), to <code>"info"</code>.</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">logger</span> <span class="op">=</span> <span class="fu">lgr</span><span class="fu">::</span><span class="fu"><a href="https://s-fleck.github.io/lgr/reference/get_logger.html" class="external-link">get_logger</a></span><span class="op">(</span><span class="st">"mlr3oml"</span><span class="op">)</span></span>
+<span><span class="va">logger</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"info"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">oml_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span><span class="co"># to print the object, some meta data must be downloaded</span></span>
+<span><span class="va">oml_data</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
+<span><span class="co">##  * Default target: class</span></span></code></pre>
+<p>To download all information associated with an object, the
+<code>$download()</code> method can be called. This can be useful to
+ensure that all information is available offline. In this case, only the
+actual underlying data is downloaded, as everything else was already
+implicityly accessed above.</p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="api-key">API Key<a class="anchor" aria-label="anchor" href="#api-key"></a>
