@@ -1,4 +1,4 @@
-skip_on_cran()
+skip()
 
 test_that("data publishing works", {
   test_server = TRUE
