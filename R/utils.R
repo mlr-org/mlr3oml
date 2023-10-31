@@ -150,11 +150,11 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
 #'  The API key to perform the action, if left NULL it first tries getOption("mlr3oml.api_key") and
 #'  then Sys.getenv("OMLAPIKEY").
 #' @param server (`character(1)`)
-#'  The server address, defaults to `get_server()`.
+#'  The server address, defaults to `FALSE`.
 #' @param confirm (`logical(1)`)
 #'  Whether the deletion has to be confirmed interactively.
 #' @noRd
-delete = function(type, id, api_key = NULL, test_server = NULL) {
+delete = function(type, id, api_key = NULL, test_server = FALSE) {
   server = get_server(assert_flag(test_server))
   if (is.null(api_key)) api_key = get_api_key(server)
   assert_choice(type, choices = c("flow", "run", "task", "data", "study", "collection"))
