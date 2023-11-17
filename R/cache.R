@@ -117,7 +117,7 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
     return(fun(id, ...))
   }
 
-  path = file.path(cache_dir, ifelse(test_server, "test", "public"), type)
+  path = file.path(cache_dir, if (test_server) "test" else "public", type)
   file = file.path(path, sprintf("%i.%s", id, if (parquet) "parquet" else "qs"))
 
   if (file.exists(file)) {
@@ -138,12 +138,11 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
     dir.create(path, recursive = TRUE)
   }
 
-  obj = fun(id, ...)
   if (parquet) {
-    lg$debug("Moving parquet data from tempfile to cache.", type = type, id = id, file = file)
-    file.rename(obj, file)
+    obj = fun(id, ..., file = file)
     return(file)
   }
+  obj = fun(id, ...)
 
   lg$debug("Storing compressed object in cache", type = type, id = id, file = file)
   qs::qsave(obj, file = file, nthreads = getOption("Ncpus", 1L))

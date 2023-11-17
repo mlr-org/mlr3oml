@@ -1,5 +1,8 @@
 # mlr3oml 0.9.0-9000
 
+* Bugfix: Caching of parquet files failed when the temporary directory was on a
+different partition as the cache directory
+
 # mlr3oml 0.9.0
 
 * Fix: Parquet datasets now work where columns simultaneously have to be renamed
