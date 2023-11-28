@@ -44,6 +44,16 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
 
+
+      - name: Cache OpenML
+        uses: actions/cache@v3
+        id: openml-cache
+        with:
+          path: ~/openml
+            # we will just (almost) always get the cache from the restore keys
+          key: ${{ runner.os }}-openml-${{ hashFiles('.') }}
+          restore-keys: ${{ runner.os }}-openml-
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
