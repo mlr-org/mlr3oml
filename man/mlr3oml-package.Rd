@@ -47,6 +47,9 @@ If set to \code{FALSE}, the arff version of datasets will be used by default.
 Note that the OpenML sever is still transitioning from arff to parquet and some features
 will work better with arff.
 Default is \code{FALSE}.
+\item \code{mlr3oml.retries}:
+An integer defining number of retries when downloading data from OpenML.
+If it is \code{NULL}, the number of retries is set to 3.
 }
 
 \strong{Relevant for developers}

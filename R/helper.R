@@ -91,7 +91,7 @@ download_file = function(url, path, api_key = NULL, server) {
 
 
 get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE, server,
-  api_key = get_api_key(server), retries = 3L, error_on_fail = TRUE) {
+  api_key = get_api_key(server), retries = getOption("mlr3oml.retries", 3L), error_on_fail = TRUE) {
   path = tempfile(fileext = ".json")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)

@@ -42,6 +42,9 @@
 #'   Note that the OpenML sever is still transitioning from arff to parquet and some features
 #'   will work better with arff.
 #'   Default is `FALSE`.
+#'  * `mlr3oml.retries`:
+#'  An integer defining number of retries when downloading data from OpenML.
+#'  If it is `NULL`, the number of retries is set to 3.
 #'
 #' **Relevant for developers**
 #'

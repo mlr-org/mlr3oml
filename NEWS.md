@@ -2,6 +2,8 @@
 
 * Bugfix: Caching of parquet files failed when the temporary directory was on a
 different partition as the cache directory
+* feat: Add option `mlr3oml.retries` to control number of retries when
+downloading data from OpenML. The default is 3.
 
 # mlr3oml 0.9.0
 

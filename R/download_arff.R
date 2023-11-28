@@ -11,7 +11,8 @@ download_arff = function(data_id, server, desc = download_desc_data(data_id, ser
 #' When using the internal parser (default) the names are also changed to comply with R's
 #' variable naming scheme.
 #' @noRd
-get_arff = function(url, ..., sparse = FALSE, server, api_key = get_api_key(server), retries = 3L) {
+get_arff = function(url, ..., sparse = FALSE, server, api_key = get_api_key(server),
+  retries = getOption("mlr3oml.retries", 3L)) {
   path = tempfile(fileext = ".arff")
   on.exit(file.remove(path[file.exists(path)]))
   url = sprintf(url, ...)
