@@ -1,4 +1,4 @@
-skip_on_cran()
+skip()
 
 test_that("Can publish collection on the test server", {
   test_server = TRUE

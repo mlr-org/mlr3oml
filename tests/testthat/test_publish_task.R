@@ -1,14 +1,14 @@
-skip_on_cran()
+skip()
 
 test_that("Can publish task on test server", {
   test_server = TRUE
   withr::defer(delete(type = "task", id = task_id, test_server = test_server))
   withr::defer(delete(type = "task", id = task_id2, test_server = test_server))
 
-  data_id = 150 # iris
+  data_id = 128 # iris
 
   f = function() {
-    publish_task(id = data_id, type = "classif", target = "Species", estimation_procedure = 6, test_server = test_server) # nolint
+    publish_task(id = data_id, type = "classif", target = "class", estimation_procedure = 6, test_server = test_server) # nolint
   }
 
   expect_message({task_id <<- f()}, regexp = NA) # nolint

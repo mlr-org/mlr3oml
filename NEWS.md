@@ -1,5 +1,8 @@
 # mlr3oml 0.9.0-9000
 
+* feat: Add option `mlr3oml.retries` to control number of retries when
+downloading data from OpenML. The default is 3.
+
 # mlr3oml 0.9.0
 
 * Fix: Parquet datasets now work where columns simultaneously have to be renamed

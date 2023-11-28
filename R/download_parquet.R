@@ -2,7 +2,7 @@ download_parquet = function(data_id, server, desc = download_desc_data(data_id, 
   get_parquet(desc$minio_url, api_key = get_api_key(server))
 }
 
-get_parquet = function(url, ..., server, api_key = get_api_key(server), retries = 3L) {
+get_parquet = function(url, ..., server, api_key = get_api_key(server), retries = getOption("mlr3oml.retries", 3L)) {
   path = tempfile(fileext = ".parquet")
   url = sprintf(url, ...)
 
