@@ -184,8 +184,6 @@ OMLData = R6Class("OMLData",
       }
       if (is.null(private$.parquet_path)) {
         loadNamespace("mlr3db")
-        # this function is already cached, it works a little different than the cached(f, ...)
-        # because we cache it as .parquet and not as .qs
         private$.parquet_path = cached(
           download_parquet, "data_parquet", self$id, desc = self$desc, cache_dir = self$cache_dir,
           server = self$server, test_server = self$test_server, parquet = TRUE

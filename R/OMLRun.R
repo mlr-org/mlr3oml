@@ -245,7 +245,9 @@ as_resample_result.OMLRun = function(x, store_backends = TRUE, ...) {
     resampling = list(resampling),
     iteration = seq_len(resampling$iters),
     prediction = predictions,
-    uhash = uuid::UUIDgenerate()
+    uhash = uuid::UUIDgenerate(),
+    param_values  = replicate(list(), n = 2),
+    learner_hash = learner$hash
   )
 
   ResampleResult$new(ResultData$new(data, store_backends = store_backends))
