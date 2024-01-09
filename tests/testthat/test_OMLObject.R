@@ -13,5 +13,5 @@ test_that("Caching directory is correctly handled when it does not exist", {
   expect_true(grepl(out[[1L]], pattern = "changed since initializing this object"))
   expect_true(grepl(out[[1L]], pattern = dir1))
   expect_true(grepl(out[[1L]], pattern = cache_dir))
-  expect_equal(odata$cache_dir, dir1)
+  expect_equal(normalizePath(odata$cache_dir, winslash = "/"), normalizePath(dir1, winslash = "/"))
 })
