@@ -20,7 +20,7 @@ get_desc_downloader = function(type) {
 }
 
 get_server = function(test_server) {
-  if (test_server) "https://test.openml.org/api/v1" else "https://www.openml.org/api/v1"
+  if (test_server) "https://test.openml.org/api/v1" else "https://www.test.openml.org/py"
 }
 
 catf_estimation_procedure = function(estimation_procedure) {
