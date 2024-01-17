@@ -1,7 +1,5 @@
 download_desc_collection = function(collection_id, server) {
-  desc = get_json(paste0(server, "/json/study/%i"), collection_id,
-    simplify_data_frame = FALSE, server = server
-  )[[1L]]
+  desc = get_json(paste0(server, "/studies/%i"), collection_id, simplify_data_frame = FALSE, server = server)
 
   parse_desc_collection(desc)
 }

@@ -101,17 +101,20 @@ get_json = function(url, ..., simplify_vector = TRUE, simplify_data_frame = TRUE
   for (retry in seq_len(retries)) {
     response = download_file(url, path, api_key = api_key)
 
+    browser()
     if (response$ok) {
       json = jsonlite::fromJSON(path, simplifyVector = simplify_vector, simplifyDataFrame = simplify_data_frame)
       return(json)
     } else if (retry < retries) {
-      if (response$oml_code %in% c(107L)) {
-        delay = max(rnorm(1L, mean = 10), 0)
-        lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
-        Sys.sleep(delay)
-      } else {
-        break
-      }
+      break
+      # FIXME:
+      #if (isTRUE(response$oml_code %in% c(107L))) {
+      #  delay = max(rnorm(1L, mean = 10), 0)
+      #  lg$debug("Server busy, retrying in %.2f seconds", delay, try = retry)
+      #  Sys.sleep(delay)
+      #} else {
+      #  break
+      #}
     }
   }
 
@@ -134,6 +137,15 @@ get_paginated_table = function(query_type, ..., limit, server) {
     query = build_filter_query(query_type, dots, server)
 
     response = get_json(query, error_on_fail = FALSE, server = server)
+
+    response = httr::POST(
+      url = sprintf("%s/task", get_server(test_server)),
+      body = list(
+        description = httr::upload_file(desc_path)
+      ),
+      query = list(api_key = api_key)
+    )
+
     if (inherits(response, "server_response")) {
       if (response$oml_code %in% magic_numbers$oml_no_more_results) {
         # no more results

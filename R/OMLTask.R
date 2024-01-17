@@ -100,7 +100,7 @@ OMLTask = R6Class("OMLTask",
     #' @field name (`character(1)`)\cr
     #'   Name of the task, extracted from the task description.
     name = function() {
-      self$desc$task_name
+      self$desc$name
     },
     #' @field task_type (`character(1)`)\cr
     #'   The OpenML task type.
@@ -156,7 +156,7 @@ OMLTask = R6Class("OMLTask",
     #' @field data_name (`character()`)\cr
     #' Name of the dataset (inferred from the task name).
     data_name = function() {
-      strsplit(self$desc$task_name, split = " ")[[1]][[3]]
+      strsplit(self$desc$name, split = " ")[[1]][[3]]
     }
   ),
   private = list(
