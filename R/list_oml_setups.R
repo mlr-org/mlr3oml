@@ -6,7 +6,7 @@
 #' @export
 list_oml_setups = function(flow_id = NULL, setup_id = NULL, tag = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {
-  tab = get_paginated_table("setup",
+  tab = get_paginated_table("setups",
     flow = flow_id,
     setup = setup_id,
     tag = tag,

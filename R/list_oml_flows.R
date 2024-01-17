@@ -4,7 +4,7 @@
 #' @export
 list_oml_flows = function(uploader = NULL, tag = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {
-  tab = get_paginated_table("flow",
+  tab = get_paginated_table("flows",
     uploader = uploader,
     tag = tag,
     limit = limit,
