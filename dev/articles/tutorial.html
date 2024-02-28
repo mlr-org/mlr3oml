@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.7/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
@@ -214,7 +214,9 @@ data types, missing values, whether they should be ignored for learning
 or whether they are the row identifier.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">oml_data</span><span class="op">$</span><span class="va">features</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    index            name data_type</span></span>
+<pre><code><span><span class="co">## Key: &lt;index&gt;</span></span>
+<span><span class="co">##    index            name data_type</span></span>
+<span><span class="co">##    &lt;int&gt;          &lt;char&gt;    &lt;fctr&gt;</span></span>
 <span><span class="co">## 1:     0 checking_status   nominal</span></span>
 <span><span class="co">## 2:     1        duration   numeric</span></span>
 <span><span class="co">## 3:     2  credit_history   nominal</span></span>
@@ -222,6 +224,7 @@ or whether they are the row identifier.</p>
 <span><span class="co">## 5:     4   credit_amount   numeric</span></span>
 <span><span class="co">## 6:     5  savings_status   nominal</span></span>
 <span><span class="co">##                                                                                   nominal_value</span></span>
+<span><span class="co">##                                                                                          &lt;list&gt;</span></span>
 <span><span class="co">## 1:                                                                0&lt;=X&lt;200,&lt;0,&gt;=200,no checking</span></span>
 <span><span class="co">## 2:                                                                                             </span></span>
 <span><span class="co">## 3: all paid,critical/other existing credit,delayed previously,existing paid,no credits/all paid</span></span>
@@ -229,6 +232,7 @@ or whether they are the row identifier.</p>
 <span><span class="co">## 5:                                                                                             </span></span>
 <span><span class="co">## 6:                                          100&lt;=X&lt;500,500&lt;=X&lt;1000,&lt;100,&gt;=1000,no known savings</span></span>
 <span><span class="co">##    is_target is_ignore is_row_identifier number_of_missing_values</span></span>
+<span><span class="co">##       &lt;lgcl&gt;    &lt;lgcl&gt;            &lt;lgcl&gt;                    &lt;int&gt;</span></span>
 <span><span class="co">## 1:     FALSE     FALSE             FALSE                        0</span></span>
 <span><span class="co">## 2:     FALSE     FALSE             FALSE                        0</span></span>
 <span><span class="co">## 3:     FALSE     FALSE             FALSE                        0</span></span>
@@ -240,6 +244,7 @@ We only show a subset of the data here for readability.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##    checking_status duration                 credit_history</span></span>
+<span><span class="co">##             &lt;fctr&gt;    &lt;int&gt;                         &lt;fctr&gt;</span></span>
 <span><span class="co">## 1:              &lt;0        6 critical/other existing credit</span></span>
 <span><span class="co">## 2:        0&lt;=X&lt;200       48                  existing paid</span></span>
 <span><span class="co">## 3:     no checking       12 critical/other existing credit</span></span>
@@ -252,6 +257,7 @@ the <code><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" clas
 <span><span class="va">backend</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;DataBackendDataTable&gt; (1000x22)</span></span>
 <span><span class="co">##  checking_status duration                 credit_history             purpose</span></span>
+<span><span class="co">##           &lt;fctr&gt;    &lt;int&gt;                         &lt;fctr&gt;              &lt;fctr&gt;</span></span>
 <span><span class="co">##               &lt;0        6 critical/other existing credit            radio/tv</span></span>
 <span><span class="co">##         0&lt;=X&lt;200       48                  existing paid            radio/tv</span></span>
 <span><span class="co">##      no checking       12 critical/other existing credit           education</span></span>
@@ -259,33 +265,37 @@ the <code><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" clas
 <span><span class="co">##               &lt;0       24             delayed previously             new car</span></span>
 <span><span class="co">##      no checking       36                  existing paid           education</span></span>
 <span><span class="co">##  credit_amount   savings_status employment installment_commitment</span></span>
+<span><span class="co">##          &lt;int&gt;           &lt;fctr&gt;     &lt;fctr&gt;                  &lt;int&gt;</span></span>
 <span><span class="co">##           1169 no known savings        &gt;=7                      4</span></span>
 <span><span class="co">##           5951             &lt;100     1&lt;=X&lt;4                      2</span></span>
 <span><span class="co">##           2096             &lt;100     4&lt;=X&lt;7                      2</span></span>
 <span><span class="co">##           7882             &lt;100     4&lt;=X&lt;7                      2</span></span>
 <span><span class="co">##           4870             &lt;100     1&lt;=X&lt;4                      3</span></span>
 <span><span class="co">##           9055 no known savings     1&lt;=X&lt;4                      2</span></span>
-<span><span class="co">##     personal_status other_parties residence_since property_magnitude age</span></span>
-<span><span class="co">##         male single          none               4        real estate  67</span></span>
-<span><span class="co">##  female div/dep/mar          none               2        real estate  22</span></span>
-<span><span class="co">##         male single          none               3        real estate  49</span></span>
-<span><span class="co">##         male single     guarantor               4     life insurance  45</span></span>
-<span><span class="co">##         male single          none               4  no known property  53</span></span>
-<span><span class="co">##         male single          none               4  no known property  35</span></span>
+<span><span class="co">##     personal_status other_parties residence_since property_magnitude   age</span></span>
+<span><span class="co">##              &lt;fctr&gt;        &lt;fctr&gt;           &lt;int&gt;             &lt;fctr&gt; &lt;int&gt;</span></span>
+<span><span class="co">##         male single          none               4        real estate    67</span></span>
+<span><span class="co">##  female div/dep/mar          none               2        real estate    22</span></span>
+<span><span class="co">##         male single          none               3        real estate    49</span></span>
+<span><span class="co">##         male single     guarantor               4     life insurance    45</span></span>
+<span><span class="co">##         male single          none               4  no known property    53</span></span>
+<span><span class="co">##         male single          none               4  no known property    35</span></span>
 <span><span class="co">##  other_payment_plans  housing existing_credits                job</span></span>
+<span><span class="co">##               &lt;fctr&gt;   &lt;fctr&gt;            &lt;int&gt;             &lt;fctr&gt;</span></span>
 <span><span class="co">##                 none      own                2            skilled</span></span>
 <span><span class="co">##                 none      own                1            skilled</span></span>
 <span><span class="co">##                 none      own                1 unskilled resident</span></span>
 <span><span class="co">##                 none for free                1            skilled</span></span>
 <span><span class="co">##                 none for free                2            skilled</span></span>
 <span><span class="co">##                 none for free                1 unskilled resident</span></span>
-<span><span class="co">##  num_dependents own_telephone foreign_worker class ..row_id</span></span>
-<span><span class="co">##               1           yes            yes  good        1</span></span>
-<span><span class="co">##               1          none            yes   bad        2</span></span>
-<span><span class="co">##               2          none            yes  good        3</span></span>
-<span><span class="co">##               2          none            yes  good        4</span></span>
-<span><span class="co">##               2          none            yes   bad        5</span></span>
-<span><span class="co">##               2           yes            yes  good        6</span></span>
+<span><span class="co">##  num_dependents own_telephone foreign_worker  class ..row_id</span></span>
+<span><span class="co">##           &lt;int&gt;        &lt;fctr&gt;         &lt;fctr&gt; &lt;fctr&gt;    &lt;int&gt;</span></span>
+<span><span class="co">##               1           yes            yes   good        1</span></span>
+<span><span class="co">##               1          none            yes    bad        2</span></span>
+<span><span class="co">##               2          none            yes   good        3</span></span>
+<span><span class="co">##               2          none            yes   good        4</span></span>
+<span><span class="co">##               2          none            yes    bad        5</span></span>
+<span><span class="co">##               2           yes            yes   good        6</span></span>
 <span><span class="co">## [...] (994 rows omitted)</span></span></code></pre>
 <p>Because this specific dataset has a default target in its meta data,
 we can also directly convert it to an <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a></code>.</p>
@@ -343,18 +353,19 @@ previous section.</p>
 <code>$task_splits</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_task</span><span class="op">$</span><span class="va">task_splits</span></span></code></pre></div>
-<pre><code><span><span class="co">##        type rowid repeat. fold</span></span>
-<span><span class="co">##    1:  TEST   490       0    0</span></span>
-<span><span class="co">##    2:  TEST   539       0    0</span></span>
-<span><span class="co">##    3:  TEST   694       0    0</span></span>
-<span><span class="co">##    4:  TEST   646       0    0</span></span>
-<span><span class="co">##    5:  TEST   150       0    0</span></span>
-<span><span class="co">##   ---                         </span></span>
-<span><span class="co">##  996: TRAIN   875       0    0</span></span>
-<span><span class="co">##  997: TRAIN   549       0    0</span></span>
-<span><span class="co">##  998: TRAIN   195       0    0</span></span>
-<span><span class="co">##  999: TRAIN   241       0    0</span></span>
-<span><span class="co">## 1000: TRAIN   360       0    0</span></span></code></pre>
+<pre><code><span><span class="co">##         type rowid repeat.  fold</span></span>
+<span><span class="co">##       &lt;fctr&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">##    1:   TEST   490       0     0</span></span>
+<span><span class="co">##    2:   TEST   539       0     0</span></span>
+<span><span class="co">##    3:   TEST   694       0     0</span></span>
+<span><span class="co">##    4:   TEST   646       0     0</span></span>
+<span><span class="co">##    5:   TEST   150       0     0</span></span>
+<span><span class="co">##   ---                           </span></span>
+<span><span class="co">##  996:  TRAIN   875       0     0</span></span>
+<span><span class="co">##  997:  TRAIN   549       0     0</span></span>
+<span><span class="co">##  998:  TRAIN   195       0     0</span></span>
+<span><span class="co">##  999:  TRAIN   241       0     0</span></span>
+<span><span class="co">## 1000:  TRAIN   360       0     0</span></span></code></pre>
 <p>The conversion to an <code><a href="https://mlr3.mlr-org.com/reference/Task.html" class="external-link">mlr3::Task</a></code> is possible using the
 <code><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task()</a></code> converter.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
@@ -446,22 +457,24 @@ from above:</p>
 evaluation of these predictions.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">run</span><span class="op">$</span><span class="va">prediction</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    repeat. fold row_id confidence.good confidence.bad prediction correct</span></span>
-<span><span class="co">## 1:       0    0    490        0.920000       0.080000       good    good</span></span>
-<span><span class="co">## 2:       0    0    539        0.885714       0.114286       good    good</span></span>
-<span><span class="co">## 3:       0    0    694        0.920000       0.080000       good    good</span></span>
-<span><span class="co">## 4:       0    0    646        0.727273       0.272727       good    good</span></span>
-<span><span class="co">## 5:       0    0    150        0.727273       0.272727       good    good</span></span>
-<span><span class="co">## 6:       0    0    970        0.166667       0.833333        bad    good</span></span></code></pre>
+<pre><code><span><span class="co">##    repeat.  fold row_id confidence.good confidence.bad prediction correct</span></span>
+<span><span class="co">##      &lt;int&gt; &lt;int&gt;  &lt;int&gt;           &lt;num&gt;          &lt;num&gt;     &lt;fctr&gt;  &lt;fctr&gt;</span></span>
+<span><span class="co">## 1:       0     0    490        0.920000       0.080000       good    good</span></span>
+<span><span class="co">## 2:       0     0    539        0.885714       0.114286       good    good</span></span>
+<span><span class="co">## 3:       0     0    694        0.920000       0.080000       good    good</span></span>
+<span><span class="co">## 4:       0     0    646        0.727273       0.272727       good    good</span></span>
+<span><span class="co">## 5:       0     0    150        0.727273       0.272727       good    good</span></span>
+<span><span class="co">## 6:       0     0    970        0.166667       0.833333        bad    good</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">run</span><span class="op">$</span><span class="va">evaluation</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                             name     value        array_data repeat fold</span></span>
-<span><span class="co">## 1:          area_under_roc_curve  0.657856 0.657856,0.657856   &lt;NA&gt;   NA</span></span>
-<span><span class="co">## 2:                  average_cost  0.000000                NA   &lt;NA&gt;   NA</span></span>
-<span><span class="co">## 3:                     f_measure  0.705442 0.795745,0.494737   &lt;NA&gt;   NA</span></span>
-<span><span class="co">## 4:                         kappa  0.290990                NA   &lt;NA&gt;   NA</span></span>
-<span><span class="co">## 5: kb_relative_information_score 53.759911                NA   &lt;NA&gt;   NA</span></span>
-<span><span class="co">## 6:           mean_absolute_error  0.342722                NA   &lt;NA&gt;   NA</span></span></code></pre>
+<pre><code><span><span class="co">##                             name     value        array_data repeat  fold</span></span>
+<span><span class="co">##                           &lt;char&gt;     &lt;num&gt;            &lt;list&gt; &lt;char&gt; &lt;int&gt;</span></span>
+<span><span class="co">## 1:          area_under_roc_curve  0.657856 0.657856,0.657856   &lt;NA&gt;    NA</span></span>
+<span><span class="co">## 2:                  average_cost  0.000000                NA   &lt;NA&gt;    NA</span></span>
+<span><span class="co">## 3:                     f_measure  0.705442 0.795745,0.494737   &lt;NA&gt;    NA</span></span>
+<span><span class="co">## 4:                         kappa  0.290990                NA   &lt;NA&gt;    NA</span></span>
+<span><span class="co">## 5: kb_relative_information_score 53.759911                NA   &lt;NA&gt;    NA</span></span>
+<span><span class="co">## 6:           mean_absolute_error  0.342722                NA   &lt;NA&gt;    NA</span></span></code></pre>
 <p>OpenML runs can be converted to <code><a href="https://mlr3.mlr-org.com/reference/ResampleResult.html" class="external-link">mlr3::ResampleResult</a></code>s
 using the <code><a href="https://mlr3.mlr-org.com/reference/as_resample_result.html" class="external-link">as_resample_result()</a></code> function.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
@@ -540,6 +553,7 @@ features.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">cc18_filtered</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"task_id"</span>, <span class="st">"name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##    task_id                name</span></span>
+<span><span class="co">##      &lt;int&gt;              &lt;char&gt;</span></span>
 <span><span class="co">## 1:      11       balance-scale</span></span>
 <span><span class="co">## 2:      15            breast-w</span></span>
 <span><span class="co">## 3:      18 mfeat-morphological</span></span>
@@ -603,9 +617,9 @@ keep the output clean), to <code>"info"</code>.</p>
 <span><span class="va">oml_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="co"># to print the object, some meta data must be downloaded</span></span>
 <span><span class="va">oml_data</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [16:13:59.191] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [16:13:59.404] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [16:13:59.604] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<pre><code><span><span class="co">## INFO  [17:30:56.774] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:30:56.936] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:30:57.087] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
 <span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <p>To download all information associated with an object, the
@@ -615,7 +629,7 @@ actual underlying data is downloaded, as everything else was already
 implicityly accessed above.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [16:13:59.858] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
+<pre><code><span><span class="co">## INFO  [17:30:57.285] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="caching">Caching<a class="anchor" aria-label="anchor" href="#caching"></a>
@@ -633,9 +647,9 @@ can be added or removed.</p>
 <span></span>
 <span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [16:14:00.336] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [16:14:00.523] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [16:14:00.715] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<pre><code><span><span class="co">## INFO  [17:30:57.657] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:30:57.797] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:30:57.937] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
 <span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
