@@ -3,7 +3,7 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   tutorial: tutorial.html
-last_built: 2024-06-05T11:15Z
+last_built: 2024-06-05T11:18Z
 urls:
   reference: https://mlr3oml.mlr-org.com/reference
   article: https://mlr3oml.mlr-org.com/articles
