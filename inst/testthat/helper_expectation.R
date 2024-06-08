@@ -53,6 +53,13 @@ expect_oml_data = function(data) {
   expect_names(data$feature_names, "strict")
   expect_subset(data$feature_names, colnames(data$data))
   expect_disjunct(data$target_names, data$feature_names)
+  expect_character(data$desc$default_target_attribute, null.ok = TRUE)
+  expect_character(data$desc$row_id_attribute, null.ok = TRUE)
+  expect_character(data$desc$ignore_attribute, null.ok = TRUE)
+  expect_character(data$desc$creator, null.ok = TRUE)
+  expect_character(data$desc$contributor, null.ok = TRUE)
+  expect_character(data$desc$paper_url, null.ok = TRUE)
+  expect_character(data$desc$tag, null.ok = TRUE)
   # can't do this because after OpenML's parquet transition some features seem to be missing
   # expect_set_equal(names(data$data), c(data$feature_names, data$target_names))
   expect_count(data$nrow)
@@ -65,6 +72,12 @@ expect_oml_data = function(data) {
   }
   expect_flag(data$parquet)
   backend = as_data_backend(data)
+  if (length(data$desc$default_target_attribute)) {
+    expect_choice(data$desc$default_target_attribute, backend$colnames)
+  }
+  if (length(data$desc$ignore_attribute)) {
+    expect_choice(data$desc$ignore_attribute, backend$colnames)
+  }
   expect_r6(backend, paste0("DataBackend"))
 }
 

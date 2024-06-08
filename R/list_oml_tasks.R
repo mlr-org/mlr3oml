@@ -16,7 +16,7 @@ list_oml_tasks = function(task_id = NULL, data_id = NULL, number_instances = NUL
       clust = "5"
     )
   }
-  tab = get_paginated_table("task",
+  tab = get_paginated_table("tasks",
     task_id = task_id,
     data_id = data_id,
     number_instances = number_instances,
