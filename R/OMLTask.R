@@ -137,7 +137,7 @@ OMLTask = R6Class("OMLTask",
     },
     #' @field target_names (`character()`)\cr
     #' Name of the targets, as extracted from the OpenML task description.
-    #' For survival tasks, a named vector with `"event"` and at least one of `"left"` and `"right"` is returned.
+    #' For survival tasks, a vector with names `"event"` and at least one of `"left"` and `"right"` is returned.
     target_names = function() {
       source_data = self$desc$input$source_data
       conv_surv = function(source_data) {

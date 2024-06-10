@@ -171,7 +171,8 @@ otask_surv$target_names
 ```
 
 Here, `$target_names` always includes a value with name `"event"`, and at least one of `"left"` (timestamp) and `"right"` (timestamp).
-In order to manually create an `mlr3proba::TaskSurv`, we use `mlr3proba::as_task_surv` and pass the data, task id and other metadata required to create the task.
+In order to manually create an `mlr3proba::TaskSurv`, we use `mlr3proba::as_task_surv` and pass the data, task id and other metadata to the function.
+
 If:
 * only the `"left"` timestamp is present, pass it as argument `time` and set the type to `"left"` 
 * only the `"right"` timestamp is present, pass it as argument `time` and set the type to `"right"`
@@ -188,7 +189,7 @@ mlr3_task$feature_names = otask_surv$feature_names
 mlr3_task
 ```
 ```{r, eval = FALSE}
-## <TaskSurv:otask_surv$data$data> (432 x 9)
+## <TaskSurv:rossi> (432 x 9)
 ## * Target: week, arrest
 ## * Properties: -
 ## * Features (7):
