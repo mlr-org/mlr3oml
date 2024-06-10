@@ -10,6 +10,8 @@
 #'
 #' @section mlr3 Integration:
 #' * Obtain a [mlr3::Task] by calling `as_task()`.
+#'   Note that this only works for classification and regression tasks.
+#'   For survival tasks, see the *Getting Started* vignette on the package website.
 #' * Obtain a [mlr3::Resampling] by calling `as_resampling()`.
 #'
 #' @references
@@ -135,18 +137,21 @@ OMLTask = R6Class("OMLTask",
     },
     #' @field target_names (`character()`)\cr
     #' Name of the targets, as extracted from the OpenML task description.
+    #' For survival tasks, a named vector with `"event"` and at least one of `"left"` and `"right"` is returned.
     target_names = function() {
       source_data = self$desc$input$source_data
+      conv_surv = function(source_data) {
+        target_names = unlist(
+          source_data[c("target_feature_left", "target_feature_right", "target_feature_event")]
+        )
+        set_names(make.names(target_names), gsub(pattern = "^target_feature_", "", names(target_names)))
+      }
       targets = switch(self$desc$task_type,
         "Supervised Classification" = ,
-        "Supervised Regression" = source_data$target_feature,
-        # "Survival Analysis" = unlist(
-        #   source_data[c("target_feature_left", "target_feature_right", "target_feature_event")],
-        #   use.names = FALSE
-        # ),
+        "Supervised Regression" = make.names(source_data$target_feature),
+        "Survival Analysis" = conv_surv(source_data),
         stopf("Unsupported task type '%s'", self$desc$task_type)
       )
-      make.names(targets)
     },
     #' @field feature_names (`character()`)\cr
     #' Name of the features (without targets of this [OMLTask]).
@@ -189,6 +194,8 @@ as_task.OMLTask = function(x, ...) {
     "Supervised Classification" = TaskClassif,
     "Supervised Regression" = TaskRegr,
     # "Survival Analysis" = new_task_surv,
+    "Survival Analyis" = 
+      stopf("For survival tasks, see the 'Getting Started' vignette on the website."),
     stopf("Unsupported task type '%s'.", x$desc$task_type)
   )
   task = constructor$new(name, backend, target = target)

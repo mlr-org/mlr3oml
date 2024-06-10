@@ -14,6 +14,8 @@ This object can also be constructed using the sugar function \code{\link[=otsk]{
 
 \itemize{
 \item Obtain a \link[mlr3:Task]{mlr3::Task} by calling \code{as_task()}.
+Note that this only works for classification and regression tasks.
+For survival tasks, see the \emph{Getting Started} vignette on the package website.
 \item Obtain a \link[mlr3:Resampling]{mlr3::Resampling} by calling \code{as_resampling()}.
 }
 }
@@ -71,7 +73,8 @@ Number of rows, extracted from the \link{OMLData} object.}
 Number of columns, as extracted from the \link{OMLData} object.}
 
 \item{\code{target_names}}{(\code{character()})\cr
-Name of the targets, as extracted from the OpenML task description.}
+Name of the targets, as extracted from the OpenML task description.
+For survival tasks, a named vector with \code{"event"} and at least one of \code{"left"} and \code{"right"} is returned.}
 
 \item{\code{feature_names}}{(\code{character()})\cr
 Name of the features (without targets of this \link{OMLTask}).}

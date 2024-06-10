@@ -131,7 +131,7 @@ Filter for flow id.}
 Vector of setup ids to restrict to.}
 
 \item{type}{(\code{character(1)})\cr
-The task type, supported values are: \code{"clasisf"}, \code{"regr"}, \code{"surv"} and \code{"clust"}.}
+The task type, supported values are: \code{"classif"}, \code{"regr"}, \code{"surv"} and \code{"clust"}.}
 }
 \value{
 (\code{data.table()}) of results, or a null data.table if no data set matches the filter criteria.

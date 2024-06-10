@@ -10,8 +10,10 @@
 #'   Can either be `"classif"` or `"regr"` or an integer indicating the task type.
 #' @param estimation_procedure (`integer(1)`)\cr
 #'   The id of the estimation procedure.
-#' @param target (`character(1)`)\cr
+#' @param target (`character(1)` | named `character()`)\cr
 #'   The target variable (if applicable).
+#'   For survival tasks, this must be a named vector, containing at least `"event"`, as well as
+#'   either `"left"`, `"right"` (or both).
 #' @template param_api_key
 #' @template param_test_server
 #'
@@ -30,12 +32,20 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
     type = switch(type,
       regr = 2,
       classif = 1,
+      surv = 7,
       stopf("Invalid type '%s'.", type)
     )
   } else {
     assert_int(type, lower = 1L)
   }
-  assert_character(target, len = 1L)
+  if (type == 7) {
+    assert_character(target, min.len = 2L, any.missing = FALSE)
+    assert_integer(data)
+    tn = names(target)
+    assert_true(("event" %in% tn) & ("left" %in% tn || "right" %in% tn))
+  } else {
+    assert_character(target, len = 1L)
+  }
   estimation_procedure = assert_int(estimation_procedure)
 
   add = function(name, value) {
@@ -48,7 +58,17 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
   task = xml2::xml_add_child(doc, "oml:task_inputs", "xmlns:oml" = "http://openml.org/openml")
   xml2::xml_add_child(task, "oml:task_type_id", type)
   add("source_data", id)
-  if (!is.null(target)) add("target_feature", target)
+  if (type == 7) {
+    add("target_feature_event", target["event"])
+    if ("left" %in% names(target)) {
+      add("target_feature_left", target["left"])
+    }
+    if ("right" %in% names(target)) {
+      add("target_feature_right", target["right"])
+    }
+  } else {
+    if (!is.null(target)) add("target_feature", target)
+  }
   add("estimation_procedure", estimation_procedure)
 
   withr::defer(unlink(desc_path))
