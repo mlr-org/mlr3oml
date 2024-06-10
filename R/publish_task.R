@@ -40,7 +40,6 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
   }
   if (type == 7) {
     assert_character(target, min.len = 2L, any.missing = FALSE)
-    assert_integer(data)
     tn = names(target)
     assert_true(("event" %in% tn) & ("left" %in% tn || "right" %in% tn))
   } else {
