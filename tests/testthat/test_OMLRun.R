@@ -5,7 +5,7 @@ skip_on_cran()
 # expect_oml_run works
 #
 # When the test server works:
-# 1. Create run for clasisf, regr and surv (for different predict_types)
+# 1. Create run for classif, regr and surv (for different predict_types)
 # 2. Publish the run.
 # 3. Download the run and convert it.
 #

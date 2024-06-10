@@ -2,7 +2,7 @@
 #' @param task_id (`integer()`)\cr
 #'   Vector of task ids to restrict to.
 #' @param type (`character(1)`)\cr
-#'   The task type, supported values are: `"clasisf"`, `"regr"`, `"surv"` and `"clust"`.
+#'   The task type, supported values are: `"classif"`, `"regr"`, `"surv"` and `"clust"`.
 #' @export
 list_oml_tasks = function(task_id = NULL, data_id = NULL, number_instances = NULL, number_features = NULL,
   number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),

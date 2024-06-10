@@ -23,8 +23,10 @@ Can either be \code{"classif"} or \code{"regr"} or an integer indicating the tas
 \item{estimation_procedure}{(\code{integer(1)})\cr
 The id of the estimation procedure.}
 
-\item{target}{(\code{character(1)})\cr
-The target variable (if applicable).}
+\item{target}{(\code{character(1)} | named \code{character()})\cr
+The target variable (if applicable).
+For survival tasks, this must be a named vector, containing at least \code{"event"}, as well as
+either \code{"left"} (timestamp), \code{"right"} (timestamp) or both.}
 
 \item{api_key}{(\code{character(1)})
 The API key to perform the action, if left NULL it first tries the "mlr3oml.api_key" R option and
