@@ -196,13 +196,6 @@ mlr3_task
 ## - int (7): age, fin, mar, paro, prio, race, wexp
 ```
 
-The resampling, however, can be converted just like above using `as_resampling()`:
-
-```{r}
-as_resampling(otask_surv)
-```
-
-
 ### Flows and Runs
 
 We can access the flow with [ID 1068](https://www.openml.org/search?type=flow&sort=runs&id=1068) as shown below:
