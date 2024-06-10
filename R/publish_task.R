@@ -13,7 +13,7 @@
 #' @param target (`character(1)` | named `character()`)\cr
 #'   The target variable (if applicable).
 #'   For survival tasks, this must be a named vector, containing at least `"event"`, as well as
-#'   either `"left"`, `"right"` (or both).
+#'   either `"left"` (timestamp), `"right"` (timestamp) or both.
 #' @template param_api_key
 #' @template param_test_server
 #'
