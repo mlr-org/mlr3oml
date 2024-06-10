@@ -114,6 +114,7 @@ odatasets[, c("data_id", "name")]
   - Downloaded objects can be cached by setting the `mlr3oml.cache`
     option.
   - Both the `arff` and `parquet` filetype for datasets are supported.
+  - You can upload datasets, tasks, and collections to OpenML.
 
 ## Documentation
 
