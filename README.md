@@ -1,7 +1,7 @@
 
 # mlr3oml
 
-Package website: [release](https://mlr3oml.mlr-org.com/) |
+Package website: [release](https://mlr3oml.mlr-org.com/) \|
 [dev](https://mlr3oml.mlr-org.com/dev/)
 
 OpenML integration to the [mlr3 ecosystem](https://mlr-org.com/).
@@ -75,64 +75,90 @@ odatasets = list_oml_data(
   number_classes = 2
 )
 
-odatasets[, c("data_id", "name")]
+head(odatasets[, c("data_id", "name")])
 ```
 
-    ##      data_id
-    ##   1:      13
-    ##   2:      15
-    ##   3:      29
-    ##   4:      49
-    ##   5:      50
-    ##  ---        
-    ## 238:   44767
-    ## 239:   45039
-    ## 240:   45063
-    ## 241:   45562
-    ## 242:   45568
-    ##                                                                              name
-    ##   1:                                                                breast-cancer
-    ##   2:                                                                     breast-w
-    ##   3:                                                              credit-approval
-    ##   4:                                                                      heart-c
-    ##   5:                                                                  tic-tac-toe
-    ##  ---                                                                             
-    ## 238: Click_prediction_small_seed_4_nrows_2000_nclasses_10_ncols_100_stratify_True
-    ## 239:                                                             compas-two-years
-    ## 240:                                                              credit-approval
-    ## 241:                                                                seismic-bumps
-    ## 242:                                                         telco-customer-churn
+    ##    data_id            name
+    ## 1:      13   breast-cancer
+    ## 2:      15        breast-w
+    ## 3:      29 credit-approval
+    ## 4:      49         heart-c
+    ## 5:      50     tic-tac-toe
+    ## 6:      51         heart-h
+
+To retrieve individual datasets, you can use `odt` and either manually
+construct a new `Task` object using `as_task()` or use it `data.table`
+format.
+
+``` r
+odataset = odt(29)
+
+# Dataset as data.table
+str(odataset$data)
+```
+
+    ## Classes 'data.table' and 'data.frame':   690 obs. of  16 variables:
+    ##  $ A1   : Factor w/ 2 levels "b","a": 1 2 2 1 1 1 1 2 1 1 ...
+    ##  $ A2   : num  30.8 58.7 24.5 27.8 20.2 ...
+    ##  $ A3   : num  0 4.46 0.5 1.54 5.62 ...
+    ##  $ A4   : Factor w/ 4 levels "u","y","l","t": 1 1 1 1 1 1 1 1 2 2 ...
+    ##  $ A5   : Factor w/ 3 levels "g","p","gg": 1 1 1 1 1 1 1 1 2 2 ...
+    ##  $ A6   : Factor w/ 14 levels "c","d","cc","i",..: 10 9 9 10 10 7 8 3 6 10 ...
+    ##  $ A7   : Factor w/ 9 levels "v","h","bb","j",..: 1 2 2 1 1 1 2 1 2 1 ...
+    ##  $ A8   : num  1.25 3.04 1.5 3.75 1.71 ...
+    ##  $ A9   : Factor w/ 2 levels "t","f": 1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ A10  : Factor w/ 2 levels "t","f": 1 1 2 1 2 2 2 2 2 2 ...
+    ##  $ A11  : int  1 6 0 5 0 0 0 0 0 0 ...
+    ##  $ A12  : Factor w/ 2 levels "t","f": 2 2 2 1 2 1 1 2 2 1 ...
+    ##  $ A13  : Factor w/ 3 levels "g","p","s": 1 1 1 1 3 1 1 1 1 1 ...
+    ##  $ A14  : int  202 43 280 100 120 360 164 80 180 52 ...
+    ##  $ A15  : int  0 560 824 3 0 0 31285 1349 314 1442 ...
+    ##  $ class: Factor w/ 2 levels "+","-": 1 1 1 1 1 1 1 1 1 1 ...
+    ##  - attr(*, ".internal.selfref")=<externalptr>
+
+``` r
+# Creating a new task
+otask = as_task(odataset)
+otask
+```
+
+    ## <TaskClassif:credit-approval> (690 x 16)
+    ## * Target: class
+    ## * Properties: twoclass
+    ## * Features (15):
+    ##   - fct (9): A1, A10, A12, A13, A4, A5, A6, A7, A9
+    ##   - int (3): A11, A14, A15
+    ##   - dbl (3): A2, A3, A8
 
 ## Feature Overview
 
-  - Datasets, tasks, flows, runs, and collections can be downloaded from
-    [OpenML](https://www.openml.org) and are represented as `R6`
-    classes.
-  - OpenML objects can be easily converted to the corresponding `mlr3`
-    counterpart.
-  - Filtering of OpenML objects can be achieved using listing functions.
-  - Downloaded objects can be cached by setting the `mlr3oml.cache`
-    option.
-  - Both the `arff` and `parquet` filetype for datasets are supported.
-  - You can upload datasets, tasks, and collections to OpenML.
+- Datasets, tasks, flows, runs, and collections can be downloaded from
+  [OpenML](https://www.openml.org) and are represented as `R6` classes.
+- OpenML objects can be easily converted to the corresponding `mlr3`
+  counterpart.
+- Filtering of OpenML objects can be achieved using listing functions.
+- Downloaded objects can be cached by setting the `mlr3oml.cache`
+  option.
+- Both the `arff` and `parquet` filetype for datasets are supported.
+- You can upload datasets, tasks, and collections to OpenML.
 
 ## Documentation
 
-  - Start by reading the [Large-Scale Benchmarking
-    chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
-    from the `mlr3` book.
-  - The [package website](https://mlr3oml.mlr-org.com/dev/) contains a
-    getting started guide.
-  - The OpenML [API documentation](https://www.openml.org/apis) is also
-    a good resource.
+- Start by reading the [Large-Scale Benchmarking
+  chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html)
+  from the `mlr3` book.
+- The [package website](https://mlr3oml.mlr-org.com/dev/) contains a
+  getting started guide.
+- The OpenML [API documentation](https://www.openml.org/apis) is also a
+  good resource.
 
 ## Bugs, Questions, Feedback
 
 *mlr3oml* is a free and open source software project that encourages
 participation and feedback. If you have any issues, questions,
 suggestions or feedback, please do not hesitate to open an “issue” about
-it on the GitHub page\!
+it on the GitHub page!
 
 In case of problems / bugs, it is often helpful if you provide a
-“minimum working example” that showcases the behaviour (but don’t
-worry about this if the bug is obvious).
+“minimum working example” that showcases the behaviour (but don’t worry
+about this if the bug is obvious).
