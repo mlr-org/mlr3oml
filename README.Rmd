@@ -61,8 +61,22 @@ odatasets = list_oml_data(
   number_classes = 2
 )
 
-odatasets[, c("data_id", "name")]
+head(odatasets[, c("data_id", "name")])
 ```
+
+To retrieve individual datasets, you can use `odt` and either manually construct a new `Task` object using `as_task()` or use it `data.table` format.
+
+```{r}
+odataset = odt(29)
+
+# Dataset as data.table
+str(odataset$data)
+
+# Creating a new task
+otask = as_task(odataset)
+otask
+```
+
 ## Feature Overview
 
 * Datasets, tasks, flows, runs, and collections can be downloaded from [OpenML](https://www.openml.org) and are represented as `R6` classes.
