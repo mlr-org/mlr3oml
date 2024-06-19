@@ -162,3 +162,21 @@ with_cache = function(code, cache) {
   on.exit({options(old_options)}, add = TRUE)
   force(code)
 }
+
+oml_make_request = function(url, resource, api_key, desc_path, data_path = NULL) {
+  params = list(description = curl::form_file(desc_path))
+  if (!is.null(data_path)) {
+    params = insert_named(params, list(data = curl::form_file(data_path)))
+  }
+  req = httr2::request(url)
+  req = httr2::req_error(req, is_error = function(resp) FALSE)
+  req = httr2::req_url_path_append(req, resource)
+  req = httr2::req_url_query(req, api_key = api_key)
+  req = do.call(httr2::req_body_multipart, c(list(req), params))
+  httr2::req_perform(req)
+}
+
+oml_process_response = function(resp) {
+  body = httr2::resp_body_xml(resp)
+  xml2::as_list(body)
+}
