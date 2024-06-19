@@ -55,29 +55,23 @@ publish_task = function(id, type, estimation_procedure, target, api_key = NULL,
   desc_path = tempfile(fileext = ".xml")
   xml2::write_xml(x = doc, file = desc_path)
 
-  response = httr::POST(
-    url = sprintf("%s/task", get_server(test_server)),
-    body = list(
-      description = httr::upload_file(desc_path)
-    ),
-    query = list(api_key = api_key)
-  )
+  resp = oml_make_url(get_server(test_server), "task", api_key, desc_path)
+  body = oml_process_response(resp)
 
-  response_list = xml2::as_list(httr::content(response))
-  if (httr::http_error(response)) {
-    if (isTRUE(response_list$error$code[[1L]] == "614")) { # Task already exists.
-      info = response_list$error$additional_information[[1L]]
+  if (httr2::resp_is_error(resp)) {
+    if (isTRUE(body$error$code[[1L]] == "614")) { # Task already exists.
+      info = body$error$additional_information[[1L]]
       id = as.integer(substr(info, 17L, nchar(info) - 1L))
       messagef("Task already exists with id %s.", id)
       return(id)
     } else {
       warningf(
-        paste(response_list$error$message, response_list$error$additional_information, collapse = "\n")
+        paste(body$error$message, body$error$additional_information, collapse = "\n")
       )
-      return(response)
+      return(resp)
     }
   }
 
-  as.integer(response_list$upload_task$id[[1L]])
+  as.integer(body$upload_task$id[[1L]])
 }
 
