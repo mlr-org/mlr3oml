@@ -166,7 +166,7 @@ with_cache = function(code, cache) {
 oml_make_request = function(url, resource, api_key, desc_path, data_path = NULL) {
   params = list(description = curl::form_file(desc_path))
   if (!is.null(data_path)) {
-    params = insert_named(params, list(data = curl::form_file(data_path)))
+    params = insert_named(params, list(dataset = curl::form_file(data_path)))
   }
   req = httr2::request(url)
   req = httr2::req_error(req, is_error = function(resp) FALSE)
