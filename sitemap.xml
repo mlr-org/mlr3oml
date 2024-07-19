@@ -1,87 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/404.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/articles/tutorial.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/as_learner.OMLFlow.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/list_oml.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/mlr3oml-package.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/ocl.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/odt.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oflw.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_collection.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_data.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_flow.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_object.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_run.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/oml_task.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/orn.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/otsk.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/publish_collection.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/publish_data.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/publish_task.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/read_arff.html</loc>
-  </url>
-  <url>
-    <loc>https://mlr3oml.mlr-org.com/reference/write_arff.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://mlr3oml.mlr-org.com/404.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/LICENSE-text.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/LICENSE.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/articles/index.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/articles/tutorial.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/authors.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/index.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/news/index.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/as_learner.OMLFlow.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/index.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/list_oml.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/mlr3oml-package.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/ocl.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/odt.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oflw.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oml_collection.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oml_data.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oml_flow.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oml_object.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oml_run.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/oml_task.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/orn.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/otsk.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/publish_collection.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/publish_data.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/publish_task.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/read_arff.html</loc></url>
+<url><loc>https://mlr3oml.mlr-org.com/reference/write_arff.html</loc></url>
 </urlset>
+
