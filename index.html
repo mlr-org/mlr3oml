@@ -106,31 +106,49 @@
 <span>  number_classes <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">odatasets</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data_id"</span>, <span class="st">"name"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="do">##      data_id</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="do">##   1:      13</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="do">##   2:      15</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="do">##   3:      29</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="do">##   4:      49</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="do">##   5:      50</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="do">##  ---        </span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="do">## 238:   44767</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="do">## 239:   45039</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="do">## 240:   45063</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="do">## 241:   45562</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="do">## 242:   45568</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="do">##                                                                              name</span></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="do">##   1:                                                                breast-cancer</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="do">##   2:                                                                     breast-w</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="do">##   3:                                                              credit-approval</span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="do">##   4:                                                                      heart-c</span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="do">##   5:                                                                  tic-tac-toe</span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="do">##  ---                                                                             </span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="do">## 238: Click_prediction_small_seed_4_nrows_2000_nclasses_10_ncols_100_stratify_True</span></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="do">## 239:                                                             compas-two-years</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="do">## 240:                                                              credit-approval</span></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="do">## 241:                                                                seismic-bumps</span></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="do">## 242:                                                         telco-customer-churn</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">odatasets</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data_id"</span>, <span class="st">"name"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="do">##    data_id            name</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="do">## 1:      13   breast-cancer</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="do">## 2:      15        breast-w</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="do">## 3:      29 credit-approval</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="do">## 4:      49         heart-c</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="do">## 5:      50     tic-tac-toe</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="do">## 6:      51         heart-h</span></span></code></pre></div>
+<p>To retrieve individual datasets, you can use <code>odt</code> and either manually construct a new <code>Task</code> object using <code><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task()</a></code> or use it <code>data.table</code> format.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">odataset</span> <span class="op">=</span> <span class="fu"><a href="reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">29</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Dataset as data.table</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">odataset</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="do">## Classes 'data.table' and 'data.frame':   690 obs. of  16 variables:</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="do">##  $ A1   : Factor w/ 2 levels "b","a": 1 2 2 1 1 1 1 2 1 1 ...</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="do">##  $ A2   : num  30.8 58.7 24.5 27.8 20.2 ...</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">##  $ A3   : num  0 4.46 0.5 1.54 5.62 ...</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="do">##  $ A4   : Factor w/ 4 levels "u","y","l","t": 1 1 1 1 1 1 1 1 2 2 ...</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="do">##  $ A5   : Factor w/ 3 levels "g","p","gg": 1 1 1 1 1 1 1 1 2 2 ...</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">##  $ A6   : Factor w/ 14 levels "c","d","cc","i",..: 10 9 9 10 10 7 8 3 6 10 ...</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">##  $ A7   : Factor w/ 9 levels "v","h","bb","j",..: 1 2 2 1 1 1 2 1 2 1 ...</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">##  $ A8   : num  1.25 3.04 1.5 3.75 1.71 ...</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="do">##  $ A9   : Factor w/ 2 levels "t","f": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="do">##  $ A10  : Factor w/ 2 levels "t","f": 1 1 2 1 2 2 2 2 2 2 ...</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="do">##  $ A11  : int  1 6 0 5 0 0 0 0 0 0 ...</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="do">##  $ A12  : Factor w/ 2 levels "t","f": 2 2 2 1 2 1 1 2 2 1 ...</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="do">##  $ A13  : Factor w/ 3 levels "g","p","s": 1 1 1 1 3 1 1 1 1 1 ...</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="do">##  $ A14  : int  202 43 280 100 120 360 164 80 180 52 ...</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="do">##  $ A15  : int  0 560 824 3 0 0 31285 1349 314 1442 ...</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="do">##  $ class: Factor w/ 2 levels "+","-": 1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="do">##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Creating a new task</span></span>
+<span><span class="va">otask</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">odataset</span><span class="op">)</span></span>
+<span><span class="va">otask</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="do">## &lt;TaskClassif:credit-approval&gt; (690 x 16)</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="do">## * Target: class</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="do">## * Properties: twoclass</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="do">## * Features (15):</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="do">##   - fct (9): A1, A10, A12, A13, A4, A5, A6, A7, A9</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="do">##   - int (3): A11, A14, A15</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="do">##   - dbl (3): A2, A3, A8</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="feature-overview">Feature Overview<a class="anchor" aria-label="anchor" href="#feature-overview"></a>
