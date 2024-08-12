@@ -1,4 +1,5 @@
 magic_numbers = list(
+  # FIXME: These will not be be needed anymore / will change
   oml_no_more_results = c(
     data_set = 372L,
     task = 482L,
