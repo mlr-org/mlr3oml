@@ -44,6 +44,9 @@
 <li class="active nav-item"><a class="nav-link" href="../articles/tutorial.html">Getting Started</a></li>
       </ul>
 <ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlr-org/mlr3oml/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/"><span class="fa fa-comments"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://stackoverflow.com/questions/tagged/mlr3"><span class="fa fab fa-stack-overflow"></span></a></li>
@@ -571,9 +574,9 @@ keep the output clean), to <code>"info"</code>.</p>
 <span><span class="va">oml_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="co"># to print the object, some meta data must be downloaded</span></span>
 <span><span class="va">oml_data</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [19:44:24.305] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [19:44:24.521] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [19:44:24.720] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<pre><code><span><span class="co">## INFO  [17:29:50.239] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:29:50.385] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:29:50.510] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
 <span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <p>To download all information associated with an object, the
@@ -583,7 +586,7 @@ actual underlying data is downloaded, as everything else was already
 implicityly accessed above.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [19:44:24.977] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
+<pre><code><span><span class="co">## INFO  [17:29:50.700] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="caching">Caching<a class="anchor" aria-label="anchor" href="#caching"></a>
@@ -601,9 +604,9 @@ can be added or removed.</p>
 <span></span>
 <span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [19:44:25.446] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [19:44:25.632] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [19:44:25.824] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<pre><code><span><span class="co">## INFO  [17:29:51.040] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:29:51.167] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
+<span><span class="co">## INFO  [17:29:51.290] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
 <span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
