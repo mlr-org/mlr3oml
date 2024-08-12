@@ -161,6 +161,40 @@ tsk("oml", task_id = 261)
 rsmp("oml", task_id = 261)
 ```
 
+For technical reasons, it is currently not possible to directly convert OpenML survival tasks to {mlr3proba} survival tasks.
+Below, we create an example survival task:
+
+```{r}
+otask_surv = otsk(168753)
+otask_surv
+otask_surv$target_names
+```
+
+Here, `$target_names` always includes a value with name `"event"`, and at least one of `"left"` (timestamp) and `"right"` (timestamp).
+In order to manually create an `mlr3proba::TaskSurv`, we use `mlr3proba::as_task_surv` and pass the data, task id and other metadata to the function.
+
+If:
+* only the `"left"` timestamp is present, pass it as argument `time` and set the type to `"left"` 
+* only the `"right"` timestamp is present, pass it as argument `time` and set the type to `"right"`
+* both `"left"` and `"right"` are present, pass the `"left"` timestamp as `time`, the `"right"` timestamp as `time2` and set `type` to `"interval"`.
+
+```{r, eval = FALSE}
+mlr3_task = mlr3proba::as_task_surv(otask_surv$data$data,
+  id = otask_surv$id,
+  status = otask_surv$target_names["event"],
+  time = otask_surv$target_names["left"],
+  type = "left"
+)
+mlr3_task$feature_names = otask_surv$feature_names
+mlr3_task
+```
+```{r, eval = FALSE}
+## <TaskSurv:rossi> (432 x 9)
+## * Target: week, arrest
+## * Properties: -
+## * Features (7):
+## - int (7): age, fin, mar, paro, prio, race, wexp
+```
 
 ### Flows and Runs
 
