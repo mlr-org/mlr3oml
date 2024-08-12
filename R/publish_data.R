@@ -31,7 +31,7 @@
 publish_data = function(data, name, desc, license = NULL, default_target = NULL, citation = NULL,
   row_identifier = NULL, ignore_attribute = NULL, original_data_url = NULL, paper_url = NULL,
   test_server = test_server_default(), api_key = NULL) {
-  require_namespaces(c("xml2", "httr"))
+  require_namespaces(c("xml2", "httr2"))
   assert_flag(test_server)
   if (is.null(api_key)) {
     api_key = get_api_key(get_server(test_server))
@@ -80,22 +80,15 @@ publish_data = function(data, name, desc, license = NULL, default_target = NULL,
   withr::defer(unlink(data_path))
   write_arff(data, data_path)
 
-  response = httr::POST(
-    url = sprintf("%s/data", get_server(test_server)),
-    body = list(
-      description = httr::upload_file(desc_path),
-      dataset = httr::upload_file(data_path)
-    ),
-    query = list(api_key = api_key)
-  )
-  response_list = xml2::as_list(httr::content(response))
+  resp = oml_make_request(get_server(test_server), "data", api_key, desc_path, data_path)
+  body = oml_process_response(resp)
 
-  if (httr::http_error(response)) {
+  if (httr2::resp_is_error(resp)) {
     warningf(
-      paste(response_list$error$message, response_list$error$additional_information, collapse = "\n")
+      paste(body$error$message, body$error$additional_information, collapse = "\n")
     )
-    return(response)
+    return(resp)
   }
 
-  as.integer(response_list$upload_data_set$id[[1]])
+  as.integer(body$upload_data_set$id[[1]])
 }

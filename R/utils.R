@@ -161,6 +161,9 @@ delete = function(type, id, api_key = NULL, test_server = FALSE) {
 
   if (type == "collection") type = "study"
   url = sprintf("%s/%s/%s", server, type, id)
-  response = httr::DELETE(url, query = list(api_key = api_key))
-  response
+  req = httr2::request(url)
+  req = httr2::req_url_query(req, api_key = api_key)
+  req = httr2::req_method(req, "DELETE")
+  resp = httr2::req_perform(req)
+  resp
 }

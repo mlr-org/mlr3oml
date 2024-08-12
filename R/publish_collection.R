@@ -51,21 +51,14 @@ publish_collection = function(ids, name, desc, main_entity_type = "task", alias 
   withr::defer(unlink(desc_path))
   xml2::write_xml(x = doc, file = desc_path)
 
-  response = httr::POST(
-    url = sprintf("%s/study", get_server(test_server)),
-    body = list(
-      description = httr::upload_file(desc_path)
-    ),
-    query = list(api_key = api_key)
-  )
+  resp = oml_make_request(get_server(test_server), "study", api_key, desc_path)
+  body = oml_process_response(resp)
 
-
-  response_list = xml2::as_list(httr::content(response))
-  if (httr::http_error(response)) {
+  if (httr2::resp_is_error(resp)) {
     warningf(
-      paste(response_list$error$message, response_list$error$additional_information, collapse = "\n")
+      paste(body$error$message, body$error$additional_information, collapse = "\n")
     )
-    return(response)
+    return(resp)
   }
-  as.integer(response_list$study_upload$id[[1L]])
+  as.integer(body$study_upload$id[[1L]])
 }
