@@ -11,10 +11,10 @@ read_arff(path)
 Path or URI of the ARFF file, passed to \code{\link[=file]{file()}}.}
 }
 \value{
-(\code{\link[=data.table]{data.table()}}).
+(\link[data.table:data.table]{data.table()}).
 }
 \description{
-Parses a file located at \code{path} and returns a \code{\link[=data.table]{data.table()}}.
+Parses a file located at \code{path} and returns a \link[data.table:data.table]{data.table()}.
 
 Limitations:
 \itemize{
@@ -22,6 +22,6 @@ Limitations:
 Use \CRANpkg{RWeka} instead.
 \item Dates (even if there is no time component) are read in as \link{POSIXct}.
 \item The \code{date-format} from the ARFF specification is currently ignored.
-Instead, we rely on the auto-detection of \CRANpkg{data.table}'s \code{\link[=fread]{fread()}}..
+Instead, we rely on the auto-detection of \CRANpkg{data.table}'s \link[data.table:fread]{fread()}..
 }
 }

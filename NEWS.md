@@ -1,4 +1,8 @@
-# mlr3oml 0.9.0-9000
+# mlr3oml 0.10.1
+
+* Bugfix: provide anchors for links in Rd files
+
+# mlr3oml 0.10.0
 
 * Bugfix: Caching of parquet files failed when the temporary directory was on a
 different partition as the cache directory

@@ -1,7 +1,7 @@
 #' @title Read ARFF files
 #'
 #' @description
-#' Parses a file located at `path` and returns a [data.table()].
+#' Parses a file located at `path` and returns a [data.table()][data.table::data.table].
 #'
 #' Limitations:
 #'
@@ -9,12 +9,12 @@
 #'   Use \CRANpkg{RWeka} instead.
 #' * Dates (even if there is no time component) are read in as [POSIXct].
 #' * The `date-format` from the ARFF specification is currently ignored.
-#'   Instead, we rely on the auto-detection of \CRANpkg{data.table}'s [fread()]..
+#'   Instead, we rely on the auto-detection of \CRANpkg{data.table}'s [fread()][data.table::fread]..
 #'
 #' @param path (`character(1)`)\cr
 #'   Path or URI of the ARFF file, passed to [file()].
 #'
-#' @return ([data.table()]).
+#' @return ([data.table()][data.table::data.table]).
 #' @import stringi
 #' @export
 read_arff = function(path) {
