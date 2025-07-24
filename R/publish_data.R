@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Upload a dataset to OpenML.
-#' This can also be achieved through the [website](https://openml.org).
+#' This can also be achieved through the [website](https://www.openml.org).
 #'
 #' @param data ([`data.frame()`])\cr
 #'   The data to upload.

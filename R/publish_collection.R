@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Publish a collection to OpenML
-#' This can also be achieved through the [website](https://openml.org).
+#' This can also be achieved through the [website](https://www.openml.org).
 #'
 #' @param ids (`integer()`)\cr
 #'   The IDs to include in the collection.

@@ -16,7 +16,7 @@ This tutorial will give you a quick overview of the main features of `mlr3oml`.
 If you are not familiar with [OpenML](https://docs.openml.org/), we recommend to read [its documentation](https://docs.openml.org) first, as we will not explain the OpenML concepts in detail here.
 Further coverage of some selected `mlr3oml` features can be found in the [Large-Scale Benchmarking chapter](https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html) of the `mlr3book`.
 Note that `mlr3oml` currently only supports downloading objects from OpenML.
-Uploading can for example be achieved through the [website](https://openml.org).
+Uploading can for example be achieved through the [website](https://www.openml.org).
 
 First, we will briefly cover the different OpenML objects that can be downloaded using `mlr3oml`.
 Then we will show how to find objects with certain properties on OpenML.
@@ -233,7 +233,7 @@ task1
 ## Listing {#sec-listing}
 
 While we showed how to work with objects with known IDs, another important question is how to find the relevant IDs.
-This can either be achieved through the OpenML [website](https://openml.org) or through the REST API.
+This can either be achieved through the OpenML [website](https://www.openml.org) or through the REST API.
 To access the latter, `mlr3oml` provides the following [listing functions](https://mlr3oml.mlr-org.com/reference/list_oml.html):
 
 * `list_oml_data()` - Find datasets

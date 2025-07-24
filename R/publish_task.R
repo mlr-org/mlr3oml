@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Publish a task on OpenML.
-#' This can also be achieved through the [website](https://openml.org).
+#' This can also be achieved through the [website](https://www.openml.org).
 #'
 #' @param id (`integer(1)`)\cr
 #'   The dataset id.

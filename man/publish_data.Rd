@@ -63,5 +63,5 @@ In case \code{test_server} is TRUE (only relevant for developers) the test serve
 }
 \description{
 Upload a dataset to OpenML.
-This can also be achieved through the \href{https://openml.org}{website}.
+This can also be achieved through the \href{https://www.openml.org}{website}.
 }
