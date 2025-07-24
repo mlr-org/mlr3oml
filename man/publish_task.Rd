@@ -39,5 +39,5 @@ Defaults to value of option \code{"mlr3oml.test_server"}, or \code{FALSE} if not
 }
 \description{
 Publish a task on OpenML.
-This can also be achieved through the \href{https://openml.org}{website}.
+This can also be achieved through the \href{https://www.openml.org}{website}.
 }
