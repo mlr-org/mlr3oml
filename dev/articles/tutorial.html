@@ -5,100 +5,56 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="mlr3oml">
 <title>Getting Started • mlr3oml</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.8/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.8/font.css" rel="stylesheet">
-<link href="../deps/Roboto_Slab-0.4.8/font.css" rel="stylesheet">
-<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
-<meta property="og:description" content="mlr3oml">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
 <meta name="robots" content="noindex">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">mlr3oml</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.0-9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.10.1.9000</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">
-    <span class="fa fa fa fa-file-alt"></span>
-     
-    Reference
-  </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://mlr3book.mlr-org.com">
-    <span class="fa fa fa fa-link"></span>
-     
-    mlr3book
-  </a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/tutorial.html">Getting Started</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-file-alt"></span> Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://mlr3book.mlr-org.com"><span class="fa fa-link"></span> mlr3book</a></li>
+<li class="active nav-item"><a class="nav-link" href="../articles/tutorial.html">Getting Started</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/mlr-org/mlr3oml/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/">
-    <span class="fa fa fa fa-comments"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://stackoverflow.com/questions/tagged/mlr3">
-    <span class="fab fa fab fa-stack-overflow"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://mlr-org.com/">
-    <span class="fa fa-rss"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlr-org/mlr3oml/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite/"><span class="fa fa-comments"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://stackoverflow.com/questions/tagged/mlr3"><span class="fa fab fa-stack-overflow"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://mlr-org.com/"><span class="fa fa-rss"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -107,10 +63,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Getting Started</h1>
+
+      <h1>Getting Started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr3oml/blob/HEAD/vignettes/articles/tutorial.Rmd" class="external-link"><code>vignettes/articles/tutorial.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mlr-org/mlr3oml/blob/main/vignettes/articles/tutorial.Rmd" class="external-link"><code>vignettes/articles/tutorial.Rmd</code></a></small>
       <div class="d-none name"><code>tutorial.Rmd</code></div>
     </div>
 
@@ -125,7 +82,7 @@ not explain the OpenML concepts in detail here. Further coverage of some
 selected <code>mlr3oml</code> features can be found in the <a href="https://mlr3book.mlr-org.com/chapters/chapter11/large-scale_benchmarking.html" class="external-link">Large-Scale
 Benchmarking chapter</a> of the <code>mlr3book</code>. Note that
 <code>mlr3oml</code> currently only supports downloading objects from
-OpenML. Uploading can for example be achieved through the <a href="https://openml.org" class="external-link">website</a>.</p>
+OpenML. Uploading can for example be achieved through the <a href="https://www.openml.org" class="external-link">website</a>.</p>
 <p>First, we will briefly cover the different OpenML objects that can be
 downloaded using <code>mlr3oml</code>. Then we will show how to find
 objects with certain properties on OpenML. Finally, we will quickly
@@ -226,10 +183,10 @@ or whether they are the row identifier.</p>
 <span><span class="co">##                                                                                   nominal_value</span></span>
 <span><span class="co">##                                                                                          &lt;list&gt;</span></span>
 <span><span class="co">## 1:                                                                0&lt;=X&lt;200,&lt;0,&gt;=200,no checking</span></span>
-<span><span class="co">## 2:                                                                                             </span></span>
+<span><span class="co">## 2:                                                                                       [NULL]</span></span>
 <span><span class="co">## 3: all paid,critical/other existing credit,delayed previously,existing paid,no credits/all paid</span></span>
 <span><span class="co">## 4:                  business,domestic appliance,education,furniture/equipment,new car,other,...</span></span>
-<span><span class="co">## 5:                                                                                             </span></span>
+<span><span class="co">## 5:                                                                                       [NULL]</span></span>
 <span><span class="co">## 6:                                          100&lt;=X&lt;500,500&lt;=X&lt;1000,&lt;100,&gt;=1000,no known savings</span></span>
 <span><span class="co">##    is_target is_ignore is_row_identifier number_of_missing_values</span></span>
 <span><span class="co">##       &lt;lgcl&gt;    &lt;lgcl&gt;            &lt;lgcl&gt;                    &lt;int&gt;</span></span>
@@ -255,7 +212,8 @@ the <code><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" clas
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">backend</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">oml_data</span><span class="op">)</span></span>
 <span><span class="va">backend</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;DataBackendDataTable&gt; (1000x22)</span></span>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;DataBackendDataTable&gt;</span><span style="font-weight: bold;"> (</span><span style="color: #0000BB; font-weight: bold;">1000</span><span style="font-weight: bold;">x</span><span style="color: #0000BB; font-weight: bold;">22</span><span style="font-weight: bold;">)</span> <span style="color: #00BBBB;">────────────────────────────────────────────</span></span></span>
 <span><span class="co">##  checking_status duration                 credit_history             purpose</span></span>
 <span><span class="co">##           &lt;fctr&gt;    &lt;int&gt;                         &lt;fctr&gt;              &lt;fctr&gt;</span></span>
 <span><span class="co">##               &lt;0        6 critical/other existing credit            radio/tv</span></span>
@@ -372,46 +330,50 @@ previous section.</p>
 <code class="sourceCode R"><span><span class="co"># Convert OpenML task to mlr3 task</span></span>
 <span><span class="va">task</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_task.html" class="external-link">as_task</a></span><span class="op">(</span><span class="va">oml_task</span><span class="op">)</span></span>
 <span><span class="va">task</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
-<span><span class="co">## * Target: class</span></span>
-<span><span class="co">## * Properties: twoclass</span></span>
-<span><span class="co">## * Features (20):</span></span>
-<span><span class="co">##   - fct (13): checking_status, credit_history, employment,</span></span>
-<span><span class="co">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
-<span><span class="co">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
-<span><span class="co">##     savings_status</span></span>
-<span><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
-<span><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;TaskClassif&gt;</span><span style="font-weight: bold;"> (1000x21)</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## • Target: class</span></span>
+<span><span class="co">## • Target classes: good (positive class, 70%), bad (30%)</span></span>
+<span><span class="co">## • Properties: twoclass</span></span>
+<span><span class="co">## • Features (20):</span></span>
+<span><span class="co">##   • fct (13): checking_status, credit_history, employment, foreign_worker,</span></span>
+<span><span class="co">##   housing, job, other_parties, other_payment_plans, own_telephone,</span></span>
+<span><span class="co">##   personal_status, property_magnitude, purpose, savings_status</span></span>
+<span><span class="co">##   • int (7): age, credit_amount, duration, existing_credits,</span></span>
+<span><span class="co">##   installment_commitment, num_dependents, residence_since</span></span></code></pre>
 <p>The associated resampling can be obtained by calling
 <code><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resampling()</a></code>.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert OpenML task to mlr3 resampling</span></span>
 <span><span class="va">resampling</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resampling.html" class="external-link">as_resampling</a></span><span class="op">(</span><span class="va">oml_task</span><span class="op">)</span></span>
 <span><span class="va">resampling</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;ResamplingCustom&gt;: Custom Splits</span></span>
-<span><span class="co">## * Iterations: 1</span></span>
-<span><span class="co">## * Instantiated: TRUE</span></span>
-<span><span class="co">## * Parameters: list()</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;ResamplingCustom&gt;</span><span style="font-weight: bold;"> : Custom Splits</span> <span style="color: #00BBBB;">──────────────────────────────────────────</span></span></span>
+<span><span class="co">## • Iterations: <span style="color: #0000BB;">1</span></span></span>
+<span><span class="co">## • Instantiated: <span style="color: #0000BB;">TRUE</span></span></span>
+<span><span class="co">## • Parameters: list()</span></span></code></pre>
 <p>To simplify this, there exist <code>"oml"</code> tasks and
 resamplings:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">261</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;TaskClassif:credit-g&gt; (1000 x 21)</span></span>
-<span><span class="co">## * Target: class</span></span>
-<span><span class="co">## * Properties: twoclass</span></span>
-<span><span class="co">## * Features (20):</span></span>
-<span><span class="co">##   - fct (13): checking_status, credit_history, employment,</span></span>
-<span><span class="co">##     foreign_worker, housing, job, other_parties, other_payment_plans,</span></span>
-<span><span class="co">##     own_telephone, personal_status, property_magnitude, purpose,</span></span>
-<span><span class="co">##     savings_status</span></span>
-<span><span class="co">##   - int (7): age, credit_amount, duration, existing_credits,</span></span>
-<span><span class="co">##     installment_commitment, num_dependents, residence_since</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;TaskClassif&gt;</span><span style="font-weight: bold;"> (1000x21)</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## • Target: class</span></span>
+<span><span class="co">## • Target classes: good (positive class, 70%), bad (30%)</span></span>
+<span><span class="co">## • Properties: twoclass</span></span>
+<span><span class="co">## • Features (20):</span></span>
+<span><span class="co">##   • fct (13): checking_status, credit_history, employment, foreign_worker,</span></span>
+<span><span class="co">##   housing, job, other_parties, other_payment_plans, own_telephone,</span></span>
+<span><span class="co">##   personal_status, property_magnitude, purpose, savings_status</span></span>
+<span><span class="co">##   • int (7): age, credit_amount, duration, existing_credits,</span></span>
+<span><span class="co">##   installment_commitment, num_dependents, residence_since</span></span></code></pre>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">rsmp</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="fl">261</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;ResamplingCustom&gt;: Custom Splits</span></span>
-<span><span class="co">## * Iterations: 1</span></span>
-<span><span class="co">## * Instantiated: TRUE</span></span>
-<span><span class="co">## * Parameters: list()</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;ResamplingCustom&gt;</span><span style="font-weight: bold;"> : Custom Splits</span> <span style="color: #00BBBB;">──────────────────────────────────────────</span></span></span>
+<span><span class="co">## • Iterations: <span style="color: #0000BB;">1</span></span></span>
+<span><span class="co">## • Instantiated: <span style="color: #0000BB;">TRUE</span></span></span>
+<span><span class="co">## • Parameters: list()</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="flows-and-runs">Flows and Runs<a class="anchor" aria-label="anchor" href="#flows-and-runs"></a>
@@ -480,10 +442,14 @@ using the <code><a href="https://mlr3.mlr-org.com/reference/as_resample_result.h
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rr</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_resample_result.html" class="external-link">as_resample_result</a></span><span class="op">(</span><span class="va">run</span><span class="op">)</span></span>
 <span><span class="va">rr</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;ResampleResult&gt; with 2 resampling iterations</span></span>
-<span><span class="co">##   task_id learner_id resampling_id iteration warnings errors</span></span>
-<span><span class="co">##  credit-g   oml.1068        custom         1        0      0</span></span>
-<span><span class="co">##  credit-g   oml.1068        custom         1        0      0</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;ResampleResult&gt;</span><span style="font-weight: bold;"> with </span><span style="color: #0000BB; font-weight: bold;">2</span><span style="font-weight: bold;"> resampling iterations</span> <span style="color: #00BBBB;">───────────────────────────────</span></span></span>
+<span><span class="co">##   task_id learner_id resampling_id iteration     prediction_test warnings</span></span>
+<span><span class="co">##  credit-g   oml.1068        custom         1 &lt;PredictionClassif&gt;        0</span></span>
+<span><span class="co">##  credit-g   oml.1068        custom         1 &lt;PredictionClassif&gt;        0</span></span>
+<span><span class="co">##  errors</span></span>
+<span><span class="co">##       0</span></span>
+<span><span class="co">##       0</span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="collection">Collection<a class="anchor" aria-label="anchor" href="#collection"></a>
@@ -511,15 +477,16 @@ these tasks as follows:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">task1</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"oml"</span>, task_id <span class="op">=</span> <span class="va">cc18</span><span class="op">$</span><span class="va">task_ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">task1</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;TaskClassif:kr-vs-kp&gt; (3196 x 37)</span></span>
-<span><span class="co">## * Target: class</span></span>
-<span><span class="co">## * Properties: twoclass</span></span>
-<span><span class="co">## * Features (36):</span></span>
-<span><span class="co">##   - fct (36): bkblk, bknwy, bkon8, bkona, bkspr, bkxbq, bkxcr, bkxwp,</span></span>
-<span><span class="co">##     blxwp, bxqsq, cntxt, dsopp, dwipd, hdchk, katri, mulch, qxmsq,</span></span>
-<span><span class="co">##     r2ar8, reskd, reskr, rimmx, rkxwp, rxmsq, simpl, skach, skewr,</span></span>
-<span><span class="co">##     skrxp, spcop, stlmt, thrsk, wkcti, wkna8, wknck, wkovl, wkpos,</span></span>
-<span><span class="co">##     wtoeg</span></span></code></pre>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="color: #0000BB; font-weight: bold;">&lt;TaskClassif&gt;</span><span style="font-weight: bold;"> (3196x37)</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## • Target: class</span></span>
+<span><span class="co">## • Target classes: won (positive class, 52%), nowin (48%)</span></span>
+<span><span class="co">## • Properties: twoclass</span></span>
+<span><span class="co">## • Features (36):</span></span>
+<span><span class="co">##   • fct (36): bkblk, bknwy, bkon8, bkona, bkspr, bkxbq, bkxcr, bkxwp, blxwp,</span></span>
+<span><span class="co">##   bxqsq, cntxt, dsopp, dwipd, hdchk, katri, mulch, qxmsq, r2ar8, reskd, reskr,</span></span>
+<span><span class="co">##   rimmx, rkxwp, rxmsq, simpl, skach, skewr, skrxp, spcop, stlmt, thrsk, wkcti,</span></span>
+<span><span class="co">##   wkna8, wknck, wkovl, wkpos, wtoeg</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -527,8 +494,8 @@ these tasks as follows:</p>
 </h3>
 <p>While we showed how to work with objects with known IDs, another
 important question is how to find the relevant IDs. This can either be
-achieved through the OpenML <a href="https://openml.org" class="external-link">website</a> or
-through the REST API. To access the latter, <code>mlr3oml</code>
+achieved through the OpenML <a href="https://www.openml.org" class="external-link">website</a>
+or through the REST API. To access the latter, <code>mlr3oml</code>
 provides the following <a href="https://mlr3oml.mlr-org.com/reference/list_oml.html">listing
 functions</a>:</p>
 <ul>
@@ -617,10 +584,7 @@ keep the output clean), to <code>"info"</code>.</p>
 <span><span class="va">oml_data</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="co"># to print the object, some meta data must be downloaded</span></span>
 <span><span class="va">oml_data</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [17:30:56.774] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [17:30:56.936] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [17:30:57.087] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
+<pre><code><span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
 <p>To download all information associated with an object, the
 <code>$download()</code> method can be called. This can be useful to
@@ -629,7 +593,6 @@ actual underlying data is downloaded, as everything else was already
 implicityly accessed above.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">oml_data</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [17:30:57.285] Retrieving ARFF <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://api.openml.org/data/v1/download/31/credit-g.arff`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="caching">Caching<a class="anchor" aria-label="anchor" href="#caching"></a>
@@ -640,26 +603,23 @@ implicityly accessed above.</p>
 cache directory. When this is enabled, many OpenML objects are also
 available offline. Note that OpenML collections are not cached, as IDs
 can be added or removed.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set a temporary directy as the cache folder</span></span>
 <span><span class="va">cache_dir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mlr3oml.cache <span class="op">=</span> <span class="va">cache_dir</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">odata</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata</span></span></code></pre></div>
-<pre><code><span><span class="co">## INFO  [17:30:57.657] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [17:30:57.797] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/qualities/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## INFO  [17:30:57.937] Retrieving JSON <span style="color: #808080;">{</span><span style="color: #D75FAF;">url</span><span style="color: #808080;">: </span>`https://www.openml.org/api/v1/json/data/features/31`<span style="color: #808080;">, </span><span style="color: #D75FAF;">authenticated</span><span style="color: #808080;">: </span>`FALSE`<span style="color: #808080;">}</span></span></span>
-<span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
+<pre><code><span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># When accessing the data again, nothing has to be downloaded</span></span>
 <span><span class="co"># because the information is loaded from the cache</span></span>
 <span><span class="va">odata_again</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
 <span><span class="va">odata_again</span></span></code></pre></div>
 <pre><code><span><span class="co">## &lt;OMLData:31:credit-g&gt; (1000x21)</span></span>
 <span><span class="co">##  * Default target: class</span></span></code></pre>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set back the logger</span></span>
 <span><span class="va">logger</span><span class="op">$</span><span class="fu">set_threshold</span><span class="op">(</span><span class="st">"warn"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -681,13 +641,13 @@ e.g. regarding the data type.</p>
 <code><a href="https://mlr3.mlr-org.com/reference/DataBackend.html" class="external-link">mlr3::DataBackend</a></code> using the parquet file type, the
 resulting backend is an <a href="https://mlr3db.mlr-org.com/reference/DataBackendDuckDB.html" class="external-link"><code>mlr3db::DataBackendDuckDB</code></a>
 object. For the arff file format, the resulting backend is a <a href="https://mlr3.mlr-org.com/reference/DataBackendDataTable.html" class="external-link"><code>mlr3::DataBackendDataTable</code></a>.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https:///mlr3db.mlr-org.com" class="external-link">mlr3db</a></span><span class="op">)</span></span>
 <span><span class="va">odata_pq</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">31</span>, parquet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">backend_pq</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata_pq</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">backend_pq</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "DataBackendDuckDB" "DataBackend"       "R6"</span></span></code></pre>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compare with arff</span></span>
 <span><span class="va">odata_arff</span> <span class="op">=</span> <span class="fu"><a href="../reference/odt.html">odt</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">31</span>, parquet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">backend_arff</span> <span class="op">=</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/as_data_backend.html" class="external-link">as_data_backend</a></span><span class="op">(</span><span class="va">odata_arff</span><span class="op">)</span></span>
@@ -698,28 +658,26 @@ in the <code>mlr3book</code>.</p>
 </div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Michel Lang, Sebastian Fischer.</p>
+  <p>Developed by Michel Lang, Sebastian Fischer.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
