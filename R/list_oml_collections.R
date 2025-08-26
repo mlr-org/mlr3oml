@@ -4,8 +4,8 @@
 #' @param status (`character(1)`)\cr
 #'   Should be one of "active", "in_preparation", "deactivated", "all". By
 #'   default "all" studies are returned.
-#' @param main_entity_type (`character(1)`)\cr
-#'   Filter for main entity type, usually "run" or "task".
+#' @param main_entity_type (`character(1)` | `NULL`)\cr
+#'   Filter for main entity type. Can be "run" or "task".
 #' @export
 list_oml_collections = function(uploader = NULL, status = "all", main_entity_type = NULL,
   limit = limit_default(), test_server = test_server_default(), ...) {

@@ -97,8 +97,8 @@ Filter for uploader.}
 Should be one of "active", "in_preparation", "deactivated", "all". By
 default "all" studies are returned.}
 
-\item{main_entity_type}{(\code{character(1)})\cr
-Filter for main entity type, usually "run" or "task".}
+\item{main_entity_type}{(\code{character(1)} | \code{NULL})\cr
+Filter for main entity type. Can be "run" or "task".}
 
 \item{limit}{(\code{integer()})\cr
 Limit the results to \code{limit} records.
