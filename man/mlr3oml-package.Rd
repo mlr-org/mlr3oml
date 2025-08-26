@@ -32,7 +32,7 @@ integration of OpenML and mlr3.
 \itemize{
 \item \code{mlr3oml.cache}: Enables or disables caching globally.
 If set to \code{FALSE}, caching is disabled.
-If set to \code{TRUE}, cache directory as reported by \code{\link[=R_user_dir]{R_user_dir()}} is used.
+If set to \code{TRUE}, cache directory as reported by \code{\link[backports:R_user_dir]{backports::R_user_dir()}} is used.
 Alternatively, you can specify a path on the local file system here.
 Default is \code{FALSE}.
 \item \code{mlr3oml.api_key}: API key to use. All operations supported by this package
