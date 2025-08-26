@@ -29,6 +29,3 @@ list_oml_collections = function(uploader = NULL, status = "all", main_entity_typ
 
   return(tab[])
 }
-
-
-
