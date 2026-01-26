@@ -87,7 +87,7 @@ test_that("OMLData arff fallback works when parquet does not exist", {
   odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$desc
   # non-existing file
-  odata$.__enclos_env__$private$.desc$minio_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
+  odata$.__enclos_env__$private$.desc$parquet_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
   odata$data
   expect_true(inherits(odata$.__enclos_env__$private$.backend, "DataBackendDataTable"))
 })
@@ -96,7 +96,7 @@ test_that("as_data_backend falls back to arff when parquet does not exist", {
   odata = with_cache(OMLData$new(31, parquet = TRUE), cache = FALSE)
   odata$desc
   # non-existing file
-  odata$.__enclos_env__$private$.desc$minio_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
+  odata$.__enclos_env__$private$.desc$parquet_url = "http://openml1.win.tue.nl/dataset31/dataset_000.pq"
   backend = as_data_backend(odata)
   expect_r6(backend, "DataBackendDataTable")
 

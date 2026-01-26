@@ -7,8 +7,8 @@ test_that("Separate caches are used for test and public server", {
     code = OMLData$new(31, test_server = FALSE)$desc,
     cache = cachedir
   )
-  expect_true("31.qs" %in% list.files(file.path(cachedir, "public", "data_desc")))
-  expect_true("31.qs" %nin% list.files(file.path(cachedir, "test", "data_desc")))
+  expect_true("31.qs2" %in% list.files(file.path(cachedir, "public", "data_desc")))
+  expect_true("31.qs2" %nin% list.files(file.path(cachedir, "test", "data_desc")))
   local_test_server()
   odata_test = with_cache(
     code = OMLData$new(31, test_server = TRUE)$desc,
@@ -35,8 +35,8 @@ test_that("Caching works with parquet and custom cache path", {
         files,
         c("data_desc", "data_features", "data_parquet")
       )
-      expect_true("9.qs" %in% list.files(file.path(dir, "public", "data_desc")))
-      expect_true("9.qs" %in% list.files(file.path(dir, "public", "data_features")))
+      expect_true("9.qs2" %in% list.files(file.path(dir, "public", "data_desc")))
+      expect_true("9.qs2" %in% list.files(file.path(dir, "public", "data_features")))
       expect_true("9.parquet" %in% list.files(file.path(dir, "public", "data_parquet")))
     }, cache = dir)
 
@@ -46,7 +46,7 @@ test_that("Caching works with parquet and custom cache path", {
     odata = odata$data
     files = list.files(file.path(dir, "public"))
     expect_true("data" %in% files)
-    expect_true("9.qs" %in% list.files(file.path(dir, "public", "data")))
+    expect_true("9.qs2" %in% list.files(file.path(dir, "public", "data")))
     }, cache  = dir)
 })
 
@@ -61,8 +61,8 @@ test_that("Caching works with parquet and custom cache path", {
 #  odata = odata$desc
 #  dat = odata$data
 #  files = list.files(odata$cache_dir)
-#  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_desc")))
-#  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data_features")))
+#  expect_true("9.qs2" %in% list.files(file.path(dir, "test", "data_desc")))
+#  expect_true("9.qs2" %in% list.files(file.path(dir, "test", "data_features")))
 #  expect_true("9.parquet" %in% list.files(file.path(dir, "test", "data_parquet")))
 #
 #  odata = with_cache(
@@ -72,6 +72,6 @@ test_that("Caching works with parquet and custom cache path", {
 #  odata = odata$data
 #  files = list.files(file.path(dir, "test"))
 #  expect_true("data" %in% files)
-#  expect_true("9.qs" %in% list.files(file.path(dir, "test", "data")))
+#  expect_true("9.qs2" %in% list.files(file.path(dir, "test", "data")))
 #})
 #

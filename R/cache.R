@@ -6,17 +6,17 @@
 CACHE = new.env(hash = FALSE, parent = emptyenv())
 
 CACHE$versions = list(
-  data = 3L,
-  data_parquet = 3L,
-  data_desc = 3L,
-  data_qualities = 2L,
-  data_features = 2L,
-  task_desc = 2L,
-  task_splits = 2L,
-  flow_desc = 2L,
-  collection_desc = 2L,
-  run_desc = 2L,
-  prediction = 2L
+  data = 4L,
+  data_parquet = 4L,
+  data_desc = 4L,
+  data_qualities = 3L,
+  data_features = 3L,
+  task_desc = 3L,
+  task_splits = 3L,
+  flow_desc = 3L,
+  collection_desc = 3L,
+  run_desc = 3L,
+  prediction = 3L
 )
 
 CACHE$initialized = character()
@@ -51,7 +51,7 @@ initialize_cache = function(cache_dir) {
     return(TRUE)
   }
 
-  require_namespaces("qs", "The following packages are required for caching: %s")
+  require_namespaces("qs2", "The following packages are required for caching: %s")
   cache_file = file.path(cache_dir, "version.json")
   write_cache_file = FALSE
 
@@ -104,7 +104,7 @@ initialize_cache = function(cache_dir) {
 #' @param test_server (`logical(1)`)\cr
 #'   Whether to use the test server. This is needed to determine the cache directory.
 #' @param parquet (`logical(1)`)\cr
-#'   Whether the caching is done for parquet, in this case we don't use qs to compress the data
+#'   Whether the caching is done for parquet, in this case we don't use qs2 to compress the data
 #'   and the caching therefore works a little different.
 #' @param cache_dir (`character(1)`)\cr
 #'   The cache directory.
@@ -118,7 +118,7 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
   }
 
   path = file.path(cache_dir, if (test_server) "test" else "public", type)
-  file = file.path(path, sprintf("%i.%s", id, if (parquet) "parquet" else "qs"))
+  file = file.path(path, sprintf("%i.%s", id, if (parquet) "parquet" else "qs2"))
 
   if (file.exists(file)) {
     if (parquet) {
@@ -126,7 +126,7 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
       return(file)
     } else {
       lg$debug("Loading object from cache", type = type, id = id, file = file)
-      obj = try(qs::qread(file, nthreads = getOption("Ncpus", 1L)))
+      obj = try(qs2::qs_read(file, nthreads = getOption("Ncpus", 1L)))
       if (!inherits(obj, "try-error")) {
         return(obj)
       }
@@ -145,6 +145,6 @@ cached = function(fun, type, id, test_server, parquet = FALSE, ..., cache_dir = 
   obj = fun(id, ...)
 
   lg$debug("Storing compressed object in cache", type = type, id = id, file = file)
-  qs::qsave(obj, file = file, nthreads = getOption("Ncpus", 1L))
+  qs2::qs_save(obj, file = file, nthreads = getOption("Ncpus", 1L))
   return(obj)
 }

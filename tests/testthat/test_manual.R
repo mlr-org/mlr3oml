@@ -7,14 +7,14 @@ test_that("data is cached", {
   expect_file_exists(file.path(path, "version.json"))
 
   expect_list(odata$desc)
-  path_desc = file.path(path, "data_desc", "9.qs")
+  path_desc = file.path(path, "data_desc", "9.qs2")
   expect_file_exists(path_desc)
-  expect_equal(odata$desc, qs::qread(path_desc))
+  expect_equal(odata$desc, qs2::qs_read(path_desc))
 
   expect_data_table(odata$data)
-  path_data = file.path(path, "data", "9.qs")
+  path_data = file.path(path, "data", "9.qs2")
   expect_file_exists(path_data)
-  expect_equal(odata$data, qs::qread(path_data))
+  expect_equal(odata$data, qs2::qs_read(path_data))
 
   # ensure that cache is not overwritten
   mtime_before = file.mtime(path_data)
