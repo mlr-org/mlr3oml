@@ -31,6 +31,8 @@ test_that("Task 100 works", {
 
 test_that("OpenML CC-18 should work: arff", {
   task_ids = OMLCollection$new(99)$task_ids
+  # https://github.com/jeroen/curl/issues/430#issuecomment-3801914339
+  task_ids <- setdiff(task_ids, 167124)
   # n = length(task_ids)
   # task_ids = sample(task_ids, n)
   task_types = c(

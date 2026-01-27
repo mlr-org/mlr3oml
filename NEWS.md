@@ -1,4 +1,6 @@
-# mlr3oml (development version)
+# mlr3oml 0.12.0
+
+* Move from `qs` to `qs2` package for caching.
 
 # mlr3oml 0.11.0
 
