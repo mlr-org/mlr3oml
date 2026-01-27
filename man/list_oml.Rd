@@ -31,6 +31,7 @@ list_oml_data(
   number_classes = NULL,
   number_missing_values = NULL,
   tag = NULL,
+  uploader = NULL,
   limit = limit_default(),
   test_server = test_server_default(),
   ...
