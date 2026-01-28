@@ -24,3 +24,4 @@
 ^vignettes/articles$
 ^info$
 ^CRAN-SUBMISSION$
+^\.claude/
