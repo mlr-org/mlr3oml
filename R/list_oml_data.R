@@ -50,7 +50,7 @@
 #' @export
 #' @template examples
 list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NULL, number_features = NULL,
-  number_classes = NULL, number_missing_values = NULL, tag = NULL, limit = limit_default(),
+  number_classes = NULL, number_missing_values = NULL, tag = NULL, uploader = NULL, limit = limit_default(),
   test_server = test_server_default(), ...) {
 
   tab = get_paginated_table("data",
@@ -61,6 +61,7 @@ list_oml_data = function(data_id = NULL, data_name = NULL, number_instances = NU
     number_classes = number_classes,
     number_missing_values = number_missing_values,
     tag = tag,
+    uploader = uploader,
     limit = limit,
     server = get_server(test_server),
     ...

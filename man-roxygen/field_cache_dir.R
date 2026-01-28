@@ -4,4 +4,4 @@
 #' Objects from the test server are stored in the subdirectory 'test', those from the public
 #' server are stored in the subdirectory 'public'.
 #'
-#' The package \CRANpkg{qs} is required for caching.
+#' The package \CRANpkg{qs2} is required for caching.

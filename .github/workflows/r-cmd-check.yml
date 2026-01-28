@@ -60,6 +60,8 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
+        with:
+          args: 'c("--no-manual", "--no-stop-on-test-error")'
         env:
           TESTOPENMLAPIKEY: ${{ secrets.TESTOPENMLAPIKEY }}
 
