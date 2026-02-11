@@ -1,17 +1,16 @@
 download_desc_task = function(task_id, server) {
-  desc = get_json(paste0(server, "/json/task/%i"), task_id,
+  desc = get_json(paste0(server, "/tasks/%i"), task_id,
     simplify_data_frame = FALSE, server = server
-  )[[1L]]
+  )
 
   desc = parse_desc_task(desc)
   return(desc)
 }
 
 parse_desc_task = function(desc) {
-  desc$task_id = as.integer(desc$task_id)
-  desc$task_type_id = as.integer(desc$task_type_id)
-  desc$input = set_names(map(desc$input, function(x) x[[2L]]), map_chr(desc$input, "name"))
-  desc$input$source_data$data_set_id = as.integer(desc$input$source_data$data_set_id)
+  desc$input = set_names(imap(desc$input, function(x, nm) x[[1]]), map_chr(desc$input, "name"))
+  desc$output = set_names(imap(desc$output, function(x, nm) x[[1]]), map_chr(desc$output, "name"))
+
   est_params = desc$input$estimation_procedure$parameter
   ep_names = map(est_params, "name")
   ep_values = map(est_params, "value")

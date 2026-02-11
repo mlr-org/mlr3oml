@@ -183,5 +183,3 @@ test_that("download runs without error", {
 #  expect_data_table(odata$data)
 #  #expect_class(odata$data[["Timestamp"]], "POSIXct")
 #})
-
-
