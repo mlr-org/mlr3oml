@@ -64,8 +64,12 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
   require_namespaces(c("DBI", "duckdb", "mlr3db"))
 
   assert_file_exists(data, access = "r", extension = "parquet")
+  data = normalizePath(data)
   con = DBI::dbConnect(duckdb::duckdb())
   on.exit({DBI::dbDisconnect(con, shutdown = TRUE)}, add = TRUE)
+
+  # record all view definitions so the connector can rebuild them on a fresh connection
+  queries = character()
 
   # 1. view: we create the data as is
   tbl = "mlr3db_view"
@@ -79,6 +83,7 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
 
   query = sprintf("%s FROM parquet_scan(['%s'])", query, paste0(data, collapse = "','"))
   DBI::dbExecute(con, query)
+  queries = c(queries, query)
 
   # 2. view: we encode the booleans as VARCHAR
   table_info = DBI::dbGetQuery(con, sprintf("PRAGMA table_info('%s')", tbl))
@@ -94,6 +99,7 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
 
     query = sprintf("CREATE OR REPLACE VIEW '%s' AS SELECT %s from '%s'", tbl, vars, tbl_prev)
     DBI::dbExecute(con, query)
+    queries = c(queries, query)
   }
 
   # 3. view: we normalize the names
@@ -126,10 +132,20 @@ as_duckdb_backend_character = function(data, primary_key = NULL, factors) {
       tbl, renamings, tbl_prev
     )
     DBI::dbExecute(con, query)
+    queries = c(queries, query)
   }
 
+  # the duckdb connection does not survive serialization,
+  # so the backend needs a connector that rebuilds the views on a fresh connection,
+  # e.g. when the task is restored on a parallel worker
+  connector = crate(function() {
+    con = DBI::dbConnect(duckdb::duckdb())
+    for (query in queries) DBI::dbExecute(con, query)
+    con
+  }, queries)
+
   backend = mlr3db::DataBackendDuckDB$new(con, table = tbl, primary_key = primary_key,
-    strings_as_factors = factors
+    strings_as_factors = factors, connector = connector
   )
 
   on.exit()

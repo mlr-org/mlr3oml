@@ -1,5 +1,9 @@
 # mlr3oml (development version)
 
+* fix: Parquet-based backends now reconnect after serialization.
+  Previously, using a parquet-backed task on a parallel worker failed with
+  "Invalid connection. Provide a connector during construction to automatically reconnect".
+
 # mlr3oml 0.12.0
 
 * Move from `qs` to `qs2` package for caching.
